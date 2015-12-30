@@ -9,7 +9,9 @@
 #include "CAUIEditorParser.h"
 #include "platform/CCFileUtils.h"
 #include "tinyxml2/tinyxml2.h"
+
 NS_CC_BEGIN
+
 
 CAUIEditorParser::CAUIEditorParser()
 :m_pSupverview(NULL)
@@ -97,6 +99,31 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             scale9ImageVew->setImage(CAImage::create(value));
         }
+
+		if (const char* value = viewXml->Attribute("alpha"))
+		{
+			scale9ImageVew->setAlpha(atof(value));
+		}
+
+		if (const char* value = viewXml->Attribute("insetLeft"))
+		{
+			scale9ImageVew->setInsetLeft(atof(value));
+		}
+
+		if (const char* value = viewXml->Attribute("insetTop"))
+		{
+			scale9ImageVew->setInsetTop(atof(value));
+		}
+
+		if (const char* value = viewXml->Attribute("insetRight"))
+		{
+			scale9ImageVew->setInsetRight(atof(value));
+		}
+
+		if (const char* value = viewXml->Attribute("insetBottom"))
+		{
+			scale9ImageVew->setInsetBottom(atof(value));
+		}
     }
     else if (contrlType.compare("CALabel") == 0)
     {
@@ -125,8 +152,61 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             label->setFontSize(atoi(value));
         }
+
+		if (const char* value = viewXml->Attribute("fontName"))
+		{
+			label->setFontName(value);
+		}
+
+		if (const char* value = viewXml->Attribute("bold"))
+		{
+			bool var = (atoi(value) == 1) ? true : false;
+			label->setBold(var);
+		}
         
+		if (const char* value = viewXml->Attribute("underLine"))
+		{
+			bool var = (atoi(value) == 1) ? true : false;
+			label->setUnderLine(var);
+		}
+
+		if (const char* value = viewXml->Attribute("italics"))
+		{
+			bool var = (atoi(value) == 1) ? true : false;
+			label->setItalics(var);
+		}
+
+		if (const char* value = viewXml->Attribute("lineSpacing"))
+		{
+			label->setLineSpacing(atoi(value));
+		}
         
+		if (const char* value = viewXml->Attribute("textAlignment"))
+		{
+			label->setTextAlignment(CATextAlignment(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("verticalTextAlignment"))
+		{
+			label->setVerticalTextAlignmet(CAVerticalTextAlignment(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("enableCopy"))
+		{
+			bool var = (atoi(value) == 1) ? true : false;
+			label->setEnableCopy(var);
+		}
+
+		if (const char* value = viewXml->Attribute("numberOfLine"))
+		{
+			label->setNumberOfLine(atoi(value));
+		}
+
+		if (const char* value = viewXml->Attribute("wordWrap"))
+		{
+			label->setWordWrap(atoi(value));
+		}
+
     }
     else if (contrlType.compare("CAButton") == 0)
     {
@@ -249,122 +329,183 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             btn->setImageForState(CAControlStateDisabled, CAImage::create(value));
         }
-        
-        if (strcmp(viewXml->Attribute("BackgroundType"), "Scale9") == 0)
+
+        if (strcmp(viewXml->Attribute("backgroundType"), "Scale9") == 0)
         {
-            if (const char* value = viewXml->Attribute("BackgroundNormal"))
+            if (const char* value = viewXml->Attribute("backgroundNormal"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateNormal, scale9ImageView);
+                btn->setBackGroundViewForState(CAControlStateNormal, scale9ImageView);
             }
             
-            if (const char* value = viewXml->Attribute("BackgroundHighted"))
+            if (const char* value = viewXml->Attribute("backgroundHighted"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateHighlighted, scale9ImageView);
+                btn->setBackGroundViewForState(CAControlStateHighlighted, scale9ImageView);
             }
             
-            if (const char* value = viewXml->Attribute("BackgroundSelected"))
+            if (const char* value = viewXml->Attribute("backgroundSelected"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateSelected, scale9ImageView);
+                btn->setBackGroundViewForState(CAControlStateSelected, scale9ImageView);
             }
             
-            if (const char* value = viewXml->Attribute("BackgroundDisabled"))
+            if (const char* value = viewXml->Attribute("backgroundDisabled"))
             {
                 CAScale9ImageView* scale9ImageView = CAScale9ImageView::create();
                 scale9ImageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateDisabled, scale9ImageView);
+                btn->setBackGroundViewForState(CAControlStateDisabled, scale9ImageView);
             }
         }
-        else if (strcmp(viewXml->Attribute("BackgroundType"), "ColorView") == 0)
+        else if (strcmp(viewXml->Attribute("backgroundType"), "ColorView") == 0)
         {
-            if (viewXml->Attribute("BackgroundColorNormal"))
+            if (viewXml->Attribute("backgroundColorNormal"))
             {
-                btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+                btn->setBackGroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
             }
             
-            if (viewXml->Attribute("BackgroundColorHighted"))
+            if (viewXml->Attribute("backgroundColorHighted"))
             {
-                btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(CAColor_clear));
+                btn->setBackGroundViewForState(CAControlStateHighlighted, CAView::createWithColor(CAColor_clear));
             }
             
-            if (viewXml->Attribute("BackgroundColorSelected"))
+            if (viewXml->Attribute("backgroundColorSelected"))
             {
-                btn->setBackgroundViewForState(CAControlStateSelected, CAView::createWithColor(CAColor_clear));
+                btn->setBackGroundViewForState(CAControlStateSelected, CAView::createWithColor(CAColor_clear));
             }
             
-            if (viewXml->Attribute("BackgroundColorDisabled"))
+            if (viewXml->Attribute("backgroundColorDisabled"))
             {
-                btn->setBackgroundViewForState(CAControlStateDisabled, CAView::createWithColor(CAColor_clear));
+                btn->setBackGroundViewForState(CAControlStateDisabled, CAView::createWithColor(CAColor_clear));
             }
         }
         else
         {
-            if (const char* value = viewXml->Attribute("BackgroundNormal"))
+            if (const char* value = viewXml->Attribute("backgroundNormal"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+                btn->setBackGroundViewForState(CAControlStateNormal, imageView);
             }
             
-            if (const char* value = viewXml->Attribute("BackgroundHighted"))
+            if (const char* value = viewXml->Attribute("backgroundHighted"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateHighlighted, imageView);
+                btn->setBackGroundViewForState(CAControlStateHighlighted, imageView);
             }
             
-            if (const char* value = viewXml->Attribute("BackgroundSelected"))
+            if (const char* value = viewXml->Attribute("backgroundSelected"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateSelected, imageView);
+                btn->setBackGroundViewForState(CAControlStateSelected, imageView);
             }
             
-            if (const char* value = viewXml->Attribute("BackgroundDisabled"))
+            if (const char* value = viewXml->Attribute("backgroundDisabled"))
             {
                 CAImageView* imageView = CAImageView::create();
                 imageView->setImage(CAImage::create(value));
-                btn->setBackgroundViewForState(CAControlStateDisabled, imageView);
+                btn->setBackGroundViewForState(CAControlStateDisabled, imageView);
             }
         }
         
-        if (const char* value = viewXml->Attribute("BackgroundColorNormal"))
+        if (const char* value = viewXml->Attribute("backgroundColorNormal"))
         {
-            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateNormal))
+            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateNormal))
             {
-                BackgroundView->setColor(ccc4Int(atoi(value)));
+                backgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
         
-        if (const char* value = viewXml->Attribute("BackgroundColorHighted"))
+        if (const char* value = viewXml->Attribute("backgroundColorHighted"))
         {
-            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateHighlighted))
+            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateHighlighted))
             {
-                BackgroundView->setColor(ccc4Int(atoi(value)));
+                backgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
         
-        if (const char* value = viewXml->Attribute("BackgroundColorSelected"))
+        if (const char* value = viewXml->Attribute("backgroundColorSelected"))
         {
-            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateSelected))
+            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateSelected))
             {
-                BackgroundView->setColor(ccc4Int(atoi(value)));
+                backgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
         
-        if (const char* value = viewXml->Attribute("BackgroundColorDisabled"))
+        if (const char* value = viewXml->Attribute("backgroundColorDisabled"))
         {
-            if (CAView* BackgroundView = btn->getBackgroundViewForState(CAControlStateDisabled))
+            if (CAView* backgroundView = btn->getBackGroundViewForState(CAControlStateDisabled))
             {
-                BackgroundView->setColor(ccc4Int(atoi(value)));
+                backgroundView->setColor(ccc4Int(atoi(value)));
             }
         }
+
+
+		if (const char* value = viewXml->Attribute("controlState"))
+		{
+			CAControlState state = CAControlState(atoi(value));
+
+			if (state == CAControlStateNormal)
+			{
+				CAImage* img = CAImage::create(viewXml->Attribute("backgroundNormal"));
+				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+				btn->setBackGroundViewForState(CAControlStateNormal,imageView);
+			}
+			else if (state == CAControlStateHighlighted)
+			{
+				CAImage* img = CAImage::create(viewXml->Attribute("backgroundHighted"));
+				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+				btn->setBackGroundViewForState(CAControlStateNormal, imageView);
+			}
+			if (state == CAControlStateDisabled)
+			{
+				CAImage* img = CAImage::create(viewXml->Attribute("backgroundDisabled"));
+				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+				btn->setBackGroundViewForState(CAControlStateNormal, imageView);
+			}
+			else if (state == CAControlStateSelected)
+			{
+				CAImage* img = CAImage::create(viewXml->Attribute("backgroundSelected"));
+				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+				btn->setBackGroundViewForState(CAControlStateNormal, imageView);
+			}
+		}
     }
+	else if (contrlType.compare("CATextField") == 0)
+	{
+		DRect rect;
+		rect.origin.x = atoi(viewXml->Attribute("x"));
+		rect.origin.y = atoi(viewXml->Attribute("y"));
+		rect.size.width = atoi(viewXml->Attribute("w"));
+		rect.size.height = atoi(viewXml->Attribute("h"));
+
+		CATextField* textField = CATextField::createWithFrame(rect);
+		superview->addSubview(textField);
+		map.insert(viewXml->Attribute("textTag"), textField);
+
+		textField->setFrame(rect);
+
+		if (const char* value = viewXml->Attribute("titleColor"))
+		{
+			textField->setTextColor(ccc4Int(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("cursorColor"))
+		{
+			textField->setCursorColor(ccc4Int(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("background"))
+		{
+			textField->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create(value)));
+		}
+
+	}
     else if (contrlType.compare("CASwitch") == 0)
     {
         CASwitch* sw = CASwitch::create();
@@ -383,6 +524,12 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             sw->setColor(ccc4Int(atoi(value)));
         }
         
+		if (const char* value = viewXml->Attribute("isOn"))
+		{
+			bool var = (atoi(value) == 1) ? true : false;
+			sw->setIsOn(var,false);
+		}
+
         if (const char* value = viewXml->Attribute("onImage"))
         {
             sw->setOnImage(CAImage::create(value));
@@ -400,7 +547,9 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     }
     else if (contrlType.compare("CASegmentedControl") == 0)
     {
-        CASegmentedControl* segmentControl = CASegmentedControl::create(2);
+		int itemCount = atoi(viewXml->Attribute("itemCount"));
+
+		CASegmentedControl* segmentControl = CASegmentedControl::create(itemCount);
         superview->addSubview(segmentControl);
         map.insert(viewXml->Attribute("textTag"), segmentControl);
         
@@ -416,11 +565,21 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             segmentControl->setColor(ccc4Int(atoi(value)));
         }
         
-        if (const char* value = viewXml->Attribute("Background"))
+        if (const char* value = viewXml->Attribute("background"))
         {
             segmentControl->setBackgroundImage(CAImage::create(value));
         }
         
+		if (const char* value = viewXml->Attribute("fontName"))
+		{
+			segmentControl->setTitleFontName(value);
+		}
+
+		if (const char* value = viewXml->Attribute("fontSize"))
+		{
+			segmentControl->setTitleFontSize(atoi(value));
+		}
+
         if (const char* value = viewXml->Attribute("segmentItemImage"))
         {
             segmentControl->setSegmentItemBackgroundImage(CAImage::create(value));
@@ -433,13 +592,74 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("titleColorSelected"))
         {
-            segmentControl->setTitleColor(ccc4Int(atoi(value)));
+            segmentControl->setTitleSelectedColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("tintColor"))
         {
             segmentControl->setTintColor(ccc4Int(atoi(value)));
         }
+
+		if (const char* value = viewXml->Attribute("image"))
+		{
+			segmentControl->setImageForSegmentAtIndex(CAImage::create(value), 1, CAControlStateNormal);
+		}
+		
+		tinyxml2::XMLElement* itemXml = NULL;
+		
+		for (int index = 0; index < itemCount; index++)
+		{
+			if (itemXml == NULL	)
+			{
+				itemXml = viewXml->FirstChildElement();
+			}
+			else
+			{
+				itemXml = itemXml->NextSiblingElement();
+			}
+
+			if (const char* value = itemXml->Attribute("title"))
+			{
+				segmentControl->setTitleForSegmentAtIndex(value, index);
+			}
+
+			if (const char* value = itemXml->Attribute("image"))
+			{
+				segmentControl->setImageForSegmentAtIndex(CAImage::create(value), index, CAControlStateNormal);
+			}
+
+			if (const char* value = itemXml->Attribute("selectedImage"))
+			{
+				segmentControl->setImageForSegmentAtIndex(CAImage::create(value), index, CAControlStateSelected);
+			}
+
+			DSize size = DSizeZero;
+			if (const char* value = itemXml->Attribute("imageSize_w"))
+			{
+				size.width = atoi(value);
+			}
+			if (const char* value = itemXml->Attribute("imageSize_h"))
+			{
+				size.height = atoi(value);
+			}
+			segmentControl->setImageSizeAtIndex(size, index);
+
+			DSize offset = DSizeZero;
+			if (const char* value = itemXml->Attribute("imageOffSize_x"))
+			{
+				offset.width = atoi(value);
+			}
+			if (const char* value = itemXml->Attribute("imageOffSize_y"))
+			{
+				offset.height = atoi(value);
+			}
+			segmentControl->setContentOffsetForSegmentAtIndex(offset, index);
+
+			if (const char* value = itemXml->Attribute("isEnabled"))
+			{
+				segmentControl->setEnabledForSegmentAtIndex((bool)atoi(value), index);
+			}
+		}
     }
     else if (contrlType.compare("CAProgress") == 0)
     {
@@ -481,9 +701,36 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("progress"))
         {
-            progress->setProgress(atof(value));
+            progress->setProgress(atof(value)/100);
         }
     }
+	else if (contrlType.compare("CATextView") == 0)
+	{
+		DRect rect;
+		rect.origin.x = atoi(viewXml->Attribute("x"));
+		rect.origin.y = atoi(viewXml->Attribute("y"));
+		rect.size.width = atoi(viewXml->Attribute("w"));
+		rect.size.height = atoi(viewXml->Attribute("h"));
+
+		CATextView* textView = CATextView::createWithFrame(rect);
+		superview->addSubview(textView);
+		map.insert(viewXml->Attribute("textTag"), textView);
+
+		if (const char* value = viewXml->Attribute("cursorColor"))
+		{
+			textView->setCursorColor(ccc4Int(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("titleColor"))
+		{
+			textView->setTextColor(ccc4Int(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("background"))
+		{
+			textView->setBackGroundImage(CAImage::create(value));
+		}
+	}
     else if (contrlType.compare("CASlider") == 0)
     {
         CASlider* slider = CASlider::create();
@@ -502,20 +749,20 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             slider->setColor(ccc4Int(atoi(value)));
         }
         
-        if (const char* value = viewXml->Attribute("minTrackTintImage"))
+        if (const char* value = viewXml->Attribute("minTrackImage"))
         {
             slider->setMinTrackTintImage(CAImage::create(value));
         }
         
-        if (const char* value = viewXml->Attribute("maxTrackTintImage"))
+        if (const char* value = viewXml->Attribute("maxTrackImage"))
         {
             slider->setMaxTrackTintImage(CAImage::create(value));
         }
-        
-        if (const char* value = viewXml->Attribute("thumbTintImage"))
-        {
-            slider->setThumbTintImage(CAImage::create(value));
-        }
+		
+		if (const char* value = viewXml->Attribute("tintImage"))
+		{
+			slider->setThumbTintImage(CAImage::create(value));
+		}
         
         if (const char* value = viewXml->Attribute("minValue"))
         {
@@ -527,7 +774,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             slider->setMaxValue(atof(value));
         }
         
-        if (const char* value = viewXml->Attribute("value"))
+        if (const char* value = viewXml->Attribute("sliderValue"))
         {
             slider->setValue(atof(value));
         }
@@ -557,17 +804,27 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("increntmentImage"))
         {
-            stepper->setIncrementImage(CAImage::create(value), CAControlStateDisabled);
+			stepper->setIncrementImage(CAImage::create(value), CAControlStateNormal);
         }
         
-        if (const char* value = viewXml->Attribute("decrentmentImage"))
+        if (const char* value = viewXml->Attribute("increntmentSelectedImage"))
         {
-            stepper->setDecrementImage(CAImage::create(value), CAControlStateDisabled);
+			stepper->setDecrementImage(CAImage::create(value), CAControlStateNormal);
         }
+
+		if (const char* value = viewXml->Attribute("decrentmentImage"))
+		{
+			stepper->setIncrementImage(CAImage::create(value), CAControlStateSelected);
+		}
+
+		if (const char* value = viewXml->Attribute("decrentmentSelectedImage"))
+		{
+			stepper->setDecrementImage(CAImage::create(value), CAControlStateSelected);
+		}
         
-        if (const char* value = viewXml->Attribute("Background"))
+        if (const char* value = viewXml->Attribute("background"))
         {
-            stepper->setBackgroundImage(CAImage::create(value), CAControlStateDisabled);
+			stepper->setBackgroundImage(CAImage::create(value), CAControlStateNormal);
         }
     }
     else if (contrlType.compare("CAActivityIndicatorView") == 0)
@@ -595,20 +852,56 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("imageNormal"))
         {
+			DSize imageSize = CrossApp::DSizeZero;
+			if (const char* value = viewXml->Attribute("imageWidth"))
+			{
+				imageSize.width = atoi(value);
+			}
+
+			if (const char* value = viewXml->Attribute("imageHeight"))
+			{
+				imageSize.height = atoi(value);
+			}
+
             CAImage* image = CAImage::create(value);
             DRect rect = DRectZero;
-            rect.size = image->getContentSize();
+			if (imageSize.width !=0 || imageSize.height != 0)
+			{
+				rect.size = imageSize;
+			}
+			else
+			{
+				rect.size = image->getContentSize();
+			}
+            
             CAImageView* imageView = CAImageView::createWithImage(CAImage::create(value));
             imageView->setFrame(rect);
-            activity->setActivityIndicatorView(imageView);
-            
+            activity->setActivityIndicatorView(imageView);        
         }
         
-        if (const char* value = viewXml->Attribute("Background"))
+        if (const char* value = viewXml->Attribute("background"))
         {
+			DSize backgroundSize = CrossApp::DSizeZero;
+			if (const char* value = viewXml->Attribute("backgroundWidth"))
+			{
+				backgroundSize.width = atoi(value);
+			}
+
+			if (const char* value = viewXml->Attribute("backgroundHeight"))
+			{
+				backgroundSize.height = atoi(value);
+			}
+
             CAImage* image = CAImage::create(value);
             DRect rect = DRectZero;
-            rect.size = image->getContentSize();
+			if (backgroundSize.width != 0 || backgroundSize.height != 0)
+			{
+				rect.size = backgroundSize;
+			}
+			else
+			{
+				rect.size = image->getContentSize();
+			}
             CAImageView* imageView = CAImageView::createWithImage(CAImage::create(value));
             imageView->setFrame(rect);
             activity->setActivityBackView(imageView);
@@ -630,7 +923,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             pickerView->setColor(ccc4Int(atoi(value)));
         }
-        
+
         if (const char* value = viewXml->Attribute("fontSizeNormal"))
         {
             pickerView->setFontSizeNormal(atoi(value));
@@ -656,6 +949,23 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             pickerView->setSeparateColor(ccc4Int(atoi(value)));
         }
     }
+	else if (contrlType.compare("CADatePickerView") == 0)
+	{
+		DRect rect;
+		rect.origin.x = atoi(viewXml->Attribute("x"));
+		rect.origin.y = atoi(viewXml->Attribute("y"));
+		rect.size.width = atoi(viewXml->Attribute("w"));
+		rect.size.height = atoi(viewXml->Attribute("h"));
+
+		CADatePickerView* datePicker = CADatePickerView::createWithFrame(rect, (CADatePickerMode)atoi(viewXml->Attribute("mode")));
+		superview->addSubview(datePicker);
+		map.insert(viewXml->Attribute("textTag"), datePicker);
+
+		if (const char* value = viewXml->Attribute("color"))
+		{
+			datePicker->setColor(ccc4Int(atoi(value)));
+		}
+	}
     else if (contrlType.compare("CAWebView") == 0)
     {
         DRect rect;
@@ -673,6 +983,29 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             webView->loadURL(value);
         }
     }
+	else if (contrlType.compare("CAGifView") == 0)
+	{
+		DRect rect;
+		rect.origin.x = atoi(viewXml->Attribute("x"));
+		rect.origin.y = atoi(viewXml->Attribute("y"));
+		rect.size.width = atoi(viewXml->Attribute("w"));
+		rect.size.height = atoi(viewXml->Attribute("h"));
+
+		CAGif* gif = NULL;
+		if (const char* value = viewXml->Attribute("path"))
+		{
+			gif = CAGif::createWithFilePath(value);
+		}
+		
+		CAGifView* gifView = CAGifView::createWithFrame(rect);
+		superview->addSubview(gifView);
+		map.insert(viewXml->Attribute("textTag"), gifView);
+		if (gif)
+		{
+			gifView->setGif(gif);
+		}
+
+	}
     else if (contrlType.compare("CAPageView") == 0)
     {
         DRect rect;
@@ -688,7 +1021,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("color"))
         {
-            pageView->setBackgroundColor(ccc4Int(atoi(value)));
+            pageView->setBackGroundColor(ccc4Int(atoi(value)));
         }
         
         if(const char* value = viewXml->Attribute("spacing"))
@@ -730,7 +1063,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
    
         if (const char* value = viewXml->Attribute("color"))
         {
-            tableView->setBackgroundColor(ccc4Int(atoi(value)));
+            tableView->setBackGroundColor(ccc4Int(atoi(value)));
         }
 
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -771,12 +1104,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
                 tableView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                tableView->setHeaderRefreshView(NULL);
             }
         }
         
@@ -786,12 +1115,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
-                tableView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                tableView->setHeaderRefreshView(NULL);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                tableView->setFooterRefreshView(pullview);
             }
         }
         
@@ -824,7 +1149,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
  
         if (const char* value = viewXml->Attribute("color"))
         {
-            listView->setBackgroundColor(ccc4Int(atoi(value)));
+            listView->setBackGroundColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -878,12 +1203,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
                 listView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                listView->setHeaderRefreshView(NULL);
             }
         }
         
@@ -893,12 +1214,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
-                listView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                listView->setHeaderRefreshView(NULL);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                listView->setFooterRefreshView(pullview);
             }
         }
         
@@ -922,7 +1239,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
   
         if (const char* value = viewXml->Attribute("color"))
         {
-            collectionView->setBackgroundColor(ccc4Int(atoi(value)));
+            collectionView->setBackGroundColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -963,12 +1280,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
                 collectionView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                collectionView->setHeaderRefreshView(NULL);
             }
         }
         
@@ -978,12 +1291,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
-                collectionView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                collectionView->setHeaderRefreshView(NULL);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                collectionView->setFooterRefreshView(pullview);
             }
         }
         
@@ -1025,7 +1334,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("color"))
         {
-            waterfallView->setBackgroundColor(ccc4Int(atoi(value)));
+            waterfallView->setBackGroundColor(ccc4Int(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1071,12 +1380,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
                 waterfallView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                waterfallView->setHeaderRefreshView(NULL);
             }
         }
         
@@ -1086,12 +1391,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             if(var)
             {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
-                waterfallView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                waterfallView->setHeaderRefreshView(NULL);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                waterfallView->setFooterRefreshView(pullview);
             }
         }
         
@@ -1133,9 +1434,21 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("color"))
         {
-            scrollView->setBackgroundColor(ccc4Int(atoi(value)));
+            scrollView->setBackGroundColor(ccc4Int(atoi(value)));
         }
         
+		DSize viewSize = CrossApp::DSizeZero;
+		if (const char* value = viewXml->Attribute("viewSize_w"))
+		{
+			viewSize.width = atoi(value);
+		}
+
+		if (const char* value = viewXml->Attribute("viewSize_h"))
+		{
+			viewSize.height = atoi(value);
+		}
+		scrollView->setViewSize(viewSize);
+
         DPoint contentOffSet = DPointZero;
         if (const char* value = viewXml->Attribute("contentOffSet_x"))
         {
@@ -1186,43 +1499,8 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             bool var = (atoi(value)==1) ? true : false;
             scrollView->setBounceVertical(var);
         }
-
-        if (const char* value = viewXml->Attribute("headerRefreshView"))
-        {
-            
-            bool var = (atoi(value)==1) ? true : false;
-            if(var)
-            {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
-                scrollView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                scrollView->setHeaderRefreshView(NULL);
-            }
-        }
-        
-        if (const char* value = viewXml->Attribute("footerRefreshView"))
-        {
-            
-            bool var = (atoi(value)==1) ? true : false;
-            if(var)
-            {
-                CrossApp::CAPullToRefreshView *pullview = new CrossApp::CAPullToRefreshView(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
-                scrollView->setHeaderRefreshView(pullview);
-            }
-            else
-            {
-                scrollView->setHeaderRefreshView(NULL);
-            }
-        }
     }
-    
-    
-    
-    
-    
-    
+
     return view;
 
 }
@@ -1232,10 +1510,14 @@ void parserXml(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::stri
     while (viewXml)
     {
         CAView* view = layoutView(viewXml, superview, map);
-        if (view)
-        {
-            parserXml(((tinyxml2::XMLElement*)viewXml->FirstChildElement()), view, map);
-        }
+		if (view)
+		{
+			if (typeid(*view) == typeid(CAView))
+			{
+				parserXml(((tinyxml2::XMLElement*)viewXml->FirstChildElement()), view, map);
+			}
+		}
+
         viewXml = viewXml->NextSiblingElement();
     }
 }
