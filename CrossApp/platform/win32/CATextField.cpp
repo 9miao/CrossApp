@@ -71,6 +71,10 @@ public:
 			getKeyBoradReturnCallBack();
 
 			CATextFieldDelegate* pDelegate = m_pTextFieldX->getDelegate();
+            if (m_pTextFieldX->isAllowkeyBoardHide())
+            {
+                m_pTextFieldX->resignFirstResponder();
+            }
 			if (pDelegate)
 			{
 				pDelegate->textFieldShouldReturn(m_pTextFieldX);
@@ -596,6 +600,7 @@ CATextField::CATextField()
 , m_pDelegate(NULL)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
 , m_cTextColor(CAColor_black)
 , m_cPlaceHdolderColor(CAColor_gray)
 , m_iFontSize(40)
