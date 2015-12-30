@@ -177,7 +177,7 @@ CATextField::CATextField()
     textField_iOS.borderStyle = UITextBorderStyleNone;
     textField_iOS.placeholder = @"placeholder";
     CGFloat scale = [[UIScreen mainScreen] scale];
-    textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale]
+    textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     
     setMarginLeft(m_iMarginLeft);
     setMarginRight(m_iMarginRight);
@@ -518,7 +518,7 @@ void CATextField::setFontSize(int var)
 {
     m_iFontSize = var;
     
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = [[UIScreen mainScreen] scale];
     textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
     
