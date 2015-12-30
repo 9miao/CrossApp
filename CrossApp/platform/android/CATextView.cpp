@@ -405,7 +405,6 @@ bool CATextView::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
-
 	m_pBgImageView = CAScale9ImageView::createWithImage(image);
 	m_pBgImageView->setCapInsets(capInsets);
 	this->insertSubview(m_pBgImageView, -1);

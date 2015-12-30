@@ -180,9 +180,17 @@ public class CrossAppTextView
 		    	textView.setOnEditorActionListener(new OnEditorActionListener() {
 					
 					@Override
-					public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+					public boolean onEditorAction(CharSequence arg0, int arg1, KeyEvent arg2) {
 						// TODO Auto-generated method stub
-						keyBoardReturnCallBack(mykey);
+	            		context.runOnGLThread(new Runnable() 
+	                	{
+	                        @Override
+	                        public void run()
+	                        {
+	                        	keyBoardReturnCallBack(mykey);
+	                        }
+	                    });
+						
 						return true;
 					}
 				});
@@ -295,7 +303,7 @@ public class CrossAppTextView
 	}
 
     //textView color 
-    public void setTextViewTextColor(final int color)
+    public void setTextViewextColor(final int color)
     {
 		context.runOnUiThread(new Runnable()
 		{
@@ -413,8 +421,7 @@ public class CrossAppTextView
               	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         		textView.requestFocus();
-        		Editable etext = textView.getText();
-            	textView.setSelection(etext.length());
+        		
         		
         		context.runOnGLThread(new Runnable() 
             	{
@@ -437,7 +444,8 @@ public class CrossAppTextView
             @Override
             public void run()
             {           	
-            	textView.setSelection(0);
+            	Editable etext = textView.getText();
+            	textView.setSelection(etext.length());
             	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);  
             	imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
         		textView.clearFocus();
