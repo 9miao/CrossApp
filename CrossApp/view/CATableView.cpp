@@ -456,8 +456,6 @@ void CATableView::clearData()
         itr3->clear();
     }
     m_rLineRectss.clear();
-    
-    m_pSelectedTableCells.clear();
     m_pUsedLines.clear();
     
     std::map<CAIndexPath2E, CATableViewCell*>::iterator itr4;

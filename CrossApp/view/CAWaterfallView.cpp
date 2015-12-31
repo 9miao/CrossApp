@@ -413,7 +413,6 @@ void CAWaterfallView::clearData()
 {
 	m_mpUsedWaterfallCells.clear();
 	m_rUsedWaterfallCellRects.clear();
-	m_pSelectedWaterfallCells.clear();
 	m_nColumnHeightVect.clear();
 
 	for (int i = 0; i < m_vpUsedWaterfallCells.size(); i++)

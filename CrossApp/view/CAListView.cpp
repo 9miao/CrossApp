@@ -471,8 +471,6 @@ void CAListView::clearData()
 		cell->resetListViewCell();
 	}
 	m_vpUsedListCells.clear();
-
-	m_pSelectedListCells.clear();
 	
 	m_nIndexs = 0;
 	m_rIndexRects.clear();
@@ -611,7 +609,7 @@ void CAListView::loadCollectionCell()
 void CAListView::update(float dt)
 {
     CAScrollView::update(dt);
-    
+
     recoveryCollectionCell();
     
     loadCollectionCell();
