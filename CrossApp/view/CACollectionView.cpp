@@ -446,9 +446,6 @@ void CACollectionView::clearData()
 
 	m_mpUsedCollectionCells.clear();
 	m_rUsedCollectionCellRects.clear();
-
-	m_pSelectedCollectionCells.clear();
-
 	m_pSectionHeaderViews.clear();
 	m_pSectionFooterViews.clear();
 	m_rSectionRects.clear();

@@ -521,7 +521,6 @@ void CAAutoCollectionView::clearData()
 {
 	m_mpUsedCollectionCells.clear();
 	m_rUsedCollectionCellRects.clear();
-	m_pSelectedCollectionCells.clear();
 	m_rCollectionViewSection.clear();
 
 	for (int i = 0; i < m_vpUsedCollectionCells.size(); i++)
