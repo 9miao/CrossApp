@@ -327,6 +327,11 @@ bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     return true;
 }
 
+void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    
+}
+
 void CATextView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
     this->ccTouchEnded(pTouch, pEvent);
