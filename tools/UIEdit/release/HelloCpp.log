@@ -1,0 +1,74 @@
+﻿生成启动时间为 2015/12/31 20:44:55。
+     1>项目“D:\CrossApp_\projects\edit\proj.win32\HelloCpp.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\kazmath\include /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\platform\win32 /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\the_third_party\win32 /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\the_third_party\win32\OGLES /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\the_third_party\win32\pthread /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\the_third_party\freetype\include /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CrossApp\the_third_party\curl\include\win32 /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\external /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\CocosDenshion\include /ID:\CrossApp_\projects\edit\proj.win32\..\..\..\extensions /I..\Classes /I.. /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USE_MATH_DEFINES /D GL_GLEXT_PROTOTYPES /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release.win32\\" /Fd"Release.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\Classes\SqlManage.cpp
+         SqlManage.cpp
+     1>..\Classes\SqlManage.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\animation/CAAnimation.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\animation/CAViewAnimation.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\images/CAImage.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\dispatcher/CATouch.h(20): warning C4305: “参数”: 从“unsigned int”到“float”截断
+     1>d:\crossapp_\crossapp\dispatcher/CATouch.h(21): warning C4305: “参数”: 从“unsigned int”到“float”截断
+     1>d:\crossapp_\crossapp\dispatcher/CATouch.h(22): warning C4305: “参数”: 从“unsigned int”到“float”截断
+     1>d:\crossapp_\crossapp\control\CASegmentedControl.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\control/CASlider.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\control/CAPageControl.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\control/CAStepper.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\view/CAPageView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\view\CAPullToRefreshView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\view\CAActivityIndicatorView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\controller/CADrawerController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\view/CAPickerView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\view/CADatePickerView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\video/CAVideoPlayerRender.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\video/CAVideoPlayerView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\video/CAVideoPlayerControlView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\cocoa/CACalendar.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\platform/CATextField.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\platform/CATextView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\crossapp\platform/CADensityDpi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>d:\crossapp_\projects\edit\classes\tempClass.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>..\Classes\SqlManage.cpp(269): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(294): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(348): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(373): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(459): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(486): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(796): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(931): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\SqlManage.cpp(1068): warning C4018: “<”: 有符号/无符号不匹配
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\CrossApp_\projects\edit\proj.win32\Release.win32\UIEdit.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:D:\CrossApp_\projects\edit\proj.win32\Release.win32\ libExtensions.lib libCrossApp.lib libCocosDenshion.lib pthreadVCE2.lib opengl32.lib glew32.lib libcurl_imp.lib websockets.lib sqlite3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\CrossApp_\projects\edit\proj.win32\Release.win32\UIEdit.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\CrossApp_\projects\edit\proj.win32\Release.win32\UIEdit.lib" /MACHINE:X86 /SAFESEH Release.win32\AppDelegate.obj
+         Release.win32\AutoView.obj
+         Release.win32\CAColourPicker.obj
+         Release.win32\CAColourView.obj
+         Release.win32\CAHuePicker.obj
+         Release.win32\CAListMenuView.obj
+         Release.win32\CAMenuView.obj
+         Release.win32\CanvasScenes.obj
+         Release.win32\CanvasView.obj
+         Release.win32\CASaturationBrightnessPicker.obj
+         Release.win32\CATreeListControl.obj
+         Release.win32\CATreeListItem.obj
+         Release.win32\CATreeListView.obj
+         Release.win32\CAWindowFrame.obj
+         Release.win32\MainScenes.obj
+         Release.win32\OpenProjects.obj
+         Release.win32\PropertyView.obj
+         Release.win32\RootWindow.obj
+         Release.win32\SqlManage.obj
+         Release.win32\Tools.obj
+         Release.win32\main.obj
+         D:\CrossApp_\projects\edit\proj.win32\Release.win32\libCocosDenshion.lib
+         D:\CrossApp_\projects\edit\proj.win32\Release.win32\libCrossApp.lib
+         D:\CrossApp_\projects\edit\proj.win32\Release.win32\libExtensions.lib
+            正在创建库 D:\CrossApp_\projects\edit\proj.win32\Release.win32\UIEdit.lib 和对象 D:\CrossApp_\projects\edit\proj.win32\Release.win32\UIEdit.exp
+         正在生成代码
+         已完成代码的生成
+         HelloCpp.vcxproj -> D:\CrossApp_\projects\edit\proj.win32\Release.win32\UIEdit.exe
+     1>已完成生成项目“D:\CrossApp_\projects\edit\proj.win32\HelloCpp.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:26.31
