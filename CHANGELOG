@@ -1,4 +1,26 @@
 
+#### CrossApp 1.3.0 Beta 更新内容：
+
+#####1.新增UI编辑器
+在引擎根目录，支持mac、windows平台
+
+#####2.重构CATextField
+接口有改动，代理有改动，升级着参考官网文档，体验完爆老旧的CATextField
+
+#####3.重构CATextView
+接口有改动，代理有改动，升级着参考官网文档，体验完爆老旧的CATextView
+目前仅实现iOS与android。
+
+#####4.新增瀑布流控件CAWaterfallView
+
+#####5.重构CASegmentedControl
+
+#####6.修复抽屉管理器CADrawerController偶尔触摸失灵bug
+
+#####7.其他大量的细节优化
+
+**********************************************************************************
+
 #### CrossApp 1.2.0 更新内容：  
 
 #####1.修复win32编译sqlte3报错的问题

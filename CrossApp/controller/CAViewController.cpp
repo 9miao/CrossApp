@@ -36,6 +36,7 @@ CAViewController::CAViewController()
 
 CAViewController::~CAViewController()
 {
+    CC_SAFE_RELEASE_NULL(m_pParser);
     m_pView->setViewDelegate(NULL);
     CC_SAFE_RELEASE_NULL(m_pView);
     CC_SAFE_RELEASE_NULL(m_pTabBarItem);
@@ -61,10 +62,18 @@ void CAViewController::parser()
     m_pParser = new CAUIEditorParser();
     
     std::string name = typeid(*this).name();
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    name = name.substr(6, name.length() - 6);
+#else
     name = name.substr(2, name.length() - 2);
+#endif
+    
     std::string filePath = "r/" + name + ".xib";
 
     m_pParser->initWithPath(filePath, m_pView);
+    m_pParser->parseViewControllItems(this);
+    
 }
 
 void CAViewController::getSuperViewRect(const DRect& rect)

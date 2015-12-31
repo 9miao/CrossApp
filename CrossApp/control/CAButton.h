@@ -166,6 +166,8 @@ protected:
     void setBackgroundViewRoundedRect();
 };
 
+#define setBackGroundViewForState(controlState, var) setBackgroundViewForState(controlState, var)
+#define getBackGroundViewForState(controlState, var) getBackgroundViewForState(controlState, var)
 NS_CC_END
 
 #endif /* defined(__CAButton__) */

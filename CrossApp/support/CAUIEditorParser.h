@@ -11,6 +11,10 @@
 
 #include "basics/CAObject.h"
 #include "basics/CASTLContainer.h"
+#include "tinyxml2/tinyxml2.h"
+#include "CrossApp.h"
+
+USING_NS_CC;
 NS_CC_BEGIN
 
 CC_DLL class CAUIEditorParser : public CAObject
@@ -23,11 +27,17 @@ public:
     
     bool initWithPath(const std::string& filePath, CAView* superview);
     
+	void parseViewControllItems(CAViewController* viewController);
+
     CAMap<std::string, CAView*> m_mViews;
     
 protected:
     
     CAView* m_pSupverview;
+
+	CAViewController* m_pViewController;
+
+	tinyxml2::XMLDocument* m_pMyDocument;
 };
 
 NS_CC_END

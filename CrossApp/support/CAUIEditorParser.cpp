@@ -8,20 +8,22 @@
 
 #include "CAUIEditorParser.h"
 #include "platform/CCFileUtils.h"
-#include "tinyxml2/tinyxml2.h"
+
 
 NS_CC_BEGIN
 
 
 CAUIEditorParser::CAUIEditorParser()
 :m_pSupverview(NULL)
+,m_pViewController(NULL)
+,m_pMyDocument(NULL)
 {
     
 }
 
 CAUIEditorParser::~CAUIEditorParser()
 {
-    
+	CC_SAFE_DELETE(m_pMyDocument);
 }
 
 CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::string, CAView*>& map)
@@ -452,27 +454,39 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 			if (state == CAControlStateNormal)
 			{
-				CAImage* img = CAImage::create(viewXml->Attribute("backgroundNormal"));
-				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-				btn->setBackgroundViewForState(CAControlStateNormal,imageView);
+				if (const char* value = viewXml->Attribute("backgroundNormal"))
+				{
+					CAImage* img = CAImage::create(value);
+					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+					btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				}
 			}
 			else if (state == CAControlStateHighlighted)
 			{
-				CAImage* img = CAImage::create(viewXml->Attribute("backgroundHighted"));
-				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-				btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				if (const char* value = viewXml->Attribute("backgroundHighted"))
+				{
+					CAImage* img = CAImage::create(value);
+					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+					btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				}
 			}
 			if (state == CAControlStateDisabled)
 			{
-				CAImage* img = CAImage::create(viewXml->Attribute("backgroundDisabled"));
-				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-				btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				if (const char* value = viewXml->Attribute("backgroundDisabled"))
+				{
+					CAImage* img = CAImage::create(value);
+					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+					btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				}
 			}
 			else if (state == CAControlStateSelected)
 			{
-				CAImage* img = CAImage::create(viewXml->Attribute("backgroundSelected"));
-				CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-				btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				if (const char* value = viewXml->Attribute("backgroundSelected"))
+				{
+					CAImage* img = CAImage::create(value);
+					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
+					btn->setBackgroundViewForState(CAControlStateNormal, imageView);
+				}
 			}
 		}
     }
@@ -490,11 +504,98 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		textField->setFrame(rect);
 
-		if (const char* value = viewXml->Attribute("titleColor"))
+		if (const char* value = viewXml->Attribute("textColor"))
 		{
 			textField->setTextColor(ccc4Int(atoi(value)));
 		}
 
+		if (const char* value = viewXml->Attribute("keyboartType"))
+		{
+			textField->setKeyboardType(CATextField::KeyboardType(atoi(value)));
+		}
+		
+		if (const char* value = viewXml->Attribute("returnType"))
+		{
+			textField->setReturnType(CATextField::ReturnType(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("clearButtonMode"))
+		{
+			textField->setClearButtonMode(CATextField::ClearButtonMode(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("textFieldAlign"))
+		{
+			textField->setTextFieldAlign(CATextField::TextFieldAlign(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("fontSize"))
+		{
+			textField->setFontSize(atoi(value));
+		}
+
+		if (const char* value = viewXml->Attribute("maxLenght"))
+		{
+			textField->setMaxLenght(atoi(value));
+		}
+
+		if (const char* value = viewXml->Attribute("maginLeft"))
+		{
+			textField->setMarginLeft(atoi(value));
+		}
+
+		if (const char* value = viewXml->Attribute("maginLeftImage"))
+		{
+			DSize leftSize = DSizeZero;
+			if (const char* value = viewXml->Attribute("maginLeftImageSize_w"))
+			{
+				leftSize.width = atoi(value);
+			}
+			if (const char* value = viewXml->Attribute("maginLeftImageSize_h"))
+			{
+				leftSize.height= atoi(value);
+			}
+			textField->setMarginImageLeft(leftSize,value);
+		}
+
+		if (const char* value = viewXml->Attribute("maginRight"))
+		{
+			textField->setMarginRight(atoi(value));
+		}
+
+		if (const char* value = viewXml->Attribute("maginRightImage"))
+		{
+			DSize rightSize = DSizeZero;
+			if (const char* value = viewXml->Attribute("maginRightImageSize_w"))
+			{
+				rightSize.width = atoi(value);
+			}
+			if (const char* value = viewXml->Attribute("maginRightImageSize_h"))
+			{
+				rightSize.height = atoi(value);
+			}
+			textField->setMarginImageLeft(rightSize, value);
+		}
+
+		if (const char* value = viewXml->Attribute("placeGolderColor"))
+		{
+			textField->setPlaceHolderColor(ccc4Int(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("background"))
+		{
+			textField->setBackgroundImage(CAImage::create(value));
+		}
+
+		if (const char* value = viewXml->Attribute("placeHolderText"))
+		{
+			textField->setPlaceHolderText(value);
+		}
+
+		if (const char* value = viewXml->Attribute("text"))
+		{
+			textField->setText(value);
+		}
 	}
     else if (contrlType.compare("CASwitch") == 0)
     {
@@ -710,6 +811,27 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		if (const char* value = viewXml->Attribute("titleColor"))
 		{
 			textView->setTextColor(ccc4Int(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("textViewAlign"))
+		{
+			textView->setTextViewAlign(CATextView::TextViewAlign(atoi(value)));
+		}
+
+		if (const char* value = viewXml->Attribute("fontSize"))
+		{
+			textView->setTextFontSize(atoi(value));
+		}
+
+		if (const char* value = viewXml->Attribute("text"))
+		{
+			textView->setText(value);
+		}
+
+
+		if (const char* value = viewXml->Attribute("background"))
+		{
+			textView->setBackgroundImage(CAImage::create(value));
 		}
 
 	}
@@ -960,7 +1082,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         superview->addSubview(webView);
         map.insert(viewXml->Attribute("textTag"), webView);
         
-        if (const char* value = viewXml->Attribute("loadURL"))
+        if (const char* value = viewXml->Attribute("url"))
         {
             webView->loadURL(value);
         }
@@ -1519,14 +1641,13 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
             str[i] = data[i];
         }
         
-        tinyxml2::XMLDocument* myDocument = new tinyxml2::XMLDocument();
-        myDocument->Parse(data, size);
-        tinyxml2::XMLElement* rootElement = myDocument->RootElement();
+        m_pMyDocument = new tinyxml2::XMLDocument();
+		m_pMyDocument->Parse(data, size);
+		tinyxml2::XMLElement* rootElement = m_pMyDocument->RootElement();
         
         tinyxml2::XMLElement* entity = NULL;
         if (rootElement)
         {
-
             entity = rootElement->FirstChildElement();
         }
         
@@ -1537,6 +1658,136 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
     return true;
 }
 
+void CAUIEditorParser::parseViewControllItems(CAViewController* viewController)
+{
+	m_pViewController = viewController;
+
+	if (!m_pMyDocument)
+	{
+		return;
+	}
+	tinyxml2::XMLElement* rootElement = m_pMyDocument->RootElement();
+
+	tinyxml2::XMLElement* entity = NULL;
+	if (rootElement)
+	{
+		entity = rootElement->FirstChildElement();
+	}
+
+
+	entity = entity->NextSiblingElement();
+
+	std::string contrlID = entity->Attribute("id");
+
+	if (entity)
+	{
+		//CATabBarItem
+		if (contrlID.compare("CATabBarItem") == 0)
+		{
+			std::string barTitle = "";
+			CAImage* image = NULL;
+			CAImage* selectImage = NULL;
+			int nValue = 0;
+			if (const char* value = entity->Attribute("image"))
+			{
+				image = CAImage::create(value);
+			}
+			if (const char* value = entity->Attribute("selectImage"))
+			{
+				selectImage = CAImage::create(value);
+			}
+			if (const char* value = entity->Attribute("title"))
+			{
+				barTitle = value;
+			}
+			CATabBarItem* item = CATabBarItem::create(barTitle, image, selectImage);
+			if (const char* value = entity->Attribute("badgeValue"))
+			{
+				item->setBadgeValue(value);
+			}
+
+			viewController->setTabBarItem(item);
+
+		}
+	}
+
+	entity = entity->NextSiblingElement();
+	std::string navigationID = entity->Attribute("id");
+	if (entity)
+	{
+		//CANavigationItem
+		if (navigationID.compare("CANavigationBarItem") == 0)
+		{
+			CANavigationBarItem* navigationBarItem = NULL;
+			if (const char* value = entity->Attribute("title"))
+			{
+				navigationBarItem = CANavigationBarItem::create(value);
+			}
+			if (const char* value = entity->Attribute("titleImage"))
+			{
+				navigationBarItem->setTitleViewImage(CAImage::create(value));
+			}
+			if (navigationBarItem)
+			{
+				tinyxml2::XMLElement* leftXml = entity->FirstChildElement();
+
+				tinyxml2::XMLElement* lElementXml = leftXml->FirstChildElement();
+
+				while (lElementXml)
+				{
+					std::string leftTitle = "";
+					CAImage* leftImage = NULL;
+					CAImage* leftHightImage = NULL;
+
+					if (const char* value = lElementXml->Attribute("title"))
+					{
+						leftTitle = value;
+					}
+					if (const char* value = lElementXml->Attribute("image"))
+					{
+						leftImage = CAImage::create(value);
+					}
+					if (const char* value = lElementXml->Attribute("hightImage"))
+					{
+						leftHightImage = CAImage::create(value);
+					}
+					CABarButtonItem* leftButton = CABarButtonItem::create(leftTitle, leftImage, leftHightImage);
+					navigationBarItem->addLeftButtonItem(leftButton);
+					lElementXml = lElementXml->NextSiblingElement();
+				}
+
+
+				tinyxml2::XMLElement* rightXml = leftXml->NextSiblingElement();
+
+				tinyxml2::XMLElement* rElementXml = rightXml->FirstChildElement();
+
+				while (rElementXml)
+				{
+					std::string rightTitle = "";
+					CAImage* rightImage = NULL;
+					CAImage* rightHightImage = NULL;
+					if (const char* value = rElementXml->Attribute("title"))
+					{
+						rightTitle = value;
+					}
+					if (const char* value = rElementXml->Attribute("image"))
+					{
+						rightImage = CAImage::create(value);
+					}
+					if (const char* value = rElementXml->Attribute("hightImage"))
+					{
+						rightImage = CAImage::create(value);
+					}
+					CABarButtonItem* rightButton = CABarButtonItem::create(rightTitle, rightImage, rightHightImage);
+					navigationBarItem->addRightButtonItem(rightButton);
+					rElementXml = rElementXml->NextSiblingElement();
+				}
+
+				viewController->setNavigationBarItem(navigationBarItem);
+			}
+		}
+	}
+}
 
 
 

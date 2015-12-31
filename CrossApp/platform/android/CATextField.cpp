@@ -16,7 +16,7 @@
 
 #define CLASS_NAME "org/CrossApp/lib/CrossAppTextField"
 #define GET_CLASS "(I)Lorg/CrossApp/lib/CrossAppTextField;"
-
+#define CAColorToJavaColor(color) (color.a + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
 NS_CC_BEGIN
 
 static std::map<int , CATextField*> s_map;
@@ -370,6 +370,7 @@ CATextField::CATextField()
 : m_pBackgroundView(NULL)
 , m_pImgeView(NULL)
 , m_pTextField(NULL)
+, m_pDelegate(NULL)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
 , m_bAllowkeyBoardHide(true)
@@ -377,7 +378,7 @@ CATextField::CATextField()
 , m_iMarginRight(10)
 , m_iFontSize(40)
 , m_iMaxLenght(0)
-, m_pDelegate(NULL)
+, m_eClearBtn(ClearButtonMode::ClearButtonNone)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     s_map[m_u__ID] = this;
@@ -727,7 +728,7 @@ const std::string& CATextField::getPlaceHolderText()
 void CATextField::setPlaceHolderColor(const CAColor4B& var)
 {
 	m_cPlaceHdolderColor = var;
-	setPlaceHolderColorJNI(m_u__ID, getUIntFormColor4B(var));
+	setPlaceHolderColorJNI(m_u__ID, CAColorToJavaColor(var));
 
     this->delayShowImage();
 }
@@ -755,7 +756,7 @@ const std::string& CATextField::getText()
 void CATextField::setTextColor(const CAColor4B& var)
 {
 	m_cTextColor = var;
-	setTextColorJNI(m_u__ID, getUIntFormColor4B(var));
+	setTextColorJNI(m_u__ID, CAColorToJavaColor(var));
 
     this->delayShowImage();
 }

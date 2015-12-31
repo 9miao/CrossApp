@@ -15,6 +15,8 @@
 
 #define CLASS_TEXTVIEW "org/CrossApp/lib/CrossAppTextView"
 #define GET_CLASS "(I)Lorg/CrossApp/lib/CrossAppTextView;"
+#define CAColorToJavaColor(color) (color.a + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
+
 
 NS_CC_BEGIN
 
@@ -271,6 +273,9 @@ extern "C"
 }
 
 
+
+
+
 CATextView::CATextView()
 : m_pBackgroundView(NULL)
 , m_pShowImageView(NULL)
@@ -512,7 +517,7 @@ const std::string& CATextView::getText()
 void CATextView::setTextColor(const CAColor4B& var)
 {
 	m_sTextColor = var;
-	textViewSetTextColorJNI(m_u__ID, getUIntFormColor4B(var));
+	textViewSetTextColorJNI(m_u__ID, CAColorToJavaColor(var));
 
     this->delayShowImage();
 }
