@@ -32,11 +32,11 @@ static inline CAColor4B
 ccc4Int(unsigned int rgba)
 {
     CAColor4B c;
-    c.r = rgba % 0x100;
+    c.b = rgba % 0x100;
     rgba /= 0x100;
     c.g = rgba % 0x100;
     rgba /= 0x100;
-    c.b = rgba % 0x100;
+    c.r = rgba % 0x100;
     rgba /= 0x100;
     c.a = rgba % 0x100;
     return c;
@@ -45,13 +45,13 @@ ccc4Int(unsigned int rgba)
 static inline int
 getIntFormColor4B(const CAColor4B& color)
 {
-    return (color.r + color.g * 0x100 + color.b * 0x10000 + color.a * 0x1000000);
+    return (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000);
 }
 
 static inline unsigned int
 getUIntFormColor4B(const CAColor4B& color)
 {
-    return (color.r + color.g * 0x100 + color.b * 0x10000 + color.a * 0x1000000);
+    return (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000);
 }
 
 //CAColor4B predefined colors

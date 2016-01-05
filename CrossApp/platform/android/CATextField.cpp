@@ -16,7 +16,7 @@
 
 #define CLASS_NAME "org/CrossApp/lib/CrossAppTextField"
 #define GET_CLASS "(I)Lorg/CrossApp/lib/CrossAppTextField;"
-#define CAColorToJavaColor(color) (color.a + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
+#define CAColorToJavaColor(color) (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
 NS_CC_BEGIN
 
 static std::map<int , CATextField*> s_map;

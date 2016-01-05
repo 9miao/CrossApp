@@ -15,7 +15,7 @@
 
 #define CLASS_TEXTVIEW "org/CrossApp/lib/CrossAppTextView"
 #define GET_CLASS "(I)Lorg/CrossApp/lib/CrossAppTextView;"
-#define CAColorToJavaColor(color) (color.a + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
+#define CAColorToJavaColor(color) (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
 
 
 NS_CC_BEGIN

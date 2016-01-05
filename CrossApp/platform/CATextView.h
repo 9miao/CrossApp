@@ -22,6 +22,9 @@ class CC_DLL CATextView;
 class CC_DLL CATextViewDelegateX
 {
 public:
+    
+    virtual ~CATextViewDelegateX(){}
+    
     virtual bool textViewShouldBeginEditing(CATextView * sender)
     {
         return true;

@@ -18,6 +18,9 @@ class CC_DLL CATextField;
 class CC_DLL CATextFieldDelegate
 {
 public:
+    
+    virtual ~CATextFieldDelegate(){}
+    
 	virtual bool textFieldShouldBeginEditing(CATextField * sender)
 	{
 		return true;
