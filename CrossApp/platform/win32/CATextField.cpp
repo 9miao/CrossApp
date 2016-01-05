@@ -956,10 +956,12 @@ const CATextField::ReturnType& CATextField::getReturnType()
 
 void CATextField::setBackgroundImage(CAImage* image)
 {
-	if (!image)return;
-
-	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
-	m_pBackgroundView->setImage(image);
+    if (image)
+    {
+        DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
+        m_pBackgroundView->setCapInsets(capInsets);
+    }
+    m_pBackgroundView->setImage(image);
 }
 
 void CATextField::setSecureTextEntry(bool var)

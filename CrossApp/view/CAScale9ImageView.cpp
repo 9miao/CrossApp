@@ -398,11 +398,8 @@ void CAScale9ImageView::setAlpha(float alpha)
 void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 {
     CAView::setImage(image);
-    if (m_pobImage)
-    {
-        this->updateWithImage();
-        this->updatePositions();
-    }
+    this->updateWithImage();
+    this->updatePositions();
 }
 
 bool CAScale9ImageView::initWithFrame(const DRect& rect, const CAColor4B& color4B)

@@ -1616,7 +1616,7 @@ void parserXml(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::stri
         CAView* view = layoutView(viewXml, superview, map);
 		if (view)
 		{
-			if (typeid(*view) == typeid(CAView))
+			if (typeid(*view) == typeid(CAView) || typeid(*view) == typeid(CAScrollView))
 			{
 				parserXml(((tinyxml2::XMLElement*)viewXml->FirstChildElement()), view, map);
 			}
@@ -1662,10 +1662,8 @@ void CAUIEditorParser::parseViewControllItems(CAViewController* viewController)
 {
 	m_pViewController = viewController;
 
-	if (!m_pMyDocument)
-	{
-		return;
-	}
+    CC_RETURN_IF(!m_pMyDocument);
+    
 	tinyxml2::XMLElement* rootElement = m_pMyDocument->RootElement();
 
 	tinyxml2::XMLElement* entity = NULL;
@@ -1687,7 +1685,7 @@ void CAUIEditorParser::parseViewControllItems(CAViewController* viewController)
 			std::string barTitle = "";
 			CAImage* image = NULL;
 			CAImage* selectImage = NULL;
-			int nValue = 0;
+
 			if (const char* value = entity->Attribute("image"))
 			{
 				image = CAImage::create(value);

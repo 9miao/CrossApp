@@ -53,7 +53,6 @@ CARenderImage::CARenderImage()
 CARenderImage::~CARenderImage()
 {
     CC_SAFE_RELEASE(m_pImageView);
-    CC_SAFE_RELEASE(m_pImage);
     
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
@@ -440,7 +439,7 @@ void CARenderImage::end()
     m_pImage = new CAImage();
     m_pImage->initWithRawData(pTempData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
     m_pImageView->setImage(m_pImage);
-    
+    m_pImage->release();
     CC_SAFE_DELETE_ARRAY(pBuffer);
     CC_SAFE_DELETE_ARRAY(pTempData);
 }
@@ -567,9 +566,9 @@ void CARenderImage::draw()
 bool CARenderImage::saveToFile(const char *szFilePath)
 {
     bool bRet = false;
-    if (m_pImage)
+    if (m_pImageView->getImage())
     {
-        bRet = m_pImage->saveToFile(szFilePath);
+        bRet = m_pImageView->getImage()->saveToFile(szFilePath);
     }
     return bRet;
 }

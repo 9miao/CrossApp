@@ -161,7 +161,7 @@ bool CATextView::init()
     textView_iOS1.delegate = textView_iOS;
 
     //bg
-    CAImage* image = CAImage::create("source_material/textView_bg.png");
+    CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithFrame(DRectZero);
     m_pBackgroundView->setImage(image);
