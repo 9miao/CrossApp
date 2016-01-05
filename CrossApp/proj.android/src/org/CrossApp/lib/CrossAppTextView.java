@@ -98,7 +98,6 @@ public class CrossAppTextView
 	}
 	
 	//keyBoard return call back
-	private static native void keyBoardReturnCallBack(int key);
 	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
 	private static native void text(int key, String text);
     public void init(int key)
@@ -174,26 +173,7 @@ public class CrossAppTextView
 						// TODO Auto-generated method stub
 					}
 				});
-		    	
 
-
-		    	textView.setOnEditorActionListener(new OnEditorActionListener() {
-					
-					@Override
-					public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-						// TODO Auto-generated method stub
-	            		context.runOnGLThread(new Runnable() 
-	                	{
-	                        @Override
-	                        public void run()
-	                        {
-	                        	keyBoardReturnCallBack(mykey);
-	                        }
-	                    });
-						
-						return true;
-					}
-				});
 		    		    	
 		    	//娣诲����板��灞�涓�
 				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 

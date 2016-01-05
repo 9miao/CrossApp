@@ -182,23 +182,6 @@ void textViewSetTextViewAlignJNI(int key, int type)
     }
 }
 
-
-//void setMaxLenghtJNI(int key, int type)
-//{
-//     JniMethodInfo jni;
-//     if (JniHelper::getStaticMethodInfo(jni, CLASS_TEXTVIEW, "getTextView", GET_CLASS))
-//     {
-//         jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
-//         
-//         if (JniHelper::getMethodInfo(jni, CLASS_TEXTVIEW, "setMaxLenght", "(I)V"))
-//         {
-//             jni.env->CallVoidMethod(obj, jni.methodID, type);
-//             jni.env->DeleteLocalRef(jni.classID);
-//         }
-//     }
-//}
-
-
 extern "C"
 {
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_onByte(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
@@ -226,16 +209,6 @@ extern "C"
         if (textView->getDelegate())
         {
             textView->getDelegate()->keyBoardHeight(textView, (int)s_px_to_dip(height));
-        }
-    }
-    //return call back
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
-    {
-		CATextView* textView = s_map[(int)key];
-        
-        if (textView->getDelegate())
-        {
-            textView->getDelegate()->textViewShouldReturn(textView);
         }
     }
     

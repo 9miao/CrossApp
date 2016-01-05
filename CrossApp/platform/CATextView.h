@@ -32,10 +32,7 @@ public:
     {
         return true;
     }
-    
-    //
-    virtual void textViewShouldReturn(CATextView *sender){}
-    
+
     //
     virtual void keyBoardHeight(CATextView *sender, int height){}
     
