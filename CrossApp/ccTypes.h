@@ -20,6 +20,7 @@ typedef struct _Color4B
     GLubyte b;
     GLubyte a;
 } CAColor4B;
+
 //! helper macro that creates an CAColor4B type
 static inline CAColor4B
 ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
@@ -79,7 +80,8 @@ static const CAColor4B CAColor_clear   = {255, 255, 255,   0};
 /** RGBA color composed of 4 floats
 @since v0.8
 */
-typedef struct _Color4F {
+typedef struct _Color4F
+{
     GLfloat r;
     GLfloat g;
     GLfloat b;

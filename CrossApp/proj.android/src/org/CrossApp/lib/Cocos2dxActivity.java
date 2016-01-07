@@ -116,22 +116,23 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	this.init();
     	rootview = this.getWindow().getDecorView();
 		Cocos2dxHelper.init(this, this);
-		CrossAppTextField.initWithHandler();
-		CrossAppTextView.initWithHandler();
-		
+
 		exeHandler();
 		AndroidNetWorkManager.setContext(this);
 		
-		 if(mWebViewHelper == null)
+		 if(savedInstanceState == null)
 		 {
-			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
+			mWebViewHelper = new Cocos2dxWebViewHelper(frame);
+			CrossAppTextField.initWithHandler();
+			CrossAppTextView.initWithHandler();
 		 }
-		 if (savedInstanceState != null && savedInstanceState.containsKey("WEBVIEW"))
+		 else if (savedInstanceState != null && savedInstanceState.containsKey("WEBVIEW"))
 		 {
 			 mWebViewHelper = new Cocos2dxWebViewHelper(frame);
 			 String[] strs = savedInstanceState.getStringArray("WEBVIEW");
 			 mWebViewHelper.setAllWebviews(strs);
 			 savedInstanceState.clear();
+			 CrossAppTextField.reload();
 		 }
 		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
@@ -487,17 +488,19 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 	}
 	@Override
-	protected void onResume() {
+	protected void onResume() 
+	{
 		super.onResume();
-		if (_sTextField!=null) {
+		if (_sTextField != null) 
+		{
 			_sTextField.resume();
 		}
-		if (_sTextView!=null) {
+		
+		if (_sTextView != null)
+		{
 			_sTextView.resume();
 		}
-		
-		
-		
+
 		Cocos2dxHelper.onResume();
 		this.mGLSurfaceView.onResume();
 		if (AndroidGPS.locationManager!=null)

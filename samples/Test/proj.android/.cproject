@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="0.756827735">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.756827735" moduleId="org.eclipse.cdt.core.settings" name="Default">
@@ -26,8 +24,8 @@
 								</outputEntries>
 							</builder>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.1844369373" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs">
-								<option id="org.eclipse.cdt.build.core.settings.holder.libfiles.628519629" name="Library Files" superClass="org.eclipse.cdt.build.core.settings.holder.libfiles" valueType="libFiles"/>
-								<option id="org.eclipse.cdt.build.core.settings.holder.libpaths.1705781501" name="Library Paths" superClass="org.eclipse.cdt.build.core.settings.holder.libpaths" valueType="libPaths"/>
+								<option id="org.eclipse.cdt.build.core.settings.holder.libfiles.628519629" name="Library Files" superClass="org.eclipse.cdt.build.core.settings.holder.libfiles"/>
+								<option id="org.eclipse.cdt.build.core.settings.holder.libpaths.1705781501" name="Library Paths" superClass="org.eclipse.cdt.build.core.settings.holder.libpaths"/>
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.991472034" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1413805376" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
@@ -83,8 +81,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Classes"/>
-						<entry excluding="extensions|CrossApp|scripting|Classes" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="scripting|extensions|Classes|CrossApp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

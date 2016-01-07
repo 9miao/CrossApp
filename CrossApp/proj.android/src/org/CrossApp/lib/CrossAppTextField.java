@@ -3,19 +3,15 @@ package org.CrossApp.lib;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import android.R.bool;
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnKeyListener;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
@@ -27,12 +23,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.View.OnClickListener;
-import android.view.ViewDebug.IntToString;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -40,7 +32,7 @@ import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView.OnEditorActionListener;
 
-public class CrossAppTextField
+@SuppressLint("UseSparseArrays") public class CrossAppTextField
 {
 	private EditText textField = null; 
 	private static FrameLayout layout = null;
@@ -53,9 +45,23 @@ public class CrossAppTextField
 	private Button 	clearButton = null;
 	private int keyboardheight = 0;
 	private int keyboardheightTemp = 0;
-	private int leftMargin = 0;
-	private int rightMargin = 0;
-	private int inputType = 1;
+	private int leftMargin = 10;
+	private int rightMargin = 10;
+	private int inputType = InputType.TYPE_CLASS_TEXT;
+	private int fontSize = 20;
+	private String placeHolder = "";
+	private int placeHolderColor = Color.GRAY;
+	private String textFieldText = "";
+	private int textFieldTextColor = Color.BLACK;
+	private int contentSizeW = 800;
+	private int contentSizeH = 200;
+	private boolean secureTextEntry = false;
+	private boolean showClearButton = false;
+	private int keyBoardReturnType = EditorInfo.IME_ACTION_DONE;
+	private int gravity = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
+	private TextWatcher textWatcher = null;
+	private OnEditorActionListener onEditorActionListener = null;
+	private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = null;
 	
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
@@ -67,11 +73,6 @@ public class CrossAppTextField
 	//是否弹出键盘
 	private boolean isShowKey = false;
 	
-	
- 	protected void finalize()
-    {
-		layout.removeView(textField);
-     }
 	
 	public static void initWithHandler()
 	{
@@ -96,125 +97,40 @@ public class CrossAppTextField
     	}
 	}
 	
+	public static void reload()
+	{
+		handler = new Handler(Looper.myLooper());
+		context =  (Cocos2dxActivity)Cocos2dxActivity.getContext();
+		layout = Cocos2dxActivity.getFrameLayout();
+		
+		Set<Integer> keys = (Set<Integer>) dict.keySet() ; 
+		Iterator<Integer> iterator = keys.iterator() ; 
+		while (iterator.hasNext())
+		{
+			Integer key = iterator.next();
+			CrossAppTextField textField = dict.get(key);
+			textField.initWithTextField(key);
+		}
+	}
+	
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
 	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
 	private static native void text(int key, String text);
     public void init(int key)
     {
-    	
-    	
     	mykey = key;
     	dict.put(key, this);
-
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
-            	//���濮����
-		    	textField = new EditText(context) ; 
-		    	textField.setPadding(10, 0, 10, 0) ;
-		    	textField.setTextSize(14);
-		    	textField.setMaxLines(1) ;
-		    	textField.setSingleLine(true); 
-		    	textField.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-		    	
-		    	textField.addTextChangedListener(new TextWatcher() {
-					
-					@Override
-					public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
-					{//起始位置， 删除长度，增加长度
-						// TODO Auto-generated method stub
-						if (isSetText)
-						{
-							isSetText = false;
-							return;
-						}
-						
-						String string = arg0.toString();
-						if (arg2>arg3) 
-						{
-							changedTextString = beforeTextString.substring(arg1, arg1+arg2);
-						}
-						else
-						{
-							changedTextString = string.substring(arg1, arg1+arg3);
-						}
-						
-						_arg1 = arg1;
-						_arg2 = arg2;
-						_arg3 = arg3;
-						
-						context.runOnUiThread(new Runnable()
-						{
-							
-							@Override
-							public void run()
-							{
-								text(mykey, textField.getText().toString());
-								textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
-							}
-							
-						});
-						
-						
-						
-					}
-					
-					@Override
-					public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-							int arg3)
-					{
-						// TODO Auto-generated method stub
-						beforeTextString = arg0.toString();
-					}
-					
-					@Override
-					public void afterTextChanged(Editable arg0)
-					{
-						// TODO Auto-generated method stub
-					}
-				});
-		    	
-
-
-		    	textField.setOnEditorActionListener(new OnEditorActionListener() {
-					
-					@Override
-					public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-						// TODO Auto-generated method stub
-	            		context.runOnGLThread(new Runnable() 
-	                	{
-	                        @Override
-	                        public void run()
-	                        {
-	                        	keyBoardReturnCallBack(mykey);
-	                        }
-	                    });
-						
-						return true;
-					}
-				});
-		    		    	
-		    	//娣诲����板��灞�涓�
-				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
-		    	params.leftMargin = -1000; 
-		    	params.topMargin = -1000;
-		    	params.width = 800;
-		    	params.height = 200;
-		    	layout.addView(textField, params) ;
-
-		    	//���������瑙���������惧舰
-				textField.setBackgroundColor(0);
-				textField.setFocusable(true);
-				textField.setDrawingCacheEnabled(true);
-		        
-				
-				getKeyBoardHeight();
+            	initWithTextField(mykey);
             }
         });
     }
+  
     
     //keyboard height
     
@@ -223,60 +139,75 @@ public class CrossAppTextField
     private static native void resignFirstResponder(int key);
     public int getKeyBoardHeight()
     {
-		layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    	onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() 
+    	{
 
-        @Override
-        public void onGlobalLayout() 
-        {
-        	
-            // TODO Auto-generated method stub
-            Rect r = new Rect();
-            layout.getWindowVisibleDisplayFrame(r);
+            @Override
+            public void onGlobalLayout() 
+            {
+            	
+                // TODO Auto-generated method stub
+                Rect r = new Rect();
+                layout.getWindowVisibleDisplayFrame(r);
 
-            int screenHeight = layout.getRootView().getHeight();
-            
-            keyboardheightTemp = screenHeight- r.bottom;
-            if (keyboardheightTemp!=keyboardheight) {
-            	context.runOnUiThread(new Runnable() 
-            	{
-        			
-        			@Override
-        			public void run() 
-        			{
-        				// TODO Auto-generated method stub
-        				if (keyboardheightTemp < 1 && isShowKey == true)
-        				{
-							//hide
-        					isShowKey = false;
-        					context.runOnGLThread(new Runnable() 
-                        	{
-                                @Override
-                                public void run()
-                                {
-                                	resignFirstResponder(mykey);
-                                }
-                            });
-        					
-						}
-//        				if (keyboardheight<1) {
-//							//show
-//        					Log.d("android", "show board");
-//						}
-//        				Log.d("android", "call c++");
-        				
-        				//keyBoardReturn
-        				keyBoardHeightReturn(mykey, keyboardheightTemp);
-        			}
-        		});
+                int screenHeight = layout.getRootView().getHeight();
+                
+                keyboardheightTemp = screenHeight- r.bottom;
+                if (keyboardheightTemp!=keyboardheight) {
+                	context.runOnUiThread(new Runnable() 
+                	{
+            			
+            			@Override
+            			public void run() 
+            			{
+            				// TODO Auto-generated method stub
+            				if (keyboardheightTemp < 1 && isShowKey == true)
+            				{
+    							//hide
+            					isShowKey = false;
+            					context.runOnGLThread(new Runnable() 
+                            	{
+                                    @Override
+                                    public void run()
+                                    {
+                                    	resignFirstResponder(mykey);
+                                    }
+                                });
+            					
+    						}
+//            				if (keyboardheight<1) {
+//    							//show
+//            					Log.d("android", "show board");
+//    						}
+//            				Log.d("android", "call c++");
+            				
+            				//keyBoardReturn
+            				keyBoardHeightReturn(mykey, keyboardheightTemp);
+            			}
+            		});
+    			}
+                keyboardheight = keyboardheightTemp;
+            }
+        };
+    	layout.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
+
+		return keyboardheight;
+
+    }
+
+    public void setFontSize(final int size) 
+    {
+		context.runOnUiThread(new Runnable()
+		{
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				fontSize = size;
+				textField.setTextSize(size);
 			}
-            keyboardheight = keyboardheightTemp;
-        }
-    });
-
-	return keyboardheight;
-
-}
-
+		});
+	}
     //placeholder text
     public void setTextFieldPlacHolder(final String text) 
     {
@@ -286,10 +217,12 @@ public class CrossAppTextField
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				placeHolder = text;
 				textField.setHint(text);
 			}
 		});
 	}
+    
     public void setTextFieldText(final String text) 
     {
     		context.runOnUiThread(new Runnable()
@@ -299,23 +232,12 @@ public class CrossAppTextField
 			public void run() {
 				// TODO Auto-generated method stub
 				isSetText = true;
+				textFieldText = text;
 				textField.setText(text);
 			}
 		});
 	}
     
-    public void setFontSize(final int size) 
-    {
-		context.runOnUiThread(new Runnable()
-		{
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				textField.setTextSize(size);
-			}
-		});
-	}
   //placeholder color
     public void setTextFieldPlacHolderColor(final int color)
     {
@@ -325,6 +247,7 @@ public class CrossAppTextField
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				placeHolderColor = color;
 				textField.setHintTextColor(color);
 			}
 		});
@@ -336,8 +259,10 @@ public class CrossAppTextField
 		{
 			
 			@Override
-			public void run() {
+			public void run()
+			{
 				// TODO Auto-generated method stub
+				textFieldTextColor = color;
 				textField.setTextColor(color);
 			}
 		});
@@ -395,24 +320,27 @@ public class CrossAppTextField
     	context.runOnUiThread(new Runnable() 
     	{
 			@Override
-			public void run() {
+			public void run() 
+			{
 				// TODO Auto-generated method stub
-				switch (var) {
+				switch (var)
+				{
 				case 0:
 					//center
-					textField.setGravity(Gravity.CENTER_VERTICAL);
+					gravity = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
 					break;
 				case 1:
 					//left
-					textField.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+					gravity = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
 					break;
 				case 2:
 					//right
-					textField.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+					gravity = (Gravity.RIGHT | Gravity.CENTER_VERTICAL);
 					break;
 				default:
 					break;
 				}
+				textField.setGravity(gravity);
 			}
 		});
 	}
@@ -422,32 +350,35 @@ public class CrossAppTextField
     {
 		context.runOnUiThread(new Runnable() 
 		{
+			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				String string = type + "";
 				Log.d("android", string);
 				
-				switch (type) {
+				switch (type) 
+				{
 				case 0:
-					textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
+					keyBoardReturnType = EditorInfo.IME_ACTION_DONE;
 					break;
 				case 1:
-					textField.setImeOptions(EditorInfo.IME_ACTION_GO);
+					keyBoardReturnType = EditorInfo.IME_ACTION_GO;
 					break;
 				case 2:
-					textField.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+					keyBoardReturnType = EditorInfo.IME_ACTION_NEXT;
 					break;
 				case 3:
-					textField.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+					keyBoardReturnType = EditorInfo.IME_ACTION_SEARCH;
 					break;
 				case 4:
-					textField.setImeOptions(EditorInfo.IME_ACTION_SEND);
+					keyBoardReturnType = EditorInfo.IME_ACTION_SEND;
 					break;
 				default:
-					textField.setImeOptions(EditorInfo.IME_ACTION_DONE);
+					keyBoardReturnType = EditorInfo.IME_ACTION_DONE;
 					break;
 				}
+				textField.setImeOptions(keyBoardReturnType);
 			}
 		});
     }
@@ -501,6 +432,8 @@ public class CrossAppTextField
             @Override
             public void run()
             {
+            	showClearButton = true;
+            	
             	clearButton = new Button(context);
             	clearButton.setBackgroundColor(0);
 //            	clearButton.setHighlightColor(Color.YELLOW);
@@ -510,7 +443,7 @@ public class CrossAppTextField
             	btnParams.height = 20;
             	btnParams.rightMargin = -1000;
             	btnParams.topMargin = -1000;
-            	layout.addView(clearButton,btnParams) ;
+            	layout.addView(clearButton, btnParams) ;
             	
             	clearButton.setVisibility(View.GONE);
             	
@@ -558,9 +491,11 @@ public class CrossAppTextField
             @Override
             public void run()
             {
+            	contentSizeW = width;
+            	contentSizeH = height;
             	FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
-            	params.width = width;
-            	params.height = height;
+            	params.width = contentSizeW;
+            	params.height = contentSizeH;
             	textField.setLayoutParams(params);
             }
         });
@@ -570,6 +505,7 @@ public class CrossAppTextField
     {
     	if (var == 0)
     	{
+    		secureTextEntry = false;
     		context.runOnUiThread(new Runnable() 
         	{
                 @Override
@@ -581,6 +517,7 @@ public class CrossAppTextField
     	}
     	else
     	{
+    		secureTextEntry = true;
     		context.runOnUiThread(new Runnable() 
         	{
                 @Override
@@ -643,7 +580,7 @@ public class CrossAppTextField
               	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         		textField.requestFocus();
-        		
+
         		if (clearButton != null)
             	{
     				clearButton.setVisibility(View.VISIBLE);
@@ -730,6 +667,13 @@ public class CrossAppTextField
         });
     }
     
+    public void removeThis()
+    {
+    	textField.removeTextChangedListener(textWatcher);
+    	layout.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
+    	layout.removeView(textField);
+    }
+    
 	static public CrossAppTextField getTextField(final int key)
 	{
 		CrossAppTextField var = dict.get(key);
@@ -746,13 +690,143 @@ public class CrossAppTextField
 	
 	static public void removeTextField(final int key) 
 	{
-		CrossAppTextField var = dict.get(key);
+		final CrossAppTextField var = dict.get(key);
 		if (var != null)
 		{
-			
+			context.runOnUiThread(new Runnable() 
+	    	{
+	            @Override
+	            public void run()
+	            {
+	            	var.removeThis();
+	            	dict.remove(key);
+	            }
+	        });
 		}
-		dict.remove(key);
+		
 	}
+	
+	public void initWithTextField(int key)
+	{
+		if (textField != null)
+		{
+			layout.removeView(textField);
+		}
+		
+    	textField = new EditText(context) ; 
+    	textField.setMaxLines(1);
+    	textField.setSingleLine(true); 
+    	textField.setGravity(gravity);
+    	textField.setBackgroundColor(0);
+		textField.setFocusable(true);
+		textField.setDrawingCacheEnabled(true);
+		textField.setTextSize(fontSize);
+		textField.setInputType(inputType);
+		textField.setHint(placeHolder);
+		textField.setHintTextColor(placeHolderColor);
+		textField.setText(textFieldText);
+		textField.setTextColor(textFieldTextColor);
+		textField.setImeOptions(keyBoardReturnType);
+		
+    	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
+    	params.leftMargin = -1000; 
+    	params.topMargin = -1000;
+    	params.width = contentSizeW;
+    	params.height = contentSizeH;
+    	layout.addView(textField, params) ;
+    	
+    	textField.setPadding(leftMargin, 0, rightMargin, 0) ;
+    	
+    	if	(secureTextEntry == true)
+    	{
+    		setSecureTextEntry(1);
+    	}
+		
+    	if (showClearButton == true)
+    	{
+    		showClearButton();
+    	}
+
+    	textWatcher = new TextWatcher()
+    	{
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
+			{//起始位置， 删除长度，增加长度
+				// TODO Auto-generated method stub
+				if (isSetText)
+				{
+					isSetText = false;
+					return;
+				}
+				
+				String string = arg0.toString();
+				if (arg2>arg3) 
+				{
+					changedTextString = beforeTextString.substring(arg1, arg1+arg2);
+				}
+				else
+				{
+					changedTextString = string.substring(arg1, arg1+arg3);
+				}
+				
+				_arg1 = arg1;
+				_arg2 = arg2;
+				_arg3 = arg3;
+				
+				context.runOnGLThread(new Runnable()
+				{
+					
+					@Override
+					public void run()
+					{
+						text(mykey, textField.getText().toString());
+						textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
+					}
+					
+				});
+    	
+ 
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3)
+			{
+				// TODO Auto-generated method stub
+				beforeTextString = arg0.toString();
+			}
+			
+			@Override
+			public void afterTextChanged(Editable arg0)
+			{
+				// TODO Auto-generated method stub
+			}
+		};
+		textField.addTextChangedListener(textWatcher);
+
+		
+		onEditorActionListener = new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				// TODO Auto-generated method stub
+        		context.runOnGLThread(new Runnable() 
+            	{
+                    @Override
+                    public void run()
+                    {
+                    	keyBoardReturnCallBack(mykey);
+                    }
+                });
+				
+				return true;
+			}
+		};    	
+    	textField.setOnEditorActionListener(onEditorActionListener);
+    	
+		getKeyBoardHeight();
+	}
+	
 	
 	public void resume() 
 	{
@@ -760,7 +834,14 @@ public class CrossAppTextField
 		{    
 			public void run()
 			{    
-				resignFirstResponder(mykey);
+				context.runOnGLThread(new Runnable() 
+            	{
+                    @Override
+                    public void run()
+                    {
+                    	resignFirstResponder(mykey);
+                    }
+                });
 			}    
 		};  
 		

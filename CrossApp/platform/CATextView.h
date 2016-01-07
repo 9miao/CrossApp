@@ -19,11 +19,11 @@ NS_CC_BEGIN
 
 
 class CC_DLL CATextView;
-class CC_DLL CATextViewDelegateX
+class CC_DLL CATextViewDelegate
 {
 public:
     
-    virtual ~CATextViewDelegateX(){}
+    virtual ~CATextViewDelegate(){}
     
     virtual bool textViewShouldBeginEditing(CATextView * sender)
     {
@@ -73,7 +73,7 @@ public:
     
     
     //delegate
-    CC_SYNTHESIZE(CATextViewDelegateX*, m_pDelegate, Delegate);
+    CC_SYNTHESIZE(CATextViewDelegate*, m_pDelegate, Delegate);
     
     //Text     Text/Color
     CC_PROPERTY_PASS_BY_REF(std::string, m_sText, Text);

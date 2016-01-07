@@ -40,7 +40,7 @@ import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView.OnEditorActionListener;
 
-public class CrossAppTextView
+@SuppressLint("UseSparseArrays") public class CrossAppTextView
 {
 	private EditText textView = null; 
 	private static FrameLayout layout = null;
@@ -54,7 +54,21 @@ public class CrossAppTextView
 	private int keyboardheightTemp = 0;
 	private int leftMargin = 0;
 	private int rightMargin = 0;
-	private int inputType = 1;
+	private int inputType = InputType.TYPE_CLASS_TEXT;
+	private int fontSize = 20;
+	private String placeHolder = "";
+	private int placeHolderColor = Color.GRAY;
+	private String textFieldText = "";
+	private int textFieldTextColor = Color.BLACK;
+	private int contentSizeW = 800;
+	private int contentSizeH = 200;
+	private boolean secureTextEntry = false;
+	private boolean showClearButton = false;
+	private int keyBoardReturnType = EditorInfo.IME_ACTION_DONE;
+	private int gravity = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
+	private TextWatcher textWatcher = null;
+	private OnEditorActionListener onEditorActionListener = null;
+	private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = null;
 	
 	//代理回调需要
 	private boolean isSetText = false;
@@ -484,11 +498,11 @@ public class CrossAppTextView
 		CrossAppTextView var = dict.get(key);
 		if (var != null)
 		{
-			
+
 		}
 		dict.remove(key);
 	}
-	
+
 	public void resume() 
 	{
 		TimerTask task = new TimerTask()

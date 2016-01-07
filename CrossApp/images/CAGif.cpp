@@ -26,6 +26,7 @@ CAGif::CAGif()
 :m_fDurTime(0.0f)
 ,m_pImage(NULL)
 ,m_pDataSize(0)
+,m_pImageData(NULL)
 {
     m_pImage = new CAImage();
 }
@@ -33,7 +34,7 @@ CAGif::CAGif()
 CAGif::~CAGif()
 {
     CC_SAFE_RELEASE(m_pImage);
-    free(m_pImageData);
+    CC_SAFE_DELETE(m_pImageData);
 }
 
 CAGif* CAGif::createWithFilePath(std::string filePath)

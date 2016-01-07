@@ -294,7 +294,7 @@ extern "C"
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
         CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
         imageView->setVisible(true);
         s_map[(int)key]->reViewlayout();
@@ -303,8 +303,11 @@ extern "C"
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)
     {
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textField"));
-        imageView->setVisible(false);
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
+        if (imageView)
+        {
+            imageView->setVisible(false);
+        }
     }
     
     //textfield delegate
@@ -404,6 +407,11 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
+    
+    if (this->isFirstResponder())
+    {
+        this->resignFirstResponder();
+    }
 }
 
 void showClearButtonJNI(int key)
@@ -539,7 +547,7 @@ bool CATextField::init()
     
 	m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
 	this->addSubview(m_pImgeView);
-    m_pImgeView->setTextTag("textField");
+    m_pImgeView->setTag(0xbcda);
     
     return true;
 }

@@ -1283,12 +1283,11 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 #endif
 	}
 
-	
-
 	FontBufferInfo info;
 	info.pBuffer = pBuffer;
 	info.size = *size;
 	info.face_index = ttfIndex;
+    info.font_offset_type = s_fontOffsetType;
 	s_fontsNames[path] = info;
 	return pBuffer;
 }

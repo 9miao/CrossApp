@@ -25,17 +25,18 @@
 
 -(void)regiestKeyBoardMessage;
 -(void)removeTextView;
+-(void)hide;
 @end
  
 @implementation IOSTextField
 {
-    
+
 }
 
 -(void)hide
 {
     CGRect rect = self.frame;
-    rect.origin = CGPointMake(5000, 5000);
+    rect.origin = CGPointMake(-5000, -5000);
     self.frame = rect;
 }
 
@@ -186,7 +187,7 @@ CATextField::CATextField()
 {
     this->setHaveNextResponder(false);
     
-    CGPoint point = CGPointMake(5000, 5000);
+    CGPoint point = CGPointMake(-5000, -5000);
     m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textField_iOS];
@@ -283,6 +284,7 @@ void CATextField::hideNativeTextField()
 
 void CATextField::showNativeTextField()
 {
+    this->update(0);
     CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
 }
 
@@ -367,8 +369,6 @@ void CATextField::update(float dt)
     {
         CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
-        
-        CC_BREAK_IF(m_obLastPoint.equals(point));
 
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGRect rect = textField_iOS.frame;
