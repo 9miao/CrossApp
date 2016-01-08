@@ -369,7 +369,7 @@ void CATextField::update(float dt)
 {
     do
     {
-        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        //CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
 
         CGFloat scale = [[UIScreen mainScreen] scale];

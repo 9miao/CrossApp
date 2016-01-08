@@ -62,7 +62,7 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
         _webController->autorelease();
         RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
-        _webController->initWebView("http://www.crossapp.com.cn");
+        _webController->initWebView("http://crossapp.9miao.com");
     }
     else if(row==3)
     {

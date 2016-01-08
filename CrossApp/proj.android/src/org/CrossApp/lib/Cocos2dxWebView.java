@@ -40,7 +40,7 @@ public class Cocos2dxWebView extends WebView {
         this.getSettings().setBuiltInZoomControls(true);
         this.getSettings().setJavaScriptEnabled(true);
         this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
-     
+        this.getSettings().setUseWideViewPort(true);
         
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
         try {

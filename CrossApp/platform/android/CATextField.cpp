@@ -564,10 +564,8 @@ void CATextField::update(float dt)
 {
     do
     {
-        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        //CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
-        
-        CC_BREAK_IF(m_obLastPoint.equals(point));
         
         point.x = s_dip_to_px(point.x);
         point.y = s_dip_to_px(point.y);

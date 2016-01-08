@@ -356,11 +356,10 @@ void CATextField::update(float dt)
 {
     do
     {
-        CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
+        //CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
         point.y = CAApplication::getApplication()->getWinSize().height - point.y;
         point.y = point.y - m_obContentSize.height;
-//        CC_BREAK_IF(m_obLastPoint.equals(point));
 
         CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
         NSPoint origin;
