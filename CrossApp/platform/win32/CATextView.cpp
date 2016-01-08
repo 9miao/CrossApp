@@ -104,9 +104,6 @@ public:
 			}
 			cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
 		}
-
-		//CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length(), m_iCurPos - (int)m_szText.length()));
-		//CC_RETURN_IF(m_pTextViewDelegate && m_pTextViewDelegate->onTextViewDeleteBackward(this, m_szText.c_str(), (int)m_szText.length()));
 		CC_RETURN_IF(execCurSelCharRange());
 
 		int nDeleteLen = (int)cszDelStr.size();
@@ -136,36 +133,72 @@ public:
 	bool canDetachWithIME() { return true; }
 	void cursorMoveBackward()
 	{
-		/*if (m_iCurPos == 0 || m_sText.empty())
+		if (m_iCurPos == 0 || m_szText.empty())
 			return;
 
-			int iPrevPos = m_iCurPos, nMoveLen = 1;
-			while (0x80 == (0xC0 & m_sText.at(m_iCurPos - nMoveLen)))
-			{
+		int nMoveLen = 1;
+		while (0x80 == (0xC0 & m_szText.at(m_iCurPos - nMoveLen)))
+		{
 			++nMoveLen;
-			}
-			m_iCurPos -= nMoveLen;
 
-			m_curSelCharRange.first = m_curSelCharRange.second = m_iCurPos;
-			adjustCursorMove();
-			m_pTextViewMark->setVisible(false);*/
+		}
+		m_iCurPos -= nMoveLen;
+
+		m_curSelCharRange.first = m_curSelCharRange.second = 0;
+		calcCursorPosition();
+		m_pCurPosition = m_pCursorMark->getCenterOrigin();
 	}
 	void cursorMoveForward()
 	{
-		/*if (m_iCurPos == m_sText.length() || m_sText.empty())
+		if (m_iCurPos == m_szText.length() || m_szText.empty())
 			return;
 
-			int iPrevPos = m_iCurPos, nMoveLen = 1;
-			for (std::string::size_type n = m_iCurPos + nMoveLen; n < m_sText.length() && 0x80 == (0xC0 & m_sText.at(n));)
-			{
+		int nMoveLen = 1;
+		for (std::string::size_type n = m_iCurPos + nMoveLen; n < m_szText.length() && 0x80 == (0xC0 & m_szText.at(n));)
+		{
 			++nMoveLen;
 			n = m_iCurPos + nMoveLen;
-			}
-			m_iCurPos += nMoveLen;
+		}
+		m_iCurPos += nMoveLen;
 
-			m_curSelCharRange.first = m_curSelCharRange.second = m_iCurPos;*/
-		//adjustCursorMove();
-		//m_pTextViewMark->setVisible(false);
+		m_curSelCharRange.first = m_curSelCharRange.second = 0;
+		calcCursorPosition();
+		m_pCurPosition = m_pCursorMark->getCenterOrigin();
+	}
+	void cursorMoveUp()
+	{
+		if (m_iCurPos == 0 || m_szText.empty())
+			return;
+
+		DPoint cursorRect = m_pCursorMark->getCenterOrigin();
+		float scrollViewOffSetY = m_pContainerView->getContentOffset().y;
+		DPoint point = DPoint(m_pCurPosition.x, cursorRect.y - m_iLineHeight - scrollViewOffSetY);
+
+		int iCurLine = 0; int iCurPosX = 0;
+		calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
+		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+		showCursorMark();
+
+		m_curSelCharRange = std::pair<int, int>(m_iCurPos, m_iCurPos);
+		calcCursorPosition();
+	}
+
+	void cursorMoveDown()
+	{
+		if (m_szText.empty() || m_iCurPos == m_szText.size())
+			return;
+
+		DPoint cursorRect = m_pCursorMark->getCenterOrigin();
+		float scrollViewOffSetY = m_pContainerView->getContentOffset().y;
+		DPoint point = DPoint(m_pCurPosition.x, cursorRect.y + m_iLineHeight - scrollViewOffSetY);
+
+		int iCurLine = 0; int iCurPosX = 0;
+		calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
+		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+		showCursorMark();
+
+		m_curSelCharRange = std::pair<int, int>(m_iCurPos, m_iCurPos);
+		calcCursorPosition();
 	}
 	void initMarkSprite()
 	{
