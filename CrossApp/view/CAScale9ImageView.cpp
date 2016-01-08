@@ -254,6 +254,7 @@ void CAScale9ImageView::setContentSize(const DSize &size)
 {
     CAView::setContentSize(size);
     
+    this->updateCapInset();
     this->updatePositions();
 }
 

@@ -1487,7 +1487,7 @@ DRect CAView::convertRectToWorldSpace(const CrossApp::DRect &nodeRect)
 DPoint CAView::convertToNodeSpace(const DPoint& worldPoint)
 {
     DPoint ret = worldPoint;//DPointApplyAffineTransform(p, worldToNodeTransform());
-    for (CAView* v = this; v; v = v->getSuperview())
+    for (CAView* v = this; v; v = v->m_pSuperview)
     {
         ret.x -= v->getFrameOrigin().x;
         ret.y -= v->getFrameOrigin().y;
@@ -1500,7 +1500,7 @@ DPoint CAView::convertToWorldSpace(const DPoint& nodePoint)
     DPoint p = nodePoint;
     
     DPoint ret = p;//DPointApplyAffineTransform(p, nodeToWorldTransform());
-    for (CAView* v = this; v; v = v->getSuperview())
+    for (CAView* v = this; v; v = v->m_pSuperview)
     {
         ret.x += v->getFrameOrigin().x;
         ret.y += v->getFrameOrigin().y;
@@ -1511,7 +1511,7 @@ DPoint CAView::convertToWorldSpace(const DPoint& nodePoint)
 DPoint CAView::convertToNodeSize(const DSize& worldSize)
 {
     DSize ret = worldSize;
-    for (CAView* v = this; v; v = v->getSuperview())
+    for (CAView* v = this; v; v = v->m_pSuperview)
     {
         ret.width /= v->getScaleX();
         ret.height /= v->getScaleY();
@@ -1522,7 +1522,7 @@ DPoint CAView::convertToNodeSize(const DSize& worldSize)
 DPoint CAView::convertToWorldSize(const DSize& nodeSize)
 {
     DSize ret = nodeSize;
-    for (CAView* v = this; v; v = v->getSuperview())
+    for (CAView* v = this; v; v = v->m_pSuperview)
     {
         ret.width *= v->getScaleX();
         ret.height *= v->getScaleY();

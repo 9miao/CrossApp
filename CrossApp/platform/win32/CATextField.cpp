@@ -522,11 +522,11 @@ public:
 		GLfloat x1, x2, y1, y2;
 
 		const CATextField::TextFieldAlign& align = m_pTextFieldX->getTextFieldAlign();
-		if (align == CATextField::TextEditAlignRight)
+		if (align == Right)
 		{
 			x1 = m_iLabelWidth - m_obRect.size.width;
 		}
-		else if (align == CATextField::TextEditAlignCenter)
+		else if (align == Center)
 		{
 			x1 = (m_iLabelWidth - m_obRect.size.width) / 2;
 		}
