@@ -296,7 +296,7 @@ void CATextView::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
 
-    DSize worldContentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGRect rect = textView_iOS.frame;

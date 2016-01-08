@@ -572,7 +572,7 @@ void CATextField::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
     
-    DSize worldContentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
     DSize size;
     size.width = s_dip_to_px(worldContentSize.width);
@@ -630,10 +630,10 @@ void CATextField::setMarginLeft(int var)
 {
 	m_iMarginLeft = var;
 
-	DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginLeft,0), worldToNodeTransform());
+	DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginLeft, 0));
 	float x = s_dip_to_px(worldContentSize.width);
 
-	worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginRight, 0), worldToNodeTransform());
+	worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
 	float y = s_dip_to_px(worldContentSize.width);
 
 	setMarginJNI(m_u__ID, x, y);
@@ -652,10 +652,10 @@ void CATextField::setMarginRight(int var)
     {
         m_iMarginRight = var;
         
-        DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginLeft, 0), worldToNodeTransform());
+        DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginLeft, 0));
         float x = s_dip_to_px(worldContentSize.width);
         
-        worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginRight, 0), worldToNodeTransform());
+        worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
         float y = s_dip_to_px(worldContentSize.width);
         
         setMarginJNI(m_u__ID, x, y);

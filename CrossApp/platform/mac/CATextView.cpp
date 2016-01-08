@@ -162,7 +162,7 @@ void CATextView::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
     
-    DSize worldContentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
     DSize size;
     size.width = s_dip_to_px(worldContentSize.width);

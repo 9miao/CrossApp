@@ -97,10 +97,10 @@ void CAGifView::setCenter(DRect rect)
 
 void CAGifView::updateImageRect()
 {
-    m_sQuad.bl.vertices = vertex3(  m_fLeft, m_fBottom + 0.5f, m_fVertexZ);
-    m_sQuad.br.vertices = vertex3( m_fRight + 0.5f, m_fBottom + 0.5f, m_fVertexZ);
+    m_sQuad.bl.vertices = vertex3(  m_fLeft, m_fBottom, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3( m_fRight, m_fBottom, m_fVertexZ);
     m_sQuad.tl.vertices = vertex3(  m_fLeft, m_fTop,    m_fVertexZ);
-    m_sQuad.tr.vertices = vertex3( m_fRight + 0.5f, m_fTop,    m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3( m_fRight, m_fTop,    m_fVertexZ);
 }
 
 void CAGifView::setGif(CAGif* gif)

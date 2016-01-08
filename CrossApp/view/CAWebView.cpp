@@ -215,7 +215,7 @@ void CAWebView::update(float dt)
     {
         CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(m_obPoint);
-        DSize contentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+        DSize contentSize = this->convertToWorldSize(m_obContentSize);
         //CC_BREAK_IF(m_obLastPoint.equals(point) && m_obLastContentSize.equals(contentSize));
         m_obLastPoint = point;
         m_obLastContentSize = contentSize;

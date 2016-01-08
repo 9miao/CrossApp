@@ -23,7 +23,7 @@ CAListView::CAListView()
 , m_nListHeaderHeight(0)
 , m_nListFooterHeight(0)
 , m_obSeparatorColor(CAColor_gray)
-, m_nSeparatorViewHeight(s_px_to_dip(1.05f))
+, m_nSeparatorViewHeight(LINE_WIDTH)
 {
     
 }

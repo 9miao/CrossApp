@@ -383,7 +383,7 @@ void CATextField::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
     
-    DSize worldContentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGRect rect = textField_iOS.frame;
@@ -589,7 +589,7 @@ void CATextField::setMarginLeft(int var)
 {
     m_iMarginLeft = var;
     
-    DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(DSize(var, 0));
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGFloat x = s_dip_to_px(worldContentSize.width) / scale;
@@ -613,7 +613,7 @@ void CATextField::setMarginRight(int var)
     {
         m_iMarginRight = var;
         
-        DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
+        DSize worldContentSize = this->convertToWorldSize(DSize(var, 0));
         
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGFloat x = s_dip_to_px(worldContentSize.width) / scale;
@@ -634,7 +634,7 @@ int CATextField::getMarginRight()
 
 void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& filePath)
 {
-    DSize worldContentSize = DSizeApplyAffineTransform(imgSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(imgSize);
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGRect rect;
     rect.origin.x = 0;
@@ -653,7 +653,7 @@ void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& fil
 
 void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& filePath)
 {
-    DSize worldContentSize = DSizeApplyAffineTransform(imgSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(imgSize);
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGRect rect;
     rect.origin.x = 0;

@@ -154,12 +154,12 @@ void CAImageView::updateByImageViewScaleType()
             if (imageRatio > viewRatio)
             {
                 m_fTop = (viewSize.height - viewSize.width / imageRatio) / 2;
-                m_fBottom = m_fTop + viewSize.width / imageRatio - 0.5f;
+                m_fBottom = m_fTop + viewSize.width / imageRatio;
             }
             else if (imageRatio < viewRatio)
             {
                 m_fLeft = (viewSize.width - viewSize.height * imageRatio) / 2;
-                m_fRight = m_fLeft + viewSize.height * imageRatio - 0.5f;
+                m_fRight = m_fLeft + viewSize.height * imageRatio;
             }
         }
             break;
@@ -235,9 +235,9 @@ void CAImageView::updateImageRect()
 {
     // Don't update Z.
     m_sQuad.bl.vertices = vertex3(  m_fLeft,    m_fTop, m_fVertexZ);
-    m_sQuad.br.vertices = vertex3( m_fRight + 0.5f,    m_fTop, m_fVertexZ);
-    m_sQuad.tl.vertices = vertex3(  m_fLeft, m_fBottom + 0.5f, m_fVertexZ);
-    m_sQuad.tr.vertices = vertex3( m_fRight + 0.5f, m_fBottom + 0.5f, m_fVertexZ);
+    m_sQuad.br.vertices = vertex3( m_fRight,    m_fTop, m_fVertexZ);
+    m_sQuad.tl.vertices = vertex3(  m_fLeft, m_fBottom, m_fVertexZ);
+    m_sQuad.tr.vertices = vertex3( m_fRight, m_fBottom, m_fVertexZ);
 }
 
 void CAImageView::setImageViewScaleType(const CAImageViewScaleType &var)

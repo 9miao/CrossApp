@@ -163,17 +163,17 @@ public:
 
     virtual bool isVisible();
 
-    virtual void setRotation(float fRotation);
+    virtual void setRotation(int fRotation);
 
-    virtual float getRotation();
+    virtual int getRotation();
 
-    virtual void setRotationX(float fRotaionX);
+    virtual void setRotationX(int fRotaionX);
 
-    virtual float getRotationX();
+    virtual int getRotationX();
 
-    virtual void setRotationY(float fRotationY);
+    virtual void setRotationY(int fRotationY);
  
-    virtual float getRotationY();
+    virtual int getRotationY();
 
     virtual void addSubview(CAView * child);
 
@@ -235,12 +235,6 @@ public:
 
     virtual CATransformation nodeToParentTransform(void);
 
-    virtual CATransformation parentToNodeTransform(void);
-
-    virtual CATransformation nodeToWorldTransform(void);
-
-    virtual CATransformation worldToNodeTransform(void);
-
     DRect convertRectToNodeSpace(const DRect& worldRect);
 
     DRect convertRectToWorldSpace(const DRect& nodeRect);
@@ -249,10 +243,10 @@ public:
 
     DPoint convertToWorldSpace(const DPoint& nodePoint);
 
-    DPoint convertToNodeSpaceAR(const DPoint& worldPoint);
-
-    DPoint convertToWorldSpaceAR(const DPoint& nodePoint);
-
+    DPoint convertToNodeSize(const DSize& worldSize);
+    
+    DPoint convertToWorldSize(const DSize& nodeSize);
+    
     DPoint convertTouchToNodeSpace(CATouch * touch);
 
     DPoint convertTouchToNodeSpaceAR(CATouch * touch);
@@ -268,9 +262,7 @@ public:
     virtual void setShaderProgram(CAGLProgram *pShaderProgram);
 
     virtual CAGLProgram* getShaderProgram();
-    
-    void setAdditionalTransform(const CATransformation& additionalTransform);
-    
+        
 public:
     
     virtual bool isDisplayRange();
@@ -374,8 +366,8 @@ protected:
     
     CC_SYNTHESIZE(CAImageAtlas*, m_pobImageAtlas, ImageAtlas);
     
-    float m_fRotationX;                 ///< rotation angle on x-axis
-    float m_fRotationY;                 ///< rotation angle on y-axis
+    int m_fRotationX;                 ///< rotation angle on x-axis
+    int m_fRotationY;                 ///< rotation angle on y-axis
     
     float m_fScaleX;                    ///< scaling factor on x-axis
     float m_fScaleY;                    ///< scaling factor on y-axis
@@ -396,7 +388,6 @@ protected:
     
     CATransformation m_sAdditionalTransform; ///< transform
     CATransformation m_sTransform;     ///< transform
-    CATransformation m_sInverse;       ///< transform
     
     CACamera *m_pCamera;                ///< a camera
 
@@ -415,7 +406,6 @@ protected:
     
     bool m_bTransformDirty;             ///< transform dirty flag
     bool m_bInverseDirty;               ///< transform dirty flag
-    bool m_bAdditionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     bool m_bVisible;                    ///< is this node visible
 
     bool m_bReorderChildDirty;          ///< children order dirty flag

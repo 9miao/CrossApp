@@ -359,7 +359,7 @@ void CAStepper::onEnter()
         {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
-                                                  s_px_to_dip(1.05f),
+                                                  LINE_WIDTH,
                                                   getBounds().size.height));
         }
         else
@@ -367,7 +367,7 @@ void CAStepper::onEnter()
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
                                                   getBounds().size.width,
-                                                  s_px_to_dip(1.05f)));
+                                                  LINE_WIDTH));
         }
         
         
@@ -541,13 +541,13 @@ void CAStepper::setContentSize(const DSize & var)
         {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
-                                                  s_px_to_dip(1.05f),
+                                                  LINE_WIDTH,
                                                   getBounds().size.height));
         }else{
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
                                                   getBounds().size.width,
-                                                   s_px_to_dip(1.05f)));
+                                                   LINE_WIDTH));
         }
     }
     

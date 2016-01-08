@@ -79,7 +79,6 @@ CAView::CAView(void)
 , m_bRunning(false)
 , m_bTransformDirty(true)
 , m_bInverseDirty(true)
-, m_bAdditionalTransformDirty(false)
 , m_bVisible(true)
 , m_bReorderChildDirty(false)
 , _displayedAlpha(1.0f)
@@ -376,25 +375,25 @@ void CAView::setVertexZ(float var)
 
 
 /// rotation getter
-float CAView::getRotation()
+int CAView::getRotation()
 {
     CCAssert(m_fRotationX == m_fRotationY, "CAView#rotation. RotationX != RotationY. Don't know which one to return");
     return m_fRotationX;
 }
 
 /// rotation setter
-void CAView::setRotation(float newRotation)
+void CAView::setRotation(int newRotation)
 {
     this->setRotationX(newRotation);
     this->setRotationY(newRotation);
 }
 
-float CAView::getRotationX()
+int CAView::getRotationX()
 {
     return m_fRotationX;
 }
 
-void CAView::setRotationX(float fRotationX)
+void CAView::setRotationX(int fRotationX)
 {
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -408,12 +407,12 @@ void CAView::setRotationX(float fRotationX)
     }
 }
 
-float CAView::getRotationY()
+int CAView::getRotationY()
 {
     return m_fRotationY;
 }
 
-void CAView::setRotationY(float fRotationY)
+void CAView::setRotationY(int fRotationY)
 {
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -1187,8 +1186,8 @@ void CAView::visit()
         {
             float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
             float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
-            float x2 = MIN(s_dip_to_px(frame.getMaxX() + 0.5f), restoreScissorRect.getMaxX());
-            float y2 = MIN(s_dip_to_px(frame.getMaxY() + 0.5f), restoreScissorRect.getMaxY());
+            float x2 = MIN(s_dip_to_px(frame.getMaxX()), restoreScissorRect.getMaxX());
+            float y2 = MIN(s_dip_to_px(frame.getMaxY()), restoreScissorRect.getMaxY());
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
             glScissor(x1, y1, width, height);
@@ -1464,60 +1463,16 @@ CATransformation CAView::nodeToParentTransform(void)
             }
         }
         
-        if (m_bAdditionalTransformDirty)
-        {
-            m_sTransform = CATransformationConcat(m_sTransform, m_sAdditionalTransform);
-            m_bAdditionalTransformDirty = false;
-        }
-        
         m_bTransformDirty = false;
     }
     return m_sTransform;
-}
-
-void CAView::setAdditionalTransform(const CATransformation& additionalTransform)
-{
-    m_sAdditionalTransform = additionalTransform;
-    m_bTransformDirty = true;
-    m_bAdditionalTransformDirty = true;
-}
-
-CATransformation CAView::parentToNodeTransform(void)
-{
-    if ( m_bInverseDirty )
-    {
-        m_sInverse = CATransformationInvert(this->nodeToParentTransform());
-        m_bInverseDirty = false;
-    }
-    
-    return m_sInverse;
-}
-
-CATransformation CAView::nodeToWorldTransform()
-{
-    CATransformation t = this->nodeToParentTransform();
-    
-    for (CAView *p = m_pSuperview; p != NULL; p = p->getSuperview())
-        t = CATransformationConcat(t, p->nodeToParentTransform());
-    
-    return t;
-}
-
-CATransformation CAView::worldToNodeTransform(void)
-{
-    return CATransformationInvert(this->nodeToWorldTransform());
 }
 
 DRect CAView::convertRectToNodeSpace(const CrossApp::DRect &worldRect)
 {
     DRect ret = worldRect;
     ret.origin = this->convertToNodeSpace(ret.origin);
-    
-    for (CAView* v = this; v; v = v->getSuperview())
-    {
-        ret.size.width /= v->getScaleX();
-        ret.size.height /= v->getScaleY();
-    }
+    ret.size = this->convertToNodeSize(ret.size);
     return ret;
 }
 
@@ -1525,42 +1480,54 @@ DRect CAView::convertRectToWorldSpace(const CrossApp::DRect &nodeRect)
 {
     DRect ret = nodeRect;
     ret.origin = this->convertToWorldSpace(ret.origin);
-    for (CAView* v = this; v; v = v->getSuperview())
-    {
-        ret.size.width *= v->getScaleX();
-        ret.size.height *= v->getScaleY();
-    }
+    ret.size = this->convertToWorldSize(ret.size);
     return ret;
 }
 
 DPoint CAView::convertToNodeSpace(const DPoint& worldPoint)
 {
-    DPoint p = CAApplication::getApplication()->convertToGL(worldPoint);
-    DPoint ret = DPointApplyAffineTransform(p, worldToNodeTransform());
-    
-    ret.y = this->getBounds().size.height - ret.y;
+    DPoint ret = worldPoint;//DPointApplyAffineTransform(p, worldToNodeTransform());
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.x -= v->getFrameOrigin().x;
+        ret.y -= v->getFrameOrigin().y;
+    }
     return ret;
 }
 
 DPoint CAView::convertToWorldSpace(const DPoint& nodePoint)
 {
     DPoint p = nodePoint;
-    p.y = this->getBounds().size.height - p.y;
-    DPoint ret = DPointApplyAffineTransform(p, nodeToWorldTransform());
-    ret = CAApplication::getApplication()->convertToUI(ret);
+    
+    DPoint ret = p;//DPointApplyAffineTransform(p, nodeToWorldTransform());
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.x += v->getFrameOrigin().x;
+        ret.y += v->getFrameOrigin().y;
+    }
     return ret;
 }
 
-DPoint CAView::convertToNodeSpaceAR(const DPoint& worldPoint)
+DPoint CAView::convertToNodeSize(const DSize& worldSize)
 {
-    DPoint nodePoint = convertToNodeSpace(worldPoint);
-    return ccpSub(nodePoint, m_obAnchorPointInPoints);
+    DSize ret = worldSize;
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.width /= v->getScaleX();
+        ret.height /= v->getScaleY();
+    }
+    return ret;
 }
 
-DPoint CAView::convertToWorldSpaceAR(const DPoint& nodePoint)
+DPoint CAView::convertToWorldSize(const DSize& nodeSize)
 {
-    DPoint pt = ccpAdd(nodePoint, m_obAnchorPointInPoints);
-    return convertToWorldSpace(pt);
+    DSize ret = nodeSize;
+    for (CAView* v = this; v; v = v->getSuperview())
+    {
+        ret.width *= v->getScaleX();
+        ret.height *= v->getScaleY();
+    }
+    return ret;
 }
 
 // convenience methods which take a CATouch instead of DPoint
@@ -1568,11 +1535,6 @@ DPoint CAView::convertTouchToNodeSpace(CATouch *touch)
 {
     DPoint point = touch->getLocation();
     return this->convertToNodeSpace(point);
-}
-DPoint CAView::convertTouchToNodeSpaceAR(CATouch *touch)
-{
-    DPoint point = touch->getLocation();
-    return this->convertToNodeSpaceAR(point);
 }
 
 void CAView::updateTransform()
@@ -1619,8 +1581,8 @@ void CAView::updateTransform()
             x1 = RENDER_IN_SUBPIXEL(x1);
             y1 = RENDER_IN_SUBPIXEL(y1);
             
-            float x2 = x1 + size.width + 0.5f;
-            float y2 = y1 + size.height + 0.5f;
+            float x2 = x1 + size.width;
+            float y2 = y1 + size.height;
 
             m_sQuad.bl.vertices = vertex3( x1, y1, m_fVertexZ );
             m_sQuad.br.vertices = vertex3( x2, y1, m_fVertexZ );
@@ -1730,8 +1692,8 @@ void CAView::updateImageRect()
     GLfloat x1,x2,y1,y2;
     x1 = 0;
     y1 = 0;
-    x2 = m_obContentSize.width + 0.5f;
-    y2 = m_obContentSize.height + 0.5f;
+    x2 = m_obContentSize.width;
+    y2 = m_obContentSize.height;
     
     m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
     m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);

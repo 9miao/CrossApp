@@ -373,7 +373,7 @@ void CATextField::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
     
-    DSize worldContentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
     CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
     NSSize size;
@@ -531,7 +531,7 @@ void CATextField::setMarginLeft(int var)
 {
     m_iMarginLeft = var;
     
-    DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
+    DSize worldContentSize = this->convertToWorldSize(DSize(var, 0));
     
     [textField_MAC setMarginLeft:worldContentSize.width];
     
@@ -551,7 +551,7 @@ void CATextField::setMarginRight(int var)
     {
         m_iMarginRight = var;
         
-        DSize worldContentSize = DSizeApplyAffineTransform(DSize(var, 0), worldToNodeTransform());
+        DSize worldContentSize = this->convertToWorldSize(DSize(var, 0));
         
         [textField_MAC setMarginRight:worldContentSize.width];
         
@@ -613,7 +613,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
         rightMarginView->setImageColorForState(CAControlStateHighlighted, CAColor_blue);
         rightMarginView->addTarget(this, CAControl_selector(CATextField::clearBtnCallBack), CAControlEventTouchUpInSide);
 
-        DSize worldContentSize = DSizeApplyAffineTransform(DSize(m_iMarginRight, 0), worldToNodeTransform());
+        DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
         
         [textField_MAC setMarginRight:worldContentSize.width];
         
