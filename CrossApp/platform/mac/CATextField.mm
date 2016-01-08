@@ -23,6 +23,8 @@
 #define NSTextAlignmentRight NSRightTextAlignment
 #endif
 
+#define MAC_SCALE 1//[[NSScreen mainScreen] backingScaleFactor]
+
 @interface MACTextField: NSTextField<NSTextFieldDelegate>
 {
     BOOL _isShouldEdit;
@@ -58,14 +60,14 @@
 
 -(void)setMarginLeft:(int)marginLeft
 {
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     _marginLeft = CrossApp::s_dip_to_px(marginLeft) / scale;
 }
 
 -(int)getMarginLeft
 {
     int olbMarginLeft = _marginLeft;
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     return CrossApp::s_px_to_dip(_marginLeft) * scale;
     
     NSRect rect = self.frame;
@@ -76,7 +78,7 @@
 -(void)setMarginRight:(int)marginRight
 {
     int olbMarginRight = _marginRight;
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     _marginRight = CrossApp::s_dip_to_px(marginRight) / scale;
     
     NSRect rect = self.frame;
@@ -86,7 +88,7 @@
 
 -(int)getMarginRight
 {
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     return CrossApp::s_px_to_dip(_marginRight) * scale;
 }
 
@@ -107,7 +109,7 @@
 -(CrossApp::DRect)getDRect
 {
     CrossApp::DRect rect;
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     rect.origin.x = CrossApp::s_px_to_dip(_marginLeft) * scale;
     rect.origin.y = CrossApp::s_px_to_dip(0) * scale;
     rect.size.width = CrossApp::s_px_to_dip(self.frame.size.width) * scale;
@@ -199,7 +201,7 @@ CATextField::CATextField()
     textField_MAC.textField = this;
     
     textField_MAC.placeholderString = @"placeholder";
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
 }
 
@@ -361,7 +363,7 @@ void CATextField::update(float dt)
         point.y = CAApplication::getApplication()->getWinSize().height - point.y;
         point.y = point.y - m_obContentSize.height;
 
-        CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+        CGFloat scale = MAC_SCALE;
         NSPoint origin;
         origin.x = s_dip_to_px(point.x) / scale;
         origin.y = s_dip_to_px(point.y) / scale;
@@ -376,7 +378,7 @@ void CATextField::setContentSize(const DSize& contentSize)
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     NSSize size;
     size.width = s_dip_to_px(worldContentSize.width) / scale;
     size.height =  s_dip_to_px(worldContentSize.height) / scale;
@@ -469,7 +471,7 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     
     NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
 //    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     this->delayShowImage();
 }
@@ -483,7 +485,7 @@ void CATextField::setFontSize(int var)
 {
     m_iFontSize = var;
     
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGFloat scale = MAC_SCALE;
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
 //    [textField_MAC setValue:textField_MAC.font forKeyPath:@"_placeholderLabel.font"];
     
