@@ -166,15 +166,6 @@ void CATextView::update(float dt)
 
 void CATextView::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(contentSize);
-    
-    DSize worldContentSize = DSizeApplyAffineTransform(m_obContentSize, worldToNodeTransform());
-    
-    DSize size;
-    size.width = s_dip_to_px(worldContentSize.width);
-    size.height =  s_dip_to_px(worldContentSize.height);
-
-    
 	m_pBackgroundView->setFrame(this->getBounds());
     m_pShowImageView->setFrame(this->getBounds());
 }

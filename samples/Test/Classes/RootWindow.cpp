@@ -63,11 +63,6 @@ bool RootWindow::init()
     m_pRootDrawerController = drawer;
     CAApplication::getApplication()->setNotificationView(NULL);
 
-    CAButton* button = CAButton::createWithFrame(DRect(0, 0, 150, 80), CAButtonTypeRoundedRect);
-    button->setTitleForState(CAControlStateAll, "ABCDEFG");
-    this->insertSubview(button, 999);
-    button->addTarget(this, CAControl_selector(RootWindow::keyBackClicked), CAControlEventTouchUpInSide);
-    button->setRotation(30);
     return true;
 }
 
