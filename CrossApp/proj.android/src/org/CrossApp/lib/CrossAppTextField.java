@@ -486,13 +486,13 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void setTextFieldSize(final int width, final int height)
     {
+    	contentSizeW = width;
+    	contentSizeH = height;
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
-            	contentSizeW = width;
-            	contentSizeH = height;
             	FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
             	params.width = contentSizeW;
             	params.height = contentSizeH;

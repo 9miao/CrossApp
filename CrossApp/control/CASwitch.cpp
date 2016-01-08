@@ -48,6 +48,7 @@ void CASwitch::onExitTransitionDidStart()
 void CASwitch::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
+    this->updateSwitchState(false, false);
 }
 
 void CASwitch::setIsOn(bool on, bool animated)

@@ -338,13 +338,13 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void setTextViewSize(final int width, final int height)
     {
+    	contentSizeW = width;
+    	contentSizeH = height;
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
-            	contentSizeW = width;
-            	contentSizeH = height;
             	FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textView.getLayoutParams(); 
             	params.width = width;
             	params.height = height;
