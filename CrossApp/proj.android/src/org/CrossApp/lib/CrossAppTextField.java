@@ -569,18 +569,21 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void becomeFirstResponder()
     {
-    	isShowKey = true;
     	Cocos2dxActivity.setSingleTextField(this);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
+            	isShowKey = true;
+            	
             	//show
               	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         		textField.requestFocus();
-
+        		Editable etext = textField.getText();
+            	textField.setSelection(etext.length());
+            	
         		if (clearButton != null)
             	{
     				clearButton.setVisibility(View.VISIBLE);
@@ -601,22 +604,21 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void resignFirstResponder()
     {
-    	isShowKey = false;
     	Cocos2dxActivity.setSingleTextField(null);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
+            	isShowKey = false;
+            	
             	//show
             	if (clearButton != null)
             	{
             		clearButton.setVisibility(View.GONE);
             		textField.setPadding(leftMargin, 0, 10, 0);
             	}
-            	
-            	Editable etext = textField.getText();
-            	textField.setSelection(etext.length());
+            	textField.setSelection(0);
             	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);  
             	imm.hideSoftInputFromWindow(textField.getWindowToken(), 0);
         		textField.clearFocus();

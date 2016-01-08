@@ -469,6 +469,12 @@ bool CATextField::becomeFirstResponder()
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
         ima->setImage(CAImage::create("source_material/clear_button.png"));
 	}
+    
+    if (CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
+    {
+        CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    }
+    
     return result;
 }
 
