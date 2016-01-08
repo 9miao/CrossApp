@@ -423,13 +423,13 @@ public:
 			const CATextField::TextFieldAlign& align = m_pTextFieldX->getTextFieldAlign();
 			switch (align)
 			{
-			case CATextField::TextEditAlignLeft:
+			case CATextField::Left:
 				iStr_d_length = 0;
 				break;
-			case CATextField::TextEditAlignCenter:
+			case CATextField::Center:
 				iStr_d_length = (m_iLabelWidth - (m_iString_l_length + m_iString_r_length)) / 2;
 				break;
-			case CATextField::TextEditAlignRight:
+			case CATextField::Right:
 				iStr_d_length = (m_iLabelWidth - (m_iString_l_length + m_iString_r_length));
 				break;
 			}
@@ -607,7 +607,9 @@ CATextField::CATextField()
 , m_iFontSize(40)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
-, m_eClearBtn(ClearButtonMode::ClearButtonNone)
+, m_eClearBtn(None)
+, m_eAlign(Left)
+, m_eReturnType(Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -636,7 +638,7 @@ bool CATextField::resignFirstResponder()
 
     bool result = CAView::resignFirstResponder();
 
-	if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
+	if (m_eClearBtn == WhileEditing)
 	{
 		setMarginImageRight(DSize(10,0), "");
 	}
@@ -652,7 +654,7 @@ bool CATextField::becomeFirstResponder()
 
 	bool result = CAView::becomeFirstResponder();
 
-	if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
+	if (m_eClearBtn == WhileEditing)
 	{
 		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), "source_material/clearbtn.png");
 	}
@@ -825,7 +827,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == ClearButtonNone)
+    if (m_eClearBtn == None)
     {
         m_iMarginRight = var;
         

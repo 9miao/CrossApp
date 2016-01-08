@@ -182,7 +182,9 @@ CATextField::CATextField()
 , m_iMarginRight(10)
 , m_iFontSize(40)
 , m_iMaxLenght(0)
-, m_eClearBtn(ClearButtonMode::ClearButtonNone)
+, m_eClearBtn(None)
+, m_eAlign(Left)
+, m_eReturnType(Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -432,22 +434,22 @@ void CATextField::setKeyboardType(const KeyboardType& type)
     
     UIKeyboardType keyBoardType = UIKeyboardTypeDefault;
     switch (type) {
-        case KeyboardType::KeyboardTypeNumbersAndPunctuation:
+        case KeyboardType::NumbersAndPunctuation:
             keyBoardType = UIKeyboardTypeNumbersAndPunctuation;
             break;
-        case KeyboardType::KeyboardTypeURL:
+        case KeyboardType::URL:
             keyBoardType = UIKeyboardTypeURL;
             break;
-        case KeyboardType::KeyboardTypeNumberPad:
+        case KeyboardType::NumberPad:
             keyBoardType = UIKeyboardTypeNumberPad;
             break;
-        case KeyboardType::KeyboardTypePhonePad:
+        case KeyboardType::PhonePad:
             keyBoardType = UIKeyboardTypePhonePad;
             break;
-        case KeyboardType::KeyboardTypeNamePhonePad:
+        case KeyboardType::NamePhonePad:
             keyBoardType = UIKeyboardTypeNamePhonePad;
             break;
-        case KeyboardType::KeyboardTypeEmailAddress:
+        case KeyboardType::EmailAddress:
             keyBoardType = UIKeyboardTypeEmailAddress;
             break;
         default:
@@ -469,16 +471,16 @@ void CATextField::setReturnType(const ReturnType &var)
     
     UIReturnKeyType keyBoardReturnType = UIReturnKeyDone;
     switch (var) {
-        case ReturnType::ReturnTypeGo:
+        case Go:
             keyBoardReturnType = UIReturnKeyGo;
             break;
-        case ReturnType::ReturnTypeNext:
+        case Next:
             keyBoardReturnType = UIReturnKeyNext;
             break;
-        case ReturnType::ReturnTypeSearch:
+        case Search:
             keyBoardReturnType = UIReturnKeySearch;
             break;
-        case ReturnType::ReturnTypeSend:
+        case Send:
             keyBoardReturnType = UIReturnKeySend;
             break;
         default:
@@ -609,7 +611,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == ClearButtonNone)
+    if (m_eClearBtn == None)
     {
         m_iMarginRight = var;
         
@@ -677,7 +679,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
     UITextFieldViewMode mode= UITextFieldViewModeNever;
     switch (var)
     {
-        case ClearButtonMode::ClearButtonWhileEditing:
+        case WhileEditing:
             mode = UITextFieldViewModeWhileEditing;
             textField_iOS.rightViewMode = UITextFieldViewModeNever;
             break;
@@ -702,13 +704,13 @@ void CATextField::setTextFieldAlign(const TextFieldAlign &var)
     
     switch (var)
     {
-        case CATextField::TextEditAlignCenter:
+        case Center:
             textField_iOS.textAlignment = NSTextAlignmentCenter;
             break;
-        case CATextField::TextEditAlignLeft:
+        case Left:
             textField_iOS.textAlignment = NSTextAlignmentLeft;
             break;
-        case CATextField::TextEditAlignRight:
+        case Right:
             textField_iOS.textAlignment = NSTextAlignmentRight;
             break;
         default:

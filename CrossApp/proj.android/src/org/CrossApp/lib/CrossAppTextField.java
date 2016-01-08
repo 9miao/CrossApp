@@ -331,7 +331,7 @@ import android.widget.TextView.OnEditorActionListener;
 					break;
 				case 1:
 					//left
-					gravity = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
+					gravity = (Gravity.CENTER | Gravity.CENTER_VERTICAL);
 					break;
 				case 2:
 					//right

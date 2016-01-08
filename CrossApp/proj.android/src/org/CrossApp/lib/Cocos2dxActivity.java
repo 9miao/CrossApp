@@ -133,6 +133,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 			 mWebViewHelper.setAllWebviews(strs);
 			 savedInstanceState.clear();
 			 CrossAppTextField.reload();
+			 CrossAppTextView.reload();
 		 }
 		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 

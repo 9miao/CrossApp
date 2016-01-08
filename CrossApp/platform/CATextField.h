@@ -21,25 +21,25 @@ public:
     
     virtual ~CATextFieldDelegate(){}
     
-	virtual bool textFieldShouldBeginEditing(CATextField * sender)
+	virtual bool textFieldShouldBeginEditing(CATextField* sender)
 	{
 		return true;
 	}
 
 	//If the sender doesn't want to detach from the IME, return true;
-	virtual bool textFieldShouldEndEditing(CATextField * sender)
+	virtual bool textFieldShouldEndEditing(CATextField* sender)
 	{
 		return true;
 	}
 
 	//
-	virtual void textFieldShouldReturn(CATextField *sender){}
+	virtual void textFieldShouldReturn(CATextField* sender){}
 
 	//
-	virtual void keyBoardHeight(CATextField *sender, int height){}
+	virtual void keyBoardHeight(CATextField* sender, int height){}
 
 	//arg0  
-	virtual void textFieldAfterTextChanged(CATextField *sender,
+	virtual void textFieldAfterTextChanged(CATextField* sender,
                                            const char* beforeText,
                                            const char* changeText,
                                            int location,
@@ -51,47 +51,41 @@ public:
 class CC_DLL CATextField : public CAView
 {
 public:
-    typedef enum
-    {
-        TextFieldTypeNone = 0,
-        TextFieldTypeSquareRect,
-        TextFieldTypeRoundedRect
-    }TextFieldType;
-    
+
     //keyBoard type
     typedef enum
     {
-        KeyboardTypeDefault = 0,
-        KeyboardTypeNumbersAndPunctuation,
-        KeyboardTypeURL,
-        KeyboardTypeNumberPad,
-        KeyboardTypePhonePad,
-        KeyboardTypeNamePhonePad,
-        KeyboardTypeEmailAddress,
+        Default = 0,
+        NumbersAndPunctuation,
+        URL,
+        NumberPad,
+        PhonePad,
+        NamePhonePad,
+        EmailAddress,
     }KeyboardType;
     
     //return type
     typedef enum
     {
-		ReturnTypeDone=0,
-        ReturnTypeGo,
-        ReturnTypeNext,
-        ReturnTypeSearch,
-        ReturnTypeSend
+		Done=0,
+        Go,
+        Next,
+        Search,
+        Send
     }ReturnType;
     
     //clear button Mode
     typedef enum
     {
-        ClearButtonNone = 0,
-        ClearButtonWhileEditing
+        None = 0,
+        WhileEditing
     }ClearButtonMode;
 
 	typedef enum 
 	{
-		TextEditAlignCenter = 0,
-		TextEditAlignLeft,
-		TextEditAlignRight
+        Left,
+		Center,
+		Right
 	}TextFieldAlign;
     
 public:
@@ -146,7 +140,7 @@ public:
     //returnType       default:ReturnTypeDone
     CC_PROPERTY_PASS_BY_REF(ReturnType, m_eReturnType, ReturnType);
     
-	//textFieldAlign  default:center
+	//textFieldAlign  default:left
 	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_eAlign, TextFieldAlign);
     
     //Password, the default is false

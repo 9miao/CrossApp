@@ -26,6 +26,7 @@ static CATempTypeFont s_TempFont;
 
 
 #define ITALIC_LEAN_VALUE (0.3f)
+#define DEFAULT_SPACE_VALUE (2)
 
 CAFreeTypeFont::CAFreeTypeFont()
 :m_space(" ")
@@ -279,7 +280,7 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
 		}
         if (glyph_bbox.xMin == glyph_bbox.xMax)
         {
-            glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
+            glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
         }
         glyph_bbox.xMin += glyph->pos.x;
         glyph_bbox.xMax += glyph->pos.x;
@@ -299,7 +300,7 @@ int CAFreeTypeFont::cutStringByWidth(const std::string& text, int iLimitWidth, i
             bbox.yMax = glyph_bbox.yMax;
         
         int width = (int)(bbox.xMax - bbox.xMin);
-        cutWidth = (int)(glyph->pos.x - bbox.xMin + (slot->advance.x >> 6));
+		cutWidth = (int)(glyph->pos.x - bbox.xMin + (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE);
         if (width > iLimitWidth)
         {
             cutWidth = (int)(glyph->pos.x - bbox.xMin);
@@ -671,7 +672,7 @@ void CAFreeTypeFont::calcuMultiLines(std::vector<TGlyph>& glyphs)
 		}
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
-			glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6);
+			glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
 		}
 
 		glyph_bbox.xMin += glyphs[i].pos.x;
@@ -945,8 +946,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Glyph_Transform(glyph->image, pFTMat, NULL);
 
 		/* increment pen position */
-		pen.x += slot->advance.x >> 6;
-
+		pen.x += (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
 		if (pFTMat)
 		{
 			pen.x += italicsDt;
@@ -1047,7 +1047,7 @@ void  CAFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 		}
 		if (glyph_bbox.xMin == glyph_bbox.xMax)
 		{
-			glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
+			glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
 		}
         
         glyph_bbox.xMin += glyph->pos.x;
@@ -1093,7 +1093,7 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 	}
 	if (glyph_bbox.xMin == glyph_bbox.xMax)
 	{
-		glyph_bbox.xMax = (glyph_bbox.xMin + slot->advance.x) >> 6;
+		glyph_bbox.xMax = glyph_bbox.xMin + (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
 	}
 	glyph_bbox.xMin += glyph.pos.x;
 	glyph_bbox.xMax += glyph.pos.x;
@@ -1282,6 +1282,8 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         }
 #endif
 	}
+
+	
 
 	FontBufferInfo info;
 	info.pBuffer = pBuffer;

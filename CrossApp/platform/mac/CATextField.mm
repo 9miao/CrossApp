@@ -185,7 +185,9 @@ CATextField::CATextField()
 , m_iMarginRight(10)
 , m_iFontSize(40)
 , m_iMaxLenght(0)
-, m_eClearBtn(ClearButtonMode::ClearButtonNone)
+, m_eClearBtn(None)
+, m_eAlign(Left)
+, m_eReturnType(Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -547,7 +549,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == ClearButtonNone)
+    if (m_eClearBtn == None)
     {
         m_iMarginRight = var;
         
@@ -604,7 +606,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
 
 void CATextField::setClearButtonMode(const ClearButtonMode &var)
 {
-    if (var == ClearButtonWhileEditing)
+    if (var == WhileEditing)
     {
         setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
         
@@ -643,13 +645,13 @@ void CATextField::setTextFieldAlign(const TextFieldAlign &var)
     
     switch (var)
     {
-        case CATextField::TextEditAlignLeft:
+        case Left:
             [[textField_MAC cell] setAlignment:NSTextAlignmentLeft];
             break;
-        case CATextField::TextEditAlignCenter:
+        case Center:
             [[textField_MAC cell] setAlignment:NSTextAlignmentCenter];
             break;
-        case CATextField::TextEditAlignRight:
+        case Right:
             [[textField_MAC cell] setAlignment:NSTextAlignmentRight];
             break;
         default:

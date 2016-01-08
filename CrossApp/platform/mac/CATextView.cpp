@@ -22,6 +22,8 @@ CATextView::CATextView()
 , m_pTextView(NULL)
 , m_iFontSize(40)
 , m_pDelegate(NULL)
+, m_eAlign(Left)
+, m_eReturnType(Default)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -240,6 +242,16 @@ void CATextView::setTextColor(const CAColor4B& var)
 const CAColor4B& CATextView::getTextColor()
 {
 	return m_sTextColor; 
+}
+
+void CATextView::setReturnType(const ReturnType& var)
+{
+    m_eReturnType = var;
+}
+
+const CATextView::ReturnType& CATextView::getReturnType()
+{
+    return m_eReturnType;
 }
 
 void CATextView::setBackgroundImage(CAImage* image)

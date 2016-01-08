@@ -25,22 +25,25 @@ public:
     
     virtual ~CATextViewDelegate(){}
     
-    virtual bool textViewShouldBeginEditing(CATextView * sender)
+    virtual bool textViewShouldBeginEditing(CATextView* sender)
     {
         return true;
     }
     
     //If the sender doesn't want to detach from the IME, return true;
-    virtual bool textViewShouldEndEditing(CATextView * sender)
+    virtual bool textViewShouldEndEditing(CATextView* sender)
     {
         return true;
     }
+    
+    //
+    virtual void textViewShouldReturn(CATextView* sender){}
 
     //
-    virtual void keyBoardHeight(CATextView *sender, int height){}
+    virtual void keyBoardHeight(CATextView* sender, int height){}
     
     //arg0
-    virtual void textViewAfterTextChanged(CATextView *sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
+    virtual void textViewAfterTextChanged(CATextView*sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
 };
 
 
@@ -50,10 +53,20 @@ class CC_DLL CATextView : public CAView
 public:
     typedef enum
     {
-        TextViewAlignLeft = 0,
-        TextViewAlignCenter,
-        TextViewAlignRight
+        Left = 0,
+        Center,
+        Right
     }TextViewAlign;
+    
+    //return type
+    typedef enum
+    {
+        Default=0,
+        Done,
+        Send,
+        Next
+    }ReturnType;
+    
 public:
     CATextView();
     
@@ -84,6 +97,9 @@ public:
     
     //TextViewAlign
     CC_PROPERTY_PASS_BY_REF(TextViewAlign,m_eAlign,TextViewAlign);
+    
+    //returnType       default:ReturnTypeDefault
+    CC_PROPERTY_PASS_BY_REF(ReturnType, m_eReturnType, ReturnType);
     
     //BackgroundImage
     void setBackgroundImage(CAImage* image);

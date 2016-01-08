@@ -3,6 +3,8 @@ package org.CrossApp.lib;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,20 +54,20 @@ import android.widget.TextView.OnEditorActionListener;
 	private Bitmap bmp = null;
 	private int keyboardheight = 0;
 	private int keyboardheightTemp = 0;
-	private int leftMargin = 0;
-	private int rightMargin = 0;
-	private int inputType = InputType.TYPE_CLASS_TEXT;
+	private int leftMargin = 5;
+	private int rightMargin = 5;
+	private int inputType = (InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
 	private int fontSize = 20;
 	private String placeHolder = "";
 	private int placeHolderColor = Color.GRAY;
-	private String textFieldText = "";
-	private int textFieldTextColor = Color.BLACK;
+	private String textViewText = "";
+	private int textViewTextColor = Color.BLACK;
 	private int contentSizeW = 800;
-	private int contentSizeH = 200;
+	private int contentSizeH = 400;
 	private boolean secureTextEntry = false;
 	private boolean showClearButton = false;
-	private int keyBoardReturnType = EditorInfo.IME_ACTION_DONE;
-	private int gravity = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
+	private int keyBoardReturnType = EditorInfo.IME_ACTION_NONE;
+	private int gravity = (Gravity.LEFT | Gravity.TOP);
 	private TextWatcher textWatcher = null;
 	private OnEditorActionListener onEditorActionListener = null;
 	private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = null;
@@ -111,7 +113,24 @@ import android.widget.TextView.OnEditorActionListener;
     	}
 	}
 	
+	public static void reload()
+	{
+		handler = new Handler(Looper.myLooper());
+		context =  (Cocos2dxActivity)Cocos2dxActivity.getContext();
+		layout = Cocos2dxActivity.getFrameLayout();
+		
+		Set<Integer> keys = (Set<Integer>) dict.keySet() ; 
+		Iterator<Integer> iterator = keys.iterator() ; 
+		while (iterator.hasNext())
+		{
+			Integer key = iterator.next();
+			CrossAppTextView textField = dict.get(key);
+			textField.initWithTextView(key);
+		}
+	}
+	
 	//keyBoard return call back
+	private static native void keyBoardReturnCallBack(int key);
 	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
 	private static native void text(int key, String text);
     public void init(int key)
@@ -126,84 +145,7 @@ import android.widget.TextView.OnEditorActionListener;
             @Override
             public void run()
             {
-            	//���濮����
-		    	textView = new EditText(context) ; 
-		    	textView.setPadding(10, 0, 10, 0) ;
-		    	textView.setGravity(Gravity.LEFT | Gravity.TOP);
-		    	
-		    	textView.addTextChangedListener(new TextWatcher() {
-					
-					@Override
-					public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
-					{//起始位置， 删除长度，增加长度
-						// TODO Auto-generated method stub
-						if (isSetText)
-						{
-							isSetText = false;
-							return;
-						}
-						
-						String string = arg0.toString();
-						if (arg2>arg3) 
-						{
-							changedTextString = beforeTextString.substring(arg1, arg1+arg2);
-						}
-						else
-						{
-							changedTextString = string.substring(arg1, arg1+arg3);
-						}
-						
-						_arg1 = arg1;
-						_arg2 = arg2;
-						_arg3 = arg3;
-						
-						context.runOnUiThread(new Runnable()
-						{
-							
-							@Override
-							public void run()
-							{
-								text(mykey, textView.getText().toString());
-								textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
-							}
-							
-						});
-						
-						
-						
-					}
-					
-					@Override
-					public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-							int arg3)
-					{
-						// TODO Auto-generated method stub
-						beforeTextString = arg0.toString();
-					}
-					
-					@Override
-					public void afterTextChanged(Editable arg0)
-					{
-						// TODO Auto-generated method stub
-					}
-				});
-
-		    		    	
-		    	//娣诲����板��灞�涓�
-				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
-		    	params.leftMargin = -1000; 
-		    	params.topMargin = -1000;
-		    	params.width = 800;
-		    	params.height = 200;
-		    	layout.addView(textView, params) ;
-
-		    	//���������瑙���������惧舰
-				textView.setBackgroundColor(0);
-				textView.setFocusable(true);
-				textView.setDrawingCacheEnabled(true);
-		        
-				
-				getKeyBoardHeight();
+            	initWithTextView(mykey);
             }
         });
     }
@@ -269,6 +211,20 @@ import android.widget.TextView.OnEditorActionListener;
 
 }
 
+    public void setFontSize(final int size) 
+    {
+		context.runOnUiThread(new Runnable()
+		{
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				fontSize = size;
+				textView.setTextSize(size);
+			}
+		});
+	}
+
     public void setTextViewText(final String text) 
     {
     		context.runOnUiThread(new Runnable()
@@ -278,26 +234,14 @@ import android.widget.TextView.OnEditorActionListener;
 			public void run() {
 				// TODO Auto-generated method stub
 				isSetText = true;
+				textViewText = text;
 				textView.setText(text);
 			}
 		});
 	}
     
-    public void setFontSize(final int size) 
-    {
-		context.runOnUiThread(new Runnable()
-		{
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				textView.setTextSize(size);
-			}
-		});
-	}
-
     //textView color 
-    public void setTextViewextColor(final int color)
+    public void setTextViewTextColor(final int color)
     {
 		context.runOnUiThread(new Runnable()
 		{
@@ -305,6 +249,7 @@ import android.widget.TextView.OnEditorActionListener;
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				textViewTextColor = color;
 				textView.setTextColor(color);
 			}
 		});
@@ -317,30 +262,65 @@ import android.widget.TextView.OnEditorActionListener;
     	context.runOnUiThread(new Runnable() 
     	{
 			@Override
-			public void run() {
+			public void run() 
+			{
 				// TODO Auto-generated method stub
-				switch (var) {
+				switch (var)
+				{
 				case 0:
-					//left
-					textView.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
-					
+					//center
+					gravity = (Gravity.LEFT | Gravity.TOP);
 					break;
 				case 1:
-					//center
-					textView.setGravity(Gravity.CENTER_VERTICAL);
+					//left
+					gravity = (Gravity.CENTER | Gravity.TOP);
 					break;
 				case 2:
 					//right
-					textView.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+					gravity = (Gravity.RIGHT | Gravity.TOP);
 					break;
 				default:
 					break;
 				}
+				textView.setGravity(gravity);
 			}
 		});
 	}
     
-
+    public void setKeyBoardReturnType(final int type)
+    {
+		context.runOnUiThread(new Runnable() 
+		{
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				String string = type + "";
+				switch (type) {
+				case 0:
+					inputType = (InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
+					keyBoardReturnType = EditorInfo.IME_ACTION_NONE;
+					break;
+				case 1:
+					inputType = (InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
+					keyBoardReturnType = EditorInfo.IME_ACTION_DONE;
+					break;
+				case 2:
+					inputType = (InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
+					keyBoardReturnType = EditorInfo.IME_ACTION_SEND;
+					break;
+				case 3:
+					inputType = (InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
+					keyBoardReturnType = EditorInfo.IME_ACTION_NEXT;
+					break;
+				default:
+					break;
+				}
+				textView.setInputType(inputType);
+				textView.setImeOptions(keyBoardReturnType);
+			}
+		});
+    }
+    
 	public void setTextViewPoint(final int x, final int y)
     {
     	context.runOnUiThread(new Runnable() 
@@ -363,6 +343,8 @@ import android.widget.TextView.OnEditorActionListener;
             @Override
             public void run()
             {
+            	contentSizeW = width;
+            	contentSizeH = height;
             	FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textView.getLayoutParams(); 
             	params.width = width;
             	params.height = height;
@@ -445,8 +427,8 @@ import android.widget.TextView.OnEditorActionListener;
         		textView.clearFocus();
         		
         		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textView.getLayoutParams(); 
-            	params.leftMargin = -1000; 
-            	params.topMargin = -1000;
+            	params.leftMargin = -5000; 
+            	params.topMargin = -5000;
             	textView.setLayoutParams(params);
         		
             	TimerTask task = new TimerTask()
@@ -477,7 +459,13 @@ import android.widget.TextView.OnEditorActionListener;
             }
         });
     }
-    
+
+    public void removeThis()
+    {
+    	textView.removeTextChangedListener(textWatcher);
+    	layout.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
+    	layout.removeView(textView);
+    }
 
 	static public CrossAppTextView getTextView(final int key)
 	{
@@ -495,14 +483,134 @@ import android.widget.TextView.OnEditorActionListener;
 	
 	static public void removeTextView(final int key) 
 	{
-		CrossAppTextView var = dict.get(key);
+		final CrossAppTextView var = dict.get(key);
 		if (var != null)
 		{
-
+			context.runOnUiThread(new Runnable() 
+	    	{
+	            @Override
+	            public void run()
+	            {
+	            	var.removeThis();
+	            	dict.remove(key);
+	            }
+	        });
 		}
-		dict.remove(key);
 	}
 
+	public void initWithTextView(int key)
+	{
+		if (textView != null)
+		{
+			layout.removeView(textView);
+		}
+		
+		textView = new EditText(context) ; 
+		textView.setSingleLine(false);  
+		textView.setGravity(gravity);
+		textView.setBackgroundColor(0);
+    	textView.setFocusable(true);
+    	textView.setDrawingCacheEnabled(true);
+    	textView.setTextSize(fontSize);
+		textView.setInputType(inputType);
+//		textView.setHint(placeHolder);
+//		textView.setHintTextColor(placeHolderColor);
+		textView.setText(textViewText);
+		textView.setTextColor(textViewTextColor);
+		textView.setImeOptions(keyBoardReturnType);
+		
+    	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
+    	params.leftMargin = -5000; 
+    	params.topMargin = -5000;
+    	params.width = contentSizeW;
+    	params.height = contentSizeH;
+    	layout.addView(textView, params) ;
+
+
+    	textWatcher = new TextWatcher()
+    	{
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
+			{//起始位置， 删除长度，增加长度
+				// TODO Auto-generated method stub
+				if (isSetText)
+				{
+					isSetText = false;
+					return;
+				}
+				
+				String string = arg0.toString();
+				if (arg2>arg3) 
+				{
+					changedTextString = beforeTextString.substring(arg1, arg1+arg2);
+				}
+				else
+				{
+					changedTextString = string.substring(arg1, arg1+arg3);
+				}
+				
+				_arg1 = arg1;
+				_arg2 = arg2;
+				_arg3 = arg3;
+				
+				context.runOnGLThread(new Runnable()
+				{
+					
+					@Override
+					public void run()
+					{
+						text(mykey, textView.getText().toString());
+						textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
+					}
+					
+				});
+    	
+ 
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3)
+			{
+				// TODO Auto-generated method stub
+				beforeTextString = arg0.toString();
+			}
+			
+			@Override
+			public void afterTextChanged(Editable arg0)
+			{
+				// TODO Auto-generated method stub
+			}
+		};
+		textView.addTextChangedListener(textWatcher);
+
+		
+		onEditorActionListener = new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				// TODO Auto-generated method stub
+				if (keyBoardReturnType != EditorInfo.IME_ACTION_NONE)
+				{
+					context.runOnGLThread(new Runnable() 
+	            	{
+	                    @Override
+	                    public void run()
+	                    {
+	                    	keyBoardReturnCallBack(mykey);
+	                    }
+	                });
+					
+					return true;
+				}
+        		return false;
+			}
+		};    	
+    	textView.setOnEditorActionListener(onEditorActionListener);
+    	
+		getKeyBoardHeight();
+	}
+	
 	public void resume() 
 	{
 		TimerTask task = new TimerTask()

@@ -167,6 +167,21 @@ void textViewSetTextColorJNI(int key, int color)
     }
 }
 
+void textViewSetReturnTypeJNI(int key, int type)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, CLASS_TEXTVIEW, "getTextView", GET_CLASS))
+    {
+        jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
+        
+        if (JniHelper::getMethodInfo(jni, CLASS_TEXTVIEW, "setKeyBoardReturnType", "(I)V"))
+        {
+            jni.env->CallVoidMethod(obj, jni.methodID, type);
+            jni.env->DeleteLocalRef(jni.classID);
+        }
+    }
+}
+
 void textViewSetTextViewAlignJNI(int key, int type)
 {
     JniMethodInfo jni;
@@ -209,6 +224,18 @@ extern "C"
         if (textView->getDelegate())
         {
             textView->getDelegate()->keyBoardHeight(textView, (int)s_px_to_dip(height));
+        }
+    }
+    //return call back
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_keyBoardReturnCallBack(JNIEnv *env, jclass cls, jint key, jint height)
+    {
+        CATextView* textView = s_map[(int)key];
+        
+        textView->resignFirstResponder();
+        
+        if (textView->getDelegate())
+        {
+            textView->getDelegate()->textViewShouldReturn(textView);
         }
     }
     
@@ -255,6 +282,8 @@ CATextView::CATextView()
 , m_pTextView(NULL)
 , m_iFontSize(40)
 , m_pDelegate(NULL)
+, m_eAlign(Left)
+, m_eReturnType(Default)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     s_map[m_u__ID] = this;
@@ -310,6 +339,11 @@ bool CATextView::becomeFirstResponder()
 
 	this->showNativeTextView();
 
+    if (CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
+    {
+        CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    }
+    
     return result;
 }
 
@@ -498,6 +532,17 @@ void CATextView::setTextColor(const CAColor4B& var)
 const CAColor4B& CATextView::getTextColor()
 {
 	return m_sTextColor; 
+}
+
+void CATextView::setReturnType(const ReturnType& var)
+{
+    m_eReturnType = var;
+    textViewSetReturnTypeJNI(m_u__ID, (int)var);
+}
+
+const CATextView::ReturnType& CATextView::getReturnType()
+{
+    return m_eReturnType;
 }
 
 void CATextView::setBackgroundImage(CAImage* image)

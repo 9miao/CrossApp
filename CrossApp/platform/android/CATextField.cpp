@@ -381,7 +381,9 @@ CATextField::CATextField()
 , m_iMarginRight(10)
 , m_iFontSize(40)
 , m_iMaxLenght(0)
-, m_eClearBtn(ClearButtonMode::ClearButtonNone)
+, m_eClearBtn(None)
+, m_eAlign(Left)
+, m_eReturnType(Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     s_map[m_u__ID] = this;
@@ -442,7 +444,7 @@ bool CATextField::resignFirstResponder()
     
     this->hideNativeTextField();
 
-    if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
+    if (m_eClearBtn == WhileEditing)
     {
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
         ima->setImage(NULL);
@@ -464,7 +466,7 @@ bool CATextField::becomeFirstResponder()
 
 	this->showNativeTextField();
 
-	if (m_eClearBtn == ClearButtonMode::ClearButtonWhileEditing)
+	if (m_eClearBtn == WhileEditing)
 	{
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
         ima->setImage(CAImage::create("source_material/clear_button.png"));
@@ -654,7 +656,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == ClearButtonNone)
+    if (m_eClearBtn == None)
     {
         m_iMarginRight = var;
         
@@ -697,7 +699,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 	//set margins
 	setMarginRight(imgSize.width);
 
-    if (m_eClearBtn == ClearButtonNone)
+    if (m_eClearBtn == None)
     {
         //setimage
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);

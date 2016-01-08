@@ -1054,7 +1054,7 @@ void CDUIShowView::showTextField()
     textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolderText("Input");
-	textField->setKeyboardType(CATextField::KeyboardTypeDefault);
+	textField->setKeyboardType(CATextField::Default);
     this->getView()->addSubview(textField);
     textField->becomeFirstResponder();
     showNum = 1;
@@ -1087,18 +1087,7 @@ void CDUIShowView::showTextFieldByIndex()
 void CDUIShowView::showTextView()
 {
     CATextView* textView = CATextView::createWithFrame(DRect(100, 150, winSize.width-200, 300));
-    //textView->setPlaceHolder("TextView");
-    //textView->setSpaceHolderColor(CAColor_blueStyle);
-    //textView->setTextColor(CAColor_green);
-    //textView->setCursorColor(CAColor_red);
 	textView->setTextFontSize(_px(40));
-    //textView->setSpaceHolderColor(CAColor_blue);
-    //textView->setWordWrap(false);
-    //textView->setLineSpacing(50);
-    //textView->setFontColor(CAColor_gray);
-    //textView->setBackgroundColor(CAColor_blueStyle);
-	//textView->setBackgroundView(CAScale9ImageView::createWithImage(CAImage::create("source_material/textField_bg.png")));
-    //textView->setBackgroundImage(CAImage::create("source_material/btn_square_selected.png"));
     this->getView()->addSubview(textView);
     
     CATextField* textField = CATextField::createWithFrame(DRect(100, 450, winSize.width-200, 80));
@@ -1758,7 +1747,7 @@ void CDUIShowView::showAnimation()
     
     animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
     animation_2_textfield->setFontSize(_px(40));
-	animation_2_textfield->setKeyboardType(CATextField::KeyboardTypeDefault);
+	animation_2_textfield->setKeyboardType(CATextField::Default);
     animation_2_textfield->setVisible(false);
     
     animation_2_btn_search = CAButton::createWithCenter(DRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
