@@ -16,7 +16,7 @@ public:
 
     CABatchView();
 
-    ~CABatchView();
+    virtual ~CABatchView();
 
     inline CAImageAtlas* getImageAtlas(void) { return m_pobImageAtlas; }
     

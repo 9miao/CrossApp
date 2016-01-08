@@ -114,8 +114,12 @@ void CAScale9ImageView::updateWithImage()
 {
     CAColor4B color = this->getColor();
 
-    this->removeSubview(m_pScale9ImageView);
-    m_pScale9ImageView = NULL;
+    if (m_pScale9ImageView)
+    {
+        m_pScale9ImageView->removeAllSubviews();
+        m_pScale9ImageView->removeFromSuperview();
+        m_pScale9ImageView = NULL;
+    }
     
     memset(m_pImageView, 0, sizeof(m_pImageView));
 

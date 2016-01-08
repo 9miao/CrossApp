@@ -118,11 +118,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
 	// Slider 
 	do {
 		DRect frame = bottomPanel->getFrame();
-		CAImage* backImage = CAImage::create("source_material/vdo_progress_back.png");
 		CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");
 		m_playSlider = CASlider::createWithCenter(DRect(frame.size.width / 2, frame.size.height*0.3, frame.size.width * 0.9, 56));
-        m_playSlider->setMinTrackTintImage(backImage);
-		m_playSlider->setMaxTrackTintImage(backImage);
 		m_playSlider->setThumbTintImage(barImage);
 		m_playSlider->setTrackHeight(6);
 		m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
