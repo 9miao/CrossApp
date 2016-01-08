@@ -63,6 +63,21 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if (_textView->getReturnType() != CrossApp::CATextView::Default)
+    {
+        if ([text isEqualToString:@"\n"])
+        {
+            //判断输入的字是否是回车，即按下return
+            //在这里做你响应return键的代码
+            if (_textView->getDelegate())
+            {
+                _textView->getDelegate()->textViewShouldReturn(_textView);
+            }
+            
+            return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+        }
+    }
+    
     std::string insert = [text cStringUsingEncoding:NSUTF8StringEncoding];
     std::string cur = [[_iosTextView text] cStringUsingEncoding:NSUTF8StringEncoding];
     
