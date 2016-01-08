@@ -166,6 +166,8 @@ void CATextView::update(float dt)
 
 void CATextView::setContentSize(const DSize& contentSize)
 {
+    CAView::setContentSize(contentSize);
+    
 	m_pBackgroundView->setFrame(this->getBounds());
     m_pShowImageView->setFrame(this->getBounds());
 }
@@ -239,6 +241,15 @@ const CAColor4B& CATextView::getTextColor()
 	return m_sTextColor; 
 }
 
+void CATextView::setReturnType(const ReturnType& var)
+{
+    m_eReturnType = var;
+}
+
+const CATextView::ReturnType& CATextView::getReturnType()
+{
+    return m_eReturnType;
+}
 
 void CATextView::setBackgroundImage(CAImage* image)
 {
