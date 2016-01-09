@@ -122,7 +122,7 @@ void CALabel::updateImage()
 	int fontHeight = CAImage::getFontHeight(m_nfontName.c_str(), m_nfontSize);
 	int defaultLineSpace = fontHeight / 4;
  
-    unsigned int linenumber = (int)this->getBounds().size.height / fontHeight;
+    unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
 
     DSize size = DSizeZero;
     if (m_bFitFlag)
@@ -132,7 +132,7 @@ void CALabel::updateImage()
         {
             if (m_nNumberOfLine > 1)
             {
-				size = DSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
+				size = DSize(m_obContentSize.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
             }
             else if (m_nNumberOfLine == 1)
             {
@@ -140,7 +140,7 @@ void CALabel::updateImage()
             }
             else
             {
-                size.width = this->getBounds().size.width;
+                size.width = m_obContentSize.width;
 				size.height = CAImage::getStringHeight(m_nfontName.c_str(), m_nfontSize, m_nText, size.width, m_iLineSpacing, m_bWordWrap);
             }
         }
@@ -154,17 +154,17 @@ void CALabel::updateImage()
     {
         if (linenumber == 0)
 		{
-			size = this->getBounds().size;
+			size = m_obContentSize;
 		}
 		else
 		{
 			if (m_nNumberOfLine > 0)
 			{
-				size = DSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+				size = DSize(m_obContentSize.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
 			}
 			else
 			{
-				size = DSize(this->getBounds().size.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
+				size = DSize(m_obContentSize.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
 			}
 		}
     }
@@ -189,10 +189,10 @@ void CALabel::updateImage()
     m_cLabelSize = size;
     
     DRect rect = DRectZero;
-    rect.size.width = this->getBounds().size.width;
+    rect.size.width = m_obContentSize.width;
     rect.size.height = size.height;
     
-    float width = m_bFitFlag ? image->getContentSize().width : MIN(this->getBounds().size.width, image->getContentSize().width);
+    float width = m_bFitFlag ? image->getContentSize().width : MIN(m_obContentSize.width, image->getContentSize().width);
     
     rect.size.width = width;
 
@@ -203,11 +203,11 @@ void CALabel::updateImage()
             break;
             
         case CAVerticalTextAlignmentCenter:
-            pTextHeight = (this->getBounds().size.height - rect.size.height) / 2;
+            pTextHeight = (m_obContentSize.height - rect.size.height) / 2;
             break;
             
         case CAVerticalTextAlignmentBottom:
-            pTextHeight = this->getBounds().size.height - rect.size.height;
+            pTextHeight = m_obContentSize.height - rect.size.height;
             break;
             
         default:
