@@ -1176,8 +1176,14 @@ void CAView::visit()
         kmMat4 tm2;
         kmMat4Multiply(&tm2, &modelview, &tm);
 
-        DSize winSize = CAApplication::getApplication()->getWinSize();
-        DPoint point = DPoint(modelview.mat[12], modelview.mat[13]) + winSize/2;
+        DPoint point = DPoint(modelview.mat[12], modelview.mat[13]);
+        
+        static CAApplication* application = CAApplication::getApplication();
+        if (application->getProjection() == CAApplication::P3D)
+        {
+            point = ccpAdd(point, application->getWinSize() / 2);
+        }
+        
         DSize size = DSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
         DRect frame = DRect(point.x, point.y, size.width, size.height);
         
@@ -1186,8 +1192,8 @@ void CAView::visit()
         {
             float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
             float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
-            float x2 = MIN(s_dip_to_px(frame.getMaxX()), restoreScissorRect.getMaxX());
-            float y2 = MIN(s_dip_to_px(frame.getMaxY()), restoreScissorRect.getMaxY());
+            float x2 = MIN(s_dip_to_px(frame.getMaxX()) + 0.5f, restoreScissorRect.getMaxX());
+            float y2 = MIN(s_dip_to_px(frame.getMaxY()) + 0.5f, restoreScissorRect.getMaxY());
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
             glScissor(x1, y1, width, height);
@@ -1197,8 +1203,8 @@ void CAView::visit()
             glEnable(GL_SCISSOR_TEST);
             glScissor(s_dip_to_px(frame.origin.x),
                       s_dip_to_px(frame.origin.y),
-                      s_dip_to_px(frame.size.width),
-                      s_dip_to_px(frame.size.height));
+                      s_dip_to_px(frame.size.width) + 0.5f,
+                      s_dip_to_px(frame.size.height) + 0.5f);
         }
     }
 

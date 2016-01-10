@@ -53,7 +53,7 @@ public:
         PCustom,
         
         /// Default projection is 3D projection
-        Default = P3D,
+        Default = P2D,
     } Projection;
     
     /**
@@ -246,6 +246,13 @@ public:
     
     unsigned long getCurrentNumberOfDraws();
     
+    /** Sets an OpenGL projection
+     @since v0.8.2
+     @js NA
+     */
+    inline CAApplication::Projection getProjection(void) { return m_eProjection; }
+    void setProjection(CAApplication::Projection kProjection);
+    
 public:
 
     /** CATouchDispatcher associated with this director
@@ -271,13 +278,6 @@ public:
     CC_SYNTHESIZE_READONLY(float, m_fAdaptationRatio, AdaptationRatio);
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_uNumberOfDraws, NumberOfDraws);
-    
-	/** Sets an OpenGL projection
-	@since v0.8.2
-	@js NA
-	*/
-	inline CAApplication::Projection getProjection(void) { return m_eProjection; }
-	void setProjection(CAApplication::Projection kProjection);
 
 public:
     /** returns a shared instance of the director 

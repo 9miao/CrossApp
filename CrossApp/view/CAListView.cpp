@@ -23,7 +23,7 @@ CAListView::CAListView()
 , m_nListHeaderHeight(0)
 , m_nListFooterHeight(0)
 , m_obSeparatorColor(CAColor_gray)
-, m_nSeparatorViewHeight(LINE_WIDTH)
+, m_nSeparatorViewHeight(1)
 {
     
 }
@@ -424,8 +424,8 @@ void CAListView::reloadViewSizeData()
         if (m_nSeparatorViewHeight > 0)
         {
             m_rLineRects[i] = (m_pListViewOrientation == CAListViewOrientationVertical)
-            ? DRect(0, iStartPosition, width, m_nSeparatorViewHeight)
-            : DRect(iStartPosition, 0, m_nSeparatorViewHeight, height);
+            ? DRect(0, iStartPosition, width, s_px_to_dip(m_nSeparatorViewHeight))
+            : DRect(iStartPosition, 0, s_px_to_dip(m_nSeparatorViewHeight), height);
             iStartPosition += m_nSeparatorViewHeight;
         }
     }

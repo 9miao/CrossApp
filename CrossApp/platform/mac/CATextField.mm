@@ -297,7 +297,7 @@ void CATextField::showImage()
 {
     NSImage* image_MAC = [[[NSImage alloc]initWithData:[textField_MAC dataWithPDFInsideRect:[textField_MAC bounds]]]autorelease];
     
-    NSData* data_MAC = [image_MAC TIFFRepresentation];
+    NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
     unsigned char* data = (unsigned char*)malloc([data_MAC length]);
     [data_MAC getBytes:data];

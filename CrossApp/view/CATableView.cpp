@@ -24,7 +24,7 @@ CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
 ,m_obSeparatorColor(CAColor_gray)
-,m_nSeparatorViewHeight(LINE_WIDTH)
+,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
 ,m_nSections(0)
@@ -578,7 +578,7 @@ void CATableView::reloadData()
             m_rTableCellRectss[i][j] = DRect(0, y, width, m_nRowHeightss[i][j]);
             y += m_nRowHeightss[i][j];
             
-            m_rLineRectss[i][j] = DRect(0, y, width, m_nSeparatorViewHeight);
+            m_rLineRectss[i][j] = DRect(0, y, width, s_px_to_dip(m_nSeparatorViewHeight));
             y += m_nSeparatorViewHeight;
         }
         
@@ -586,7 +586,7 @@ void CATableView::reloadData()
         
         CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
         
-        if (sectionFooterView)
+        if (sectionFooterView) 
         {
             sectionFooterView->setFrame(sectionFooterRect);
             this->insertSubview(sectionFooterView, 2);

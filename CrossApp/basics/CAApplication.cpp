@@ -139,7 +139,7 @@ CAApplication::~CAApplication(void)
 void CAApplication::setDefaultValues(void)
 {
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / 100;
-    m_eProjection = CAApplication::P3D;
+    m_eProjection = CAApplication::Default;
 }
 
 void CAApplication::setGLDefaultValues(void)
@@ -308,7 +308,7 @@ void CAApplication::setProjection(CAApplication::Projection kProjection)
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
-            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
+            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, 0, 1024 );
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();

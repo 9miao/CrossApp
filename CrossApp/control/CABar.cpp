@@ -227,8 +227,8 @@ void CANavigationBar::showLeftButton()
     DRect rect;
     rect.size.width = m_pContentView->getBounds().size.height;
     rect.size.height = m_pContentView->getBounds().size.height;
-    rect.origin.x = rect.size.width * 0.5f + 10;
-    rect.origin.y = rect.size.height * 0.5f;
+    rect.origin.x = 10;
+    rect.origin.y = 0;
 
     for (size_t i=0; i<buttonItems.size(); i++)
     {
@@ -237,7 +237,7 @@ void CANavigationBar::showLeftButton()
         rect.size.width = item ? item->getItemWidth() : 80;
         rect.origin.x += i * rect.size.width;
         
-        CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
+        CAButton* button = CAButton::createWithFrame(rect, CAButtonTypeCustom);
         button->setImageSize(DSize(42, 42));
         button->setTitleFontSize(36);
         m_pContentView->addSubview(button);
@@ -290,8 +290,8 @@ void CANavigationBar::showRightButton()
     DRect rect;
     rect.size.width = m_pContentView->getBounds().size.height;
     rect.size.height = m_pContentView->getBounds().size.height;
-    rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width * 0.5f - 10;
-    rect.origin.y = rect.size.height * 0.5f;
+    rect.origin.x = m_pContentView->getBounds().size.width - 10;
+    rect.origin.y = 0;
 
     for (size_t i=0; i<buttonItems.size(); i++)
     {
@@ -300,7 +300,7 @@ void CANavigationBar::showRightButton()
         rect.size.width = item ? item->getItemWidth() : 80;
         rect.origin.x -= i * rect.size.width;
         
-        CAButton* button = CAButton::createWithCenter(rect, CAButtonTypeCustom);
+        CAButton* button = CAButton::createWithFrame(rect, CAButtonTypeCustom);
         button->setImageSize(DSize(42, 42));
         button->setTitleFontSize(36);
         m_pContentView->addSubview(button);

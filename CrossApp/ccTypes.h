@@ -360,7 +360,7 @@ typedef enum
 // This message is posted in CrossApp/platform/android/jni/MessageJni.cpp.
 #define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
 
-#define LINE_WIDTH MAX(s_px_to_dip(1.0f), 1.0f)
+#define LINE_WIDTH MAX(s_px_to_dip(1.0f) + 0.01f, 1.01f)
 
 NS_CC_END
 
