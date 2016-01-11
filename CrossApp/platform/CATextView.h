@@ -132,10 +132,15 @@ private:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
 protected:
+    
     CAScale9ImageView*   m_pBackgroundView;
+    
     CAImageView*         m_pShowImageView;
+    
     void*                m_pTextView;
+    
     DPoint               m_obLastPoint;
 };
 

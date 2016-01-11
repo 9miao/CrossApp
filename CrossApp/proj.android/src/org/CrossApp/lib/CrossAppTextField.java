@@ -182,7 +182,14 @@ import android.widget.TextView.OnEditorActionListener;
 //            				Log.d("android", "call c++");
             				
             				//keyBoardReturn
-            				keyBoardHeightReturn(mykey, keyboardheightTemp);
+            				context.runOnGLThread(new Runnable() 
+                        	{
+                                @Override
+                                public void run()
+                                {
+                                	keyBoardHeightReturn(mykey, keyboardheightTemp);
+                                }
+                            });
             			}
             		});
     			}

@@ -100,15 +100,8 @@ USING_NS_CC;
 
 - (UIImage*)getWebViewImage
 {
-    if (UIGraphicsBeginImageContextWithOptions!=NULL)
-    {
-        UIGraphicsBeginImageContextWithOptions(self.uiWebView.frame.size, NO, 0);
-    }
-    else
-    {
-        UIGraphicsBeginImageContext(self.uiWebView.frame.size);
-    }
-    
+    static float scale = [UIScreen mainScreen].scale;
+    UIGraphicsBeginImageContextWithOptions(self.uiWebView.bounds.size, NO, scale);
     [self.uiWebView.layer renderInContext:UIGraphicsGetCurrentContext()];
     return UIGraphicsGetImageFromCurrentImageContext();
 }
