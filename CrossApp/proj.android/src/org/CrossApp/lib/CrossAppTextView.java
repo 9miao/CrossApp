@@ -157,66 +157,68 @@ import android.widget.TextView.OnEditorActionListener;
     private static native void resignFirstResponder(int key);
     public int getKeyBoardHeight()
     {
-		layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    	onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() 
+    	{
 
-        @Override
-        public void onGlobalLayout() 
-        {
-        	
-            // TODO Auto-generated method stub
-            Rect r = new Rect();
-            layout.getWindowVisibleDisplayFrame(r);
+            @Override
+            public void onGlobalLayout() 
+            {
+            	
+                // TODO Auto-generated method stub
+                Rect r = new Rect();
+                layout.getWindowVisibleDisplayFrame(r);
 
-            int screenHeight = layout.getRootView().getHeight();
-            
-            keyboardheightTemp = screenHeight- r.bottom;
-            if (keyboardheightTemp!=keyboardheight) {
-            	context.runOnUiThread(new Runnable() 
-            	{
-        			
-        			@Override
-        			public void run() 
-        			{
-        				// TODO Auto-generated method stub
-        				if (keyboardheightTemp < 1 && isShowKey == true)
-        				{
-							//hide
-        					isShowKey = false;
-        					context.runOnGLThread(new Runnable() 
+                int screenHeight = layout.getRootView().getHeight();
+                
+                keyboardheightTemp = screenHeight- r.bottom;
+                if (keyboardheightTemp!=keyboardheight) {
+                	context.runOnUiThread(new Runnable() 
+                	{
+            			
+            			@Override
+            			public void run() 
+            			{
+            				// TODO Auto-generated method stub
+            				if (keyboardheightTemp < 1 && isShowKey == true)
+            				{
+    							//hide
+            					isShowKey = false;
+            					context.runOnGLThread(new Runnable() 
+                            	{
+                                    @Override
+                                    public void run()
+                                    {
+                                    	resignFirstResponder(mykey);
+                                    }
+                                });
+            					
+    						}
+//            				if (keyboardheight<1) {
+//    							//show
+//            					Log.d("android", "show board");
+//    						}
+//            				Log.d("android", "call c++");
+            				
+            				//keyBoardReturn
+            				context.runOnGLThread(new Runnable() 
                         	{
                                 @Override
                                 public void run()
                                 {
-                                	resignFirstResponder(mykey);
+                                	keyBoardHeightReturn(mykey, keyboardheightTemp);
                                 }
                             });
-        					
-						}
-//        				if (keyboardheight<1) {
-//							//show
-//        					Log.d("android", "show board");
-//						}
-//        				Log.d("android", "call c++");
-        				
-        				//keyBoardReturn
-        				context.runOnGLThread(new Runnable() 
-                    	{
-                            @Override
-                            public void run()
-                            {
-                            	keyBoardHeightReturn(mykey, keyboardheightTemp);
-                            }
-                        });
-        			}
-        		});
-			}
-            keyboardheight = keyboardheightTemp;
-        }
-    });
+            			}
+            		});
+    			}
+                keyboardheight = keyboardheightTemp;
+            }
+        };
+    	layout.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
 
-	return keyboardheight;
+		return keyboardheight;
 
-}
+    }
 
     public void setFontSize(final int size) 
     {
