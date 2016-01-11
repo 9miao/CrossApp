@@ -53,7 +53,7 @@ public:
         PCustom,
         
         /// Default projection is 3D projection
-        Default = P2D,
+        Default = P3D,
     } Projection;
     
     /**
