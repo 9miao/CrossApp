@@ -25,6 +25,49 @@
 
 #define MAC_SCALE 1//[[NSScreen mainScreen] backingScaleFactor]
 
+@interface MACTextFieldCell: NSTextFieldCell
+{
+}
+
+@end
+
+@implementation MACTextFieldCell
+{
+    
+}
+
+- (NSRect)adjustedFrameToVerticallyCenterText:(NSRect)frame
+{
+    // super would normally draw text at the top of the cell
+    NSInteger offset = floor((NSHeight(frame) -
+                              ([[self font] ascender] - [[self font] descender])) / 2);
+    return NSInsetRect(frame, 0.0, offset);
+}
+
+- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView
+               editor:(NSText *)editor delegate:(id)delegate event:(NSEvent *)event
+{
+    [super editWithFrame:[self adjustedFrameToVerticallyCenterText:aRect]
+                  inView:controlView editor:editor delegate:delegate event:event];
+}
+
+- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView
+                 editor:(NSText *)editor delegate:(id)delegate
+                  start:(NSInteger)start length:(NSInteger)length
+{
+    [super selectWithFrame:[self adjustedFrameToVerticallyCenterText:aRect]
+                    inView:controlView editor:editor delegate:delegate
+                     start:start length:length];
+}
+
+- (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView *)view
+{
+    [super drawInteriorWithFrame:
+     [self adjustedFrameToVerticallyCenterText:frame] inView:view];
+}
+
+@end
+
 @interface MACTextField: NSTextField<NSTextFieldDelegate>
 {
     BOOL _isShouldEdit;
@@ -124,10 +167,37 @@
         [self setDelegate:self];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setBezeled:NO];
+        
+        {
+            NSTextFieldCell* oldCell = [self cell];
+            MACTextFieldCell* cell = [[MACTextFieldCell alloc]initTextCell:@""];
+            
+            [cell setState:[oldCell state]];
+            [cell setTarget:[oldCell target]];
+            [cell setAction:[oldCell action]];
+            [cell setEnabled:[oldCell isEnabled]];
+            [cell setContinuous:[oldCell isContinuous]];
+            [cell setEditable:[oldCell isEditable]];
+            [cell setSelectable:[oldCell isSelectable]];
+            [cell setBordered:[oldCell isBordered]];
+            [cell setBezeled:[oldCell isBezeled]];
+            [cell setScrollable:[oldCell isScrollable]];
+            [cell setHighlighted:[oldCell isHighlighted]];
+            [cell setWraps:[oldCell wraps]];
+            [cell setFont:[oldCell font]];
+            [cell setFormatter:[oldCell formatter]];
+            [cell setObjectValue:[cell objectValue]];
+
+            [self setCell:cell];
+            [cell release];
+        }
+        
+        
         [[self cell] setAlignment:NSTextAlignmentLeft];
         [[self cell] setLineBreakMode:NSLineBreakByTruncatingTail];
         _marginLeft = 0;
         _marginRight = 0;
+        
         return self;
     }
     return nil;
