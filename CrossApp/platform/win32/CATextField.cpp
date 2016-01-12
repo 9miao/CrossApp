@@ -627,6 +627,8 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
+
+	CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
 }
 
 bool CATextField::resignFirstResponder()
@@ -683,7 +685,7 @@ void CATextField::delayShowImage()
 
 void CATextField::showImage()
 {
-    ((CATextFieldWin32*)m_pTextField)->updateImage();
+	((CATextFieldWin32*)m_pTextField)->updateImage();
 }
 
 CATextField* CATextField::createWithFrame(const DRect& frame)
@@ -729,8 +731,8 @@ bool CATextField::init()
 
 	CATextFieldWin32 *text = new CATextFieldWin32(this);
 	text->initWithFrame(DRect(0, 0, 1, 1));
-	text->autorelease();
 	this->addSubview(text);
+	text->release();
 
 	m_pTextField = (CATextFieldWin32*)text;
     return true;
