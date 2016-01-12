@@ -1379,6 +1379,12 @@ void CAView::onExit()
     }
 }
 
+void CAView::delayUpdate()
+{
+    CC_RETURN_IF(CAScheduler::isScheduled(schedule_selector(CAView::update), this));
+    CAScheduler::schedule(schedule_selector(CAView::update), this, 0, 0, 0);
+}
+
 // override me
 void CAView::update(float fDelta)
 {

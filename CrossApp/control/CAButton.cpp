@@ -597,6 +597,7 @@ void CAButton::setControlState(const CAControlState& var)
     {
         labelCenter.size = m_pTitleLabelSize;
     }
+    
     if(m_bDefineTitleOffset)
     {
         labelCenter.origin = ccpMult(this->getBounds().size, 0.5f);

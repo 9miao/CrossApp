@@ -328,10 +328,13 @@ public:
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
 protected:
+    
     void detachSubview(CAView *subview);
 
+    void delayUpdate();
+    
     void updateDraw();
-
+    
     void updateColor(void);
     
     virtual void setPoint(const DPoint &point);

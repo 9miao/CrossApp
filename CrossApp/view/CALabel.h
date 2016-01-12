@@ -66,7 +66,7 @@ public:
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_cLabelSize, LabelSize);
 
-    virtual void visit();
+    virtual void update(float fDelta);
     
     void sizeToFit();
     
@@ -93,8 +93,6 @@ protected:
     void updateImage();
 
 	void copySelectText();
-    
-    bool m_bUpdateImage;
     
     float pTextHeight;
     

@@ -33,6 +33,22 @@
 
 }
 
+-(id)initWithFrame:(CGRect)frame
+{
+    if ([super initWithFrame:frame])
+    {
+        _beforeText = [[NSString alloc]initWithFormat:@""];
+        return self;
+    }
+    return nil;
+}
+
+-(void)dealloc
+{
+    [super dealloc];
+    [_beforeText release];
+}
+
 -(void)hide
 {
     CGRect rect = self.frame;
@@ -151,7 +167,7 @@
         }
     }
     
-    std::string str = self.beforeText != nil ? [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding] : "";
+    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
     std::string insert = [string cStringUsingEncoding:NSUTF8StringEncoding];
     self.beforeText = [textField text];
     

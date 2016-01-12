@@ -40,9 +40,7 @@ NS_CC_BEGIN
 
 
 CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
-{return image;
-    DRect rect;
-    rect.size = size;
+{
     CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
     renderImage->begin();
     
@@ -56,10 +54,10 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
     
     GLfloat    vertices[] =
     {
-        rect.origin.x,                     rect.origin.y,                      /*0.0f,*/
-        rect.origin.x + rect.size.width,   rect.origin.y,                      /*0.0f,*/
-        rect.origin.x,                     rect.origin.y + rect.size.height,   /*0.0f,*/
-        rect.origin.x + rect.size.width,   rect.origin.y + rect.size.height,   /*0.0f*/
+        0,            0,               /*0.0f,*/
+        size.width,   0,                    /*0.0f,*/
+        0,            size.height,     /*0.0f,*/
+        size.width,   size.height           /*0.0f*/
     };
     
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
