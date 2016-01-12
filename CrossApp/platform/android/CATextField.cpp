@@ -351,9 +351,17 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_text(JNIEnv *env, jclass cls, jint key, jstring jtext)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
     {
-        const char* text = env->GetStringUTFChars(jtext, NULL);
+        char* buffer = (char*)malloc(sizeof(char) * lenght);
+        env->GetByteArrayRegion(textBuffer, 0, lenght, (jbyte *)buffer);
+        
+        std::string text;
+        text.resize(lenght);
+        for (int i=0; i<lenght; i++)
+        {
+            text[i] = buffer[i];
+        }
         
         s_lock = true;
         CATextField* textField = s_map[(int)key];

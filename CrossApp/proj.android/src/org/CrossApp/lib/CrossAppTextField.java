@@ -116,7 +116,7 @@ import android.widget.TextView.OnEditorActionListener;
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
 	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
-	private static native void text(int key, String text);
+	private static native void text(int key, byte[] text, int lenght);
     public void init(int key)
     {
     	mykey = key;
@@ -788,7 +788,8 @@ import android.widget.TextView.OnEditorActionListener;
 					@Override
 					public void run()
 					{
-						text(mykey, textField.getText().toString());
+						ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
+						text(mykey, textBuffer.array(), textBuffer.array().length);
 						textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
 					}
 					

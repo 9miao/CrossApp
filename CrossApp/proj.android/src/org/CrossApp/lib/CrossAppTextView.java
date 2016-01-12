@@ -72,7 +72,7 @@ import android.widget.TextView.OnEditorActionListener;
 	private OnEditorActionListener onEditorActionListener = null;
 	private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = null;
 	
-	//代理回调需要
+	//浠ｇ�����璋����瑕�
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
 	private String  changedTextString = "";
@@ -81,7 +81,7 @@ import android.widget.TextView.OnEditorActionListener;
 	private int _arg2 = 0;
 	private int _arg3 = 0;
 	
-	//是否弹出键盘
+	//������寮瑰�洪�����
 	private boolean isShowKey = false;
 	
 	
@@ -132,7 +132,7 @@ import android.widget.TextView.OnEditorActionListener;
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
 	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
-	private static native void text(int key, String text);
+	private static native void text(int key, byte[] text, int lenght);
     public void init(int key)
     {
     	
@@ -540,7 +540,7 @@ import android.widget.TextView.OnEditorActionListener;
     	{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
-			{//起始位置， 删除长度，增加长度
+			{//璧峰��浣�缃�锛� �����ら�垮害锛�澧������垮害
 				// TODO Auto-generated method stub
 				if (isSetText)
 				{
@@ -568,7 +568,8 @@ import android.widget.TextView.OnEditorActionListener;
 					@Override
 					public void run()
 					{
-						text(mykey, textView.getText().toString());
+						ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
+						text(mykey, textBuffer.array(), textBuffer.array().length);
 						textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
 					}
 					
