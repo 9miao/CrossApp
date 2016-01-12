@@ -35,7 +35,7 @@ CALabel::CALabel()
 ,m_bItalics(false)
 ,m_bUnderLine(false)
 ,m_bEnableCopy(false)
-, m_cFontColor(CAColor_black)
+,m_cFontColor(CAColor_black)
 {
     m_obContentSize = DSizeZero;
 }
@@ -456,16 +456,8 @@ const CAColor4B& CALabel::getColor(void)
 void CALabel::setColor(const CAColor4B& color)
 {
 	m_cFontColor = color;
-	if (!m_nText.empty())
-	{
-		updateImage();
-		CAView::setColor(CAColor_white);
-	}
-	else
-	{
-		CAView::setColor(color);
-	}
-	setAlpha(color.a / 255.0f);
+    updateImage();
+    CAView::setColor(ccc4(255, 255, 255, color.a));
 }
 
 void CALabel::update(float fDelta)
