@@ -48,12 +48,8 @@ public:
         
         /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
         P3D,
-        
-        /// it calls "updateProjection" on the projection delegate.
-        PCustom,
-        
-        /// Default projection is 3D projection
-        Default = P3D,
+
+        Default = P2D,
     } Projection;
     
     /**
@@ -116,16 +112,6 @@ public:
     /** Sets the glViewport*/
     void setViewport();
 
-    /** How many frames were called since the director started */
-    
-    
-    /** Whether or not the replaced scene will receive the cleanup message.
-     If the new scene is pushed, then the old scene won't receive the "cleanup" message.
-     If the new scene replaces the old one, the it will receive the "cleanup" message.
-     @since v0.99.0
-     */
-    inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
-
     /** This object will be visited after the main scene is visited.
      This object MUST implement the "visit" selector.
      Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
@@ -133,12 +119,6 @@ public:
      */
     CAView* getNotificationView();
     void setNotificationView(CAView *view);
-    
-    /** CAApplication delegate. It shall implemente the CCDirectorDelegate protocol
-     @since v0.99.5
-     */
-    CAApplicationDelegate* getDelegate() const;
-    void setDelegate(CAApplicationDelegate* pDelegate);
 
     // window size
 
@@ -324,9 +304,6 @@ protected:
     /* The running scene */
     CAWindow *m_pRootWindow;
     
-    /* If YES, then "old" scene will receive the cleanup message */
-    bool    m_bSendCleanupToScene;
-    
     /* last time the main loop was updated */
     struct cc_timeval *m_pLastUpdate;
 
@@ -344,9 +321,6 @@ protected:
 
     /* This object will be visited after the scene. Useful to hook a notification node */
     CAView *m_pNotificationNode;
-
-    /* Projection protocol delegate */
-    CAApplicationDelegate *m_pProjectionDelegate;
     
     CAStatusBarStyle m_eStatusBarStyle;
     

@@ -93,7 +93,7 @@ CAView::CAView(void)
 , m_bRecursiveDirty(false)
 , m_bDirty(false)
 , m_bHasChildren(false)
-, m_pViewDelegate(NULL)
+, m_pContentContainer(NULL)
 , m_bFrame(true)
 , m_bIsAnimation(false)
 , m_pobBatchView(NULL)
@@ -1316,9 +1316,9 @@ CAResponder* CAView::nextResponder()
         return NULL;
     }
     
-    if (m_pViewDelegate)
+    if (m_pContentContainer)
     {
-        return dynamic_cast<CAResponder*>(m_pViewDelegate);
+        return dynamic_cast<CAResponder*>(m_pContentContainer);
     }
     return this->getSuperview();
 }
@@ -1345,10 +1345,10 @@ void CAView::onEnterTransitionDidFinish()
             (*itr)->onEnterTransitionDidFinish();
     }
     
-    if (m_pViewDelegate)
+    if (m_pContentContainer)
     {
-        m_pViewDelegate->getSuperViewRect(this->getSuperview()->getBounds());
-        m_pViewDelegate->viewOnEnterTransitionDidFinish();
+        m_pContentContainer->getSuperViewRect(this->getSuperview()->getBounds());
+        m_pContentContainer->viewOnEnterTransitionDidFinish();
     }
 }
 
@@ -1361,9 +1361,9 @@ void CAView::onExitTransitionDidStart()
             (*itr)->onExitTransitionDidStart();
     }
     
-    if (m_pViewDelegate)
+    if (m_pContentContainer)
     {
-        m_pViewDelegate->viewOnExitTransitionDidStart();
+        m_pContentContainer->viewOnExitTransitionDidStart();
     }
 }
 

@@ -31,13 +31,13 @@ CAViewController::CAViewController()
 {
     m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
-    m_pView->setViewDelegate(this);
+    m_pView->setContentContainer(this);
 }
 
 CAViewController::~CAViewController()
 {
     CC_SAFE_RELEASE_NULL(m_pParser);
-    m_pView->setViewDelegate(NULL);
+    m_pView->setContentContainer(NULL);
     CC_SAFE_RELEASE_NULL(m_pView);
     CC_SAFE_RELEASE_NULL(m_pTabBarItem);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarItem);
@@ -201,8 +201,7 @@ void CAViewController::setTabBarItem(CATabBarItem* item)
 
 bool CAViewController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-
-    return false;
+    return true;
 }
 
 void CAViewController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)

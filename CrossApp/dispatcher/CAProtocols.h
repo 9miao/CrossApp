@@ -130,20 +130,6 @@ public:
     virtual const std::string& getString(void) const = 0;
 };
 
-/** 
- * OpenGL projection protocol 
- * @js NA
- * @lua NA
- */
-class CC_DLL CAApplicationDelegate
-{
-public:
-    /** 
-     * Will be called by CAApplication when the projection is updated, and "custom" projection is used
-     */
-    virtual void updateProjection(void) = 0;
-};
-
 NS_CC_END
 
 #endif // __CAProtocols_H__

@@ -24,8 +24,7 @@ class CADrawerController;
 class CAUIEditorParser;
 
 class CC_DLL CAViewController
-: public CAResponder
-, public CAViewDelegate
+: public CAContentContainer
 , public CAKeypadDelegate
 {
     
@@ -63,7 +62,7 @@ public:
     
     virtual void setKeypadEnabled(bool value);
     
-    virtual CAView* getView();
+    CAView* getView();
     
     virtual CAResponder* nextResponder();
 

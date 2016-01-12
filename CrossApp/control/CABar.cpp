@@ -498,10 +498,13 @@ bool CATabBar::init(const CAVector<CATabBarItem*>& items, const DSize& size, con
             btn->addTarget(this, CAControl_selector(CATabBar::setTouchSelected), CAControlEventTouchUpInSide);
             m_pButtons.pushBack(btn);
             
+            DRect badgeRect;
+            badgeRect.origin = rect.origin + DPoint(rect.size.width, 25);
+            
             CABadgeView* badgeView = new CABadgeView();
             badgeView->init();
-            badgeView->setCenter(DRect(rect.size.width, 25, 0, 0));
-            btn->insertSubview(badgeView, 10);
+            badgeView->setCenter(badgeRect);
+            m_pContentView->insertSubview(badgeView, 10);
             m_pBadgeViews.pushBack(badgeView);
             badgeView->release();
         }

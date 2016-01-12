@@ -64,7 +64,6 @@ bool CAWebView::init()
 {
     CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
     
-    DSize size = this->getBounds().size;
     m_pLoadingView = CAActivityIndicatorView::create();
     m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
 	m_pLoadingView->setVisible(false);
@@ -195,6 +194,7 @@ void CAWebView::setActivityView(CAActivityIndicatorView* loadingView)
 
 void CAWebView::showLoadingActivity(bool show)
 {
+    CC_RETURN_IF(m_pLoadingView == NULL);
 	if (show)
 	{
 		_impl->setVisible(false);
@@ -228,7 +228,10 @@ void CAWebView::update(float dt)
 void CAWebView::setContentSize(const DSize &contentSize)
 {
     CAView::setContentSize(contentSize);
-    m_pLoadingView->setFrame(this->getBounds());
+    if (m_pLoadingView)
+    {
+        m_pLoadingView->setFrame(this->getBounds());
+    }
 }
 
 NS_CC_END

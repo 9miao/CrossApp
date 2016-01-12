@@ -58,7 +58,9 @@ public:
     
 protected:
     
-    void showBegin();
+    void begin();
+    
+    void showEnded();
     
     void hideEnded();
     

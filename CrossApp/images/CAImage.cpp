@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 
 CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
-{
+{return image;
     DRect rect;
     rect.size = size;
     CARenderImage* renderImage = CARenderImage::create(size.width, size.height);

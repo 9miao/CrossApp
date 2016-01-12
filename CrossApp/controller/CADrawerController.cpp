@@ -178,11 +178,11 @@ void CADrawerController::showLeftViewController(bool animated)
     CC_RETURN_IF(m_bAnimation);
     m_bShow = true;
 
+    this->begin();
+    
     if (animated)
     {
-        this->showBegin();
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
-        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
         CAScheduler::schedule(schedule_selector(CADrawerController::scheduleShowAction), this, 1/60.0f);
         m_bAnimation = true;
     }
@@ -190,7 +190,7 @@ void CADrawerController::showLeftViewController(bool animated)
     {
         m_fCurrDivision = m_fDivision;
         this->updateViewFrame();
-        this->hideEnded();
+        this->showEnded();
     }
 }
 
@@ -199,10 +199,13 @@ void CADrawerController::hideLeftViewController(bool animated)
     CC_RETURN_IF(m_bAnimation);
     m_bShow = false;
     
+    this->begin();
+    
     if (animated)
     {
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
-        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+        m_pContainer[0]->setTouchEnabled(false);
+        m_pContainer[1]->setTouchEnabled(false);
         CAScheduler::schedule(schedule_selector(CADrawerController::scheduleHideAction), this, 1/60.0f);
         m_bAnimation = true;
     }
@@ -219,12 +222,18 @@ bool CADrawerController::isShowLeftViewController()
     return m_pContainer[0]->isVisible();
 }
 
-void CADrawerController::showBegin()
+void CADrawerController::begin()
 {
     m_pContainer[0]->setVisible(true);
+    m_pContainer[0]->setTouchEnabled(false);
     m_pContainer[1]->setTouchEnabled(false);
-    m_pLeftViewController->viewDidAppear();
+}
+
+void CADrawerController::showEnded()
+{
+    m_pContainer[0]->setTouchEnabled(true);
     m_pRightViewController->viewDidDisappear();
+    m_pLeftViewController->viewDidAppear();
 }
 
 void CADrawerController::hideEnded()
@@ -265,7 +274,7 @@ void CADrawerController::scheduleShowAction(float dt)
     if (m_fDivision - m_fCurrDivision < FLT_EPSILON)
     {
         CAScheduler::unschedule(schedule_selector(CADrawerController::scheduleShowAction), this);
-        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        this->showEnded();
         m_bAnimation = false;
     }
     else
@@ -280,7 +289,6 @@ void CADrawerController::scheduleHideAction(float dt)
     if (m_fCurrDivision < FLT_EPSILON)
     {
         CAScheduler::unschedule(schedule_selector(CADrawerController::scheduleHideAction), this);
-        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
         this->hideEnded();
         m_bAnimation = false;
     }
@@ -314,13 +322,8 @@ void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     m_fCurrDivision = MIN(m_fCurrDivision, m_fDivision);
     m_fCurrDivision = MAX(m_fCurrDivision, 0);
     
+    this->begin();
     this->updateViewFrame();
-    
-    if (m_bShow == false)
-    {
-        m_pContainer[0]->setVisible(true);
-        m_pContainer[1]->setTouchEnabled(false);
-    }
 
     m_fOffX = offDis;
 }

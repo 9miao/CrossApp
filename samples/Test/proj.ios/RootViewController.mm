@@ -42,6 +42,7 @@
                                  numberOfSamples: 0];
     [__glView setMultipleTouchEnabled:YES];
     [self.view addSubview:__glView];
+
     
 //    NSString *path=@"System/Library/Fonts"; // 要列出来的目录
 //    

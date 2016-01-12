@@ -18,6 +18,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -33,6 +34,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import android.widget.RelativeLayout.LayoutParams;
 
 import org.CrossApp.lib.AndroidVolumeControl;
 import org.CrossApp.lib.AndroidNetWorkManager;
@@ -556,7 +558,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         framelayout.setLayoutParams(framelayout_params);
         frame = framelayout;
 
-
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
 
@@ -565,13 +566,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
+        {
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+        }
+        
         mCocos2dxRenderer = new Cocos2dxRenderer();
         this.mGLSurfaceView.setCocos2dxRenderer(mCocos2dxRenderer);
 
         // Set framelayout as the content view
 		setContentView(framelayout);
-		
 	}
 	
 	public static int dip2px(Context context, float dpValue) {
