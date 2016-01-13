@@ -5,9 +5,14 @@
 #import "EAGLView.h"
 #import <Cocoa/Cocoa.h>
 
-
-
 #define textView_Mac ((MacTextView*)m_pTextView)
+
+#ifdef NSTextAlignmentLeft
+#else
+#define NSTextAlignmentLeft NSLeftTextAlignment
+#define NSTextAlignmentCenter NSCenterTextAlignment
+#define NSTextAlignmentRight NSRightTextAlignment
+#endif
 
 @interface MacTextView: NSTextField
 {
