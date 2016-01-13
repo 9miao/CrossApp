@@ -245,6 +245,13 @@
             _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
         }
     }else{
+        
+        if (curStr.length > _textField->getMaxLenght() && _textField->getMaxLenght()!=0)
+        {
+            [self setText:before];
+            return;
+        }
+        
         //insert
         insertL = curStr.length - before.length;
         starL   = before.length;
@@ -314,7 +321,7 @@ CATextField::CATextField()
     [textField_MAC setText:@""];
     [textField_MAC release];
     
-    textField_MAC.placeholderString = @"placeholder";
+    textField_MAC.placeholderString = @"";
     CGFloat scale = MAC_SCALE;
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
 }
