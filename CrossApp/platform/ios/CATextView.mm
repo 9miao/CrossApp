@@ -84,10 +84,13 @@
     int dele    = 0;
     int inse  = 0;
     
-    if (range.length>0) {
+    if (range.length>0)
+    {
         dele = (int)range.length;
         
-    }else{
+    }
+    else
+    {
         inse = (int)text.length;
     }
     

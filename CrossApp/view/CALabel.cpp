@@ -29,6 +29,7 @@ CALabel::CALabel()
 ,m_cLabelSize(DSizeZero)
 ,pTextHeight(0)
 ,m_bFitFlag(false)
+,m_bUpdateImage(false)
 ,m_iLineSpacing(0)
 ,m_bWordWrap(false)
 ,m_bBold(false)
@@ -108,7 +109,8 @@ bool CALabel::initWithCenter(const DRect& rect)
 
 void CALabel::updateImageDraw()
 {
-    this->delayUpdate();
+    m_bUpdateImage = true;
+    this->updateDraw();
 }
 
 void CALabel::updateImage()
@@ -460,9 +462,14 @@ void CALabel::setColor(const CAColor4B& color)
     CAView::setColor(ccc4(255, 255, 255, color.a));
 }
 
-void CALabel::update(float fDelta)
+void CALabel::visitEve()
 {
-    this->updateImage();
+    if (m_bUpdateImage)
+    {
+        m_bUpdateImage = false;
+        this->updateImage();
+    }
+    CAView::visitEve();
 }
 
 void CALabel::applyStyle(const string& sStyleName)

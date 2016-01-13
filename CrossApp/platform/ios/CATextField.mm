@@ -215,7 +215,7 @@ CATextField::CATextField()
     textField_iOS.keyboardType = UIKeyboardTypeDefault;
     textField_iOS.returnKeyType = UIReturnKeyDone;
     textField_iOS.borderStyle = UITextBorderStyleNone;
-    textField_iOS.placeholder = @"placeholder";
+    textField_iOS.placeholder = @"";
     CGFloat scale = [[UIScreen mainScreen] scale];
     textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     

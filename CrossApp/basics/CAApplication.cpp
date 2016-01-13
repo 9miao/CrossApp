@@ -173,6 +173,11 @@ void CAApplication::drawScene(float dt)
         }
 #endif
         
+        if (m_pRootWindow)
+        {
+            m_pRootWindow->visitEve();
+        }
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         kmGLPushMatrix();

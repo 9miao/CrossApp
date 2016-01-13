@@ -397,7 +397,7 @@ CATextField::CATextField()
     s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
     onCreateView(m_u__ID);
-    this->setPlaceHolderText("placeholder");
+    this->setPlaceHolderText("");
     setFontSizeJNI(m_u__ID, m_iFontSize / 2);
 }
 

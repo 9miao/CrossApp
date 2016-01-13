@@ -1246,6 +1246,16 @@ void CAView::visit()
     kmGLPopMatrix();
 }
 
+void CAView::visitEve(void)
+{
+    CAVector<CAView*>::iterator itr=m_obSubviews.begin();
+    while (itr!=m_obSubviews.end())
+    {
+        (*itr)->visitEve();
+        itr++;
+    }
+}
+
 void CAView::transformAncestors()
 {
     if( m_pSuperview != NULL  )

@@ -43,18 +43,19 @@
     [super keyUp:theEvent];
     
     
-    if ([theEvent keyCode] == 36||
-        [theEvent keyCode] == 76)
+    if (_textView->getReturnType() != CrossApp::CATextView::Default)
     {
-
-
-        _textView->resignFirstResponder();
-
-        if (_textView->getDelegate())
+        if ([theEvent keyCode] == 36||
+            [theEvent keyCode] == 76)
         {
-            _textView->getDelegate()->textViewShouldReturn(_textView);
+            _textView->resignFirstResponder();
+            if (_textView->getDelegate())
+            {
+                _textView->getDelegate()->textViewShouldReturn(_textView);
+            }
         }
     }
+    
 }
 
 - (void)textDidChange:(NSNotification *)notification{

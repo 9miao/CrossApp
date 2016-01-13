@@ -221,6 +221,8 @@ public:
 
     virtual void visit(void);
 
+    virtual void visitEve(void);
+    
     virtual CAResponder* nextResponder();
     
     virtual CAView* copy();
