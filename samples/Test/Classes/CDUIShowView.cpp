@@ -58,7 +58,7 @@ void ETableViewCell::initWithCell()
 	test->setColor(ccc4(34, 151, 254, 255));
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    test->setFontSize(_px(28));
+    test->setFontSize(28);
     test->setTag(100);
     this->addSubview(test);
 }
@@ -152,12 +152,12 @@ unsigned int ETableView::numberOfSections(CATableView *table)
 
 unsigned int ETableView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return _px(size.height/sectionTitle.size());
+    return size.height/sectionTitle.size();
 }
 
 unsigned int ETableView::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
 {
-    return _px(0);
+    return 0;
 }
 
 unsigned int ETableView::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
@@ -256,7 +256,7 @@ unsigned int CDListView::numberOfIndex(CAListView *listView)
 
 unsigned int CDListView::listViewHeightForIndex(CAListView *listView, unsigned int index)
 {
-    return _px(150);
+    return 150;
 }
 
 CAListViewCell* CDListView::listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index)
@@ -273,7 +273,7 @@ CAListViewCell* CDListView::listViewCellAtIndex(CAListView *listView, const DSiz
 		test->setColor(ccc4(51, 204, 255, 255));
         test->setTextAlignment(CATextAlignmentCenter);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        test->setFontSize(_px(28));
+        test->setFontSize(28);
         test->setTag(100);
         cell->addSubview(test);
     }
@@ -860,7 +860,7 @@ void CDUIShowView::showLabel()
         label->setText(cc);
         label->setColor(CAColor_red);
         label->setFontName("c:/x.ttf");
-        label->setFontSize((_px(36)));
+        label->setFontSize(36);
         label->setTextAlignment(CATextAlignmentCenter);
         label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         if (i==1) {
@@ -899,7 +899,7 @@ void CDUIShowView::showProgress()
     progress_value = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     progress_value->setTag(100);
     progress_value->setText("");
-    progress_value->setFontSize(_px(30));
+    progress_value->setFontSize(30);
 	progress_value->setColor(ccc4(51, 204, 255, 255));
     progress_value->setTextAlignment(CATextAlignmentCenter);
     progress_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -932,7 +932,7 @@ void CDUIShowView::showSlider()
     sliderValue1 = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
     sliderValue1->setColor(ccc4(51,204,255,255));
     sliderValue1->setText("0");
-    sliderValue1->setFontSize(_px(30));
+    sliderValue1->setFontSize(30);
     sliderValue1->setTextAlignment(CATextAlignmentCenter);
     sliderValue1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
@@ -948,7 +948,7 @@ void CDUIShowView::showSlider()
     sliderValue2 = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
 	sliderValue2->setColor(ccc4(51, 204, 255, 255));
     sliderValue2->setText("0");
-    sliderValue2->setFontSize(_px(30));
+    sliderValue2->setFontSize(30);
     sliderValue2->setTextAlignment(CATextAlignmentCenter);
     sliderValue2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
@@ -1051,7 +1051,6 @@ void CDUIShowView::switchStateChange(CAControl* btn, DPoint point)
 void CDUIShowView::showTextField()
 {
     CATextField* textField = CATextField::createWithFrame(DRect(100, 300, winSize.width-200, 80));
-    textField->setFontSize(_px(40));
     textField->setTag(100);
     textField->setPlaceHolderText("Input");
 	textField->setKeyboardType(CATextField::Default);
@@ -1067,7 +1066,6 @@ void CDUIShowView::showTextFieldByIndex()
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField"));
         CATextField* textField = CATextField::createWithFrame(DRect(100, 150, winSize.width-200, 80));
-        textField->setFontSize(_px(40));
         textField->setTag(100);
 		textField->setPlaceHolderText("Input");
         this->getView()->addSubview(textField);
@@ -1076,7 +1074,6 @@ void CDUIShowView::showTextFieldByIndex()
     {
         this->setNavigationBarItem(CANavigationBarItem::create("TextField Custem"));
         CATextField* textField = CATextField::createWithFrame(DRect(100, 150, winSize.width-200, 80));
-        textField->setFontSize(_px(40));
         textField->setTag(100);
 		textField->setPlaceHolderText("Input");
         textField->setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
@@ -1087,15 +1084,7 @@ void CDUIShowView::showTextFieldByIndex()
 void CDUIShowView::showTextView()
 {
     CATextView* textView = CATextView::createWithFrame(DRect(100, 150, winSize.width-200, 300));
-	textView->setTextFontSize(_px(40));
     this->getView()->addSubview(textView);
-    
-    CATextField* textField = CATextField::createWithFrame(DRect(100, 450, winSize.width-200, 80));
-    textField->setFontSize(_px(40));
-    textField->setTag(100);
-	textField->setPlaceHolderText("Input");
-	textField->setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
-    this->getView()->addSubview(textField);
 }
 
 void CDUIShowView::showSegmentedControl()
@@ -1328,7 +1317,7 @@ CATableViewCell* CDUIShowView::tableCellAtIndex(CATableView* table, const DSize&
         
         CALabel* cellText = CALabel::createWithCenter(DRect(200, _size.height/2, _size.width/2, _size.height));
         cellText->setTag(100);
-        cellText->setFontSize(_px(30));
+        cellText->setFontSize(30);
         cellText->setTextAlignment(CATextAlignmentCenter);
         cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         cell->addSubview(cellText);
@@ -1349,7 +1338,7 @@ CAView* CDUIShowView::tableViewSectionViewForHeaderInSection(CATableView* table,
     DSize _size = viewSize;
     CALabel* header = CALabel::createWithCenter(DRect(50, _size.height/2, _size.width/2, _size.height));
     header->setText(head);
-    header->setFontSize(_px(30));
+    header->setFontSize(30);
 	header->setColor(CAColor_white);
     header->setTextAlignment(CATextAlignmentCenter);
     header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -1376,12 +1365,12 @@ unsigned int CDUIShowView::numberOfSections(CATableView *table)
 
 unsigned int CDUIShowView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return _px(130);
+    return 130;
 }
 
 unsigned int CDUIShowView::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
 {
-    return _px(50);
+    return 50;
 }
 
 unsigned int CDUIShowView::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
@@ -1423,7 +1412,7 @@ unsigned int CDUIShowView::numberOfIndex(CAListView *listView)
 
 unsigned int CDUIShowView::listViewHeightForIndex(CAListView *listView, unsigned int index)
 {
-    return _px(100);
+    return 100;
 }
 
 CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index)
@@ -1441,7 +1430,7 @@ CAListViewCell* CDUIShowView::listViewCellAtIndex(CAListView *listView, const DS
 		test->setColor(ccc4(51, 204, 255, 255));
         test->setTextAlignment(CATextAlignmentCenter);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        test->setFontSize(_px(28));
+        test->setFontSize(28);
         test->setTag(100);
         cell->addSubview(test);
         
@@ -1488,8 +1477,8 @@ void CDUIShowView::showCollectionView()
     p_Conllection->setScrollViewDelegate(this);
     p_Conllection->setHeaderRefreshView(headerRefreshView);
     p_Conllection->setFooterRefreshView(footerRefreshView);
-    p_Conllection->setHoriInterval(_px(40));
-    p_Conllection->setVertInterval(_px(40));
+    p_Conllection->setHoriInterval(40);
+    p_Conllection->setVertInterval(40);
     this->getView()->addSubview(p_Conllection);
     p_Conllection->reloadData();
     p_Conllection->startPullToHeaderRefreshView();
@@ -1522,7 +1511,7 @@ CACollectionViewCell* CDUIShowView::collectionCellAtIndex(CACollectionView *coll
         
         CALabel* itemText = CALabel::createWithCenter(DRect(cellSize.width/2, cellSize.height/2, 150, 40));
         itemText->setTag(100);
-        itemText->setFontSize(_px(29));
+        itemText->setFontSize(29);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->getContentView()->addSubview(itemText);
@@ -1555,7 +1544,7 @@ unsigned int CDUIShowView::numberOfItemsInRowsInSection(CACollectionView *collec
 
 unsigned int CDUIShowView::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
-    return (this->getView()->getBounds().size.width - _px(40) * 4) / 3;
+    return (this->getView()->getBounds().size.width - 40 * 4) / 3;
 }
 
 
@@ -1616,14 +1605,14 @@ void CDUIShowView::showDatePickerView()
     p_pickerView = CAPickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280));
     p_pickerView->setPickerViewDelegate(this);
     p_pickerView->setPickerViewDataSource(this);
-    p_pickerView->setFontSizeNormal(_px(40));
-    p_pickerView->setFontSizeSelected(_px(40));
+    p_pickerView->setFontSizeNormal(40);
+    p_pickerView->setFontSizeSelected(40);
     p_pickerView->reloadAllComponents();
     
     city_value = CALabel::createWithFrame(DRect(0, 100, winSize.width, 40));
     city_value->setText(UTF8("天津市"));
 	city_value->setColor(CAColor_black);
-    city_value->setFontSize((_px(28)));
+    city_value->setFontSize(28);
     city_value->setTextAlignment(CATextAlignmentCenter);
     city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
@@ -1746,7 +1735,7 @@ void CDUIShowView::showAnimation()
     bg->setImage(CAImage::create("image/navbg.jpg"));
     
     animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
-    animation_2_textfield->setFontSize(_px(40));
+    animation_2_textfield->setFontSize(40);
 	animation_2_textfield->setKeyboardType(CATextField::Default);
     animation_2_textfield->setVisible(false);
     
@@ -1853,7 +1842,7 @@ void CDUIShowView::showStepper()
     step_value = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 40));
     step_value->setText("step_value:0");
 	step_value->setColor(CAColor_black);
-    step_value->setFontSize((_px(28)));
+    step_value->setFontSize(28);
     step_value->setTextAlignment(CATextAlignmentCenter);
     step_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->getView()->addSubview(step_value);
@@ -1921,7 +1910,7 @@ void CDUIShowView::renderCallBack(CAControl* control, DPoint point)
     }else if(button->getTag()==2) {
 
         m_clvImage->setClippingEnabled(true);
-        CARenderImage* rm = CARenderImage::create(_px(winSize.width-100), _px(winSize.width-100));
+        CARenderImage* rm = CARenderImage::create(winSize.width-100, winSize.width-100);
         rm->printscreenWithView(m_clvImage);
         
         renderImage = CAView::createWithFrame(DRect(50,winSize.height/4,winSize.width-100,winSize.width-100));

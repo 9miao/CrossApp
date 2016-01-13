@@ -147,6 +147,7 @@ CATextView::CATextView()
     [textView_iOS addIosTextView];
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textView_iOS];
+    [textView_iOS release];
     textView_iOS.textView = this;
     textView_iOS.backgroundColor = nil;
 }

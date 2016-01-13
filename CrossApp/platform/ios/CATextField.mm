@@ -21,7 +21,7 @@
 }
 
 @property(nonatomic,assign) CrossApp::CATextField* textField;
-@property(nonatomic,retain) NSString* beforeText;
+@property(nonatomic,copy) NSString* beforeText;
 
 -(void)regiestKeyBoardMessage;
 -(void)removeTextView;
@@ -46,7 +46,6 @@
 -(void)dealloc
 {
     [super dealloc];
-    [_beforeText release];
 }
 
 -(void)hide
@@ -209,6 +208,7 @@ CATextField::CATextField()
     m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textField_iOS];
+    [textField_iOS release];
     textField_iOS.textField = this;
     textField_iOS.delegate = textField_iOS;
     textField_iOS.regiestKeyBoardMessage;

@@ -350,8 +350,8 @@ protected:
 // end of base_node group
 /// @}
 
-static inline float _px(float dip) { return dip; }
-static inline float _dip(float px) { return px; }
+CC_DEPRECATED_ATTRIBUTE static inline float _px(float dip) { return dip; }
+CC_DEPRECATED_ATTRIBUTE static inline float _dip(float px) { return px; }
 
 NS_CC_END
 

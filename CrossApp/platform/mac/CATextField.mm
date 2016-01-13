@@ -68,7 +68,7 @@
 
 @end
 
-@interface MACTextField: NSTextField<NSTextFieldDelegate>
+@interface MACTextField: NSTextField
 {
     BOOL _isShouldEdit;
     int _marginLeft;
@@ -100,7 +100,11 @@
 {
     
 }
-
+-(void)setText:(NSString* )value
+{
+    self.stringValue = value;
+    self.beforeText = value;
+}
 -(void)setMarginLeft:(int)marginLeft
 {
     CGFloat scale = MAC_SCALE;
@@ -164,7 +168,6 @@
 {
     if ([super initWithFrame:frameRect])
     {
-        [self setDelegate:self];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setBezeled:NO];
         
@@ -217,11 +220,50 @@
 - (void)textDidChange:(NSNotification *)notification
 {
     [super textDidChange:notification];
-}
-
-- (void) keyDown:(NSEvent *)theEvent
-{
-    [super keyDown:theEvent];
+    
+    NSString* before = [self beforeText];
+    NSString* curStr = [self stringValue];
+    
+    int starL = 0;
+    int insertL = 0;
+    int deleteL = 0;
+    if(before.length>curStr.length){
+        //delete
+        deleteL = before.length - curStr.length;
+        starL   = curStr.length;
+        
+        for(int i=0; i<curStr.length; i++){
+            unichar ch = [curStr characterAtIndex: i];
+            unichar ch1 = [before characterAtIndex: i];
+            if(ch!=ch1){
+                starL = i;
+                break;
+            }
+        }
+        
+        if (_textField->getDelegate()) {
+            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
+        }
+    }else{
+        //insert
+        insertL = curStr.length - before.length;
+        starL   = before.length;
+        
+        for(int i=0; i<before.length; i++){
+            unichar ch = [curStr characterAtIndex: i];
+            unichar ch1 = [before characterAtIndex: i];
+            if(ch!=ch1){
+                starL = i;
+                break;
+            }
+        }
+        
+        if (_textField->getDelegate()) {
+            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
+        }
+    }
+    
+    self.beforeText = self.stringValue;
 }
 
 - (void) keyUp:(NSEvent *)theEvent
@@ -269,6 +311,8 @@ CATextField::CATextField()
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textField_MAC];
     textField_MAC.textField = this;
+    [textField_MAC setText:@""];
+    [textField_MAC release];
     
     textField_MAC.placeholderString = @"placeholder";
     CGFloat scale = MAC_SCALE;
@@ -570,8 +614,8 @@ int CATextField::getFontSize()
 void CATextField::setText(const std::string &var)
 {
     m_sText = var;
-    textField_MAC.stringValue = [NSString stringWithUTF8String:m_sText.c_str()];
-    textField_MAC.beforeText = [textField_MAC stringValue];
+    
+    [textField_MAC setText:[NSString stringWithUTF8String:m_sText.c_str()]];
     
     this->delayShowImage();
 }
