@@ -410,7 +410,7 @@ void CAPickerView::setBackgroundColor(const CAColor4B& color) {
 	this->setColor(color);
 }
 
-void CAPickerView::visit()
+void CAPickerView::visitEve()
 {
     if (m_dataSource)
     {
@@ -497,7 +497,7 @@ void CAPickerView::visit()
         }
     }
     
-    CAView::visit();
+    CAView::visitEve();
 }
 
 NS_CC_END

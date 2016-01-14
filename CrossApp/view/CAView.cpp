@@ -1874,7 +1874,8 @@ void CAView::setColor(const CAColor4B& color)
     }
     else
     {
-        _displayedColor = _realColor = color;
+        _realColor = color;
+        _displayedColor = color;
         this->updateColor();
     }
 }

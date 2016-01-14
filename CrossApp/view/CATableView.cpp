@@ -120,7 +120,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;
     
-    if (m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
+    if (m_pContainer->isTouchEnabled() && m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
     {
         DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
         

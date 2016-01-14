@@ -59,7 +59,7 @@ public:
 
 	virtual void onExitTransitionDidStart();
 
-    virtual void visit();
+    virtual void visitEve();
     
     virtual bool initWithFrame(const DRect& rect);
     virtual bool initWithCenter(const DRect& rect);

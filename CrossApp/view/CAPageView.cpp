@@ -222,6 +222,7 @@ void CAPageView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CAScrollView::ccTouchEnded(pTouch, pEvent);
+    CC_RETURN_IF(m_vTouches.size() > 1);
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
         float off_x = -m_tInertia.x;

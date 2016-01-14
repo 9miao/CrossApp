@@ -246,6 +246,7 @@ bool CAScrollView::isReachBoundaryDown()
 
 void CAScrollView::setTouchEnabledAtSubviews(bool var)
 {
+    CC_RETURN_IF(m_bTouchEnabledAtSubviews == var);
     m_bTouchEnabledAtSubviews = var;
     m_pContainer->setTouchEnabled(var);
 }
@@ -513,7 +514,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         {
             float touch_lenght = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
                                              this->convertToNodeSpace(touch1->getLocation()));
-            float scale_off = _dip(touch_lenght - m_fTouchLength) * 0.0020f;
+            float scale_off = (touch_lenght - m_fTouchLength) * 0.0020f;
             
             m_fZoomScale = m_pContainer->getScale();
             m_fZoomScale += m_fZoomScale * scale_off;
@@ -572,6 +573,10 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     
     if (p_container.equals(m_pContainer->getFrameOrigin()) == false)
     {
+        if (m_bTouchEnabledAtSubviews)
+        {
+            m_pContainer->setTouchEnabled(false);
+        }
         this->setContainerFrame(p_container);
         this->showIndicator();
         
@@ -635,6 +640,11 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_bTracking = false;
         
         this->detectionFromPullToRefreshView();
+        
+        if (m_bTouchEnabledAtSubviews)
+        {
+            m_pContainer->setTouchEnabled(true);
+        }
     }
     else if (m_vTouches.size() == 2)
     {
@@ -654,6 +664,11 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
             m_pScrollViewDelegate->scrollViewDidEndDragging(this);
         }
         m_bTracking = false;
+        
+        if (m_bTouchEnabledAtSubviews)
+        {
+            m_pContainer->setTouchEnabled(true);
+        }
     }
     else if (m_vTouches.size() == 2)
     {

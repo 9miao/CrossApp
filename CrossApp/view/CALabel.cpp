@@ -179,11 +179,12 @@ void CALabel::updateImage()
 											   m_bBold, 
 											   m_bItalics,
 											   m_bUnderLine);
-
+    
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
     m_cLabelSize = size;
-    
+    CCLog("CALabel :: %d, %d, %d", image->hasAlpha(), image->hasMipmaps(), image->hasPremultipliedAlpha());
+    image->saveToFile(crossapp_format_string("/Users/liynfg/Desktop/111/%s.png",m_nText.c_str()));
     DRect rect = DRectZero;
     rect.size.width = m_obContentSize.width;
     rect.size.height = size.height;
@@ -458,6 +459,7 @@ const CAColor4B& CALabel::getColor(void)
 void CALabel::setColor(const CAColor4B& color)
 {
 	m_cFontColor = color;
+    m_cFontColor.a = 255;
     updateImage();
     CAView::setColor(ccc4(255, 255, 255, color.a));
 }
