@@ -26,7 +26,7 @@ static CATempTypeFont s_TempFont;
 
 
 #define ITALIC_LEAN_VALUE (0.3f)
-#define DEFAULT_SPACE_VALUE (2)
+#define DEFAULT_SPACE_VALUE (1)
 
 CAFreeTypeFont::CAFreeTypeFont()
 :m_space(" ")
@@ -174,7 +174,7 @@ _AgaginInitGlyphs:
         CC_SAFE_RELEASE_NULL(image);
 	}
 	delete[]pData;
-
+    image->releaseData();
 	image->autorelease();
 	return image;
 }
