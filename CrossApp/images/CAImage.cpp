@@ -1019,9 +1019,9 @@ CAImage::~CAImage()
 }
 
 CAImage*  CAImage::createWithString(const char *text, const CAColor4B& fontColor, const char *fontName, float fontSize, const DSize& dimensions, CATextAlignment hAlignment,
-                                    CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine)
+	CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, bool bDeleteLine)
 {
-	return g_AFTFontCache.initWithString(text, fontColor, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine);
+	return g_AFTFontCache.initWithString(text, fontColor, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine, bDeleteLine);
 }
 
 int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)

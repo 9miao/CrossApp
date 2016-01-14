@@ -35,6 +35,7 @@ CALabel::CALabel()
 ,m_bBold(false)
 ,m_bItalics(false)
 ,m_bUnderLine(false)
+,m_bDeleteLine(false)
 ,m_bEnableCopy(false)
 ,m_cFontColor(CAColor_black)
 {
@@ -178,13 +179,13 @@ void CALabel::updateImage()
 											   m_iLineSpacing, 
 											   m_bBold, 
 											   m_bItalics,
-											   m_bUnderLine);
-    
+											   m_bUnderLine,
+											   m_bDeleteLine);
+
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
     m_cLabelSize = size;
-    CCLog("CALabel :: %d, %d, %d", image->hasAlpha(), image->hasMipmaps(), image->hasPremultipliedAlpha());
-    image->saveToFile(crossapp_format_string("/Users/liynfg/Desktop/111/%s.png",m_nText.c_str()));
+	
     DRect rect = DRectZero;
     rect.size.width = m_obContentSize.width;
     rect.size.height = size.height;
@@ -397,6 +398,18 @@ bool CALabel::getUnderLine()
 	return m_bUnderLine;
 }
 
+void CALabel::setDeleteLine(bool var)
+{
+	m_bDeleteLine = var;
+	this->updateImageDraw();
+}
+
+bool CALabel::getDeleteLine()
+{
+	return m_bDeleteLine;
+}
+
+
 void CALabel::setItalics(bool var)
 {
 	m_bItalics = var;
@@ -459,7 +472,6 @@ const CAColor4B& CALabel::getColor(void)
 void CALabel::setColor(const CAColor4B& color)
 {
 	m_cFontColor = color;
-    m_cFontColor.a = 255;
     updateImage();
     CAView::setColor(ccc4(255, 255, 255, color.a));
 }

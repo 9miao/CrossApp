@@ -106,13 +106,13 @@ int CAFTFontCache::getStringHeight(const char* pFontName, unsigned long nSize, c
 }
 
 CAImage* CAFTFontCache::initWithString(const char* pText, const CAColor4B& fontColor, const char* pFontName, int nSize, int width, int height,
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, bool bDeleteLine, std::vector<TextViewLineInfo>* pLinesText)
 {
 	if (pText == NULL || pFontName == NULL)
 		return NULL;
 
 	setCurrentFontData(pFontName, nSize);
-	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, fontColor, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine, pLinesText);
+	CAImage* pImage = m_pCurFontData->ftFont.initWithString(pText, fontColor, pFontName, nSize, width, height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine, bDeleteLine, pLinesText);
 	return pImage;
 }
 

@@ -92,7 +92,8 @@ public:
 	virtual ~CAFreeTypeFont();
 
 	CAImage* initWithString(const std::string& pText, const CAColor4B& fontColor, const std::string& pFontName, int nSize, int inWidth, int inHeight,
-		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
+		CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap = true, int iLineSpacing = 0, bool bBold = false, bool bItalics = false, bool bUnderLine = false, 
+		bool bDeleteLine = false, std::vector<TextViewLineInfo>* pLinesText = 0);
 
 	static void destroyAllFontBuff();
 protected:
@@ -152,6 +153,7 @@ protected:
 	bool m_bBold;
 	bool m_bItalics;
 	bool m_bUnderLine;
+	bool m_bDeleteLine;
 	CAColor4B m_cFontColor;
 };
 

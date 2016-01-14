@@ -48,6 +48,8 @@ public:
 
 	CC_PROPERTY(bool, m_bUnderLine, UnderLine);
 
+	CC_PROPERTY(bool, m_bDeleteLine, DeleteLine);
+
 	CC_PROPERTY(bool, m_bItalics, Italics);
 
 	CC_PROPERTY(int, m_iLineSpacing, LineSpacing);
