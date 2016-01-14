@@ -1,4 +1,4 @@
-//
+﻿//
 //  CAtextView.cpp
 //  tesss
 //
@@ -16,6 +16,7 @@
 #include "dispatcher/CAIMEDelegate.h"
 #include "view/CAScrollView.h"
 #include "shaders/CAShaderCache.h"
+#include "support/ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +35,7 @@ public:
 		, m_iStartMovePos(0)
 	{
 		m_hEditCur = LoadCursor(NULL, IDC_IBEAM);
-		m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pCATextView->getTextFontSize());
+		updateFontSize();
 	}
 
 	virtual ~CATextViewWin32()
@@ -77,7 +78,21 @@ public:
 
 	void insertText(const char * text, int len)
 	{
+		if (!strcmp(text, "\n"))
+		{
+			if (m_pCATextView->getReturnType() != CrossApp::CATextView::Default)
+			{
+				m_pCATextView->resignFirstResponder();
+				if (m_pCATextView->getDelegate())
+				{
+					m_pCATextView->getDelegate()->textViewShouldReturn(m_pCATextView);
+				}
+				return;
+			}
+		}
+
 		execCurSelCharRange();
+		textValueChanged(text, len, 0);
 		m_szText.insert(m_iCurPos, text, len);
 		m_iCurPos += len;
 		m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
@@ -85,7 +100,16 @@ public:
 	}
 	void clearText()
 	{
+		HideTextViewMask();
+
+		m_vLinesTextView.clear();
+		m_curSelCharRange.first = m_curSelCharRange.second = 0;
+		m_iCurPos = 0;
+		m_szText.clear();
+		m_iStartMovePos = 0;
 		
+		calcCursorPosition();
+		m_pCurPosition = m_pCursorMark->getCenterOrigin();
 	}
 	void deleteBackward()
 	{
@@ -108,6 +132,7 @@ public:
 
 		int nDeleteLen = (int)cszDelStr.size();
 		m_iCurPos = MAX(m_iCurPos, nDeleteLen);
+		textValueChanged(cszDelStr, 0, nDeleteLen);
 		m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 		m_iCurPos -= nDeleteLen;
 
@@ -245,6 +270,14 @@ public:
 			insertText(var.c_str(), (int)var.length());
 		}
 	}
+	const std::string& getText()
+	{
+		return m_szText;
+	}
+	void updateFontSize()
+	{
+		m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pCATextView->getTextFontSize());
+	}
 	
 	bool execCurSelCharRange()
 	{
@@ -252,6 +285,7 @@ public:
 			return false;
 
 		int iOldCurPos = m_curSelCharRange.first;
+		textValueChanged(m_szText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first), 0, m_curSelCharRange.second - m_curSelCharRange.first);
 		std::string cszText = m_szText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
 		setText(cszText);
 
@@ -278,6 +312,7 @@ public:
 			false,
 			false,
 			false,
+			false,
 			&m_vLinesTextView);
 
 		if (m_szText.empty())
@@ -299,6 +334,19 @@ public:
 
 		calcCursorPosition();
 		m_pCurPosition = m_pCursorMark->getCenterOrigin();
+	}
+	void textValueChanged(const std::string& szChangeText, int addLen, int DelLen)
+	{
+		if (m_pCATextView->getDelegate())
+		{
+			std::u16string c1, c2, c3;
+			StringUtils::UTF8ToUTF16(szChangeText, c1);
+			StringUtils::UTF8ToUTF16(m_szText, c2);
+			StringUtils::UTF8ToUTF16(m_szText.substr(0, m_iCurPos), c3);
+
+			m_pCATextView->getDelegate()->textViewAfterTextChanged(m_pCATextView, m_szText.c_str(), szChangeText.c_str(), c3.size(), addLen ? c1.size() : 0, DelLen ? c1.size() : 0);
+		}
+		
 	}
 	void calcCursorPosition()
 	{
@@ -535,6 +583,7 @@ CATextView::CATextView()
 , m_pTextView(NULL)
 , m_iFontSize(40)
 , m_pDelegate(NULL)
+, m_sTextColor(CAColor_black)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -618,6 +667,7 @@ void CATextView::delayShowImage()
 void CATextView::showImage()
 {
     m_pShowImageView->setFrame(this->getBounds());
+	((CATextViewWin32*)m_pTextView)->updateImage();
 }
 
 CATextView* CATextView::createWithFrame(const DRect& frame)
@@ -746,6 +796,7 @@ void CATextView::setTextFontSize(const int& var)
 {
 	m_iFontSize = var;
 
+	((CATextViewWin32*)m_pTextView)->updateFontSize();
     this->delayShowImage();
 }
 
@@ -757,11 +808,12 @@ const int& CATextView::getTextFontSize()
 
 void CATextView::setText(const std::string& var)
 {
-	m_sText = var;
+	((CATextViewWin32*)m_pTextView)->setText(var);
 }
 
 const std::string& CATextView::getText()
 {
+	m_sText = ((CATextViewWin32*)m_pTextView)->getText();
 	return m_sText;
 }
 

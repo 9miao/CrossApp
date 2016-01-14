@@ -70,7 +70,7 @@ void CAFreeTypeFont::destroyAllFontBuff()
 
 
 CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const CAColor4B& fontColor, const std::string& pFontName, int nSize, int inWidth, int inHeight,
-	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, std::vector<TextViewLineInfo>* pLinesText)
+	CATextAlignment hAlignment, CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, bool bDeleteLine, std::vector<TextViewLineInfo>* pLinesText)
 {
 	if (pText.empty())
 		return NULL;
@@ -87,9 +87,9 @@ _AgaginInitGlyphs:
 	m_bBold = bBold;
 	m_bItalics = bItalics;
 	m_bUnderLine = bUnderLine;
+	m_bDeleteLine = bDeleteLine;
 	m_cFontColor = fontColor;
 
-	
 	FT_Error error = initGlyphs(cszNewText.c_str());
 	if (error) return NULL;
 
@@ -203,6 +203,10 @@ unsigned char* CAFreeTypeFont::getBitmap(ETextAlign eAlignMask, int* outWidth, i
 		if (m_bUnderLine)
 		{
 			draw_line(pBuffer, (FT_Int)pen.x, (FT_Int)pen.y, (FT_Int)(pen.x + (*line)->width), (FT_Int)pen.y);
+		}
+		if (m_bDeleteLine)
+		{
+			draw_line(pBuffer, (FT_Int)pen.x, (FT_Int)(pen.y - m_inFontSize*0.3f), (FT_Int)(pen.x + (*line)->width), (FT_Int)(pen.y - m_inFontSize*0.3f));
 		}
         lineNumber++;
     }
