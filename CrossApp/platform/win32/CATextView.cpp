@@ -346,7 +346,7 @@ public:
 			StringUtils::UTF8ToUTF16(m_szText, c2);
 			StringUtils::UTF8ToUTF16(m_szText.substr(0, m_iCurPos), c3);
 
-			m_pCATextView->getDelegate()->textViewAfterTextChanged(m_pCATextView, m_szText.c_str(), szChangeText.c_str(), c3.size(), addLen ? c1.size() : 0, DelLen ? c1.size() : 0);
+			m_pCATextView->getDelegate()->textViewAfterTextChanged(m_pCATextView, m_szText.c_str(), szChangeText.c_str(), c3.size(), DelLen ? c1.size() : 0, addLen ? c1.size() : 0);
 		}
 		
 	}
