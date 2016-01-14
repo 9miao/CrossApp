@@ -1329,7 +1329,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             listView->setAllowsHeadAndFootHover(var);
         }
     }
-    else if (contrlType.compare("CACollectionView") == 0)
+    else if (contrlType.compare("CAAutoCollectionView") == 0)
     {
         DRect rect;
         rect.origin.x = atoi(viewXml->Attribute("x"));
@@ -1337,7 +1337,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         
-        CACollectionView* collectionView = CACollectionView::createWithFrame(rect);
+        CAAutoCollectionView* collectionView = CAAutoCollectionView::createWithFrame(rect);
         superview->addSubview(collectionView);
         map.insert(viewXml->Attribute("textTag"), collectionView);
   
@@ -1356,14 +1356,24 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             collectionView->setCollectionFooterHeight(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("horiInterval"))
+        if (const char* value = viewXml->Attribute("horiMargins"))
         {
-            collectionView->setHoriInterval(atoi(value));
+            collectionView->setHoriMargins(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("vertInterval"))
+        if (const char* value = viewXml->Attribute("vertMargins"))
         {
-            collectionView->setVertInterval(atoi(value));
+            collectionView->setVertMargins(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("horiCellInterval"))
+        {
+            collectionView->setHoriCellInterval(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("vertCellInterval"))
+        {
+            collectionView->setVertCellInterval(atoi(value));
         }
 
         if (const char* value = viewXml->Attribute("bounce"))

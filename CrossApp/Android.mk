@@ -184,7 +184,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_libsdl_static
 
-#ifeq ($(VIDEO_ENABLE),1)
+
 LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
                    video/CAVideoPlayerDecoder.cpp \
                    video/CAVideoPlayerRender.cpp \
@@ -196,7 +196,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avutil_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swresample_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swscale_static
-#endif
+
 
 
 # define the macro to compile through support/zip_support/ioapi.c
