@@ -1899,11 +1899,13 @@ void CAView::updateColor(void)
     {
         if (m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA8888
             ||
-            m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA4444)
+            m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGBA4444
+            ||
+            m_pobImage->getPixelFormat() == CAImage::PixelFormat_RGB5A1)
         {
-           color4.r = color4.r * _displayedAlpha;
-           color4.g = color4.g * _displayedAlpha;
-           color4.b = color4.b * _displayedAlpha;
+           color4.r = color4.r * color4.a / 255.0f;
+           color4.g = color4.g * color4.a / 255.0f;
+           color4.b = color4.b * color4.a / 255.0f;
         }
     }
    

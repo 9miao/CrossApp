@@ -185,7 +185,7 @@ void CALabel::updateImage()
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
     m_cLabelSize = size;
-	
+
     DRect rect = DRectZero;
     rect.size.width = m_obContentSize.width;
     rect.size.height = size.height;

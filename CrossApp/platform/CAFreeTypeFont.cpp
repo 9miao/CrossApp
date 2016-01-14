@@ -526,7 +526,7 @@ static int getEmojiOffset(int lineHeight)
     return value;
 }
 
-void  CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen)
+void CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vector *pen)
 {
 	std::vector<TGlyph>& glyphs = pInfo->glyphs;
 	for (std::vector<TGlyph>::reverse_iterator glyph = glyphs.rbegin(); glyph != glyphs.rend(); ++glyph)
@@ -606,9 +606,9 @@ void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
 			unsigned char value = bitmap->buffer[q * bitmap->width + p];
 			if (value > 0)
 			{
-				pBuffer[index++] = m_cFontColor.r*value / 255.0f;
-				pBuffer[index++] = m_cFontColor.g*value / 255.0f;
-				pBuffer[index++] = m_cFontColor.b*value / 255.0f;
+                pBuffer[index++] = m_cFontColor.r * value / 255.0f;
+				pBuffer[index++] = m_cFontColor.g * value / 255.0f;
+				pBuffer[index++] = m_cFontColor.b * value / 255.0f;
 				pBuffer[index++] = value;
 			}
         }
