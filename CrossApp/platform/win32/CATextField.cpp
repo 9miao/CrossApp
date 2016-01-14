@@ -35,6 +35,7 @@ public:
 		, m_iString_l_length(0)
 		, m_iString_r_length(0)
 		, m_iString_o_length(0)
+		, m_bCallbackTextChanged(true)
 	{
 		m_hEditCur = LoadCursor(NULL, IDC_IBEAM);
 		m_iFontHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pTextFieldX->getFontSize());
@@ -222,7 +223,7 @@ public:
 	}
 	void textValueChanged(const std::string& szChangeText, int addLen, int DelLen)
 	{
-		if (m_pTextFieldX->getDelegate())
+		if (m_bCallbackTextChanged && m_pTextFieldX->getDelegate())
 		{
 			std::u16string c1, c2, c3;
 			StringUtils::UTF8ToUTF16(szChangeText, c1);
@@ -374,6 +375,7 @@ public:
 	}
 	void setText(const std::string &var)
 	{
+		m_bCallbackTextChanged = false;
 		clearText();
 
 		if (var.empty())
@@ -384,6 +386,7 @@ public:
 		{
 			insertText(var.c_str(), (int)var.length());
 		}
+		m_bCallbackTextChanged = true;
 	}
 	const std::string& getText()
 	{
@@ -607,6 +610,7 @@ private:
 	DSize m_cImageSize;
 	int m_iStartMovePos;
 	HCURSOR m_hEditCur;
+	bool m_bCallbackTextChanged;
 };
 
 
