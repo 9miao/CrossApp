@@ -2035,7 +2035,8 @@ void CAImage::premultipliedImageData()
             break;
         case PixelFormat_A8:
             glTexImage2D(GL_TEXTURE_2D,
-                         0, GL_ALPHA,
+                         0,
+                         GL_ALPHA,
                          (GLsizei)m_uPixelsWide,
                          (GLsizei)m_uPixelsHigh,
                          0,
@@ -2045,7 +2046,8 @@ void CAImage::premultipliedImageData()
             break;
         case PixelFormat_I8:
             glTexImage2D(GL_TEXTURE_2D,
-                         0, GL_LUMINANCE,
+                         0,
+                         GL_LUMINANCE,
                          (GLsizei)m_uPixelsWide,
                          (GLsizei)m_uPixelsHigh,
                          0,

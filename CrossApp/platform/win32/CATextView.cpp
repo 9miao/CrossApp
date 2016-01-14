@@ -100,6 +100,8 @@ public:
 	}
 	void clearText()
 	{
+		textValueChanged(m_szText, 0, m_szText.size());
+
 		HideTextViewMask();
 
 		m_vLinesTextView.clear();
