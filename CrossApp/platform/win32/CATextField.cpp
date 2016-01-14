@@ -92,6 +92,7 @@ public:
 	}
 	void clearText()
 	{
+		textValueChanged(m_sText, 0, m_sText.size());
 		m_sText.clear();
 		m_vTextFiledChars.clear();
 		m_iString_l_length = 0;
@@ -129,6 +130,7 @@ public:
 		CC_RETURN_IF(execCurSelCharRange());
 
 		int nDeleteLen = (int)cszDelStr.size();
+		textValueChanged(cszDelStr, 0, nDeleteLen);
 		m_sText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
 		m_iCurPos -= nDeleteLen;
 		m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
@@ -218,6 +220,19 @@ public:
 		m_pCursorMark->setVisible(false);
 		CAViewAnimation::removeAnimations(m_s__StrID);
 	}
+	void textValueChanged(const std::string& szChangeText, int addLen, int DelLen)
+	{
+		if (m_pTextFieldX->getDelegate())
+		{
+			std::u16string c1, c2, c3;
+			StringUtils::UTF8ToUTF16(szChangeText, c1);
+			StringUtils::UTF8ToUTF16(m_sText, c2);
+			StringUtils::UTF8ToUTF16(m_sText.substr(0, m_iCurPos), c3);
+
+			m_pTextFieldX->getDelegate()->textFieldAfterTextChanged(m_pTextFieldX, m_sText.c_str(), szChangeText.c_str(), c3.size(), addLen ? c1.size() : 0, DelLen ? c1.size() : 0);
+		}
+
+	}
 	void calculateSelChars(const DPoint& point, int& l, int& r, int& p)
 	{
 	_CalcuAgain:
@@ -246,10 +261,11 @@ public:
 		std::string strRight = m_sText.substr(m_iCurPos, m_sText.size());
 
 		std::string cszNewText(text, len);
+		textValueChanged(cszNewText, len, 0);
 
 		std::u32string cszU32Text;
 		StringUtils::UTF8ToUTF32(cszNewText, cszU32Text);
-
+		
 		for (int i = 0; i < cszU32Text.size(); i++)
 		{
 			std::u32string c;
@@ -273,7 +289,6 @@ public:
 			m_iCurPos += t.charSize;
 		}
 
-		//textFieldAfterTextChanged
 		m_sText = strLeft + strRight;
 		m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
 	}
@@ -313,6 +328,7 @@ public:
 			return false;
 
 		int iOldCurPos = m_curSelCharRange.first;
+		textValueChanged(m_sText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first), 0, m_curSelCharRange.second - m_curSelCharRange.first);
 		std::string cszText = m_sText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
 		setText(cszText);
 
