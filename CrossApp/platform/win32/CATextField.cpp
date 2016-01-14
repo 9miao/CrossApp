@@ -223,16 +223,14 @@ public:
 	}
 	void textValueChanged(const std::string& szChangeText, int addLen, int DelLen)
 	{
-		if (m_bCallbackTextChanged && m_pTextFieldX->getDelegate())
+	//	if (m_bCallbackTextChanged && m_pTextFieldX->getDelegate())
 		{
-			std::u16string c1, c2, c3;
+			std::u16string c1, c3;
 			StringUtils::UTF8ToUTF16(szChangeText, c1);
-			StringUtils::UTF8ToUTF16(m_sText, c2);
 			StringUtils::UTF8ToUTF16(m_sText.substr(0, m_iCurPos), c3);
 
-			m_pTextFieldX->getDelegate()->textFieldAfterTextChanged(m_pTextFieldX, m_sText.c_str(), szChangeText.c_str(), c3.size(), addLen ? c1.size() : 0, DelLen ? c1.size() : 0);
+	//		m_pTextFieldX->getDelegate()->textFieldAfterTextChanged(m_pTextFieldX, m_sText.c_str(), szChangeText.c_str(), c3.size(), addLen ? c1.size() : 0, DelLen ? c1.size() : 0);
 		}
-
 	}
 	void calculateSelChars(const DPoint& point, int& l, int& r, int& p)
 	{
