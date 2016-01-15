@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.R.bool;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -67,9 +69,10 @@ import android.widget.TextView.OnEditorActionListener;
 	private String  beforeTextString = "";
 	private String  changedTextString = "";
 	private String  currTextString = "";
+	//起始位置
 	private int _arg1 = 0;
+	//修改长度
 	private int _arg2 = 0;
-	private int _arg3 = 0;
 	//是否弹出键盘
 	private boolean isShowKey = false;
 	
@@ -115,7 +118,7 @@ import android.widget.TextView.OnEditorActionListener;
 	
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
-	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
+	private static native boolean textChange(int key,String before,String change,int arg0,int arg1);
 	private static native void text(int key, byte[] text, int lenght);
     public void init(int key)
     {
@@ -760,7 +763,10 @@ import android.widget.TextView.OnEditorActionListener;
     	{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
-			{//起始位置， 删除长度，增加长度
+			{
+				String mes = "message:" + arg1 + ":" + arg2 + ":" + arg0;
+				Log.d("androidlog", mes);
+				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 				if (isSetText)
 				{
@@ -768,34 +774,41 @@ import android.widget.TextView.OnEditorActionListener;
 					return;
 				}
 				
+				_arg1 = arg1;
+				_arg2 = arg2;
+				
+				
+				
 				String string = arg0.toString();
-				if (arg2>arg3) 
+				if (arg2<=0) 
 				{
-					changedTextString = beforeTextString.substring(arg1, arg1+arg2);
+					//只是添加
+					changedTextString = string.substring(_arg1,_arg1+arg3);
+				}
+				else if(arg2>0&&arg3>0)
+				{
+					//删除并添加
+					changedTextString = string.substring(_arg1,_arg1+arg3);
+				}else {
+					//只是删除
+					changedTextString = "";
+				}
+				
+				mes = "message:" + changedTextString + ":" + _arg1 + ":" + _arg2;
+				Log.d("androidlog", mes);
+
+				if (!textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2))
+				{
+					isSetText = true;
+					textField.setText(beforeTextString);
+					Log.d("androidlog", "asdasdassdasd");
 				}
 				else
 				{
-					changedTextString = string.substring(arg1, arg1+arg3);
+					ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
+					text(mykey, textBuffer.array(), textBuffer.array().length);
+					Log.d("androidlog", "1111111111");
 				}
-				
-				_arg1 = arg1;
-				_arg2 = arg2;
-				_arg3 = arg3;
-				
-				context.runOnGLThread(new Runnable()
-				{
-					
-					@Override
-					public void run()
-					{
-						ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
-						text(mykey, textBuffer.array(), textBuffer.array().length);
-						textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
-					}
-					
-				});
-    	
- 
 			}
 			
 			@Override

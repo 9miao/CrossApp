@@ -335,7 +335,7 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1, int arg2)
+    JNIEXPORT bool JNICALL Java_org_CrossApp_lib_CrossAppTextField_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1)
     {
         const char* charBefore = env->GetStringUTFChars(before, NULL);
         std::string strBefore = charBefore;
@@ -347,8 +347,10 @@ extern "C"
         CATextField* textField = s_map[(int)key];
         if (textField->getDelegate())
         {
-            textField->getDelegate()->textFieldAfterTextChanged(textField, strBefore.c_str(), strChange.c_str(), arg0, arg1, arg2);
+			return textField->getDelegate()->textFieldShouldChangeCharacters(textField, arg0, arg1, strChange.c_str());
         }
+
+		return true;
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
