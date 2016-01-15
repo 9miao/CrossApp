@@ -88,10 +88,12 @@
             }
         }
         
-        if (_textView->getDelegate()) {
-            _textView->getDelegate()->textViewAfterTextChanged(_textView,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
-        }
-    }else{
+//        if (_textView->getDelegate()) {
+//            _textView->getDelegate()->textViewAfterTextChanged(_textView,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
+//        }
+    }
+    else
+    {
        //insert
         insertL = curStr.length - before.length;
         starL   = before.length;
@@ -105,9 +107,9 @@
             }
         }
         
-        if (_textView->getDelegate()) {
-            _textView->getDelegate()->textViewAfterTextChanged(_textView,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
-        }
+//        if (_textView->getDelegate()) {
+//            _textView->getDelegate()->textViewAfterTextChanged(_textView,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
+//        }
     }
     
     self.beforeText = self.stringValue;
@@ -115,7 +117,8 @@
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event
 {
-    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
+    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask)
+    {
         // The command key is the ONLY modifier key being pressed.
         if ([[event charactersIgnoringModifiers] isEqualToString:@"x"])
         {

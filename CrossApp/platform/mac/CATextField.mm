@@ -100,11 +100,13 @@
 {
     
 }
+
 -(void)setText:(NSString* )value
 {
     self.stringValue = value;
     self.beforeText = value;
 }
+
 -(void)setMarginLeft:(int)marginLeft
 {
     CGFloat scale = MAC_SCALE;
@@ -201,6 +203,8 @@
         _marginLeft = 0;
         _marginRight = 0;
         
+        [self setBeforeText:@"" ];
+        
         return self;
     }
     return nil;
@@ -219,15 +223,32 @@
 
 - (void)textDidChange:(NSNotification *)notification
 {
-    [super textDidChange:notification];
-    
     NSString* before = [self beforeText];
     NSString* curStr = [self stringValue];
+    
+    [self setStringValue:before];
+    
+    NSLog(@"AAA %@", before);
+    
+    [self setStringValue:curStr];
+    
+    if (before.length == 0)
+    {
+
+    }
+    
+    NSLog(@"BBB %@", self.stringValue);
+    
+    [self setBeforeText:curStr];
+    return;
+    
+    
     
     int starL = 0;
     int insertL = 0;
     int deleteL = 0;
-    if(before.length>curStr.length){
+    if(before.length>curStr.length)
+    {
         //delete
         deleteL = before.length - curStr.length;
         starL   = curStr.length;
@@ -241,10 +262,12 @@
             }
         }
         
-        if (_textField->getDelegate()) {
-            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
-        }
-    }else{
+//        if (_textField->getDelegate()) {
+//            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
+//        }
+    }
+    else
+    {
         
         if (curStr.length > _textField->getMaxLenght() && _textField->getMaxLenght()!=0)
         {
@@ -265,9 +288,9 @@
             }
         }
         
-        if (_textField->getDelegate()) {
-            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
-        }
+//        if (_textField->getDelegate()) {
+//            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
+//        }
     }
     
     self.beforeText = self.stringValue;
@@ -292,7 +315,8 @@
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event
 {
-    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
+    if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask)
+    {
         // The command key is the ONLY modifier key being pressed.
         if ([[event charactersIgnoringModifiers] isEqualToString:@"x"])
         {
@@ -342,7 +366,6 @@ CATextField::CATextField()
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textField_MAC];
     textField_MAC.textField = this;
-    [textField_MAC setText:@""];
     [textField_MAC release];
     
     textField_MAC.placeholderString = @"";
