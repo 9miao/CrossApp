@@ -295,7 +295,7 @@
     
     unsigned int location = [self getLocationWithBefore:before Current:current];
     unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
-    unsigned int addLenght = MAX(current.length - (before.length - lenght), 0);;
+    unsigned int addLenght = MAX((long)(current.length - (before.length - (long)lenght)), 0);
 
     std::string changedText = "";
     
@@ -716,7 +716,7 @@ void CATextField::setText(const std::string &var)
 
 const std::string& CATextField::getText()
 {
-    m_sText = [textField_MAC.stringValue UTF8String];
+    m_sText = [textField_MAC.beforeText UTF8String];
     return m_sText;
 }
 
