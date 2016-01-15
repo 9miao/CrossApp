@@ -46,6 +46,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.height = atoi(viewXml->Attribute("h"));
         view->setFrame(rect);
         
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            view->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             view->setColor(ccc4Int(atoi(value)));
@@ -63,6 +68,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         imageView->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            imageView->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -91,6 +101,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         scale9ImageVew->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            scale9ImageVew->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -139,6 +154,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         label->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            label->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("fontColor"))
         {
@@ -219,6 +239,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         btn->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            btn->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -500,6 +525,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		textField->setFrame(rect);
 
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            textField->setZOrder(atoi(value));
+        }
+        
 		if (const char* value = viewXml->Attribute("textColor"))
 		{
 			textField->setTextColor(ccc4Int(atoi(value)));
@@ -606,6 +636,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.height = atoi(viewXml->Attribute("h"));
         sw->setFrame(rect);
         
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            sw->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             sw->setColor(ccc4Int(atoi(value)));
@@ -645,6 +680,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         segmentControl->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            segmentControl->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -760,6 +800,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.height = atoi(viewXml->Attribute("h"));
         progress->setFrame(rect);
         
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            progress->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             progress->setColor(ccc4Int(atoi(value)));
@@ -802,6 +847,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		superview->addSubview(textView);
 		map.insert(viewXml->Attribute("textTag"), textView);
 
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            textView->setZOrder(atoi(value));
+        }
 
 		if (const char* value = viewXml->Attribute("titleColor"))
 		{
@@ -842,6 +891,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         slider->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            slider->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -896,6 +950,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.height = atoi(viewXml->Attribute("h"));
         stepper->setFrame(rect);
         
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            stepper->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             stepper->setColor(ccc4Int(atoi(value)));
@@ -938,6 +997,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         rect.size.width = atoi(viewXml->Attribute("w"));
         rect.size.height = atoi(viewXml->Attribute("h"));
         activity->setFrame(rect);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            activity->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -1018,6 +1082,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         superview->addSubview(pickerView);
         map.insert(viewXml->Attribute("textTag"), pickerView);
         
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            pickerView->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             pickerView->setColor(ccc4Int(atoi(value)));
@@ -1060,6 +1129,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		superview->addSubview(datePicker);
 		map.insert(viewXml->Attribute("textTag"), datePicker);
 
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            datePicker->setZOrder(atoi(value));
+        }
+        
 		if (const char* value = viewXml->Attribute("color"))
 		{
 			datePicker->setColor(ccc4Int(atoi(value)));
@@ -1076,6 +1150,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         CAWebView* webView = CAWebView::createWithFrame(rect);
         superview->addSubview(webView);
         map.insert(viewXml->Attribute("textTag"), webView);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            webView->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("url"))
         {
@@ -1098,7 +1177,13 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		
 		CAGifView* gifView = CAGifView::createWithFrame(rect);
 		superview->addSubview(gifView);
-		map.insert(viewXml->Attribute("textTag"), gifView);
+        map.insert(viewXml->Attribute("textTag"), gifView);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            gifView->setZOrder(atoi(value));
+        }
+        
 		if (gif)
 		{
 			gifView->setGif(gif);
@@ -1117,6 +1202,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         superview->addSubview(pageView);
         map.insert(viewXml->Attribute("textTag"), pageView);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            pageView->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
@@ -1160,6 +1250,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         superview->addSubview(tableView);
         map.insert(viewXml->Attribute("textTag"), tableView);
    
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            tableView->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             tableView->setBackgroundColor(ccc4Int(atoi(value)));
@@ -1236,6 +1331,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         superview->addSubview(listView);
         map.insert(viewXml->Attribute("textTag"), listView);
  
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            listView->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             listView->setBackgroundColor(ccc4Int(atoi(value)));
@@ -1319,6 +1419,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         superview->addSubview(collectionView);
         map.insert(viewXml->Attribute("textTag"), collectionView);
   
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            collectionView->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             collectionView->setBackgroundColor(ccc4Int(atoi(value)));
@@ -1414,6 +1519,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         superview->addSubview(waterfallView);
         map.insert(viewXml->Attribute("textTag"), waterfallView);
         
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            waterfallView->setZOrder(atoi(value));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             waterfallView->setBackgroundColor(ccc4Int(atoi(value)));
@@ -1503,6 +1613,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         CAScrollView* scrollView = CAScrollView::createWithFrame(rect);
         superview->addSubview(scrollView);
         map.insert(viewXml->Attribute("textTag"), scrollView);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            scrollView->setZOrder(atoi(value));
+        }
         
         if (const char* value = viewXml->Attribute("color"))
         {
