@@ -33,6 +33,7 @@ public:
 		, m_iCurPos(0)
 		, m_curSelCharRange(std::make_pair(0, 0))
 		, m_iStartMovePos(0)
+		, m_bCallbackTextChanged(true)
 	{
 		m_hEditCur = LoadCursor(NULL, IDC_IBEAM);
 		updateFontSize();
@@ -91,8 +92,20 @@ public:
 			}
 		}
 
+		std::string cszAddText;
+		cszAddText.append(text, len);
+		if (m_curSelCharRange.first != m_curSelCharRange.second)
+		{
+			if (!textValueChanged(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first, cszAddText))
+				return;
+		}
+		else
+		{
+			if (!textValueChanged(m_iCurPos, 0, cszAddText))
+				return;
+		}
+
 		execCurSelCharRange();
-		textValueChanged(text, len, 0);
 		m_szText.insert(m_iCurPos, text, len);
 		m_iCurPos += len;
 		m_curSelCharRange = std::make_pair(m_iCurPos, m_iCurPos);
@@ -100,8 +113,6 @@ public:
 	}
 	void clearText()
 	{
-		textValueChanged(m_szText, 0, m_szText.size());
-
 		HideTextViewMask();
 
 		m_vLinesTextView.clear();
@@ -116,10 +127,13 @@ public:
 	void deleteBackward()
 	{
 		CC_RETURN_IF(m_iCurPos == 0 || m_szText.empty());
-		std::string cszDelStr;
+
 		if (m_curSelCharRange.first != m_curSelCharRange.second)
 		{
-			cszDelStr = m_szText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
+			if (!textValueChanged(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first, ""))
+				return;
+
+			CC_RETURN_IF(execCurSelCharRange());
 		}
 		else
 		{
@@ -128,17 +142,16 @@ public:
 			{
 				++nDeleteLen;
 			}
-			cszDelStr = m_szText.substr(m_iCurPos - nDeleteLen, nDeleteLen);
+
+			if (!textValueChanged(m_iCurPos, nDeleteLen, ""))
+				return;
+
+			m_iCurPos = MAX(m_iCurPos, nDeleteLen);
+			m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
+			m_iCurPos -= nDeleteLen;
+
+			updateImage();
 		}
-		CC_RETURN_IF(execCurSelCharRange());
-
-		int nDeleteLen = (int)cszDelStr.size();
-		m_iCurPos = MAX(m_iCurPos, nDeleteLen);
-		textValueChanged(cszDelStr, 0, nDeleteLen);
-		m_szText.erase(m_iCurPos - nDeleteLen, nDeleteLen);
-		m_iCurPos -= nDeleteLen;
-
-		updateImage();
 	}
 	void copyToClipboard()
 	{
@@ -261,6 +274,7 @@ public:
 	
 	void setText(const std::string &var)
 	{
+		m_bCallbackTextChanged = false;
 		clearText();
 
 		if (var.empty())
@@ -271,6 +285,7 @@ public:
 		{
 			insertText(var.c_str(), (int)var.length());
 		}
+		m_bCallbackTextChanged = true;
 	}
 	const std::string& getText()
 	{
@@ -287,7 +302,6 @@ public:
 			return false;
 
 		int iOldCurPos = m_curSelCharRange.first;
-		textValueChanged(m_szText.substr(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first), 0, m_curSelCharRange.second - m_curSelCharRange.first);
 		std::string cszText = m_szText.erase(m_curSelCharRange.first, m_curSelCharRange.second - m_curSelCharRange.first);
 		setText(cszText);
 
@@ -337,17 +351,17 @@ public:
 		calcCursorPosition();
 		m_pCurPosition = m_pCursorMark->getCenterOrigin();
 	}
-	void textValueChanged(const std::string& szChangeText, int addLen, int DelLen)
+	bool textValueChanged(int location, int length, const std::string& changedText)
 	{
-		if (m_pCATextView->getDelegate())
+		if (m_bCallbackTextChanged && m_pCATextView->getDelegate())
 		{
-			std::u16string c1, c3;
-			StringUtils::UTF8ToUTF16(szChangeText, c1);
-			StringUtils::UTF8ToUTF16(m_szText.substr(0, m_iCurPos), c3);
+			std::u16string c1, c2;
+			StringUtils::UTF8ToUTF16(m_szText.substr(0, location), c1);
+			StringUtils::UTF8ToUTF16(m_szText.substr(location, length), c2);
 
-			m_pCATextView->getDelegate()->textViewAfterTextChanged(m_pCATextView, m_szText.c_str(), szChangeText.c_str(), c3.size(), DelLen ? c1.size() : 0, addLen ? c1.size() : 0);
+			return m_pCATextView->getDelegate()->textViewShouldChangeCharacters(m_pCATextView, c1.size(), c2.size(), changedText);
 		}
-		
+		return true;
 	}
 	void calcCursorPosition()
 	{
@@ -570,7 +584,7 @@ private:
 	int m_iCurPos;
 	int m_iLineHeight;
 	DPoint m_pCurPosition;
-
+	bool m_bCallbackTextChanged;
 	std::string m_szFontName;
 	std::string m_szText;
 	int m_iStartMovePos;
