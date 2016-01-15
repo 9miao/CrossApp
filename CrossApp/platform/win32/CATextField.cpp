@@ -229,7 +229,7 @@ public:
 			StringUtils::UTF8ToUTF16(szChangeText, c1);
 			StringUtils::UTF8ToUTF16(m_sText.substr(0, m_iCurPos), c3);
 
-			m_pTextFieldX->getDelegate()->textFieldAfterTextChanged(m_pTextFieldX, m_sText.c_str(), szChangeText.c_str(), c3.size(), addLen ? c1.size() : 0, DelLen ? c1.size() : 0);
+			m_pTextFieldX->getDelegate()->textFieldAfterTextChanged(m_pTextFieldX, m_sText.c_str(), szChangeText.c_str(), c3.size(), DelLen ? c1.size() : 0, addLen ? c1.size() : 0);
 		}
 	}
 	void calculateSelChars(const DPoint& point, int& l, int& r, int& p)
