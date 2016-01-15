@@ -14,6 +14,8 @@
 #define NSTextAlignmentRight NSRightTextAlignment
 #endif
 
+#define MAC_SCALE 1//[[NSScreen mainScreen] backingScaleFactor]
+
 @interface MacTextView: NSTextField
 {
     
@@ -154,8 +156,7 @@ CATextView::CATextView()
     [textView_Mac setText:@""];
     [textView_Mac release];
     
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
-    textView_Mac.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
+    textView_Mac.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / MAC_SCALE];
 }
 CATextView::~CATextView()
 {
@@ -268,10 +269,9 @@ void CATextView::update(float t)
         point.y = point.y - m_obContentSize.height;
         //        CC_BREAK_IF(m_obLastPoint.equals(point));
         
-        CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
         NSPoint origin;
-        origin.x = s_dip_to_px(point.x) / scale;
-        origin.y = s_dip_to_px(point.y) / scale;
+        origin.x = s_dip_to_px(point.x) / MAC_SCALE;
+        origin.y = s_dip_to_px(point.y) / MAC_SCALE;
         [textView_Mac setFrameOrigin:origin];
     }
     while (0);
@@ -322,10 +322,9 @@ void CATextView::setContentSize(const DSize& contentSize)
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
     NSSize size;
-    size.width = s_dip_to_px(worldContentSize.width) / scale;
-    size.height =  s_dip_to_px(worldContentSize.height) / scale;
+    size.width = s_dip_to_px(worldContentSize.width) / MAC_SCALE;
+    size.height =  s_dip_to_px(worldContentSize.height) / MAC_SCALE;
     
     NSRect rect = [textView_Mac frame];
     rect.size = size;
@@ -394,9 +393,7 @@ void CATextView::setTextFontSize(const int &var)
 {
     m_iFontSize = var;
     
-    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
-    
-    textView_Mac.font = [NSFont systemFontOfSize:s_dip_to_px(var) / scale];
+    textView_Mac.font = [NSFont systemFontOfSize:s_dip_to_px(var) / MAC_SCALE];
     
     delayShowImage();
 }
