@@ -332,8 +332,6 @@ public:
 protected:
     
     void detachSubview(CAView *subview);
-
-    void delayUpdate();
     
     void updateDraw();
     

@@ -87,7 +87,6 @@ CALabel* CALabel::createWithCenter(const DRect &rect)
 void CALabel::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    this->delayUpdate();
 }
 
 bool CALabel::initWithFrame(const DRect& rect)

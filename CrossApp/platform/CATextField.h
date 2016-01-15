@@ -35,17 +35,15 @@ public:
 	//
 	virtual void textFieldShouldReturn(CATextField* sender){}
 
-	//
 	virtual void keyBoardHeight(CATextField* sender, int height){}
 
-	//arg0  
-	virtual void textFieldAfterTextChanged(CATextField* sender,
-                                           const char* beforeText,
-                                           const char* changeText,
-                                           int location,
-                                           int delLenght,
-                                           int addLenght)
-    {}
+	virtual bool textFieldShouldChangeCharacters(CATextField* sender,
+                                                 unsigned int location,
+                                                 unsigned int lenght,
+                                                 const std::string& changedText)
+    {
+        return true;
+    }
 };
 
 class CC_DLL CATextField : public CAView

@@ -21,7 +21,6 @@
 }
 
 @property(nonatomic,assign) CrossApp::CATextField* textField;
-@property(nonatomic,copy) NSString* beforeText;
 
 -(void)regiestKeyBoardMessage;
 -(void)removeTextView;
@@ -37,7 +36,6 @@
 {
     if ([super initWithFrame:frame])
     {
-        _beforeText = [[NSString alloc]initWithFormat:@""];
         return self;
     }
     return nil;
@@ -70,46 +68,6 @@
     [self removeFromSuperview];
 }
 
-- (void)textFieldEditChanged:(UITextField *)textField
-{
-    if (_isShouldEdit)
-    {
-        _isShouldEdit = NO;
-        std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
-        self.beforeText = [textField text];
-        return;
-    }
-    
-    NSString *stra = @"";
-    NSString *strb = @"";
-    int location = 0;
-    for (int i =0,j =0; i<[self.beforeText length]; i++)
-    {
-        location = i;
-        CC_BREAK_IF(i+1>[textField text].length);
-        
-        strb = [self.beforeText substringWithRange:NSMakeRange(i, 1)];
-        stra = [[textField text] substringWithRange:NSMakeRange(j, 1)];
-        
-        CC_BREAK_IF(![strb isEqualToString:stra]);
-        j++;
-    }
-
-    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
-    self.beforeText = [textField text];
-
-    if (_textField->getDelegate())
-    {
-        _textField->getDelegate()->textFieldAfterTextChanged(_textField,
-                                                             str.c_str(),
-                                                             "",
-                                                             location,
-                                                             1,
-                                                             0);
-    }
-    
-    _isShouldEdit = NO;
-}
 
 - (void) keyboardWillWasShown:(NSNotification *) notif
 {
@@ -166,13 +124,13 @@
         }
     }
     
-    std::string str = [self.beforeText cStringUsingEncoding:NSUTF8StringEncoding];
-    std::string insert = [string cStringUsingEncoding:NSUTF8StringEncoding];
-    self.beforeText = [textField text];
-    
     if (_textField->getDelegate())
     {
-        _textField->getDelegate()->textFieldAfterTextChanged(_textField, str.c_str(), insert.c_str(), (int)range.location, 0, (int)string.length);
+        std::string text = [string UTF8String];
+        return _textField->getDelegate()->textFieldShouldChangeCharacters(_textField,
+                                                                          (unsigned int)range.location,
+                                                                          (unsigned int)range.length,
+                                                                          text);
     }
     
     
@@ -574,7 +532,6 @@ void CATextField::setText(const std::string &var)
     m_sText = var;
     
     textField_iOS.text = [NSString stringWithUTF8String:m_sText.c_str()];
-    textField_iOS.beforeText = [textField_iOS text];
     
     this->delayShowImage();
 }

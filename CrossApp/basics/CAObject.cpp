@@ -90,6 +90,11 @@ bool CAObject::isEqual(const CAObject *pObject)
     return this == pObject;
 }
 
+void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
+{
+//    CAScheduler::schedule(schedule_selector(CAView::update), this, 0, 0, afterDelay);
+}
+
 CAZone::CAZone(CAObject *pObject)
 {
     m_pCopyObject = pObject;
