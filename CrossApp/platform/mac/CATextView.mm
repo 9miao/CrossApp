@@ -65,54 +65,88 @@
     
 }
 
-- (void)textDidChange:(NSNotification *)notification{
-    [super textDidChange:notification];
+- (unsigned int)getLocationWithBefore:(NSString*)before Current:(NSString*)current
+{
+    unsigned int location = 0;
     
-    NSString* before = [self beforeText];
-    NSString* curStr = [self stringValue];
-    
-    int starL = 0;
-    int insertL = 0;
-    int deleteL = 0;
-    if(before.length>curStr.length){
-        //delete
-        deleteL = before.length - curStr.length;
-        starL   = curStr.length;
-        
-        for(int i=0; i<curStr.length; i++){
-            unichar ch = [curStr characterAtIndex: i];
-            unichar ch1 = [before characterAtIndex: i];
-            if(ch!=ch1){
-                starL = i;
-                break;
-            }
+    for(unsigned int i=0; i<before.length; i++)
+    {
+        if (i == current.length)
+        {
+            break;
         }
         
-//        if (_textView->getDelegate()) {
-//            _textView->getDelegate()->textViewAfterTextChanged(_textView,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
-//        }
+        unichar before_char = [before characterAtIndex: i];
+        unichar current_char = [current characterAtIndex: i];
+        
+        if(before_char != current_char)
+        {
+            break;
+        }
+        
+        location = before.length + 1;
+    }
+    
+    return location;
+}
+
+- (unsigned int)getLenghtWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
+{
+    unsigned int lenght = 0;
+    
+    for(unsigned int i=location; i<before.length; i++)
+    {
+        if (i == current.length)
+        {
+            lenght = before.length - location;
+            break;
+        }
+        
+        unichar before_char = [before characterAtIndex: i];
+        
+        unichar current_char = [current characterAtIndex: i];
+        
+        if(before_char == current_char)
+        {
+            break;
+        }
+        
+        lenght = i + 1 - location;
+    }
+    
+    return lenght;
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+    NSString* before = [self beforeText];
+    NSString* current = [self stringValue];
+    
+    unsigned int location = [self getLocationWithBefore:before Current:current];
+    unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
+    
+    unsigned int addLenght = current.length - (before.length - lenght);
+    
+    std::string changedText = "";
+    
+    if (addLenght > 0)
+    {
+        changedText = [[current substringWithRange:NSMakeRange(location, addLenght)] UTF8String];
     }
     else
     {
-       //insert
-        insertL = curStr.length - before.length;
-        starL   = before.length;
-        
-        for(int i=0; i<before.length; i++){
-            unichar ch = [curStr characterAtIndex: i];
-            unichar ch1 = [before characterAtIndex: i];
-            if(ch!=ch1){
-                starL = i;
-                break;
-            }
-        }
-        
-//        if (_textView->getDelegate()) {
-//            _textView->getDelegate()->textViewAfterTextChanged(_textView,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
-//        }
+        changedText = "";
     }
     
-    self.beforeText = self.stringValue;
+    if (_textView->getDelegate() && !_textView->getDelegate()->textViewShouldChangeCharacters(_textView, location, lenght, changedText))
+    {
+        [self setStringValue:before];
+    }
+    else
+    {
+        [self setBeforeText:current];
+        [self setStringValue:current];
+    }
 }
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event

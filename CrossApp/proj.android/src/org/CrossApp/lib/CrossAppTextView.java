@@ -131,7 +131,7 @@ import android.widget.TextView.OnEditorActionListener;
 	
 	//keyBoard return call back
 	private static native void keyBoardReturnCallBack(int key);
-	private static native void textChange(int key,String before,String change,int arg0,int arg1,int arg2);
+	private static native boolean textChange(int key,String before,String change,int arg0,int arg1);
 	private static native void text(int key, byte[] text, int lenght);
     public void init(int key)
     {
@@ -540,7 +540,10 @@ import android.widget.TextView.OnEditorActionListener;
     	{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
-			{//璧峰��浣�缃�锛� �����ら�垮害锛�澧������垮害
+			{
+				String mes = "message:" + arg1 + ":" + arg2 + ":" + arg0;
+				Log.d("androidlog", mes);
+				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 				if (isSetText)
 				{
@@ -548,34 +551,35 @@ import android.widget.TextView.OnEditorActionListener;
 					return;
 				}
 				
+				_arg1 = arg1;
+				_arg2 = arg2;
+				
+				
+				
 				String string = arg0.toString();
-				if (arg2>arg3) 
+				if (arg3 > 0) 
 				{
-					changedTextString = beforeTextString.substring(arg1, arg1+arg2);
+					//只是添加
+					changedTextString = string.substring(_arg1, _arg1 + arg3);
+				}
+				else 
+				{
+					//只是删除
+					changedTextString = "";
+				}
+				
+				if (!textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2))
+				{
+					isSetText = true;
+					textView.setText(beforeTextString);
 				}
 				else
 				{
-					changedTextString = string.substring(arg1, arg1+arg3);
+					isSetText = true;
+					textView.setText(string);
+					ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
+					text(mykey, textBuffer.array(), textBuffer.array().length);
 				}
-				
-				_arg1 = arg1;
-				_arg2 = arg2;
-				_arg3 = arg3;
-				
-				context.runOnGLThread(new Runnable()
-				{
-					
-					@Override
-					public void run()
-					{
-						ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
-						text(mykey, textBuffer.array(), textBuffer.array().length);
-						textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2, _arg3);
-					}
-					
-				});
-    	
- 
 			}
 			
 			@Override

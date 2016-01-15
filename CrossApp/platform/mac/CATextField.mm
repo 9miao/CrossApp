@@ -221,79 +221,110 @@
     [self setWantsLayer:YES];
 }
 
-- (void)textDidChange:(NSNotification *)notification
+- (unsigned int)getLocationWithBefore:(NSString*)before Current:(NSString*)current
 {
-    NSString* before = [self beforeText];
-    NSString* curStr = [self stringValue];
+    unsigned int location = 0;
     
-    [self setStringValue:before];
-    
-    NSLog(@"AAA %@", before);
-    
-    [self setStringValue:curStr];
-    
-    if (before.length == 0)
+    for(unsigned int i=0; i<before.length; i++)
     {
-
-    }
-    
-    NSLog(@"BBB %@", self.stringValue);
-    
-    [self setBeforeText:curStr];
-    return;
-    
-    
-    
-    int starL = 0;
-    int insertL = 0;
-    int deleteL = 0;
-    if(before.length>curStr.length)
-    {
-        //delete
-        deleteL = before.length - curStr.length;
-        starL   = curStr.length;
-        
-        for(int i=0; i<curStr.length; i++){
-            unichar ch = [curStr characterAtIndex: i];
-            unichar ch1 = [before characterAtIndex: i];
-            if(ch!=ch1){
-                starL = i;
-                break;
-            }
+        if (i == current.length)
+        {
+            location = i;
+            break;
         }
         
-//        if (_textField->getDelegate()) {
-//            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[before substringWithRange:NSMakeRange(starL, deleteL)] UTF8String], starL, deleteL, insertL);
-//        }
+        unichar before_char = [before characterAtIndex: i];
+        unichar current_char = [current characterAtIndex: i];
+        
+        if(before_char != current_char)
+        {
+            location = i;
+            break;
+        }
+        
+        location = before.length;
+    }
+    
+    return location;
+}
+
+- (unsigned int)getLenghtWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
+{
+    unsigned int lenght = 0;
+    
+    for(unsigned int i=location; i<before.length; i++)
+    {
+        if (i == current.length)
+        {
+            lenght = i + 1 - location;
+            break;
+        }
+        
+        unichar before_char = [before characterAtIndex: i];
+
+        unichar current_char = [current characterAtIndex: i];
+        
+        if(before_char != current_char)
+        {
+            if (before.length > current.length)
+            {
+                lenght = before.length - current.length;
+            }
+            else if (before.length < current.length)
+            {
+                lenght = i - location;
+            }
+            else
+            {
+                lenght = 0;
+            }
+            
+            break;
+        }
+
+        lenght = before.length - location;
+    }
+    
+    return lenght;
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+    NSString* before = [NSString stringWithString:[self beforeText]];
+    NSString* current = [NSString stringWithString:[self stringValue]];;
+    
+    unsigned int location = [self getLocationWithBefore:before Current:current];
+    unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
+    unsigned int addLenght = MAX(current.length - (before.length - lenght), 0);;
+
+    std::string changedText = "";
+    
+    if (addLenght > 0)
+    {
+        changedText = [[current substringWithRange:NSMakeRange(location, addLenght)] UTF8String];
     }
     else
     {
-        
-        if (curStr.length > _textField->getMaxLenght() && _textField->getMaxLenght()!=0)
-        {
-            [self setText:before];
-            return;
-        }
-        
-        //insert
-        insertL = curStr.length - before.length;
-        starL   = before.length;
-        
-        for(int i=0; i<before.length; i++){
-            unichar ch = [curStr characterAtIndex: i];
-            unichar ch1 = [before characterAtIndex: i];
-            if(ch!=ch1){
-                starL = i;
-                break;
-            }
-        }
-        
-//        if (_textField->getDelegate()) {
-//            _textField->getDelegate()->textFieldAfterTextChanged(_textField,[_beforeText UTF8String],[[curStr substringWithRange:NSMakeRange(starL, insertL)] UTF8String], starL, deleteL, insertL);
-//        }
+        changedText = "";
     }
     
-    self.beforeText = self.stringValue;
+    if (_textField->getMaxLenght() > 0 && _textField->getMaxLenght() < current.length)
+    {
+        [self setStringValue:[self beforeText]];
+    }
+    else
+    {
+        if (_textField->getDelegate() && !_textField->getDelegate()->textFieldShouldChangeCharacters(_textField, location, lenght, changedText))
+        {
+            [self setStringValue:before];
+        }
+        else
+        {
+            
+            [self setBeforeText:current];
+            [self setStringValue:current];
+        }
+    }
 }
 
 - (void) keyUp:(NSEvent *)theEvent

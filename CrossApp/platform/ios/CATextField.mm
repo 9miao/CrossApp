@@ -17,7 +17,7 @@
 
 @interface IOSTextField: UITextField<UITextFieldDelegate>
 {
-    BOOL _isShouldEdit;
+
 }
 
 @property(nonatomic,assign) CrossApp::CATextField* textField;
@@ -58,8 +58,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:UIKeyboardWillShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
-    
-    [self addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
 }
 
 -(void)removeTextView
@@ -108,15 +106,14 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    _isShouldEdit = YES;
     
     if (_textField->getMaxLenght() > 0)
     {
-        NSUInteger oldLength = [[textField text] length];
-        NSUInteger replacementLength = [string length];
-        NSUInteger rangeLength = range.length;
+        NSUInteger oldLenght = [[textField text] length];
+        NSUInteger addLenght = [string length];
+        NSUInteger delLenght = range.length;
         
-        NSUInteger newLength = oldLength - rangeLength + replacementLength;
+        NSUInteger newLength = oldLenght + addLenght - delLenght;
         
         if (newLength > _textField->getMaxLenght())
         {

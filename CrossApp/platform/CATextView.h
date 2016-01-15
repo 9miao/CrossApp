@@ -42,6 +42,7 @@ public:
     //
     virtual void keyBoardHeight(CATextView* sender, int height){}
     
+    //Warning!!! Warning!!! Warning!!!  This method is not on the OpenGL thread.
     virtual bool textViewShouldChangeCharacters(CATextView* sender,
                                                  unsigned int location,
                                                  unsigned int lenght,

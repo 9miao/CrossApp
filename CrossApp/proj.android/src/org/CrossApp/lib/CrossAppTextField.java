@@ -764,8 +764,8 @@ import android.widget.TextView.OnEditorActionListener;
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
 			{
-				String mes = "message:" + arg1 + ":" + arg2 + ":" + arg0;
-				Log.d("androidlog", mes);
+//				String mes = "message:" + arg1 + ":" + arg2 + ":" + arg0;
+//				Log.d("androidlog", mes);
 				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 				if (isSetText)
@@ -780,34 +780,28 @@ import android.widget.TextView.OnEditorActionListener;
 				
 				
 				String string = arg0.toString();
-				if (arg2<=0) 
+				if (arg3 > 0) 
 				{
 					//只是添加
-					changedTextString = string.substring(_arg1,_arg1+arg3);
+					changedTextString = string.substring(_arg1, _arg1 + arg3);
 				}
-				else if(arg2>0&&arg3>0)
+				else 
 				{
-					//删除并添加
-					changedTextString = string.substring(_arg1,_arg1+arg3);
-				}else {
 					//只是删除
 					changedTextString = "";
 				}
-				
-				mes = "message:" + changedTextString + ":" + _arg1 + ":" + _arg2;
-				Log.d("androidlog", mes);
 
 				if (!textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2))
 				{
 					isSetText = true;
 					textField.setText(beforeTextString);
-					Log.d("androidlog", "asdasdassdasd");
 				}
 				else
 				{
+					isSetText = true;
+					textField.setText(string);
 					ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
-					Log.d("androidlog", "1111111111");
 				}
 			}
 			

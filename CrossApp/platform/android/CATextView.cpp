@@ -239,7 +239,7 @@ extern "C"
         }
     }
     
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1, int arg2)
+	JNIEXPORT bool JNICALL Java_org_CrossApp_lib_CrossAppTextView_textChange(JNIEnv *env, jclass cls, jint key, jstring before, jstring change, int arg0, int arg1)
     {
         const char* charBefore = env->GetStringUTFChars(before, NULL);
         std::string strBefore = charBefore;
@@ -249,10 +249,12 @@ extern "C"
         env->ReleaseStringUTFChars(change, charChange);
         
 		CATextView* textView = s_map[(int)key];
-        if (textView->getDelegate())
-        {
-            textView->getDelegate()->textViewAfterTextChanged(textView, strBefore.c_str(), strChange.c_str(), arg0, arg1, arg2);
-        }
+		if (textView->getDelegate())
+		{
+			return textView->getDelegate()->textViewShouldChangeCharacters(textView, arg0, arg1, strChange.c_str());
+		}
+
+		return true;
     }
     
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
