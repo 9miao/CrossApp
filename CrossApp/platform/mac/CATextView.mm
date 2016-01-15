@@ -73,6 +73,7 @@
     {
         if (i == current.length)
         {
+            location = i;
             break;
         }
         
@@ -81,10 +82,11 @@
         
         if(before_char != current_char)
         {
+            location = i;
             break;
         }
         
-        location = before.length + 1;
+        location = before.length;
     }
     
     return location;
@@ -98,7 +100,7 @@
     {
         if (i == current.length)
         {
-            lenght = before.length - location;
+            lenght = i + 1 - location;
             break;
         }
         
@@ -106,12 +108,25 @@
         
         unichar current_char = [current characterAtIndex: i];
         
-        if(before_char == current_char)
+        if(before_char != current_char)
         {
+            if (before.length > current.length)
+            {
+                lenght = before.length - current.length;
+            }
+            else if (before.length < current.length)
+            {
+                lenght = i - location;
+            }
+            else
+            {
+                lenght = 0;
+            }
+            
             break;
         }
         
-        lenght = i + 1 - location;
+        lenght = before.length - location;
     }
     
     return lenght;
@@ -119,13 +134,12 @@
 
 - (void)textDidChange:(NSNotification *)notification
 {
-    NSString* before = [self beforeText];
-    NSString* current = [self stringValue];
+    NSString* before = [NSString stringWithString:[self beforeText]];
+    NSString* current = [NSString stringWithString:[self stringValue]];;
     
     unsigned int location = [self getLocationWithBefore:before Current:current];
     unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
-    
-    unsigned int addLenght = current.length - (before.length - lenght);
+    unsigned int addLenght = MAX(current.length - (before.length - lenght), 0);;
     
     std::string changedText = "";
     
@@ -144,6 +158,7 @@
     }
     else
     {
+        
         [self setBeforeText:current];
         [self setStringValue:current];
     }

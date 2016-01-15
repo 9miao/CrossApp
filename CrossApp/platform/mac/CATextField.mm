@@ -308,9 +308,18 @@
         changedText = "";
     }
     
-    if (_textField->getMaxLenght() > 0 && _textField->getMaxLenght() < current.length)
+    
+    int maxLenght = _textField->getMaxLenght();
+    if (maxLenght > 0 && maxLenght < current.length)
     {
-        [self setStringValue:[self beforeText]];
+        if (before.length < maxLenght)
+        {
+            [self setStringValue:[current substringToIndex:maxLenght]];
+        }
+        else
+        {
+            [self setStringValue:[self beforeText]];
+        }
     }
     else
     {
