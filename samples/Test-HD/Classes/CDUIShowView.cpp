@@ -582,8 +582,9 @@ void CDUIShowView::showButton()
     VIEWLIST.clear();
     
     CAButton* btn1 = CAButton::create(CAButtonTypeCustom);
-    btn1->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
+    btn1->setCenter(DRect(winSize.width/2, winSize.height/2, 300, 100));
     btn1->setTitleForState(CAControlStateNormal, "Noborder");
+    btn1->setTitleFontSize(60);
     btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     btn1->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchUpInSide);
     CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
@@ -592,7 +593,7 @@ void CDUIShowView::showButton()
     VIEWLIST.pushBack(view1);
     
     CAButton* btn2 = CAButton::create(CAButtonTypeSquareRect);
-    btn2->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn2->setCenter(DRect(winSize.width/2, winSize.height/2, 300, 100));
     btn2->setTitleForState(CAControlStateAll,"SquareRect");
     btn2->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchUpInSide);
     CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
@@ -601,7 +602,7 @@ void CDUIShowView::showButton()
     VIEWLIST.pushBack(view2);
     
     CAButton* btn3 = CAButton::create(CAButtonTypeRoundedRect);
-    btn3->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn3->setCenter(DRect(winSize.width/2, winSize.height/2, 300, 100));
     btn3->setTitleForState(CAControlStateAll, "RoundedRect");
     btn3->addTarget(this, CAControl_selector(CDUIShowView::buttonCallBack), CAControlEventTouchUpInSide);
     CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
@@ -610,7 +611,7 @@ void CDUIShowView::showButton()
     VIEWLIST.pushBack(view3);
     
     CAButton* btn4 = CAButton::create(CAButtonTypeSquareRect);
-    btn4->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn4->setCenter(DRect(winSize.width/2, winSize.height/2, 300, 100));
     btn4->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn4->setBackGroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/button_normal.png")));
     btn4->setBackGroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("image/button_down.png")));
@@ -622,7 +623,7 @@ void CDUIShowView::showButton()
     
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setAllowsSelected(true);
-    btn5->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 50));
+    btn5->setCenter(DRect(winSize.width/2, winSize.height/2, 300, 100));
     btn5->setTitleForState(CAControlStateNormal, "Normal");
     btn5->setTitleColorForState(CAControlStateNormal, CAColor_white);
     btn5->setTitleForState(CAControlStateSelected, "Selected");
@@ -1597,16 +1598,16 @@ void CDUIShowView::showDatePickerView()
     VIEWLIST.pushBack(view1);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     
-    CADatePickerView* dpv = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDate);
+    CADatePickerView* dpv = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,320),CADatePickerModeDate);
     //dpv->setDate(2004, 2, 16, false);
     dpv->setDelegate(this);
-
+    
     CAView* view2 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view2->addSubview(dpv);
     view2->setColor(CAColor_white);
     VIEWLIST.pushBack(view2);
     
-    CADatePickerView* dpv3 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeDateAndTime);
+    CADatePickerView* dpv3 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,320),CADatePickerModeDateAndTime);
     dpv3->setDelegate(this);
     
     CAView* view3 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
@@ -1614,7 +1615,7 @@ void CDUIShowView::showDatePickerView()
     view3->setColor(CAColor_white);
     VIEWLIST.pushBack(view3);
     
-    CADatePickerView* dpv4 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeTime);
+    CADatePickerView* dpv4 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,320),CADatePickerModeTime);
     dpv4->setDelegate(this);
     
     CAView* view4 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
@@ -1622,7 +1623,7 @@ void CDUIShowView::showDatePickerView()
     view4->setColor(CAColor_white);
     VIEWLIST.pushBack(view4);
     
-    CADatePickerView* dpv5 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280),CADatePickerModeCountDownTimer);
+    CADatePickerView* dpv5 = CADatePickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,320),CADatePickerModeCountDownTimer);
     dpv5->setDelegate(this);
     
     CAView* view5 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
@@ -1630,8 +1631,8 @@ void CDUIShowView::showDatePickerView()
     view5->setColor(CAColor_white);
     VIEWLIST.pushBack(view5);
 #endif
-	p_PageViewVec->setViews(VIEWLIST);
-	showNum = VIEWLIST.size();
+    p_PageViewVec->setViews(VIEWLIST);
+    showNum = VIEWLIST.size();
 }
 
 void CDUIShowView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
@@ -1645,8 +1646,8 @@ void CDUIShowView::didSelectRow(const struct tm& tm)
 {
     char temp_time[20];
     strftime(temp_time, 100, "%F", &tm);
-    CCLog("didSelectRow----tm======%d-%d-%d",tm.tm_year+1900,tm.tm_mon+1,tm.tm_mday);
-    CCLog("didSelectRow----tm======%s",temp_time);
+//    CCLog("didSelectRow----tm======%d-%d-%d",tm.tm_year+1900,tm.tm_mon+1,tm.tm_mday);
+//    CCLog("didSelectRow----tm======%s",temp_time);
 }
 
 unsigned int CDUIShowView::numberOfComponentsInPickerView(CAPickerView* pickerView)
@@ -1672,8 +1673,9 @@ float CDUIShowView::rowHeightForComponent(CAPickerView* pickerView, unsigned int
 
 const char* CDUIShowView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
 {
-    //CCLog("ppppp===%s",unicode_to_utf8(adressTag[row]).c_str());
-    return unicode_to_utf8(adressTag[row]).c_str();
+    static std::string s;
+    s = unicode_to_utf8(adressTag[row]);
+    return s.c_str();
 }
 
 void CDUIShowView::zoomViewBySliderValue(CrossApp::CAControl *btn, CrossApp::DPoint point)

@@ -294,7 +294,7 @@ float CADatePickerView::widthForComponent(CAPickerView* pickerView, unsigned int
 
 float CADatePickerView::rowHeightForComponent(CAPickerView* pickerView, unsigned int component)
 {
-    static float rowHeight = 80 * CAApplication::getApplication()->getAdaptationRatio();
+    static float rowHeight = 80;
     return rowHeight;
 }
 
