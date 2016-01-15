@@ -1013,7 +1013,7 @@ CAImage::~CAImage()
         ccGLDeleteTexture(m_uName);
     }
 
-    releaseData(&m_pData);
+    releaseData();
 
     s_pImages.erase(this);
 }
@@ -2137,13 +2137,20 @@ void CAImage::setShaderProgram(CAGLProgram* pShaderProgram)
 
 void CAImage::releaseData()
 {
-    releaseData(&m_pData);
+    if (m_pData)
+    {
+        releaseData(&m_pData);
+        m_uDataLenght = 0;
+    }
 }
 
 void CAImage::releaseData(unsigned char ** data)
 {
-    free(*data);
-    *data = NULL;
+    if (*data)
+    {
+        free(*data);
+        *data = NULL;
+    }
 }
 
 bool CAImage::hasPremultipliedAlpha()
