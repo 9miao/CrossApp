@@ -75,11 +75,7 @@ import android.widget.TextView.OnEditorActionListener;
 	//浠ｇ�����璋����瑕�
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
-	private String  changedTextString = "";
-	private String  currTextString = "";
-	private int _arg1 = 0;
-	private int _arg2 = 0;
-	private int _arg3 = 0;
+	private int selection = 0;
 	
 	//������寮瑰�洪�����
 	private boolean isShowKey = false;
@@ -538,47 +534,45 @@ import android.widget.TextView.OnEditorActionListener;
 
     	textWatcher = new TextWatcher()
     	{
-			@Override
+    		@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
 			{
-				String mes = "message:" + arg1 + ":" + arg2 + ":" + arg0;
-				Log.d("androidlog", mes);
 				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 				if (isSetText)
 				{
-					isSetText = false;
 					return;
 				}
-				
-				_arg1 = arg1;
-				_arg2 = arg2;
-				
-				
-				
+
 				String string = arg0.toString();
+				
+				String  changedText = "";
 				if (arg3 > 0) 
 				{
 					//只是添加
-					changedTextString = string.substring(_arg1, _arg1 + arg3);
+					changedText = string.substring(arg1, arg1 + arg3);
 				}
 				else 
 				{
 					//只是删除
-					changedTextString = "";
+					changedText = "";
 				}
-				
-				if (!textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2))
+
+				if (!textChange(mykey, beforeTextString, changedText, arg1, arg2))
 				{
 					isSetText = true;
 					textView.setText(beforeTextString);
+					textView.setSelection(selection);
+					isSetText = false;
 				}
 				else
 				{
 					isSetText = true;
 					textView.setText(string);
-					ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
+					textView.setSelection(selection - arg2 + arg3);
+					ByteBuffer textBuffer = ByteBuffer.wrap(string.getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
+					isSetText = false;
 				}
 			}
 			
@@ -586,8 +580,13 @@ import android.widget.TextView.OnEditorActionListener;
 			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 					int arg3)
 			{
+				if (isSetText)
+				{
+					return;
+				}
 				// TODO Auto-generated method stub
 				beforeTextString = arg0.toString();
+				selection = textView.getSelectionStart();  
 			}
 			
 			@Override

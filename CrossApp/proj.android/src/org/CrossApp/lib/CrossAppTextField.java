@@ -67,12 +67,8 @@ import android.widget.TextView.OnEditorActionListener;
 	
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
-	private String  changedTextString = "";
-	private String  currTextString = "";
-	//起始位置
-	private int _arg1 = 0;
-	//修改长度
-	private int _arg2 = 0;
+	private int selection = 0;
+
 	//是否弹出键盘
 	private boolean isShowKey = false;
 	
@@ -764,44 +760,45 @@ import android.widget.TextView.OnEditorActionListener;
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
 			{
-//				String mes = "message:" + arg1 + ":" + arg2 + ":" + arg0;
-//				Log.d("androidlog", mes);
 				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 				if (isSetText)
 				{
-					isSetText = false;
 					return;
 				}
 				
-				_arg1 = arg1;
-				_arg2 = arg2;
-				
-				
+				String mes = "message:" + arg0 + "  loc:" + arg1 + "  del:" + arg2  + "  add:" + arg3;
+				Log.e("androidlog", mes);
 				
 				String string = arg0.toString();
+				
+				String  changedText = "";
 				if (arg3 > 0) 
 				{
 					//只是添加
-					changedTextString = string.substring(_arg1, _arg1 + arg3);
+					changedText = string.substring(arg1, arg1 + arg3);
 				}
 				else 
 				{
 					//只是删除
-					changedTextString = "";
+					changedText = "";
 				}
 
-				if (!textChange(mykey, beforeTextString, changedTextString, _arg1, _arg2))
+				if (!textChange(mykey, beforeTextString, changedText, arg1, arg2))
 				{
 					isSetText = true;
 					textField.setText(beforeTextString);
+					textField.setSelection(selection);
+					isSetText = false;
 				}
 				else
 				{
 					isSetText = true;
 					textField.setText(string);
-					ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
+					textField.setSelection(selection - arg2 + arg3);
+					ByteBuffer textBuffer = ByteBuffer.wrap(string.getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
+					isSetText = false;
 				}
 			}
 			
@@ -809,13 +806,24 @@ import android.widget.TextView.OnEditorActionListener;
 			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 					int arg3)
 			{
+				if (isSetText)
+				{
+					return;
+				}
 				// TODO Auto-generated method stub
 				beforeTextString = arg0.toString();
+				selection = textField.getSelectionStart();  
+				String mes = "message:" + selection;
+				Log.e("androidlog", "--" + selection);
 			}
 			
 			@Override
 			public void afterTextChanged(Editable arg0)
 			{
+				if (isSetText)
+				{
+					return;
+				}
 				// TODO Auto-generated method stub
 			}
 		};
