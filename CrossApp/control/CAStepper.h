@@ -25,12 +25,14 @@ class CAScale9ImageView;
 class CC_DLL CAStepper : public CAControl {
     
 public:
-    CAStepper(const CAStepperOrientation& type);
+    CAStepper(const CAStepperOrientation& type = CAStepperOrientationHorizontal);
     virtual ~CAStepper();
 
-    static CAStepper* create(const CAStepperOrientation& type);
-    static CAStepper* createWithFrame(const DRect& rect, const CAStepperOrientation& type);
-    static CAStepper* createWithCenter(const DRect& rect, const CAStepperOrientation& type);
+    static CAStepper* create(const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+    static CAStepper* createWithFrame(const DRect& rect
+                                      , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+    static CAStepper* createWithCenter(const DRect& rect
+                                       , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
     
     virtual bool init();
     
