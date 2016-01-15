@@ -42,8 +42,13 @@ public:
     //
     virtual void keyBoardHeight(CATextView* sender, int height){}
     
-    //arg0
-    virtual void textViewAfterTextChanged(CATextView*sender,const char* beforeText,const char* changeText,int arg0,int arg1,int arg2){}
+    virtual bool textViewShouldChangeCharacters(CATextView* sender,
+                                                 unsigned int location,
+                                                 unsigned int lenght,
+                                                 const std::string& changedText)
+    {
+        return true;
+    }
 };
 
 

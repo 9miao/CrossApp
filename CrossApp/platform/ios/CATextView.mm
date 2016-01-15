@@ -61,11 +61,11 @@
     _iosTextView.frame = CGRectMake(0, 0, size.width, size.height);
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
 {
     if (_textView->getReturnType() != CrossApp::CATextView::Default)
     {
-        if ([text isEqualToString:@"\n"])
+        if ([string isEqualToString:@"\n"])
         {
             //判断输入的字是否是回车，即按下return
             //在这里做你响应return键的代码
@@ -78,26 +78,13 @@
         }
     }
     
-    std::string insert = [text cStringUsingEncoding:NSUTF8StringEncoding];
-    std::string cur = [[_iosTextView text] cStringUsingEncoding:NSUTF8StringEncoding];
-    
-    int dele    = 0;
-    int inse  = 0;
-    
-    if (range.length>0)
-    {
-        dele = (int)range.length;
-        
-    }
-    else
-    {
-        inse = (int)text.length;
-    }
-    
-    
     if (_textView->getDelegate())
     {
-       _textView->getDelegate()->textViewAfterTextChanged(_textView, cur.c_str(), insert.c_str(), (int)range.location, dele, inse);
+        std::string text = [string UTF8String];
+        return _textView->getDelegate()->textViewShouldChangeCharacters(_textView,
+                                                                          (unsigned int)range.location,
+                                                                          (unsigned int)range.length,
+                                                                          text);
     }
     
     
