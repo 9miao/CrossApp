@@ -796,8 +796,15 @@ import android.widget.TextView.OnEditorActionListener;
 					isSetText = true;
 					textField.setText(string);
 					textField.setSelection(selection - arg2 + arg3);
-					ByteBuffer textBuffer = ByteBuffer.wrap(string.getBytes());
-					text(mykey, textBuffer.array(), textBuffer.array().length);
+					context.runOnGLThread(new Runnable() 
+	            	{
+	                    @Override
+	                    public void run()
+	                    {
+	                    	ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
+	    					text(mykey, textBuffer.array(), textBuffer.array().length);
+	                    }
+	                });
 					isSetText = false;
 				}
 			}
