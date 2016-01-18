@@ -394,10 +394,19 @@ void CAApplication::reshapeProjection(const DSize& newWindowSize)
 void CAApplication::setStatusBarStyle(const CAStatusBarStyle &var)
 {
     m_eStatusBarStyle = var;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CCApplication::sharedApplication()->setStatusBarStyle(var);
 #endif
     
+}
+
+bool CAApplication::isStatusBarHidden()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    return CCApplication::sharedApplication()->isStatusBarHidden();
+#else
+    return false;
+#endif
 }
 
 void CAApplication::setDepthTest(bool bOn)

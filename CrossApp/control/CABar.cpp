@@ -19,8 +19,8 @@ NS_CC_BEGIN
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#define NAVBAR_HEIGHT 128
-#define TABBAR_HEIGHT 138
+#define NAVBAR_HEIGHT (CAApplication::getApplication()->isStatusBarHidden() ? 88 : 128)
+#define TABBAR_HEIGHT (CAApplication::getApplication()->isStatusBarHidden() ? 98 : 138)
 
 #else
 
@@ -227,7 +227,7 @@ void CANavigationBar::showLeftButton()
     DRect rect;
     rect.size.width = m_pContentView->getBounds().size.height;
     rect.size.height = m_pContentView->getBounds().size.height;
-    rect.origin.x = 10;
+    rect.origin.x = 0;
     rect.origin.y = 0;
 
     for (size_t i=0; i<buttonItems.size(); i++)
@@ -235,7 +235,11 @@ void CANavigationBar::showLeftButton()
         CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         
         rect.size.width = item ? item->getItemWidth() : 80;
-        rect.origin.x += i * rect.size.width;
+        
+        if (i == 0)
+        {
+            rect.origin.x = 10;
+        }
         
         CAButton* button = CAButton::createWithFrame(rect, CAButtonTypeCustom);
         button->setImageSize(DSize(42, 42));
@@ -273,6 +277,8 @@ void CANavigationBar::showLeftButton()
             button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
         }
         m_pLeftButtons.push_back(button);
+        
+        rect.origin.x += rect.size.width;
     }
 }
 
@@ -290,7 +296,7 @@ void CANavigationBar::showRightButton()
     DRect rect;
     rect.size.width = m_pContentView->getBounds().size.height;
     rect.size.height = m_pContentView->getBounds().size.height;
-    rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width - 10;
+    rect.origin.x = 0;
     rect.origin.y = 0;
 
     for (size_t i=0; i<buttonItems.size(); i++)
@@ -298,7 +304,11 @@ void CANavigationBar::showRightButton()
         CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         
         rect.size.width = item ? item->getItemWidth() : 80;
-        rect.origin.x -= i * rect.size.width;
+        
+        if (i == 0)
+        {
+            rect.origin.x = m_pContentView->getBounds().size.width - rect.size.width - 10;
+        }
         
         CAButton* button = CAButton::createWithFrame(rect, CAButtonTypeCustom);
         button->setImageSize(DSize(42, 42));
@@ -330,6 +340,8 @@ void CANavigationBar::showRightButton()
             button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
         }
         m_pRightButtons.push_back(button);
+        
+        rect.origin.x -= rect.size.width;
     }
 }
 

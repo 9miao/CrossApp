@@ -241,6 +241,7 @@ import android.widget.TextView.OnEditorActionListener;
 				isSetText = true;
 				textViewText = text;
 				textView.setText(text);
+				isSetText = false;
 			}
 		});
 	}
@@ -426,7 +427,6 @@ import android.widget.TextView.OnEditorActionListener;
             @Override
             public void run()
             {           	
-            	textView.setSelection(0);
             	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);  
             	imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
         		textView.clearFocus();
@@ -570,15 +570,17 @@ import android.widget.TextView.OnEditorActionListener;
 					isSetText = true;
 					textView.setText(string);
 					textView.setSelection(selection - arg2 + arg3);
-					context.runOnGLThread(new Runnable() 
-	            	{
-	                    @Override
-	                    public void run()
-	                    {
-	                    	ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
-	    					text(mykey, textBuffer.array(), textBuffer.array().length);
-	                    }
-	                });
+//					context.runOnGLThread(new Runnable() 
+//	            	{
+//	                    @Override
+//	                    public void run()
+//	                    {
+//	                    	ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
+//	    					text(mykey, textBuffer.array(), textBuffer.array().length);
+//	                    }
+//	                });
+					ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
+					text(mykey, textBuffer.array(), textBuffer.array().length);
 					isSetText = false;
 				}
 			}
@@ -593,7 +595,7 @@ import android.widget.TextView.OnEditorActionListener;
 				}
 				// TODO Auto-generated method stub
 				beforeTextString = arg0.toString();
-				selection = textView.getSelectionStart();  
+				selection = textView.getSelectionStart();
 			}
 			
 			@Override

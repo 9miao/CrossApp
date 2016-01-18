@@ -226,10 +226,7 @@ bool CATextField::becomeFirstResponder()
     
     bool result = CAView::becomeFirstResponder();
     
-    CAViewAnimation::beginAnimations(m_s__StrID + "hideTextField", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextField::hideTextField));
-    CAViewAnimation::commitAnimations();
+    this->hideTextField();
     
     [textField_iOS becomeFirstResponder];
     

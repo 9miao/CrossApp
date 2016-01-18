@@ -54,6 +54,8 @@ public:
 
     void setStatusBarStyle(const CAStatusBarStyle& var);
     
+    bool isStatusBarHidden();
+    
 protected:
     static CCApplication * sm_pSharedApplication;
 };

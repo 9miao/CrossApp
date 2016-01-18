@@ -109,6 +109,9 @@ public:
     
     inline const CAStatusBarStyle& getStatusBarStyle() { return m_eStatusBarStyle; }
     void setStatusBarStyle(const CAStatusBarStyle& var);
+    
+    bool isStatusBarHidden();
+    
     /** Sets the glViewport*/
     void setViewport();
 

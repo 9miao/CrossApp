@@ -139,7 +139,9 @@ CATextView::CATextView()
     [eaglview addSubview:textView_iOS];
     [textView_iOS release];
     textView_iOS.textView = this;
-    textView_iOS.backgroundColor = nil;
+    textView_iOS1.backgroundColor = nil;
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    textView_iOS1.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
 }
 CATextView::~CATextView()
 {
@@ -219,10 +221,7 @@ bool CATextView::becomeFirstResponder()
     
     bool result = CAView::becomeFirstResponder();
     
-    CAViewAnimation::beginAnimations(m_s__StrID + "hideTextView", NULL);
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextView::hideTextView));
-    CAViewAnimation::commitAnimations();
+    this->hideTextView();
     
     [textView_iOS1 becomeFirstResponder];
     
