@@ -766,10 +766,7 @@ import android.widget.TextView.OnEditorActionListener;
 				{
 					return;
 				}
-				
-				String mes = "message:" + arg0 + "  loc:" + arg1 + "  del:" + arg2  + "  add:" + arg3;
-				Log.e("androidlog", mes);
-				
+
 				String string = arg0.toString();
 				
 				String  changedText = "";
@@ -813,8 +810,6 @@ import android.widget.TextView.OnEditorActionListener;
 				// TODO Auto-generated method stub
 				beforeTextString = arg0.toString();
 				selection = textField.getSelectionStart();  
-				String mes = "message:" + selection;
-				Log.e("androidlog", "--" + selection);
 			}
 			
 			@Override
