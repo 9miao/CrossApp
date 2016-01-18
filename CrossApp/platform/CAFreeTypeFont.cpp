@@ -174,7 +174,9 @@ _AgaginInitGlyphs:
         CC_SAFE_RELEASE_NULL(image);
 	}
 	delete[]pData;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
     image->releaseData();
+#endif
 	image->autorelease();
 	return image;
 }
