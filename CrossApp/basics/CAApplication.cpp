@@ -154,7 +154,7 @@ void CAApplication::setGLDefaultValues(void)
 
 void CAApplication::updateDraw()
 {
-    m_nDrawCount = 30;
+    m_nDrawCount = 2;
 }
 
 void CAApplication::drawScene(float dt)
@@ -182,7 +182,7 @@ void CAApplication::drawScene(float dt)
         
         kmGLPushMatrix();
         
-        kmGLTranslatef(-0.5f, 0, 0);
+//        kmGLTranslatef(-0.5f, 0, 0);
         m_uNumberOfDraws = 0;
         // draw the scene
         if (m_pRootWindow)
