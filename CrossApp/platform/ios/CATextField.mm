@@ -15,18 +15,87 @@
 
 #define textField_iOS ((IOSTextField*)m_pTextField)
 
+@interface IOSTextFieldDelegate: NSObject<UITextFieldDelegate>
+{
+    
+}
+
+@property(nonatomic,assign) id textField;
+
+@end
+
 @interface IOSTextField: UITextField<UITextFieldDelegate>
 {
 
 }
 
 @property(nonatomic,assign) CrossApp::CATextField* textField;
+@property(nonatomic,retain) IOSTextFieldDelegate* textFieldDelegate;
+
 
 -(void)regiestKeyBoardMessage;
 -(void)removeTextView;
 -(void)hide;
 @end
- 
+
+
+
+@implementation IOSTextFieldDelegate
+{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    CrossApp::CATextField* crossTextField = ((IOSTextField*)self.textField).textField;
+    
+    if (crossTextField->isAllowkeyBoardHide())
+    {
+        crossTextField->resignFirstResponder();
+    }
+    
+    if (crossTextField->getDelegate())
+    {
+        crossTextField->getDelegate()->textFieldShouldReturn(crossTextField);
+    }
+    return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    CrossApp::CATextField* crossTextField = ((IOSTextField*)self.textField).textField;
+    
+    if (crossTextField->getMaxLenght() > 0)
+    {
+        NSUInteger oldLenght = [[textField text] length];
+        NSUInteger addLenght = [string length];
+        NSUInteger delLenght = range.length;
+        
+        NSUInteger newLength = oldLenght + addLenght - delLenght;
+        
+        if (newLength > crossTextField->getMaxLenght())
+        {
+            return NO;
+        }
+    }
+    
+    if (crossTextField->getDelegate())
+    {
+        std::string text = [string UTF8String];
+        return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
+                                                                          (unsigned int)range.location,
+                                                                          (unsigned int)range.length,
+                                                                          text);
+    }
+    
+    
+    return YES;
+}
+
+
+@end
+
+
 @implementation IOSTextField
 {
 
@@ -36,6 +105,14 @@
 {
     if ([super initWithFrame:frame])
     {
+        _textFieldDelegate = [[IOSTextFieldDelegate alloc]init];
+        [_textFieldDelegate setTextField:self];
+        [self setDelegate: _textFieldDelegate];
+        [self regiestKeyBoardMessage];
+        [self setKeyboardType: UIKeyboardTypeDefault];
+        [self setReturnKeyType: UIReturnKeyDone];
+        [self setBorderStyle: UITextBorderStyleNone];
+        [self setPlaceholder: @""];
         return self;
     }
     return nil;
@@ -43,6 +120,8 @@
 
 -(void)dealloc
 {
+    [self setDelegate: nil];
+    [_textFieldDelegate release];
     [super dealloc];
 }
 
@@ -90,50 +169,6 @@
     }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if (_textField->isAllowkeyBoardHide())
-    {
-        _textField->resignFirstResponder();
-    }
-    
-    if (_textField->getDelegate())
-    {
-        _textField->getDelegate()->textFieldShouldReturn(_textField);
-    }
-    return NO;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    
-    if (_textField->getMaxLenght() > 0)
-    {
-        NSUInteger oldLenght = [[textField text] length];
-        NSUInteger addLenght = [string length];
-        NSUInteger delLenght = range.length;
-        
-        NSUInteger newLength = oldLenght + addLenght - delLenght;
-        
-        if (newLength > _textField->getMaxLenght())
-        {
-            return NO;
-        }
-    }
-    
-    if (_textField->getDelegate())
-    {
-        std::string text = [string UTF8String];
-        return _textField->getDelegate()->textFieldShouldChangeCharacters(_textField,
-                                                                          (unsigned int)range.location,
-                                                                          (unsigned int)range.length,
-                                                                          text);
-    }
-    
-    
-    return YES;
-}
-
 @end
 
 
@@ -165,12 +200,7 @@ CATextField::CATextField()
     [eaglview addSubview:textField_iOS];
     [textField_iOS release];
     textField_iOS.textField = this;
-    textField_iOS.delegate = textField_iOS;
-    textField_iOS.regiestKeyBoardMessage;
-    textField_iOS.keyboardType = UIKeyboardTypeDefault;
-    textField_iOS.returnKeyType = UIReturnKeyDone;
-    textField_iOS.borderStyle = UITextBorderStyleNone;
-    textField_iOS.placeholder = @"";
+    
     CGFloat scale = [[UIScreen mainScreen] scale];
     textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
     

@@ -1055,7 +1055,7 @@ void CDUIShowView::showTextField()
     textField->setPlaceHolderText("Input");
 	textField->setKeyboardType(CATextField::Default);
     this->getView()->addSubview(textField);
-    textField->becomeFirstResponder();
+    //textField->becomeFirstResponder();
     showNum = 1;
 }
 

@@ -210,7 +210,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], f
     }
 
     if (set.count() == 0)
-    {
+    {        
         CCLOG("touchesMoved: count = 0");
         return;
     }

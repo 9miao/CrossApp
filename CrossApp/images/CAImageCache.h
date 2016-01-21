@@ -57,7 +57,8 @@ private:
 protected:
     
     CAMap<std::string, CAImage*> m_mImages;
-    //pthread_mutex_t                *m_pDictLock;
+    //pthread_mutex_t                *m_pDictLock;  恐怕；【】、就没看了；、‘
+
 };
 
 
