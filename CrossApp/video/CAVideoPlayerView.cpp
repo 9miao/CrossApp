@@ -8,8 +8,8 @@ NS_CC_BEGIN
 
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 2.0
-#define NETWORK_MAX_BUFFERED_DURATION 5.0
+#define NETWORK_MIN_BUFFERED_DURATION 1.5
+#define NETWORK_MAX_BUFFERED_DURATION 8.0
 
 #define ThreadMsgType_SetPosition 1
 #define ThreadMsgType_DecodeFrame 2
@@ -479,7 +479,7 @@ float CAVideoPlayerView::presentFrame()
 	{
 		VPFrame *frame = NULL;
 
-		m_isBuffered = (m_fBufferedDuration<m_fMaxBufferedDuration / 2);
+		m_isBuffered = (m_fBufferedDuration<m_fMinBufferedDuration);
 		if (m_pDecoder->isEOF())
 		{
 			m_isBuffered = false;
@@ -502,7 +502,11 @@ float CAVideoPlayerView::presentFrame()
 				CC_SAFE_DELETE(frame);
 			}
 		}
-		setCurrentFrame((VPVideoFrame*)frame);
+		if (frame || (frame == NULL && m_isBuffered))
+		{
+			setCurrentFrame((VPVideoFrame*)frame);
+		}
+		
 	}
 	return interval;
 }
@@ -515,7 +519,7 @@ void CAVideoPlayerView::tick(float dt)
 	if (m_pDecoder == NULL || m_pRenderer == NULL)
 		return;
 
-	if (m_isBuffered && ((m_fBufferedDuration > m_fMinBufferedDuration) || m_pDecoder->isEOF())) {
+	if (m_isBuffered && ((m_fBufferedDuration > m_fMaxBufferedDuration) || m_pDecoder->isEOF())) {
 
 		m_tickCorrectionTime.tv_sec = 0;
 		m_tickCorrectionTime.tv_usec = 0;
