@@ -104,18 +104,45 @@ bool CAVideoPlayerView::init()
     return true;
 }
 
-void CAVideoPlayerView::initWithPath(const std::string& szPath)
+
+void CAVideoPlayerView::setFirstVideoFrame()
+{
+	if (!createDecoder())
+		return;
+
+	VPVideoFrame* frame = NULL;
+	if (m_pDecoder)
+	{
+		frame = m_pDecoder->getFirstVideoFrame();
+	}
+	if (frame)
+	{
+		setCurrentFrame(frame);
+	}
+}
+
+void CAVideoPlayerView::initWithPath(const std::string& szPath, bool showFirstFrame)
 {
 	m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
 	m_cszPath = szPath;
+
+	if (showFirstFrame)
+	{
+		setFirstVideoFrame();
+	}
 }
 
-void CAVideoPlayerView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerView::initWithUrl(const std::string& szUrl, bool showFirstFrame)
 {
 	m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
 	m_cszPath = szUrl;
+
+	if (showFirstFrame)
+	{
+		setFirstVideoFrame();
+	}
 }
 
 void CAVideoPlayerView::setContentSize(const DSize& size)

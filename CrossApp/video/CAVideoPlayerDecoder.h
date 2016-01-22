@@ -137,6 +137,8 @@ public:
     bool setupVideoFrameFormat(VPVideoFrameFormat format);
     
     std::vector<VPFrame*> decodeFrames(float minDuration);
+
+	VPVideoFrame* getFirstVideoFrame();
     
     void onAudioCallback(unsigned char *stream, int len);
 
