@@ -27,11 +27,8 @@
 #include "platform/CADensityDpi.h"
 #include "view/CALabelStyle.h"
 
-/**
- Position of the FPS
- 
- Default: 0,0 (bottom-left corner)
- */
+
+
 #ifndef CC_DIRECTOR_STATS_POSITION
 #define CC_DIRECTOR_STATS_POSITION CAApplication::getApplication()->getVisibleOrigin()
 #endif
@@ -108,6 +105,7 @@ bool CAApplication::init(void)
 
     m_fAdaptationRatio = CADensityDpi::getDensityDpi() / 320.0f;
     
+    
     return true;
 }
     
@@ -154,7 +152,7 @@ void CAApplication::setGLDefaultValues(void)
 
 void CAApplication::updateDraw()
 {
-    m_nDrawCount = 2;
+    m_nDrawCount = 30;
 }
 
 void CAApplication::drawScene(float dt)

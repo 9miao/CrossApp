@@ -18,6 +18,12 @@
 
 NS_CC_BEGIN
 
+typedef enum
+{
+    CABarVerticalAlignmentTop = 0,
+    CABarVerticalAlignmentBottom
+}CABarVerticalAlignment;
+
 class CANavigationBar;
 class CC_DLL CANavigationBarDelegate
 {
@@ -33,15 +39,13 @@ class CC_DLL CANavigationBar
     
 public:
     
-    static CANavigationBar* create(const DSize& size = DSizeZero);
-
-public:
-    
-    CANavigationBar();
+    CANavigationBar(bool clearance = false);
     
     virtual ~CANavigationBar();
     
-    virtual bool init(const DSize& size = DSizeZero);
+    static CANavigationBar* createWithFrame(const DRect& rect, bool clearance = false);
+    
+    static CANavigationBar* createWithCenter(const DRect& rect, bool clearance = false);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -67,6 +71,8 @@ public:
 
 protected:
     
+    virtual bool init();
+    
     void showBackground();
     
     void showTitle();
@@ -79,6 +85,8 @@ protected:
     
     void updateNavigationBar();
     
+    virtual void setContentSize(const DSize & var);
+    
 protected:
     
     CAView* m_pContentView;
@@ -88,6 +96,8 @@ protected:
     std::vector<CAButton*> m_pLeftButtons;
     
     std::vector<CAButton*> m_pRightButtons;
+    
+    bool m_bClearance;
 };
 
 class CATabBar;
@@ -123,29 +133,25 @@ protected:
     
 };
 
-typedef enum
-{
-    CABarVerticalAlignmentTop = 0,
-    CABarVerticalAlignmentBottom
-}CABarVerticalAlignment;
-
 class CC_DLL CATabBar
 :public CAView
 {
     
 public:
-    
-    static CATabBar* create(const CAVector<CATabBarItem*>& items, const DSize& size = DSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
-    
-	void setItems(const CAVector<CATabBarItem*>& items);
-    
-public:
 
-    CATabBar();
+    CATabBar(bool clearance = false);
     
     virtual ~CATabBar();
 
-    virtual bool init(const CAVector<CATabBarItem*>& items, const DSize& size = DSizeZero, const CABarVerticalAlignment& var = CABarVerticalAlignmentBottom);
+    static CATabBar* createWithFrame(const DRect& rect, bool clearance = false);
+    
+    static CATabBar* createWithCenter(const DRect& rect, bool clearance = false);
+    
+    virtual void onEnterTransitionDidFinish();
+    
+    virtual void onExitTransitionDidStart();
+    
+    void setItems(const CAVector<CATabBarItem*>& items);
     
     CC_PROPERTY(CAImage*, m_pBackgroundImage, BackgroundImage);
     
@@ -185,6 +191,8 @@ public:
 
 protected:
     
+    virtual bool init();
+    
     void showBackground();
     
     void showSelectedBackground();
@@ -193,11 +201,11 @@ protected:
     
     void setTouchSelected(CAControl* control, DPoint point);
 
+    virtual void setContentSize(const DSize & var);
+    
 protected:
     
     bool m_bShowIndicator;
-    
-    CABarVerticalAlignment m_eVerticalAlignment;
     
     CATabBarItem* m_pSelectedItem;
 
@@ -210,6 +218,8 @@ protected:
     CAVector<CAButton*> m_pButtons;
     
     CAVector<CABadgeView*> m_pBadgeViews;
+    
+    bool m_bClearance;
 };
 
 

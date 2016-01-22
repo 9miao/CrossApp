@@ -1306,7 +1306,6 @@ CAView* CAView::copy()
 {
     CAView* view = NULL;
     if (m_bFrame)
-        
     {
         view = CAView::createWithFrame(this->getFrame(), this->getColor());
     }

@@ -16,6 +16,7 @@
 #include "animation/CAViewAnimation.h"
 #include "animation/CAAnimation.h"
 #include "support/CAUIEditorParser.h"
+#include "support/device/CADevice.h"
 NS_CC_BEGIN
 
 CAViewController::CAViewController()
@@ -246,6 +247,7 @@ CANavigationController::CANavigationController()
 ,m_sNavigationBarTitleColor(CAColor_white)
 ,m_sNavigationBarButtonColor(CAColor_white)
 ,m_fProgress(1.0f)
+,m_bClearance(false)
 {
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
@@ -405,13 +407,20 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f)
+    {
+        m_bClearance = this->getView()->convertToWorldSpace(DPointZero).y < 1;
+    }
+#endif
+    
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();
     this->createWithContainer(viewController);
     
     m_tNavigationBarSize = m_pNavigationBars.front()->getFrame().size;
-    
+
     this->layoutNewContainer();
 }
 
@@ -458,7 +467,21 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     m_pContainers.pushBack(container);
     container->release();
     
-    CANavigationBar* navigationBar = CANavigationBar::create(DSize(this->getView()->getBounds().size.width, 0));
+    DSize size = this->getView()->getBounds().size;
+    DRect nav_rect = DRectZero;
+    nav_rect.size.width = size.width;
+    
+    
+    if (m_bClearance)
+    {
+        nav_rect.size.height = 128;
+    }
+    else
+    {
+        nav_rect.size.height = 88;
+    }
+    
+    CANavigationBar* navigationBar = CANavigationBar::createWithFrame(nav_rect, m_bClearance);
     if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
     {
         viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
@@ -1347,9 +1370,45 @@ void CATabBarController::viewDidLoad()
         view->m_pTabBarController = this;
     }
     
-    m_pTabBar = CATabBar::create(items, DSize(this->getView()->getBounds().size.width, 0), m_eTabBarVerticalAlignment);
+    DSize size = this->getView()->getBounds().size;
+    
+    bool clearance = false;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f)
+    {
+        clearance = true;
+    }
+#endif
+    
+    DRect tab_rect = DRectZero;
+    tab_rect.size.width = size.width;
+    tab_rect.origin.x = 0;
+    
+    if (clearance && m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+    {
+        tab_rect.origin.y = 0;
+        tab_rect.size.height = 138;
+    }
+    else
+    {
+        clearance = false;
+        tab_rect.size.height = 98;
+        if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+        {
+            tab_rect.origin.y = 0;
+        }
+        else
+        {
+            tab_rect.origin.y = size.height - tab_rect.size.height;
+        }
+    }
+
+    m_pTabBar = CATabBar::createWithFrame(tab_rect, clearance);
+    m_pTabBar->setItems(items);
     this->getView()->addSubview(m_pTabBar);
     m_pTabBar->setDelegate(this);
+    
     
     DRect container_rect = this->getView()->getBounds();
     

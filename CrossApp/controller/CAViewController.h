@@ -67,7 +67,7 @@ public:
     virtual CAResponder* nextResponder();
 
     CAView* getViewWithID(const std::string& tag);
-    
+
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -247,6 +247,8 @@ protected:
     bool m_bPopViewController;
 
     DSize m_tNavigationBarSize;
+    
+    bool m_bClearance;
 };
 
 class CC_DLL CATabBarController

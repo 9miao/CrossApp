@@ -1178,8 +1178,8 @@ void CDUIShowView::showTabBar()
     item.push_back(item2);
     item.push_back(item3);
     
-    CATabBar* tabBar = CATabBar::create(item,DSize(winSize.width, 100));
-    tabBar->setFrameOrigin(DPoint(0, winSize.height-200));
+    CATabBar* tabBar = CATabBar::createWithFrame(DRect(0, winSize.height-200, winSize.width, 98));
+    tabBar->setItems(item);
     tabBar->showSelectedIndicator();
 //    tabBar->setTitleColorForNormal(CAColor_yellow);
 //    tabBar->setTitleColorForSelected(CAColor_orange);
@@ -1200,8 +1200,8 @@ void CDUIShowView::showTabBar()
     it1.push_back(item5);
     it1.push_back(item6);
     
-    CATabBar* tabBar1 = CATabBar::create(it1,DSize(winSize.width, 100));
-    tabBar1->setFrameOrigin(DPoint(0, winSize.height-200));
+    CATabBar* tabBar1 = CATabBar::createWithFrame(DRect(0, winSize.height-200, winSize.width, 98));
+    tabBar1->setItems(it1);
     tabBar1->setTitleColorForNormal(CAColor_yellow);
     tabBar1->setTitleColorForSelected(CAColor_orange);
     tabBar1->setBackgroundImage(CAImage::create("image/tab_news_bg.png"));
