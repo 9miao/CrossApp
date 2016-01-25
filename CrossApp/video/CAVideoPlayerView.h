@@ -22,6 +22,15 @@
 
 NS_CC_BEGIN
 
+class CAVideoPlayerView;
+class CAVideoPlayerViewDelegate
+{
+public:
+	virtual ~CAVideoPlayerViewDelegate(){};
+
+	virtual void movieFinishedCallback(CAVideoPlayerView *playerView) {};
+};
+
 class CC_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:
@@ -42,6 +51,8 @@ public:
 	float getPosition();
 	void setPosition(float position);
 	void setFirstVideoFrame();
+
+	CC_SYNTHESIZE(CAVideoPlayerViewDelegate*, m_pPlayerViewDelegate, PlayerViewDelegate);
 
 private:
 	virtual bool init();

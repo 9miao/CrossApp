@@ -22,7 +22,8 @@ typedef struct DecodeFramesMsg
 }DecodeFramesMsg;
 
 CAVideoPlayerView::CAVideoPlayerView()
-: m_pRenderer(NULL)
+: m_pPlayerViewDelegate(NULL)
+, m_pRenderer(NULL)
 , m_pDecoder(NULL)
 , m_isPlaying(false)
 , m_isBuffered(false)
@@ -575,6 +576,11 @@ void CAVideoPlayerView::tick(float dt)
 		{
 			pause();
 			setPosition(0);
+
+			if (m_pPlayerViewDelegate)
+			{
+				m_pPlayerViewDelegate->movieFinishedCallback(this);
+			}
 			return;
 		}
 	}
