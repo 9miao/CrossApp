@@ -317,7 +317,7 @@ void CAVideoPlayerView::setPosition(float position)
 
 void CAVideoPlayerView::showLoadingView(bool on)
 {
-	if (m_pLoadingView == NULL)
+	if (m_pLoadingView == NULL && on)
 	{
 		m_pLoadingView = CAActivityIndicatorView::create();
 		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
@@ -327,7 +327,10 @@ void CAVideoPlayerView::showLoadingView(bool on)
 		m_pLoadingView->resignFirstResponder();
 		this->addSubview(m_pLoadingView);
 	}
-	m_pLoadingView->setVisible(on);
+	if (m_pLoadingView)
+	{
+		m_pLoadingView->setVisible(on);
+	}
 }
 
 bool CAVideoPlayerView::createDecoder()
@@ -530,7 +533,7 @@ float CAVideoPlayerView::presentFrame()
 				CC_SAFE_DELETE(frame);
 			}
 		}
-		if (frame || (frame == NULL && m_isBuffered))
+		if (frame)
 		{
 			setCurrentFrame((VPVideoFrame*)frame);
 		}
