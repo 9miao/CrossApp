@@ -157,9 +157,7 @@ public:
 protected:
 
     inline virtual float maxSpeed(float dt);
-    
-    inline virtual float maxSpeedCache(float dt);
-    
+
     inline virtual float decelerationRatio(float dt);
     
     void clearData();

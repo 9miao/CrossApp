@@ -614,11 +614,6 @@ float CAWaterfallView::maxSpeed(float dt)
 	return (128 * 60 * dt);
 }
 
-float CAWaterfallView::maxSpeedCache(float dt)
-{
-	return (maxSpeed(dt) * 2.0f);
-}
-
 float CAWaterfallView::decelerationRatio(float dt)
 {
 	return 1.8f * dt;

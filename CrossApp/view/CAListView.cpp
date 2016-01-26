@@ -620,11 +620,6 @@ float CAListView::maxSpeed(float dt)
     return (128 * 60 * dt);
 }
 
-float CAListView::maxSpeedCache(float dt)
-{
-    return (maxSpeed(dt) * 2.0f);
-}
-
 float CAListView::decelerationRatio(float dt)
 {
     return 1.8f * dt;

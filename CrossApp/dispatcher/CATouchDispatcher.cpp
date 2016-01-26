@@ -130,6 +130,7 @@ void CATouchController::passingTouchesViews(float dt)
         if (!this->touchBeganWithResponder(m_vTouchesViews.at(i)))
         {
             m_vTouchesViews.erase(i);
+            m_vTouchMovedsViewCache.eraseObject(m_vTouchesViews.at(i));
         }
         else
         {
@@ -359,15 +360,10 @@ void CATouchController::touchMoved()
                     {
                         m_vTouchesViews.pushBack(m_vTouchMovedsView.front());
                         
-                        while (m_vTouchesViews.back())
+                        if (!this->touchBeganWithResponder(m_vTouchesViews.back()))
                         {
-                            if (this->touchBeganWithResponder(m_vTouchesViews.back()))
-                            {
-                                break;
-                            }
-                            m_vTouchesViews.popBack();
+                            m_vTouchesViews.clear();
                         }
-                        
                     }
                 }
             }

@@ -318,11 +318,6 @@ float CATableView::maxSpeed(float dt)
     return (128 * 60 * dt);
 }
 
-float CATableView::maxSpeedCache(float dt)
-{
-    return (maxSpeed(dt) * 2.0f);
-}
-
 float CATableView::decelerationRatio(float dt)
 {
     return 1.8f * dt;

@@ -499,7 +499,7 @@ void CAView::setPoint(const DPoint& newPoint)
 {
     m_obPoint = newPoint;
     DPoint point = DPoint(m_obAnchorPointInPoints.x * m_fScaleX,
-                            m_obAnchorPointInPoints.y * m_fScaleY);
+                          m_obAnchorPointInPoints.y * m_fScaleY);
     m_obFrameRect.origin = ccpSub(m_obPoint, point);
     this->updateDraw();
 }

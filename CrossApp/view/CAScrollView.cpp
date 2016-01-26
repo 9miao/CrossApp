@@ -37,7 +37,11 @@ CAScrollView::CAScrollView()
 ,m_fMaximumZoomScale(1.0f)
 ,m_fMinimumZoomScale(1.0f)
 ,m_fZoomScale(1.0f)
-,m_fTouchLength(0.0f)
+,m_fBeganTouchLength(0.0f)
+,m_fBeganZoomScale(1.0f)
+,m_fBeganGestureAngle(0.0f)
+,m_fBeganAngle(0.0f)
+,m_fPreviewScale(0.0f)
 ,m_tInertia(DPointZero)
 ,m_tCloseToPoint(DPointZero)
 ,m_tInitialPoint(DPointZero)
@@ -45,6 +49,7 @@ CAScrollView::CAScrollView()
 ,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
+,m_eMultitouchGesture(None)
 ,m_pHeaderRefreshView(NULL)
 ,m_pFooterRefreshView(NULL)
 ,m_bPCMode(false)
@@ -175,6 +180,8 @@ void CAScrollView::setViewSize(const DSize& var)
     m_obViewSize = var;
     m_obViewSize.width = MAX(m_obViewSize.width, m_obContentSize.width);
     m_obViewSize.height = MAX(m_obViewSize.height, m_obContentSize.height);
+    
+    m_fPreviewScale = MIN(m_obContentSize.width / m_obViewSize.width, m_obContentSize.height / m_obViewSize.height);
     
     CC_RETURN_IF(m_pContainer == NULL);
     
@@ -320,6 +327,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         m_tInertia = DPointZero;
         m_tCloseToPoint = ccpMult(offset, -1);
         m_tInitialPoint = m_pContainer->getFrameOrigin();
+        CAAnimation::unschedule(CAAnimation_selector(CAScrollView::closeToPoint), this);
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
         this->setTouchEnabledAtSubviews(false);
     }
@@ -405,6 +413,8 @@ void CAScrollView::setContentSize(const CrossApp::DSize &var)
     viewSize.height = MAX(m_obContentSize.height, viewSize.height);
     this->setViewSize(viewSize);
     
+    m_fPreviewScale = MIN(m_obContentSize.width / m_obViewSize.width, m_obContentSize.height / m_obViewSize.height);
+    
     CC_RETURN_IF(m_pContainer == NULL);
     
     DPoint point = m_pContainer->getFrameOrigin();
@@ -444,6 +454,22 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             m_vTouches.pushBack(pTouch);
         }
         
+        if (m_fZoomScale < m_fPreviewScale)
+        {
+            m_fZoomScale = m_fPreviewScale;
+            m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
+            
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+            CAViewAnimation::setAnimationDuration(0.05f);
+            CAViewAnimation::beginAnimations("", NULL);
+            m_pContainer->setScale(m_fZoomScale);
+            CAViewAnimation::setAnimationDidStopSelector(CAApplication::getApplication()->getTouchDispatcher(),
+                                                         CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsTrue));
+            CAViewAnimation::commitAnimations();
+            
+            return false;
+        }
+        
         if (m_vTouches.size() == 1)
         {
             CAAnimation::unschedule(CAAnimation_selector(CAScrollView::closeToPoint), this);
@@ -457,20 +483,38 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         {
             CATouch* touch0 = dynamic_cast<CATouch*>(m_vTouches.at(0));
             CATouch* touch1 = dynamic_cast<CATouch*>(m_vTouches.at(1));
-
-            m_fTouchLength = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
-                                         this->convertToNodeSpace(touch1->getLocation()));
             
-            DPoint mid_point = ccpMidpoint(m_pContainer->convertToNodeSpace(touch0->getLocation()),
-                                            m_pContainer->convertToNodeSpace(touch1->getLocation()));
-            
-            m_pContainer->setAnchorPointInPoints(mid_point);
-
-            if (m_pScrollViewDelegate)
+            if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == ZoomAndRotate)
             {
-                m_pScrollViewDelegate->scrollViewDidZoom(this);
+                m_fBeganZoomScale = m_fZoomScale;
+                m_fBeganTouchLength = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
+                                                  this->convertToNodeSpace(touch1->getLocation()));
             }
-            m_bZooming = true;
+            
+            if (m_eMultitouchGesture == Zoom)
+            {
+                DPoint mid_point = ccpMidpoint(m_pContainer->convertToNodeSpace(touch0->getLocation()),
+                                               m_pContainer->convertToNodeSpace(touch1->getLocation()));
+                
+                
+                m_pContainer->setAnchorPointInPoints(mid_point / m_fZoomScale);
+                
+                if (m_pScrollViewDelegate)
+                {
+                    m_pScrollViewDelegate->scrollViewDidZoom(this);
+                }
+                m_bZooming = true;
+            }
+            
+            if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
+            {
+                DPoint beganRotationVector = ccpSub(this->convertToNodeSpace(touch0->getLocation()),
+                                                    this->convertToNodeSpace(touch1->getLocation()));
+                
+                m_fBeganGestureAngle = CC_RADIANS_TO_DEGREES(ccpAngleSigned(beganRotationVector, DPoint(1, 0)));
+                m_fBeganAngle = m_pContainer->getRotation();
+            }
+
             m_tPointOffset.clear();
             CAScheduler::unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
         }
@@ -478,7 +522,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         return true;
     }
     while (0);
-
+    
     return false;
 }
 
@@ -506,27 +550,38 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     {
         CATouch* touch0 = dynamic_cast<CATouch*>(m_vTouches.at(0));
         CATouch* touch1 = dynamic_cast<CATouch*>(m_vTouches.at(1));
-        DPoint mid_point = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
-                                        this->convertToNodeSpace(touch1->getLocation()));
-        p_off = ccpSub(mid_point, ccpAdd(p_container, m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
         
-        if (m_fMinimumZoomScale < m_fMaximumZoomScale)
+        if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == ZoomAndRotate)
         {
             float touch_lenght = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
                                              this->convertToNodeSpace(touch1->getLocation()));
-            float scale_off = (touch_lenght - m_fTouchLength) * 0.0020f;
             
-            m_fZoomScale = m_pContainer->getScale();
-            m_fZoomScale += m_fZoomScale * scale_off;
+            m_fZoomScale = m_fBeganZoomScale * touch_lenght / m_fBeganTouchLength;
             
             m_fZoomScale = MIN(m_fZoomScale, m_fMaximumZoomScale);
             m_fZoomScale = MAX(m_fZoomScale, m_fMinimumZoomScale);
             
             m_pContainer->setScale(m_fZoomScale);
-            m_fTouchLength = touch_lenght;
+            p_container = m_pContainer->getFrameOrigin();
+        }
+        
+        if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
+        {
+            DPoint currRotationVector = ccpSub(this->convertToNodeSpace(touch0->getLocation()),
+                                               this->convertToNodeSpace(touch1->getLocation()));
+            
+            float currGestureAngle = CC_RADIANS_TO_DEGREES(ccpAngleSigned(currRotationVector, DPoint(1, 0)));
+            m_pContainer->setRotation(m_fBeganAngle - (currGestureAngle - m_fBeganGestureAngle));
+        }
+        
+        if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == None)
+        {
+            DPoint mid_point = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
+                                           this->convertToNodeSpace(touch1->getLocation()));
+            p_off = ccpSub(mid_point, ccpAdd(p_container, m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
         }
     }
-
+    
     if (m_bBounces)
     {
         DSize size = this->getBounds().size;
@@ -539,21 +594,21 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         DPoint scale = DPoint(1.0f, 1.0f);
         
-        if (!(lenght_x < FLT_EPSILON))
+        if (lenght_x > FLT_EPSILON)
         {
-            scale.x = (0.5f - MIN(lenght_x / size.width, 0.5f));
-            p_off.x *= scale.x;
+            scale.x = MAX(0.5f - lenght_x / size.width, 0.0f);
+            p_off.x = p_off.x * scale.x;
         }
         
-        if (!(lenght_y < FLT_EPSILON))
+        if (lenght_y > FLT_EPSILON)
         {
-            scale.y = (0.5f - MIN(lenght_y / size.height, 0.5f));
-            p_off.y *= scale.y;
+            scale.y = MAX(0.5f - lenght_y / size.height, 0.0f);
+            p_off.y = p_off.y * scale.y;
         }
     }
     
     p_container = ccpAdd(p_container, p_off);
-
+    
     if (m_bBounces == false)
     {
         this->getScrollWindowNotOutPoint(p_container);
@@ -591,7 +646,6 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_pScrollViewDelegate)
         {
-            m_pScrollViewDelegate->scrollViewDidScroll(this);
             m_pScrollViewDelegate->scrollViewDragging(this);
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
@@ -618,13 +672,6 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_tInertia = p;
         m_tPointOffset.clear();
         
-        if (!m_tInertia.equals(DPointZero))
-        {
-            if (m_pScrollViewDelegate)
-            {
-                m_pScrollViewDelegate->scrollViewDidScroll(this);
-            }
-        }
         
         this->startDeaccelerateScroll();
         
@@ -648,6 +695,8 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     }
     else if (m_vTouches.size() == 2)
     {
+        m_fBeganZoomScale = 1.0f;
+        m_fBeganTouchLength = 0.0f;
         m_bZooming = false;
     }
 }
@@ -688,7 +737,6 @@ void CAScrollView::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, C
     
     if (m_pScrollViewDelegate)
     {
-        m_pScrollViewDelegate->scrollViewDidScroll(this);
         m_pScrollViewDelegate->scrollViewDidMoved(this);
     }
 }
@@ -760,9 +808,9 @@ void CAScrollView::deaccelerateScrolling(float dt)
     dt = MIN(dt, 1/30.0f);
     dt = MAX(dt, 1/100.0f);
 
-    if (m_tInertia.getLength() > maxSpeedCache(dt))
+    if (m_tInertia.getLength() > maxSpeed(dt) * 1.5f)
     {
-        m_tInertia = ccpMult(m_tInertia, maxSpeedCache(dt) / m_tInertia.getLength());
+        m_tInertia = ccpMult(m_tInertia, maxSpeed(dt) * 1.5f / m_tInertia.getLength());
     }
     
     DPoint speed = DPointZero;

@@ -897,11 +897,6 @@ float CAAutoCollectionView::maxSpeed(float dt)
     return (128 * 60 * dt);
 }
 
-float CAAutoCollectionView::maxSpeedCache(float dt)
-{
-    return (maxSpeed(dt) * 2.0f);
-}
-
 float CAAutoCollectionView::decelerationRatio(float dt)
 {
     return 1.8f * dt;

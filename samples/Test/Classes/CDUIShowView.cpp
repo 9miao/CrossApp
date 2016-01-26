@@ -1579,10 +1579,11 @@ void CDUIShowView::showScrollView()
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
     this->getView()->addSubview(p_ScrollView);
+    p_ScrollView->setViewSize(DSize(2160, 3840));
     
     DSize _size = p_ScrollView->getBounds().size;
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
-    p_imageView->setCenter(DRect(_size.width/2, _size.height/2,800,1200));
+    p_imageView->setFrame(DRect(0, 0, 2160, 3840));
     p_ScrollView->addSubview(p_imageView);
 
 }
@@ -1987,9 +1988,12 @@ void CDUIShowView::getSelectedImage(CAImage *image)
     this->getView()->addSubview(m_clvImage);
     
     float temp_mini = 0;
-    if (image->getContentSize().width>image->getContentSize().height) {
+    if (image->getContentSize().width>image->getContentSize().height)
+    {
         temp_mini = scrollRect.size.height/image->getContentSize().height;
-    }else{
+    }
+    else
+    {
         temp_mini = scrollRect.size.width/image->getContentSize().width;
     }
     CAScrollView* scrollView = CAScrollView::createWithFrame(m_clvImage->getBounds());
