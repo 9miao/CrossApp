@@ -22,6 +22,15 @@
 
 NS_CC_BEGIN
 
+class CAVideoPlayerView;
+class CAVideoPlayerViewDelegate
+{
+public:
+	virtual ~CAVideoPlayerViewDelegate(){};
+
+	virtual void movieFinishedCallback(CAVideoPlayerView *playerView) {};
+};
+
 class CC_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:
@@ -32,8 +41,8 @@ public:
 	static CAVideoPlayerView* createWithFrame(const DRect& rect);
 	static CAVideoPlayerView* createWithCenter(const DRect& rect);
 
-	void initWithPath(const std::string& szPath);
-	void initWithUrl(const std::string& szUrl);
+	void initWithPath(const std::string& szPath, bool showFirstFrame=true);
+	void initWithUrl(const std::string& szUrl, bool showFirstFrame = true);
 	void play();
 	void pause();
 	bool isPlaying();
@@ -41,6 +50,9 @@ public:
 	float getDuration();
 	float getPosition();
 	void setPosition(float position);
+	void setFirstVideoFrame();
+
+	CC_SYNTHESIZE(CAVideoPlayerViewDelegate*, m_pPlayerViewDelegate, PlayerViewDelegate);
 
 private:
 	virtual bool init();

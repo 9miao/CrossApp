@@ -95,6 +95,14 @@ void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
 	}
 }
 
+void CAVideoPlayerControlView::setPlayerViewDelegate(CAVideoPlayerViewDelegate* var)
+{
+	if (m_glView)
+	{
+		m_glView->setPlayerViewDelegate(var);
+	}
+}
+
 
 void CAVideoPlayerControlView::buildCtrlViews()
 {

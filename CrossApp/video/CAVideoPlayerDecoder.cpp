@@ -949,4 +949,56 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 }
 
 
+VPVideoFrame* VPDecoder::getFirstVideoFrame()
+{
+	if (m_iVideoStream == -1)
+		return NULL;
+
+	if (!m_pFormatCtx) {
+		return NULL;
+	}
+
+	AVPacket packet;
+
+	bool finished = false;
+
+	while (!finished) {
+
+		if (av_read_frame(m_pFormatCtx, &packet) < 0)
+		{
+			break;
+		}
+
+		if (packet.stream_index == m_iVideoStream) {
+
+			int pktSize = packet.size;
+
+			while (pktSize > 0) {
+
+				int gotframe = 0;
+
+				int len = avcodec_decode_video2(m_pVideoCodecCtx, m_pVideoFrame, &gotframe, &packet);
+				if (len < 0) {
+					break;
+				}
+
+				if (gotframe)
+				{
+					av_free_packet(&packet);
+					return this->handleVideoFrame();
+				}
+
+				if (0 == len)
+					break;
+
+				pktSize -= len;
+			}
+		}
+		av_free_packet(&packet);
+	}
+
+	return NULL;
+}
+
+
 NS_CC_END

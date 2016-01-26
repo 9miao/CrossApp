@@ -22,7 +22,8 @@ typedef struct DecodeFramesMsg
 }DecodeFramesMsg;
 
 CAVideoPlayerView::CAVideoPlayerView()
-: m_pRenderer(NULL)
+: m_pPlayerViewDelegate(NULL)
+, m_pRenderer(NULL)
 , m_pDecoder(NULL)
 , m_isPlaying(false)
 , m_isBuffered(false)
@@ -104,18 +105,45 @@ bool CAVideoPlayerView::init()
     return true;
 }
 
-void CAVideoPlayerView::initWithPath(const std::string& szPath)
+
+void CAVideoPlayerView::setFirstVideoFrame()
+{
+	if (!createDecoder())
+		return;
+
+	VPVideoFrame* frame = NULL;
+	if (m_pDecoder)
+	{
+		frame = m_pDecoder->getFirstVideoFrame();
+	}
+	if (frame)
+	{
+		setCurrentFrame(frame);
+	}
+}
+
+void CAVideoPlayerView::initWithPath(const std::string& szPath, bool showFirstFrame)
 {
 	m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
 	m_cszPath = szPath;
+
+	if (showFirstFrame)
+	{
+		setFirstVideoFrame();
+	}
 }
 
-void CAVideoPlayerView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerView::initWithUrl(const std::string& szUrl, bool showFirstFrame)
 {
 	m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;
 	m_cszPath = szUrl;
+
+	if (showFirstFrame)
+	{
+		setFirstVideoFrame();
+	}
 }
 
 void CAVideoPlayerView::setContentSize(const DSize& size)
@@ -289,7 +317,7 @@ void CAVideoPlayerView::setPosition(float position)
 
 void CAVideoPlayerView::showLoadingView(bool on)
 {
-	if (m_pLoadingView == NULL)
+	if (m_pLoadingView == NULL && on)
 	{
 		m_pLoadingView = CAActivityIndicatorView::create();
 		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
@@ -299,7 +327,10 @@ void CAVideoPlayerView::showLoadingView(bool on)
 		m_pLoadingView->resignFirstResponder();
 		this->addSubview(m_pLoadingView);
 	}
-	m_pLoadingView->setVisible(on);
+	if (m_pLoadingView)
+	{
+		m_pLoadingView->setVisible(on);
+	}
 }
 
 bool CAVideoPlayerView::createDecoder()
@@ -502,7 +533,7 @@ float CAVideoPlayerView::presentFrame()
 				CC_SAFE_DELETE(frame);
 			}
 		}
-		if (frame || (frame == NULL && m_isBuffered))
+		if (frame)
 		{
 			setCurrentFrame((VPVideoFrame*)frame);
 		}
@@ -548,6 +579,11 @@ void CAVideoPlayerView::tick(float dt)
 		{
 			pause();
 			setPosition(0);
+
+			if (m_pPlayerViewDelegate)
+			{
+				m_pPlayerViewDelegate->movieFinishedCallback(this);
+			}
 			return;
 		}
 	}

@@ -39,6 +39,7 @@ public:
 	CC_SYNTHESIZE(std::string, m_szTitle, Title);
 	CC_PROPERTY(bool, m_bShowBackButton, ShowBackButton);
 	CC_SYNTHESIZE(CAVideoPlayerControlViewDelegate*, m_pPlayerControlViewDelegate, PlayerControlViewDelegate);
+	void setPlayerViewDelegate(CAVideoPlayerViewDelegate* var);
 	
 	void initWithPath(const std::string& szPath);
 	void initWithUrl(const std::string& szUrl);
