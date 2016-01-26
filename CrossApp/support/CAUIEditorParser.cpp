@@ -30,7 +30,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 {
     CAView* view = NULL;
     
-    DRect bounds = superview->getBounds();
+    //DRect bounds = superview->getBounds();
     
     std::string contrlType = viewXml->Attribute("contrlType");
     if (contrlType.compare("CAView") == 0)
@@ -1726,7 +1726,7 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
         tinyxml2::XMLElement* entity = NULL;
         if (rootElement)
         {
-            entity = rootElement->FirstChildElement();
+            entity = rootElement->FirstChildElement("ViewList");
         }
         
         tinyxml2::XMLElement* viewXml = ((tinyxml2::XMLElement*)entity->FirstChildElement());

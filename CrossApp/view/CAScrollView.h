@@ -139,7 +139,7 @@ public:
     
     CC_PROPERTY(CAPullToRefreshView*, m_pFooterRefreshView, FooterRefreshView);
     
-    CC_SYNTHESIZE(MultitouchGesture, m_eMultitouchGesture, MultitouchGesture);// default is CAScrollView::MultitouchGesture::None
+    CC_SYNTHESIZE_PASS_BY_REF(MultitouchGesture, m_eMultitouchGesture, MultitouchGesture);// default is CAScrollView::MultitouchGesture::None
     
     void endHeaderRefresh();
     

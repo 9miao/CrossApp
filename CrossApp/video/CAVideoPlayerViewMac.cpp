@@ -75,12 +75,12 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 	return true;
 }
 
-void CAVideoPlayerView::initWithPath(const std::string& szPath)
+void CAVideoPlayerView::initWithPath(const std::string& szPath, bool showFirstFrame)
 {
 //	return 0;
 }
 
-void CAVideoPlayerView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerView::initWithUrl(const std::string& szUrl, bool showFirstFrame)
 {
 //	return 0;
 }

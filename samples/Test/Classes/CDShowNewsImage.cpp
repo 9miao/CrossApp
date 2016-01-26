@@ -45,6 +45,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         CAScrollView* p_ScrollView = CAScrollView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
         p_ScrollView->setMinimumZoomScale(1.0f);
         p_ScrollView->setMaximumZoomScale(2.5f);
+        p_ScrollView->setMultitouchGesture(CAScrollView::MultitouchGesture::Zoom);
         p_ScrollView->setBackgroundColor(CAColor_clear);
         p_ScrollView->setShowsScrollIndicators(false);
         p_ScrollView->setBounceVertical(false);

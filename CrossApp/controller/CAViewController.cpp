@@ -1167,6 +1167,7 @@ CATabBarController::CATabBarController()
 ,m_bShowTabBarSelectedIndicator(false)
 ,m_fProgress(1.0f)
 {
+    this->setScrollEnabled(false);
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
     
@@ -1628,20 +1629,6 @@ void CATabBarController::renderingSelectedViewController()
     
     m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
     m_pViewControllers.at(m_nSelectedIndex)->viewDidAppear();
-}
-
-void CATabBarController::setScrollEnabled(bool var)
-{
-    m_bScrollEnabled = var;
-    if (m_pContainer)
-    {
-        m_pContainer->setScrollEnabled(m_bScrollEnabled);
-    }
-}
-
-bool CATabBarController::isScrollEnabled()
-{
-    return m_bScrollEnabled;
 }
 
 DPoint CATabBarController::getTabBarOpenPoint()

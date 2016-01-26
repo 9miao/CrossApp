@@ -1578,6 +1578,7 @@ void CDUIShowView::showScrollView()
     p_ScrollView = CAScrollView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
+    p_ScrollView->setMultitouchGesture(CAScrollView::MultitouchGesture::Zoom);
     this->getView()->addSubview(p_ScrollView);
     p_ScrollView->setViewSize(DSize(2160, 3840));
     

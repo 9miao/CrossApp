@@ -279,8 +279,6 @@ public:
     
     virtual void setTabBarHidden(bool hidden, bool animated);
     
-    CC_PROPERTY_IS(bool, m_bScrollEnabled, ScrollEnabled);
-    
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
