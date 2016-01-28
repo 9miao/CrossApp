@@ -337,6 +337,8 @@ protected:
     
 protected:
     
+    int m_iTabBarHeight;
+    
     float m_fProgress;
     
     bool m_bShowTabBarSelectedIndicator;

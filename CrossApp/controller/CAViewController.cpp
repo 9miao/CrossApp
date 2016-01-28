@@ -1166,6 +1166,7 @@ CATabBarController::CATabBarController()
 ,m_sTabBarSelectedTitleColor(ccc4(50, 193, 255, 255))
 ,m_bShowTabBarSelectedIndicator(false)
 ,m_fProgress(1.0f)
+,m_iTabBarHeight(0)
 {
     this->setScrollEnabled(false);
     m_pView->setColor(CAColor_clear);
@@ -1376,7 +1377,7 @@ void CATabBarController::viewDidLoad()
     bool clearance = false;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f)
+    if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f && m_iTabBarHeight == 0)
     {
         clearance = true;
     }
@@ -1389,12 +1390,12 @@ void CATabBarController::viewDidLoad()
     if (clearance && m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
     {
         tab_rect.origin.y = 0;
-        tab_rect.size.height = 138;
+        tab_rect.size.height = m_iTabBarHeight > 0 ? m_iTabBarHeight : 138;
     }
     else
     {
         clearance = false;
-        tab_rect.size.height = 98;
+        tab_rect.size.height = m_iTabBarHeight > 0 ? m_iTabBarHeight : 98;
         if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
         {
             tab_rect.origin.y = 0;
