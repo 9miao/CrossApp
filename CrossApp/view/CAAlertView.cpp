@@ -240,7 +240,7 @@ void CAAlertView::showAlertView() {
 		scrollView->setShowsHorizontalScrollIndicator(false);
 		scrollView->setShowsVerticalScrollIndicator(true);
 		scrollView->setBounceHorizontal(false);
-		scrollView->setViewSize(DSize(ALERT_VIEW_MESG_WIDTH, m_fAlertViewMessageHeight + m_fAlertViewTitleHeight));
+		scrollView->setViewSize(DSize(ALERT_VIEW_MESG_WIDTH, alertViewSpaceHeight + m_fAlertViewMessageHeight + m_fAlertViewTitleHeight));
 		m_pBackView->addSubview(scrollView);
 
 		CCAssert(m_pTitleLabel, "");
@@ -360,7 +360,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pContentLabel && !m_pContentLabel->getText().empty())
     {
 		
-		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), ALERT_VIEW_MESG_FONT, m_pContentLabel->getText(), ALERT_VIEW_MESG_WIDTH));
+		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), ALERT_VIEW_MESG_FONT, m_pContentLabel->getText(), ALERT_VIEW_MESG_WIDTH, 0, false));
 
         m_fAlertViewHeight += MIN(m_fAlertViewMessageHeight, alertViewMessageHeight);
 	}
