@@ -55,8 +55,8 @@ void CDUIShowCollectionView::viewDidLoad()
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHoriInterval(_px(3));
-    p_Conllection->setVertInterval(_px(3));
+    p_Conllection->setHoriInterval(3);
+    p_Conllection->setVertInterval(3);
     
     this->getView()->addSubview(p_Conllection);
 }
@@ -104,7 +104,7 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
         DSize itemSize = itemImage->getBounds().size;
         CALabel* itemText = CALabel::createWithCenter(DRect(itemSize.width/2, itemSize.height-40, itemSize.width,40));
         itemText->setTag(100);
-        itemText->setFontSize(_px(24));
+        itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->addSubview(itemText);
@@ -147,5 +147,5 @@ unsigned int CDUIShowCollectionView::numberOfItemsInRowsInSection(CACollectionVi
 
 unsigned int CDUIShowCollectionView::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
-    return (this->getView()->getBounds().size.width - _px(10) * 4) / 3;
+    return (this->getView()->getBounds().size.width - 10 * 4) / 3;
 }

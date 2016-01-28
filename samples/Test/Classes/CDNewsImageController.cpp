@@ -53,7 +53,7 @@ void CDNewsImageTableCell::initWithCell(int num)
 	test->setColor(CAColor_black);
     test->setTextAlignment(CATextAlignmentLeft);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    test->setFontSize(_px(32));
+    test->setFontSize(32);
     test->setBold(true);
     test->setTag(100);
     this->addSubview(test);
@@ -65,7 +65,7 @@ void CDNewsImageTableCell::initWithCell(int num)
 	dsc->setColor(CAColor_black);
     dsc->setTextAlignment(CATextAlignmentLeft);
     dsc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    dsc->setFontSize(_px(26));
+    dsc->setFontSize(26);
 
     dsc->setTag(101);
 	dsc->setColor(ccc4(200, 200, 200, 255));
@@ -217,7 +217,7 @@ void CDNewsImageController::showAlert()
 	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    test->setFontSize(_px(24));
+    test->setFontSize(24);
     test->setText("网络不给力，请点击屏幕重新加载～");
     p_alertView->addSubview(test);
     
@@ -546,7 +546,7 @@ unsigned int CDNewsImageController::numberOfRowsInSection(CATableView *table, un
 
 unsigned int CDNewsImageController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return _px(650);
+    return 650;
 }
 
 float CDNewsImageController::getRandNum()

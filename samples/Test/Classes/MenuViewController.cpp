@@ -92,7 +92,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
                                                             _size.height));
         test->setTextAlignment(CATextAlignmentLeft);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        test->setFontSize(_px(32));
+        test->setFontSize(32);
 		test->setColor(CAColor_white);
         test->setTag(100);
         cell->addSubview(test);
@@ -121,5 +121,5 @@ unsigned int MenuViewController::numberOfSections(CATableView *table)
 
 unsigned int MenuViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return _px(100);
+    return 100;
 }

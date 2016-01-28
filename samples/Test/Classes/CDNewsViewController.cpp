@@ -54,7 +54,7 @@ void CDNewsTableCell::initWithCell()
 	theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
     theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    theTitle->setFontSize(_px(32));
+    theTitle->setFontSize(32);
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
@@ -62,7 +62,7 @@ void CDNewsTableCell::initWithCell()
 	theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    theDesc->setFontSize(_px(24));
+    theDesc->setFontSize(24);
     theDesc->setTag(102);
 	theDesc->setColor(CAColor_gray);
     theDesc->setLineSpacing(10);
@@ -180,7 +180,7 @@ void CDNewsViewController::showAlert()
 	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
-    test->setFontSize(_px(24));
+    test->setFontSize(24);
     test->setText("网络不给力，请点击屏幕重新加载～");
     p_alertView->addSubview(test);
     
@@ -366,12 +366,12 @@ void CDNewsViewController::initNewsPageView()
         pageViewTitle = CALabel::createWithFrame(DRect(10, winSize.width/2-40, winSize.width-50, 50));
         pageViewTitle->setText(m_page[0].m_title);
 		pageViewTitle->setColor(CAColor_white);
-        pageViewTitle->setFontSize(_px(28));
+        pageViewTitle->setFontSize(28);
         tempview->addSubview(pageViewTitle);
     }
     
     p_TableView->setTableHeaderView(tempview);
-    p_TableView->setTableHeaderHeight(_px(winSize.width/2));
+    p_TableView->setTableHeaderHeight(winSize.width/2);
 }
 
 void CDNewsViewController::viewDidUnload()
@@ -453,7 +453,7 @@ unsigned int CDNewsViewController::numberOfRowsInSection(CATableView *table, uns
 
 unsigned int CDNewsViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return _px(170);
+    return 170;
 }
 
 void CDNewsViewController::scrollViewHeaderBeginRefreshing(CrossApp::CAScrollView *view)
