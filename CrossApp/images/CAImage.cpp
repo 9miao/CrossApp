@@ -92,9 +92,7 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, float scaleX, float s
 }
 
 CAImage* generateMipmapsWithImageRGB(CAImage* image)
-
 {
-
     int	new_w = image->getPixelsWide() >> 1;
     int	new_h = image->getPixelsHigh() >> 1;
     if (new_w < 1) new_w = 1;
@@ -114,10 +112,12 @@ CAImage* generateMipmapsWithImageRGB(CAImage* image)
         // Resample.  Simple average 2x2 --> 1, in-place.
         int	pitch = image->getPixelsWide() * 3;
         
-        for (int j = 0; j < new_h; j++) {
+        for (int j = 0; j < new_h; j++)
+        {
             unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
             unsigned char*	in = ((unsigned char*)image->getData()) + (j << 1) * pitch;
-            for (int i = 0; i < new_w; i++) {
+            for (int i = 0; i < new_w; i++)
+            {
                 int	r, g, b;
                 r = (*(in + 0) + *(in + 3) + *(in + 0 + pitch) + *(in + 3 + pitch));
                 g = (*(in + 1) + *(in + 4) + *(in + 1 + pitch) + *(in + 4 + pitch));
@@ -158,10 +158,12 @@ CAImage* generateMipmapsWithImageRGBA(CAImage* image)
         
         // Resample.  Simple average 2x2 --> 1, in-place.
         int	pitch = image->getPixelsWide() * 4;
-        for (int j = 0; j < new_h; j++) {
+        for (int j = 0; j < new_h; j++)
+        {
             unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
             unsigned char*	in = ((unsigned char*)image->getData()) + (j << 1) * pitch;
-            for (int i = 0; i < new_w; i++) {
+            for (int i = 0; i < new_w; i++)
+            {
                 int	r, g, b, a;
                 r = (*(in + 0) + *(in + 4) + *(in + 0 + pitch) + *(in + 4 + pitch));
                 g = (*(in + 1) + *(in + 5) + *(in + 1 + pitch) + *(in + 5 + pitch));

@@ -374,7 +374,10 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_resignFirstResponder(JNIEnv *env, jclass cls, jint key)
     {
         CATextField* textField = s_map[(int)key];
-        textField->resignFirstResponder();
+        if (textField->isFirstResponder())
+        {
+            textField->resignFirstResponder();
+        }
     }
 }
 

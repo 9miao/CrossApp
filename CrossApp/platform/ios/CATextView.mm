@@ -100,8 +100,7 @@
     CGFloat scale  = [[UIScreen mainScreen] scale];
     int height = CrossApp::s_px_to_dip(keyboardSize.height * scale);
     
-
-    if (_textView->getDelegate())
+    if (_textView->getDelegate() && [self.iosTextView isFirstResponder])
     {
         _textView->getDelegate()->keyBoardHeight(_textView, height);
     }
@@ -109,8 +108,7 @@
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
-
-    if (_textView->getDelegate())
+    if (_textView->getDelegate() && [self.iosTextView isFirstResponder])
     {
         _textView->getDelegate()->keyBoardHeight(_textView, 0);
     }
@@ -266,7 +264,7 @@ void CATextView::showImage()
 {
     static float scale = [UIScreen mainScreen].scale;
     UIGraphicsBeginImageContextWithOptions(textView_iOS.bounds.size, NO, scale);
-    NSLog(@"W--%f H--%f", textView_iOS.bounds.size.width , textView_iOS.bounds.size.height);
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     [textView_iOS.layer renderInContext:context];
     UIImage *image_iOS = UIGraphicsGetImageFromCurrentImageContext();

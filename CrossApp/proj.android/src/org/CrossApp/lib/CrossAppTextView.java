@@ -79,7 +79,7 @@ import android.widget.TextView.OnEditorActionListener;
 	
 	//������寮瑰�洪�����
 	private boolean isShowKey = false;
-	
+	private boolean isKeyAction = false;
 	
  	protected void finalize()
     {
@@ -196,14 +196,18 @@ import android.widget.TextView.OnEditorActionListener;
 //            				Log.d("android", "call c++");
             				
             				//keyBoardReturn
-            				context.runOnGLThread(new Runnable() 
-                        	{
-                                @Override
-                                public void run()
-                                {
-                                	keyBoardHeightReturn(mykey, keyboardheightTemp);
-                                }
-                            });
+            				if (isKeyAction)
+            				{
+            					context.runOnGLThread(new Runnable() 
+                            	{
+                                    @Override
+                                    public void run()
+                                    {
+                                    	keyBoardHeightReturn(mykey, keyboardheightTemp);
+                                    }
+                                });
+            					isKeyAction = false;
+            				}
             			}
             		});
     			}
@@ -392,13 +396,15 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void becomeFirstResponder()
     {
-    	isShowKey = true;
     	Cocos2dxActivity.setSingleTextView(this);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
+            	isShowKey = true;
+            	isKeyAction = true;
+            	
             	//show
               	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -420,13 +426,15 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void resignFirstResponder()
     {
-    	isShowKey = false;
     	Cocos2dxActivity.setSingleTextView(null);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
-            {           	
+            {        
+            	isShowKey = false;
+            	isKeyAction = true;
+            	
             	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);  
             	imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
         		textView.clearFocus();

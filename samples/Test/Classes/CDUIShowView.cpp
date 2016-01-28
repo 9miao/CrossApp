@@ -534,7 +534,7 @@ void CDUIShowView::showAlertView()
         char tem[10];
         sprintf(tem, "Click-%d",i+1);
         CAButton* btn = CAButton::create(CAButtonTypeRoundedRect);
-        btn->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
+        btn->setCenter(DRect(winSize.width/2, winSize.height/2, 200, 60));
         btn->setTitleForState(CAControlStateAll, tem);
         btn->addTarget(this, CAControl_selector(CDUIShowView::alertButtonCallBack), CAControlEventTouchUpInSide);
         

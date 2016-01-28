@@ -19,6 +19,7 @@ void CCLog(const char * pszFormat, ...)
     vsnprintf(buf, MAX_LEN, pszFormat, args);
     va_end(args);
 
+    //__android_log_print(ANDROID_LOG_ERROR, "CrossApp debug info", "%s", buf);
     __android_log_print(ANDROID_LOG_DEBUG, "CrossApp debug info", "%s", buf);
 }
 

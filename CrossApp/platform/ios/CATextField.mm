@@ -34,7 +34,7 @@
 
 
 -(void)regiestKeyBoardMessage;
--(void)removeTextView;
+-(void)removeTextField;
 -(void)hide;
 @end
 
@@ -139,7 +139,7 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
--(void)removeTextView
+-(void)removeTextField
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeFromSuperview];
@@ -155,7 +155,7 @@
     CGFloat scale  = [[UIScreen mainScreen] scale];
     int height = CrossApp::s_px_to_dip(keyboardSize.height * scale);
     
-    if (_textField->getDelegate())
+    if (_textField->getDelegate() && [self isFirstResponder])
     {
         _textField->getDelegate()->keyBoardHeight(_textField, height);
     }
@@ -163,7 +163,7 @@
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
-    if (_textField->getDelegate())
+    if (_textField->getDelegate() && [self isFirstResponder])
     {
         _textField->getDelegate()->keyBoardHeight(_textField, 0);
     }
@@ -210,7 +210,7 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
-    [textField_iOS removeTextView];
+    [textField_iOS removeTextField];
 }
 
 void CATextField::onEnterTransitionDidFinish()

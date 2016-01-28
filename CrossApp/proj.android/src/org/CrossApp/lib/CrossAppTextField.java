@@ -71,7 +71,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 	//是否弹出键盘
 	private boolean isShowKey = false;
-	
+	private boolean isKeyAction = false;
 	
 	public static void initWithHandler()
 	{
@@ -181,14 +181,18 @@ import android.widget.TextView.OnEditorActionListener;
 //            				Log.d("android", "call c++");
             				
             				//keyBoardReturn
-            				context.runOnGLThread(new Runnable() 
-                        	{
-                                @Override
-                                public void run()
-                                {
-                                	keyBoardHeightReturn(mykey, keyboardheightTemp);
-                                }
-                            });
+            				if (isKeyAction)
+            				{
+            					context.runOnGLThread(new Runnable() 
+                            	{
+                                    @Override
+                                    public void run()
+                                    {
+                                    	keyBoardHeightReturn(mykey, keyboardheightTemp);
+                                    }
+                                });
+            					isKeyAction = false;
+            				}
             			}
             		});
     			}
@@ -583,7 +587,7 @@ import android.widget.TextView.OnEditorActionListener;
             public void run()
             {
             	isShowKey = true;
-            	
+            	isKeyAction = true;
             	//show
               	InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
         		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -618,7 +622,7 @@ import android.widget.TextView.OnEditorActionListener;
             public void run()
             {
             	isShowKey = false;
-            	
+            	isKeyAction = true;
             	//show
             	if (clearButton != null)
             	{

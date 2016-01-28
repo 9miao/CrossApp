@@ -278,7 +278,10 @@ extern "C"
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_resignFirstResponder(JNIEnv *env, jclass cls, jint key)
     {
 		CATextView* textView = s_map[(int)key];
-        textView->resignFirstResponder();
+        if (textView->isFirstResponder())
+        {
+            textView->resignFirstResponder();
+        }
     }
 }
 
