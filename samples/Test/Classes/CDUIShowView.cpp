@@ -1181,10 +1181,8 @@ void CDUIShowView::showTabBar()
     CATabBar* tabBar = CATabBar::createWithFrame(DRect(0, winSize.height-200, winSize.width, 98));
     tabBar->setItems(item);
     tabBar->showSelectedIndicator();
-//    tabBar->setTitleColorForNormal(CAColor_yellow);
-//    tabBar->setTitleColorForSelected(CAColor_orange);
-    tabBar->setTag(100);
     tabBar->setSelectedAtIndex(0);
+    tabBar->setTag(100);
     
     CAView* view1 = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
     view1->addSubview(tabBar);

@@ -451,7 +451,14 @@ CATabBar::CATabBar(bool clearance)
 ,m_pDelegate(NULL)
 ,m_bClearance(clearance)
 {
+    m_pBackgroundImage = CAImage::create("source_material/tabBar_bg.png");
+    m_pBackgroundImage->retain();
     
+    m_pSelectedBackgroundImage = CAImage::create("source_material/tabBar_selected_bg.png");
+    m_pSelectedBackgroundImage->retain();
+    
+    m_pSelectedIndicatorImage = CAImage::create("source_material/tabBar_selected_indicator.png");
+    m_pSelectedIndicatorImage->retain();
 }
 
 CATabBar::~CATabBar()
@@ -500,18 +507,6 @@ bool CATabBar::init()
     this->addSubview(m_pContentView);
     m_pContentView->release();
     
-    if (m_pBackgroundImage == NULL)
-    {
-        this->setBackgroundImage(CAImage::create("source_material/tabBar_bg.png"));
-    }
-    if (m_pSelectedBackgroundImage == NULL)
-    {
-        this->setSelectedBackgroundImage(CAImage::create("source_material/tabBar_selected_bg.png"));
-    }
-    if (m_pSelectedIndicatorImage == NULL)
-    {
-        this->setSelectedIndicatorImage(CAImage::create("source_material/tabBar_selected_indicator.png"));
-    }
     return true;
 }
 
@@ -539,18 +534,51 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             btn->setTag(i);
             btn->addTarget(this, CAControl_selector(CATabBar::setTouchSelected), CAControlEventTouchUpInSide);
             m_pButtons.pushBack(btn);
+            btn->setTitleForState(CAControlStateAll, m_pItems.at(i)->getTitle());
+            btn->setTitleColorForState(CAControlStateAll, m_sTitleColor);
+            btn->setTitleColorForState(CAControlStateHighlighted, m_sSelectedTitleColor);
+            btn->setTitleColorForState(CAControlStateSelected, m_sSelectedTitleColor);
+            btn->setImageForState(CAControlStateNormal, m_pItems.at(i)->getImage());
+            CAImage* selectedImage = m_pItems.at(i)->getSelectedImage()
+            ? m_pItems.at(i)->getSelectedImage()
+            : m_pItems.at(i)->getImage();
+            btn->setImageForState(CAControlStateHighlighted, selectedImage);
+            btn->setImageForState(CAControlStateSelected, selectedImage);
+            btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+            if (m_pSelectedBackgroundImage)
+            {
+                btn->setBackgroundViewForState(CAControlStateHighlighted,
+                                               CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
+                btn->setBackgroundViewForState(CAControlStateSelected,
+                                               CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
+            }
+            else
+            {
+                btn->setBackgroundViewForState(CAControlStateHighlighted,
+                                               CAView::createWithColor(m_sSelectedBackgroundColor));
+                btn->setBackgroundViewForState(CAControlStateSelected,
+                                               CAView::createWithColor(m_sSelectedBackgroundColor));
+            }
+            btn->setAllowsSelected(true);
             
             DRect badgeRect;
-            badgeRect.origin = rect.origin + DPoint(rect.size.width, 25);
+            badgeRect.origin = rect.origin + DPoint(rect.size.width - 25, 25);
             
             CABadgeView* badgeView = new CABadgeView();
             badgeView->init();
             badgeView->setCenter(badgeRect);
             m_pContentView->insertSubview(badgeView, 10);
+            badgeView->setBadgeText(m_pItems.at(i)->getBadgeValue());
             m_pBadgeViews.pushBack(badgeView);
             badgeView->release();
         }
     }
+    
+
+    this->setBackgroundImage(m_pBackgroundImage);
+    this->setSelectedBackgroundImage(m_pSelectedBackgroundImage);
+    this->setSelectedIndicatorImage(m_pSelectedIndicatorImage);
+    
 }
 
 void CATabBar::onEnterTransitionDidFinish()
@@ -575,13 +603,9 @@ void CATabBar::setContentSize(const DSize & var)
     
     m_pContentView->setFrame(rect);
     
+    if (m_pBackgroundView)
     {
-        DRect rect;
-        rect.size.width = m_cItemSize.width;
-        rect.size.height = 8;
-        rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
-        rect.origin.y = m_cItemSize.height - rect.size.height;
-        m_pSelectedIndicatorView->setFrame(rect);
+        m_pBackgroundView->setFrame(this->getBounds());
     }
     
     unsigned int count = (unsigned int)m_pItems.size();
@@ -592,11 +616,22 @@ void CATabBar::setContentSize(const DSize & var)
         DRect rect = DRectZero;
         rect.size = m_cItemSize;
         rect.origin.x = m_cItemSize.width * i;
+        rect.origin.y = 0;
         m_pButtons.at(i)->setFrame(rect);
         
         DRect badgeRect;
-        badgeRect.origin = rect.origin + DPoint(m_cItemSize.height, 25);
+        badgeRect.origin = rect.origin + DPoint(rect.size.width - 25, 25);
         m_pBadgeViews.at(i)->setCenter(badgeRect);
+    }
+    
+    if (m_pSelectedIndicatorView)
+    {
+        DRect rect;
+        rect.size.width = m_cItemSize.width;
+        rect.size.height = 8;
+        rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
+        rect.origin.y = m_cItemSize.height - rect.size.height;
+        m_pSelectedIndicatorView->setFrame(rect);
     }
 }
 
@@ -856,13 +891,16 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedIndicatorView)
         {
             m_pSelectedIndicatorView->setVisible(m_bShowIndicator);
-            DPoint p = m_pSelectedIndicatorView->getFrameOrigin();
-            p.x = m_nSelectedIndex * m_cItemSize.width;
+            DRect rect;
+            rect.size.width = m_cItemSize.width;
+            rect.size.height = 8;
+            rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
+            rect.origin.y = m_cItemSize.height - rect.size.height;
             
             CAViewAnimation::beginAnimations("", NULL);
             CAViewAnimation::setAnimationDuration(0.3f);
             CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-            m_pSelectedIndicatorView->setFrameOrigin(p);
+            m_pSelectedIndicatorView->setFrame(rect);
             CAViewAnimation::commitAnimations();
         }
     }
