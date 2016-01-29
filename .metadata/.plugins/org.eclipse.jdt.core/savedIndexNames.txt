@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+/Users/liynfg/项目/引擎/CrossApp_beta/.metadata/.plugins/org.eclipse.jdt.core
