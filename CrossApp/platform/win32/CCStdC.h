@@ -39,8 +39,12 @@ THE SOFTWARE.
     #define isnan   _isnan
 #endif
 
-#ifndef snprintf
-#define snprintf _snprintf
+#if (_MSC_VER == 1800)
+	#ifndef snprintf
+	#define snprintf _snprintf
+	#endif
+#else
+	#define HAVE_STRUCT_TIMESPEC 1
 #endif
 
 #endif // __MINGW32__
