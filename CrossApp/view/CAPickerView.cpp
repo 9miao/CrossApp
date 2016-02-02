@@ -8,7 +8,7 @@
 
 #include "CAPickerView.h"
 #include "CALabel.h"
-
+#include "platform/CADensityDpi.h"
 NS_CC_BEGIN
 
 CAPickerView::CAPickerView()
@@ -213,7 +213,7 @@ void CAPickerView::reloadAllComponents()
             CAView* select = m_dataSource->viewForSelect(this, i, selectSize);
             if (!select)
             {
-                DRect sepRect = DRect(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, 1);
+                DRect sepRect = DRect(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, s_px_to_dip(1));
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
                 sepRect.origin.y += m_dataSource->rowHeightForComponent(this, i);
                 addSubview(CAView::createWithFrame(sepRect, m_separateColor));
