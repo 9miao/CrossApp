@@ -29,6 +29,7 @@ public class CrossAppCamera
             	SurfaceView surfaceView = new SurfaceView(Cocos2dxActivity.getContext());
             	surfaceView.setBackgroundColor(Color.RED);
             	
+
         		FrameLayout layout = Cocos2dxActivity.getFrameLayout();
         		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
             	params.leftMargin = 100; 
@@ -56,7 +57,8 @@ public class CrossAppCamera
         				{
         			        mCamera = android.hardware.Camera.open(); // attempt to get a Camera instance
         			    }
-        			    catch (Exception e){
+        			    catch (Exception e)
+        			    {
         			        // Camera is not available (in use or does not exist)
         			    }
         			}
@@ -90,9 +92,12 @@ public class CrossAppCamera
         				mCamera.setParameters(mParameters);
         				
         				//显示
-        				try {
+        				try 
+        				{
         					mCamera.setPreviewDisplay(mSurfaceHolder);
-        				} catch (Exception e) {
+        				} 
+        				catch (Exception e) 
+        				{
         					// TODO: handle exception
         					mCamera.release();
         					mCamera = null;
