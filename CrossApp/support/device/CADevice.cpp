@@ -104,6 +104,11 @@ namespace CADevice
     {
         
     }
+	
+	CC_DLL void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
+	{
+		
+	}
 }
 
 NS_CC_END

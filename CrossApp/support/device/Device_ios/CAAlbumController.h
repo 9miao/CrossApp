@@ -21,7 +21,10 @@
 @interface CAAlbumController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (assign,nonatomic)void *sender;
+
 -(void)openAlbumView:(BOOL)allowEdit;
--(void)writeImageToPhoto:(const std::string&)sender;
+
+-(void)writeImageToPhoto:(CAImage*)image;
+
 @end
 #endif /* defined(__LocationTest__CAAlbumController__) */

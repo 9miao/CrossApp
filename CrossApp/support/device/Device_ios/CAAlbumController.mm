@@ -36,17 +36,48 @@
     
 	// Do any additional setup after loading the view.
 }
--(void)writeImageToPhoto:(const std::string&)sender
-{
 
-    UIImage *newImage = [[UIImage alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%s",sender.c_str()]];
+-(void)writeImageToPhoto:(CAImage*)image
+{
+    CAImage::PixelFormat pixelFormat = image->getPixelFormat();
+    
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    
+    UIImage *newImage = NULL;
+    CGImageRef imageRef = NULL;
+    CGDataProviderRef provider = NULL;
+    
+    if (pixelFormat == CAImage::PixelFormat_RGBA8888 || pixelFormat == CAImage::PixelFormat_RGBA4444)
+    {
+        provider = CGDataProviderCreateWithData(NULL, image->getData(), 4*(image->getPixelsWide())*image->getPixelsHigh(), NULL);
+        
+        imageRef = CGImageCreate(image->getPixelsWide(), image->getPixelsHigh(), 8, 32, 4*(image->getPixelsWide()), colorSpaceRef, kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
+        
+        newImage = [UIImage imageWithCGImage:imageRef];
+    }
+    else
+    {
+        provider = CGDataProviderCreateWithData(NULL, image->getData(), 3*(image->getPixelsWide())*image->getPixelsHigh(), NULL);
+        
+        imageRef = CGImageCreate(image->getPixelsWide(), image->getPixelsHigh(), 8, 24, 3*(image->getPixelsWide()), colorSpaceRef, kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
+        
+        newImage = [UIImage imageWithCGImage:imageRef];
+    }
+    
+    CFRelease(imageRef);
+    CGColorSpaceRelease(colorSpaceRef);
+    CGDataProviderRelease(provider);
+    
     if (newImage == nil)
     {
         NSLog(@"Save image have some error");
     }
+    
     UIImageWriteToSavedPhotosAlbum(newImage, self, nil, nil);
-    [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
+    
+    //[[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
 }
+
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     NSLog(@"%@",error.domain);

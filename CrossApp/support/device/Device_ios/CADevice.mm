@@ -49,12 +49,11 @@ void openAlbum(CAMediaDelegate* target)
     [album setSender:target];
     [album openAlbumView:false];
 }
-    
-void writeToSavedPhotosAlbum(const std::string &s)
-{
-    CAAlbumController *album = [[CAAlbumController alloc] init];
-    [album writeImageToPhoto:s];
 
+void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
+{
+        CAAlbumController *album = [[CAAlbumController alloc] init];
+        [album writeImageToPhoto:image];
 }
     
 vector<CAAddressBookRecord> getAddressBook()

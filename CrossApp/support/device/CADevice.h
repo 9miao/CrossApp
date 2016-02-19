@@ -127,9 +127,7 @@ namespace CADevice
     CC_DLL float getScreenBrightness();
     
     CC_DLL void setScreenBrightness(float brightness);
-    
-    CC_DLL void writeToSavedPhotosAlbum(const std::string &s);
-    
+
     CC_DLL std::vector<CAAddressBookRecord> getAddressBook();
     
     CC_DLL void updateVersion(const std::string &url
@@ -157,6 +155,8 @@ namespace CADevice
     CC_DLL void initBlueTooth(CABlueToothDelegate *target);
     
     CC_DLL void setBlueToothType(CABlueToothType type);
+    
+    CC_DLL void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName);
 };
 
 NS_CC_END

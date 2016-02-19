@@ -499,4 +499,15 @@ public class AndroidNativeTool
         }
         return versionName;
     }
+    
+    public static String getSaveImagePath(){
+    	String path = Environment.getExternalStorageDirectory().toString()  + "/DCIM/Camera/";  
+        return path;
+    }
+    
+    //¸üÐÂÍ¼¿â
+    public static void UpdateCamera(final String url){ 
+    	s_pContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + url)));
+    } 
+    
 }

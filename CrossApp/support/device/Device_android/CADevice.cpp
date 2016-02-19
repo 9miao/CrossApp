@@ -224,7 +224,28 @@ const char* getAppVersion()
         return b;
     }
 }
-    
+
+void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
+{
+	JniMethodInfo jmi;
+	const char* path;
+	std::string savePath;
+	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/AndroidNativeTool", "getSaveImagePath", "()Ljava/lang/String;"))
+	{
+		jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
+		path = jmi.env->GetStringUTFChars(a, 0);
+	}
+	savePath = path;
+	savePath = savePath + imageName + ".jpg";
+	image->saveToFile(savePath);
+
+	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/AndroidNativeTool", "UpdateCamera", "(Ljava/lang/String;)V"))
+	{
+		jmi.env->CallStaticIntMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
+	}	
+}
+
+
 double* getGPSLocation()
 {
 	JniMethodInfo jmi;
