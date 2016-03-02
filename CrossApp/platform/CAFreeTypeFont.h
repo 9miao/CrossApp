@@ -83,9 +83,13 @@ typedef enum
     kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
 }ETextAlign;
 
+#define ITALIC_LEAN_VALUE (0.3f)
+#define DEFAULT_SPACE_VALUE (1)
+
 class CC_DLL CAFreeTypeFont
 {
 	friend class CAFTFontCache;
+	friend class CAFTRichFont;
 public:
 
 	CAFreeTypeFont();
@@ -97,9 +101,12 @@ public:
 
 	static void destroyAllFontBuff();
 protected:
+	static FT_Face initFreeType(const std::string& pFontName, unsigned long nSize);
+	static void finiFreeType(FT_Face face);
+	static unsigned char* loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex);
+
 	bool initFreeTypeFont(const std::string& pFontName, unsigned long nSize);
 	void finiFreeTypeFont();
-	unsigned char* loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex);
 	unsigned char* getBitmap(ETextAlign eAlignMask, int* outWidth, int* outHeight);
 	int getFontHeight();
 	int getStringWidth(const std::string& text, bool bBold = false, bool bItalics = false);

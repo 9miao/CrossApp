@@ -21,6 +21,8 @@ public:
 	CATempTypeFont();
 	virtual ~CATempTypeFont();
 
+	static CATempTypeFont& getInstance();
+
 	void initTempTypeFont(unsigned long nSize);
 	void finiTempTypeFont();
 

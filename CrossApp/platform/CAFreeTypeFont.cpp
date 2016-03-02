@@ -22,11 +22,7 @@ struct StrICmpLess
 };
 static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
-static CATempTypeFont s_TempFont;
 
-
-#define ITALIC_LEAN_VALUE (0.3f)
-#define DEFAULT_SPACE_VALUE (1)
 
 CAFreeTypeFont::CAFreeTypeFont()
 :m_space(" ")
@@ -56,6 +52,7 @@ CAFreeTypeFont::CAFreeTypeFont()
 CAFreeTypeFont::~CAFreeTypeFont() 
 {
 	finiFreeTypeFont();
+	destroyAllLines();
 }
 
 void CAFreeTypeFont::destroyAllFontBuff()
@@ -78,7 +75,8 @@ CAImage* CAFreeTypeFont::initWithString(const std::string& pText, const CAColor4
 	std::u32string cszTemp;
 	std::string cszNewText = pText;
 
-	s_TempFont.initTempTypeFont(nSize);
+	CATempTypeFont::getInstance().initTempTypeFont(nSize);
+
 _AgaginInitGlyphs:
 	m_inWidth = inWidth;
 	m_inHeight = inHeight;
@@ -339,7 +337,7 @@ int CAFreeTypeFont::cutStringByDSize(std::string& text, const DSize& lableSize, 
 	std::u32string cszTemp;
 	std::string cszNewText = text;
 
-	s_TempFont.initTempTypeFont(nFontSize);
+	CATempTypeFont::getInstance().initTempTypeFont(nFontSize);
 _AgaginInitGlyphs:
 	m_inWidth = lableSize.width;
 	m_inHeight = lableSize.height;
@@ -884,7 +882,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		FT_Bool isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
 		{
-			glyph_index = FT_Get_Char_Index(s_TempFont.m_CurFontFace, c);
+			glyph_index = FT_Get_Char_Index(CATempTypeFont::getInstance().m_CurFontFace, c);
 		}
         glyph->index = glyph_index;
 		if (glyph_index == 0)
@@ -901,7 +899,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 			}
 		}
 
-		FT_Face curFace = isOpenType ? s_TempFont.m_CurFontFace : m_face;
+		FT_Face curFace = isOpenType ? CATempTypeFont::getInstance().m_CurFontFace : m_face;
 		if (curFace==NULL)
         {
             numGlyphs++;
@@ -1129,6 +1127,22 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 
 bool CAFreeTypeFont::initFreeTypeFont(const std::string& pFontName, unsigned long nSize)
 {
+	m_face = initFreeType(pFontName, nSize);
+	m_inFontSize = nSize;
+	return (m_face != NULL);
+}
+
+void CAFreeTypeFont::finiFreeTypeFont()
+{
+	if (m_face)
+	{
+		finiFreeType(m_face);
+	}
+	m_face = NULL;
+}
+
+FT_Face CAFreeTypeFont::initFreeType(const std::string& pFontName, unsigned long nSize)
+{
 	unsigned long size = 0; int face_index = 0;
 	unsigned char* pBuffer = loadFont(pFontName, &size, face_index);
 	if (pBuffer == NULL)
@@ -1140,32 +1154,32 @@ bool CAFreeTypeFont::initFreeTypeFont(const std::string& pFontName, unsigned lon
 		error = FT_Init_FreeType(&s_FreeTypeLibrary);
 	}
 
-	if (!error && !m_face)
+	FT_Face face = NULL;
+	if (!error)
 	{
-		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, face_index, &m_face);
+		error = FT_New_Memory_Face(s_FreeTypeLibrary, pBuffer, size, face_index, &face);
 	}
 
 	if (!error)
 	{
-		error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
+		FT_Select_Charmap(face, FT_ENCODING_UNICODE);
+		FT_Set_Char_Size(face, nSize << 6, nSize << 6, 72, 72);
+		return face;
 	}
-
-	if (!error)
-		error = FT_Set_Char_Size(m_face, nSize << 6, nSize << 6, 72, 72);
-
-	m_inFontSize = nSize;
-	return (error==0);
+	else
+	{
+		finiFreeType(face);
+		return NULL;
+	}
 }
 
-void CAFreeTypeFont::finiFreeTypeFont()
+void CAFreeTypeFont::finiFreeType(FT_Face face)
 {
-	if (m_face)
+	if (face)
 	{
-		FT_Done_Face(m_face);
+		FT_Done_Face(face);
 	}
-	m_face = NULL;
-
-	destroyAllLines();
+	face = NULL;	
 }
 
 unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned long *size, int& ttfIndex)

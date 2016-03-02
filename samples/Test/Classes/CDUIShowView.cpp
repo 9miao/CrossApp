@@ -842,43 +842,52 @@ void CDUIShowView::showIndicatorByIndex()
 
 void CDUIShowView::showLabel()
 {
-    showNum = 6;
+    showNum = 1;
     pageViewIndex = 1;
     VIEWLIST.clear();
     for (int i=0; i<showNum; i++) {
-        CALabel* label = CALabel::createWithCenter(DRect(winSize.width/2, winSize.height/2, 300, 40));
+		CARichLabel* label = CARichLabel::createWithCenter(DRect(winSize.width / 2, winSize.height / 2, 300, 140));
 
 		std::string s = "Hello World";
 
-		std::u32string c;
-		StringUtils::UTF8ToUTF32(s, c);
-		c += 0x1F604;
+	//	std::u32string c;
+	//	StringUtils::UTF8ToUTF32(s, c);
+	//	c += 0x1F604;
 
-		std::string cc;
-		StringUtils::UTF32ToUTF8(c, cc);
+	//	std::string cc;
+	//	StringUtils::UTF32ToUTF8(c, cc);
 
-        label->setText(cc);
-        label->setColor(CAColor_red);
-        label->setFontName("c:/x.ttf");
-        label->setFontSize(36);
-        label->setTextAlignment(CATextAlignmentCenter);
-        label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+		label->appendText(s);
+
+
+		CALabelFontText* ft = CALabelFontText::create(UTF8("你好"));
+		ft->getLabelFont()->setFontSize(56);
+		ft->getLabelFont()->setUnderLine(true);
+		ft->getLabelFont()->setTextColor(ccc4(255, 0, 255, 100));
+		label->appendText(ft);
+		
+        //label->setText(cc);
+        //label->setColor(CAColor_red);
+        //label->setFontName("c:/x.ttf");
+        //label->setFontSize(36);
+        //label->setTextAlignment(CATextAlignmentCenter);
+        //label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         if (i==1) {
-            label->setUnderLine(true);
+        //    label->setUnderLine(true);
         }else if(i==2){
-            label->setBold(true);
+        //    label->setBold(true);
         }else if(i==3){
-            label->setItalics(true);
+        //    label->setItalics(true);
         }else if(i==4){
-            label->setText("Enable Copy");
-            label->setEnableCopy(true);
+        //    label->setText("Enable Copy");
+        //    label->setEnableCopy(true);
         }else if(i==5){
-            label->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
-            label->setUnderLine(true);
-            label->setBold(true);
-            label->setItalics(true);
-            label->setLineSpacing(20);
-            label->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 200));
+        //    label->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
+        //    label->setUnderLine(true);
+        //    label->setBold(true);
+        //    label->setItalics(true);
+        //    label->setLineSpacing(20);
+        //    label->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 200));
         }
         
         CAView* view = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));

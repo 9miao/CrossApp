@@ -76,6 +76,7 @@
 #include "view/CAGifView.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CALabel.h"
+#include "view/CARichLabel.h"
 #include "view/CABatchView.h"
 #include "view/CARenderImage.h"
 #include "view/CAClippingView.h"

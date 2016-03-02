@@ -394,7 +394,6 @@
     <ClCompile Include="..\script_support\JSViewController.cpp">
       <Filter>script_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\basics\CAThread.cpp" />
     <ClCompile Include="..\view\CALabelStyle.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -511,6 +510,15 @@
     </ClCompile>
     <ClCompile Include="..\platform\win32\CATextView.cpp">
       <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CARichLabel.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAThread.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CAFTRichFont.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -894,8 +902,6 @@
     <ClInclude Include="..\script_support\JSViewController.h">
       <Filter>script_support</Filter>
     </ClInclude>
-    <ClInclude Include="..\basics\CASyncQueue.h" />
-    <ClInclude Include="..\basics\CAThread.h" />
     <ClInclude Include="..\view\CALabelStyle.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -1027,6 +1033,18 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CATextView.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CARichLabel.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAThread.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASyncQueue.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFTRichFont.h">
       <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
