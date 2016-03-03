@@ -44,7 +44,7 @@ CAImage* CAFTRichFont::initWithString(const CAVector<CALabelFontText*>& labels, 
 	{
 		CC_SAFE_RELEASE_NULL(image);
 	}
-	image->saveToFile("c:\\xxx.png");
+//	image->saveToFile("c:\\xxx.png");
 	delete[]pData;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 	image->releaseData();
@@ -199,8 +199,8 @@ FT_Error CAFTRichFont::initWordGlyph(CALabelFontText* label, std::vector<TGlyphE
 	bool bUnderLine = lft->getUnderLine();
 	int iFontSize = lft->getFontSize();
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
-	iLineHeight += iLineHeight / 5;
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
+	iLineHeight += iLineHeight / 5;
 	FT_UInt previous = 0;
 	FT_Error error = 0;
 
@@ -300,7 +300,7 @@ FT_Error CAFTRichFont::initWordGlyph(CALabelFontText* label, std::vector<TGlyphE
 		pen.x += (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
 		if (pFTMat)
 		{
-			pen.x += italicsDt;
+			pen.x += (italicsDt/3.0f);
 		}
 
 		/* record current glyph index */

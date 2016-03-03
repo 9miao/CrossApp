@@ -953,7 +953,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 		pen.x += (slot->advance.x >> 6) + DEFAULT_SPACE_VALUE;
 		if (pFTMat)
 		{
-			pen.x += italicsDt;
+			pen.x += (italicsDt/5.0f);
 		}
 
 		/* record current glyph index */

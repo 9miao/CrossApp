@@ -225,7 +225,7 @@ bool CARichLabel::init()
 	{
 		return false;
 	}
-	CAView::setColor(ccc4(255, 255, 255, 0));
+	CAView::setColor(ccc4(255, 255, 255, 255));
 	return true;
 }
 
