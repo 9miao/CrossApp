@@ -394,7 +394,6 @@
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		B0621C2A1AC3DCB2005EBCA7 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		B0621C2B1AC3DCB2005EBCA7 /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstViewController.cpp; path = ../Classes/FirstViewController.cpp; sourceTree = "<group>"; };
 		B0621C2C1AC3DCB2005EBCA7 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ../Classes/FirstViewController.h; sourceTree = "<group>"; };
 		B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
@@ -439,7 +438,6 @@
 			children = (
 				B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */,
 				B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */,
-				B0621C2A1AC3DCB2005EBCA7 /* AppMacros.h */,
 				B0621C2B1AC3DCB2005EBCA7 /* FirstViewController.cpp */,
 				B0621C2C1AC3DCB2005EBCA7 /* FirstViewController.h */,
 				B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */,

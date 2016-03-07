@@ -88,11 +88,13 @@ CAViewController* CADrawerController::getRightViewController()
 }
 
 void CADrawerController::viewDidLoad()
-{    
-    m_rHideFrame[0] = DRect(-m_fDivision, 0, m_fDivision, this->getView()->getBounds().size.height);
-    m_rHideFrame[1] = DRect(0 , 0, this->getView()->getBounds().size.width, this->getView()->getBounds().size.height);
-    m_rShowFrame[0] = DRect(0, 0, m_fDivision, this->getView()->getBounds().size.height);
-    m_rShowFrame[1] = DRect(m_fDivision , 0, this->getView()->getBounds().size.width, this->getView()->getBounds().size.height);
+{
+    DSize size = this->getView()->getBounds().size;
+    
+    m_rHideFrame[0] = DRect(-m_fDivision, 0, m_fDivision, size.height);
+    m_rHideFrame[1] = DRect(0 , 0, size.width, size.height);
+    m_rShowFrame[0] = DRect(0, 0, m_fDivision, size.height);
+    m_rShowFrame[1] = DRect(m_fDivision , 0, size.width, size.height);
     
     
     for (int i=0; i<2; i++)
@@ -103,7 +105,7 @@ void CADrawerController::viewDidLoad()
         m_pContainer[i]->release();
     }
     
-    m_pContainer[0]->setAnchorPoint(DPoint(1.0f, 0.5f));
+    m_pContainer[0]->setAnchorPoint(DPoint(0.5f, 0.5f));
     m_pContainer[1]->setAnchorPoint(DPoint(0.0f, 0.5f));
     
     m_pLeftViewController->addViewFromSuperview(m_pContainer[0]);
@@ -111,11 +113,6 @@ void CADrawerController::viewDidLoad()
     
     m_bShow = true;
     this->hideLeftViewController(false);
-    
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(this->getView()->getBounds());
-    }
 }
 
 void CADrawerController::viewDidUnload()
@@ -168,9 +165,6 @@ void CADrawerController::reshapeViewRectDidFinish()
     {
         m_pContainer[i]->setFrame(rect[i]);
     }
-    
-    m_pLeftViewController->getSuperViewRect(m_pContainer[0]->getBounds());
-    m_pRightViewController->getSuperViewRect(m_pContainer[1]->getBounds());
 }
 
 void CADrawerController::showLeftViewController(bool animated)
@@ -261,8 +255,6 @@ void CADrawerController::updateViewFrame()
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
         point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 3;
-        point[0].y = this->getView()->getBounds().size.height * (1.0f - scale0) / 2;
-        point[1].y = this->getView()->getBounds().size.height * (1.0f - scale1) / 2;
     }
     
     m_pContainer[0]->setFrameOrigin(point[0]);
@@ -373,7 +365,7 @@ void CADrawerController::setBackgroundView(CrossApp::CAView *var)
     m_pBackgroundView = var;
     if (m_pBackgroundView)
     {
-        m_pBackgroundView->setFrame(this->getView()->getBounds());
+        m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
         this->getView()->insertSubview(m_pBackgroundView, -1);
     }
 }

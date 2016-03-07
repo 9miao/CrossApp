@@ -65,6 +65,7 @@ static CANavigationBar* createWithCenter(const DRect& rect)
 bool CANavigationBar::init()
 {
     m_pContentView = new CAView();
+    m_pContentView->setLayout(DRectLayout(0, 0, m_bClearance ? 40 : 0, 0));
     this->addSubview(m_pContentView);
     m_pContentView->release();
     return true;
@@ -113,10 +114,6 @@ void CANavigationBar::onExitTransitionDidStart()
 void CANavigationBar::setContentSize(const DSize & var)
 {
     CAView::setContentSize(var);
-    DRect rect = this->getBounds();
-    rect.origin.y = m_bClearance ? 40 : 0;
-    rect.size.height = rect.size.height - rect.origin.y;
-    m_pContentView->setFrame(rect);
 }
 
 void CANavigationBar::setItem(CANavigationBarItem* item)
@@ -172,7 +169,7 @@ void CANavigationBar::showBackground()
         m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create("source_material/navigation_bg.png"));
         CC_SAFE_RETAIN(m_pBackgroundView);
     }
-    m_pBackgroundView->setFrame(this->getBounds());
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
     this->insertSubview(m_pBackgroundView, -1);
 }
 
@@ -603,11 +600,6 @@ void CATabBar::setContentSize(const DSize & var)
     
     m_pContentView->setFrame(rect);
     
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(this->getBounds());
-    }
-    
     unsigned int count = (unsigned int)m_pItems.size();
     m_cItemSize = rect.size;
     m_cItemSize.width /= count;
@@ -794,7 +786,7 @@ void CATabBar::showBackground()
     {
         m_pBackgroundView = CAView::createWithColor(m_sBackgroundColor);
     }
-    m_pBackgroundView->setFrame(this->getBounds());
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
     this->insertSubview(m_pBackgroundView, -1);
 }
 

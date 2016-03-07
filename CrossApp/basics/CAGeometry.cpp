@@ -174,19 +174,19 @@ bool DSize::equals(const DSize& target) const
 // implementation of DRect
 
 DRect::DRect(void)
-:m_bCenter(false)
+:m_eType(Frame)
 {
     setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 DRect::DRect(float x, float y, float width, float height)
-:m_bCenter(false)
+:m_eType(Frame)
 {
     setRect(x, y, width, height);
 }
 
 DRect::DRect(const DRect& other)
-:m_bCenter(other.isCenter())
+:m_eType(other.isType())
 {
     setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
 }
@@ -200,7 +200,7 @@ void DRect::setRect(float x, float y, float width, float height)
 DRect& DRect::operator= (const DRect& other)
 {
     setRect(other.origin.x, other.origin.y, other.size.width, other.size.height);
-    m_bCenter = other.isCenter();
+    m_eType = other.isType();
     return *this;
 }
 
@@ -247,32 +247,32 @@ bool DRect::equals(const DRect& rect) const
 
 float DRect::getMaxX() const
 {
-    return m_bCenter ? (float)(origin.x + size.width / 2) : (float)(origin.x + size.width);
+    return m_eType == Center ? (float)(origin.x + size.width / 2) : (float)(origin.x + size.width);
 }
 
 float DRect::getMidX() const
 {
-    return m_bCenter ? (float)origin.x : (float)(origin.x + size.width / 2);
+    return m_eType == Center ? (float)origin.x : (float)(origin.x + size.width / 2);
 }
 
 float DRect::getMinX() const
 {
-    return m_bCenter ? (float)(origin.x - size.width / 2) : (float)origin.x;
+    return m_eType == Center ? (float)(origin.x - size.width / 2) : (float)origin.x;
 }
 
 float DRect::getMaxY() const
 {
-    return m_bCenter ? (float)(origin.y + size.height / 2) : (float)(origin.y + size.height);
+    return m_eType == Center ? (float)(origin.y + size.height / 2) : (float)(origin.y + size.height);
 }
 
 float DRect::getMidY() const
 {
-    return m_bCenter ? (float)origin.y : (float)(origin.y + size.height / 2);
+    return m_eType == Center ? (float)origin.y : (float)(origin.y + size.height / 2);
 }
 
 float DRect::getMinY() const
 {
-    return m_bCenter ? (float)(origin.y - size.height / 2) : (float)origin.y;
+    return m_eType == Center ? (float)(origin.y - size.height / 2) : (float)origin.y;
 }
 
 bool DRect::containsPoint(const DPoint& point) const
@@ -304,7 +304,7 @@ void DRect::InflateRect(float v)
 	size.width += 2 * v;
 	size.height += 2 * v;
 
-	if (!m_bCenter)
+	if (m_eType == Frame)
 	{
 		origin.x -= v;
 		origin.y -= v;
@@ -315,11 +315,93 @@ void DRect::InflateRect(float l, float t, float r, float b)
 {
 	size.width += (l+r);
 	size.height += (t+b);
-	if (!m_bCenter)
+	if (m_eType == Frame)
 	{
 		origin.x -= l;
 		origin.y -= t;
 	}
 }
+
+
+
+DRectLayout::DRectLayout()
+:left(0xffffffff)
+,right(0xffffffff)
+,top(0xffffffff)
+,bottom(0xffffffff)
+,width(0xffffffff)
+,height(0xffffffff)
+{
+
+}
+
+DRectLayout::DRectLayout(const DRectLayout& other)
+:left(other.left)
+,right(other.right)
+,top(other.top)
+,bottom(other.bottom)
+,width(other.width)
+,height(other.height)
+{
+
+}
+
+DRectLayout::DRectLayout(float left, float right, float top, float bottom, float width, float height)
+:left(left)
+,right(right)
+,top(top)
+,bottom(bottom)
+,width(width)
+,height(height)
+{
+
+}
+
+DRectLayout& DRectLayout:: operator= (const DRectLayout& other)
+{
+    left    = other.left;
+    right   = other.right;
+    top     = other.top;
+    bottom  = other.bottom;
+    width   = other.width;
+    height  = other.height;
+    return *this;
+}
+
+bool DRectLayout::equals(const DRectLayout& other) const
+{
+    if (fabs(left - other.left) >= 0.001f)
+    {
+        return false;
+    }
+    
+    if (fabs(right - other.right) >= 0.001f)
+    {
+        return false;
+    }
+    
+    if (fabs(top - other.top) >= 0.001f)
+    {
+        return false;
+    }
+    
+    if (fabs(bottom - other.bottom) >= 0.001f)
+    {
+        return false;
+    }
+    
+    if (fabs(width - other.width) >= 0.001f)
+    {
+        return false;
+    }
+    
+    if (fabs(height - other.height) >= 0.001f)
+    {
+        return false;
+    }
+    
+    return  true;
+}
+
 
 NS_CC_END

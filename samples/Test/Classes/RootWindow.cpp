@@ -44,8 +44,7 @@ bool RootWindow::init()
     {
         return false;
     }
-    DSize winSize = this->getBounds().size;
-    
+
     CAApplication::getApplication()->setNotificationView(CAView::createWithFrame(this->getBounds(), CAColor_green));
     
     this->initUIView();

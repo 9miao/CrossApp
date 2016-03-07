@@ -66,6 +66,7 @@ bool CAWebView::init()
     
     m_pLoadingView = CAActivityIndicatorView::create();
     m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
+    m_pLoadingView->setLayout(DRectLayout(0, 0, 0, 0));
 	m_pLoadingView->setVisible(false);
 	this->addSubview(m_pLoadingView);
     
@@ -225,14 +226,6 @@ void CAWebView::update(float dt)
     while (0);
 }
 
-void CAWebView::setContentSize(const DSize &contentSize)
-{
-    CAView::setContentSize(contentSize);
-    if (m_pLoadingView)
-    {
-        m_pLoadingView->setFrame(this->getBounds());
-    }
-}
 
 NS_CC_END
 

@@ -19,8 +19,7 @@ using namespace std;
 NS_CC_BEGIN
 
 CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
-    : CAControl()
-    , m_nItemsCount(itemsCount)
+    : m_nItemsCount(itemsCount)
     , m_pBackgroundView(NULL)
     , m_pNewSegmentItemBackgroundImage(NULL)
     , m_pSegmentItemBackgroundImage(NULL)

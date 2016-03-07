@@ -1226,10 +1226,17 @@ void CDUIShowView::showPageView()
     _view.pushBack(view2);
     _view.pushBack(view3);
     
-    p_pageView = CAPageView::createWithCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
+    p_pageView = new CAPageView(CAPageViewDirectionHorizontal);
+    DRectLayout layout;
+    layout.left = 20;
+    layout.right = 20;
+    layout.top = 20;
+    layout.bottom = 20;
+    p_pageView->initWithLayout(layout);
     p_pageView->setViews(_view);
     p_pageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_pageView);
+    p_pageView->release();
     
     pageControl = CAPageControl::createWithCenter(DRect(winSize.width/2, 50, 100, 50));
     pageControl->setNumberOfPages(_view.size());
@@ -1245,20 +1252,25 @@ void CDUIShowView::pageViewDidBeginTurning(CAPageView* pageView)
 
 void CDUIShowView::pageViewDidEndTurning(CAPageView* pageView)
 {
-    if (pageViewIndex==0) {
+    if (pageViewIndex==0)
+    {
         pageControl->setCurrentPage(pageView->getCurrPage());
         pageControl->updateCurrentPageDisplay();
-    }else{
+    }
+    else
+    {
         
     }
 
 }
 
-void CDUIShowView::pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point){
+void CDUIShowView::pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point)
+{
     CAPageControl* button = (CAPageControl*)btn;
     CCLog("btn_tag===%d",button->getCurrentPage());
     p_pageView->setCurrPage(button->getCurrentPage(), true);
 }
+
 void CDUIShowView::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point)
 {
 

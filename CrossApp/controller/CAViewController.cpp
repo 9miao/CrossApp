@@ -33,6 +33,7 @@ CAViewController::CAViewController()
     m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
     m_pView->setContentContainer(this);
+    m_pView->setLayout(DRectLayout(0, 0, 0, 0));
 }
 
 CAViewController::~CAViewController()
@@ -77,15 +78,6 @@ void CAViewController::parser()
     
 }
 
-void CAViewController::getSuperViewRect(const DRect& rect)
-{
-    m_pView->setFrame(rect);
-    if (m_bLifeLock)
-    {
-        this->reshapeViewRectDidFinish();
-    }
-}
-
 void CAViewController::viewOnEnterTransitionDidFinish()
 {
     CAScheduler::getScheduler()->resumeTarget(this);
@@ -116,7 +108,7 @@ void CAViewController::viewOnExitTransitionDidStart()
     
 }
 
-const char* CAViewController::getNibName()
+std::string CAViewController::getNibName()
 {
     return typeid(*this).name();
 }
@@ -589,7 +581,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        lastContainer->setFrameOrigin(DPoint(-x/2.0f, 0));
+        lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("", NULL);
@@ -650,7 +642,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        lastContainer->setFrameOrigin(DPoint(-x/2.0f, 0));
+        lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("", NULL);
@@ -716,15 +708,13 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
         
         CAView* secondContainer = m_pSecondContainers.at(index);
         secondContainer->setFrame(rect);
-        
-        showViewController->getSuperViewRect(secondContainer->getBounds());
     }
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
-        showContainer->setFrameOrigin(DPoint(-x/2.0f, 0));
+        showContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
@@ -788,7 +778,7 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     
     CAView* showContainer = m_pContainers.at(index);
     showContainer->setVisible(true);
-    showContainer->setFrameOrigin(DPoint(-x/2.0f, 0));
+    showContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
     
     {
         DPoint point = this->getNavigationBarNowPoint(showViewController);
@@ -800,8 +790,6 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
         
         CAView* secondContainer = m_pSecondContainers.at(index);
         secondContainer->setFrame(rect);
-        
-        showViewController->getSuperViewRect(secondContainer->getBounds());
     }
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
@@ -1027,8 +1015,6 @@ void CANavigationController::update(float dt)
     
     CAView* secondContainer = m_pSecondContainers.back();
     secondContainer->setFrame(rect);
-    
-    viewController->getSuperViewRect(secondContainer->getBounds());
 }
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -1064,9 +1050,9 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     backContainer->setFrameOrigin(point1);
     backContainer->setTouchEnabled(false);
     
-    DPoint point2 = showContainer->getCenterOrigin();
-    point2.x = point1.x/2;
-    showContainer->setCenterOrigin(point2);
+    DPoint point2 = showContainer->getFrameOrigin();
+    point2.x = -this->getView()->getBounds().size.width/3.0f + point1.x/3.0f;
+    showContainer->setFrameOrigin(point2);
     
     m_bPopViewController = ((offDis > 10) || point1.x > this->getView()->getBounds().size.width/4);
 }
@@ -1114,7 +1100,7 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.03f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        lastContainer->setFrameOrigin(DPoint(-x/2.0f, 0));
+        lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("navigation_animation2", NULL);
@@ -1751,7 +1737,6 @@ void CATabBarController::update(float dt)
         r.size = rect.size;
         m_pContainer->getSubViewAtIndex((int)i)->setFrame(r);
         CAViewController* viewController = m_pViewControllers.at(i);
-        viewController->getSuperViewRect(m_pContainer->getBounds());
     }
 }
 

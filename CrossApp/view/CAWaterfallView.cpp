@@ -674,6 +674,7 @@ CAWaterfallViewCell* CAWaterfallViewCell::create(const std::string& reuseIdentif
 bool CAWaterfallViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
 	m_pContentView = new CAView();
+    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
 	this->addSubview(m_pContentView);
 
 	this->setBackgroundView(CAView::create());
@@ -685,29 +686,19 @@ bool CAWaterfallViewCell::initWithReuseIdentifier(const std::string& reuseIdenti
 
 void CAWaterfallViewCell::setBackgroundView(CrossApp::CAView *var)
 {
-	CC_SAFE_RETAIN(var);
-	this->removeSubview(m_pBackgroundView);
-	CC_SAFE_RELEASE(m_pBackgroundView);
+    CC_RETURN_IF(var == m_pBackgroundView);
+    m_pContentView->removeSubview(m_pBackgroundView);
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pBackgroundView);
 	m_pBackgroundView = var;
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setFrame(this->getBounds());
-	this->insertSubview(m_pBackgroundView, -1);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+	m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
 CAView* CAWaterfallViewCell::getBackgroundView()
 {
 	return m_pBackgroundView;
-}
-
-void CAWaterfallViewCell::setContentSize(const CrossApp::DSize &var)
-{
-	CAView::setContentSize(var);
-
-	m_pContentView->setFrame(this->getBounds());
-	if (m_pBackgroundView)
-	{
-		m_pBackgroundView->setFrame(m_pContentView->getBounds());
-	}
 }
 
 void CAWaterfallViewCell::setControlState(const CAControlState& var)

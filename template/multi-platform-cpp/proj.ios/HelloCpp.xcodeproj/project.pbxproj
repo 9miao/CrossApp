@@ -410,7 +410,6 @@
 		B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B0A030091A8E08500005CB8F /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../CrossApp/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
 		B0ABA50B1ACBD3FA00B0DEC5 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../CrossApp/the_third_party/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
-		B0AD93E519207CA300EA40BB /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -528,7 +527,6 @@
 				B0621E1E1AC3ECB0005EBCA7 /* FirstViewController.h */,
 				B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */,
 				B0621E201AC3ECB0005EBCA7 /* RootWindow.h */,
-				B0AD93E519207CA300EA40BB /* AppMacros.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 			);

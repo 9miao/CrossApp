@@ -132,10 +132,6 @@ public:
 
 	void setActivityView(CAActivityIndicatorView* loadingView);
 	void showLoadingActivity(bool show);
-   
-protected:
-    
-    virtual void setContentSize(const DSize &contentSize);
     
 private:
     

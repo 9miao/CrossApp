@@ -169,7 +169,7 @@ void CAImageView::updateByImageViewScaleType()
     this->setImageRect(rect);
     if (!viewSize.equals(m_obContentSize))
     {
-        if (m_bFrame)
+        if (m_eLayoutType == 0)
         {
             DRect rect = this->getFrame();
             rect.size = viewSize;
@@ -306,7 +306,7 @@ void CAImageView::update(float dt)
 CAView* CAImageView::copy()
 {
     CAImageView* pReturn = CAImageView::create();
-    if (m_bFrame)
+    if (m_eLayoutType == 0)
     {
         pReturn->setFrame(this->getFrame());
     }

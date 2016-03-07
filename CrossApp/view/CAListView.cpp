@@ -688,6 +688,7 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 bool CAListViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
     m_pContentView = new CAView();
+    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
     this->addSubview(m_pContentView);
     
     this->setBackgroundView(CAView::create());
@@ -699,29 +700,19 @@ bool CAListViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 
 void CAListViewCell::setBackgroundView(CrossApp::CAView *var)
 {
+    CC_RETURN_IF(var == m_pBackgroundView);
+    m_pContentView->removeSubview(m_pBackgroundView);
     CC_SAFE_RETAIN(var);
-    this->removeSubview(m_pBackgroundView);
     CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setFrame(this->getBounds());
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
     m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
 CAView* CAListViewCell::getBackgroundView()
 {
     return m_pBackgroundView;
-}
-
-void CAListViewCell::setContentSize(const CrossApp::DSize &var)
-{
-    CAView::setContentSize(var);
-    
-    m_pContentView->setFrame(this->getBounds());
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(m_pContentView->getBounds());
-    }
 }
 
 void CAListViewCell::setControlState(const CAControlState& var)

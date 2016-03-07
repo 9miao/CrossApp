@@ -91,7 +91,7 @@ void CALabel::onEnterTransitionDidFinish()
 
 bool CALabel::initWithFrame(const DRect& rect)
 {
-    if (!CAView::initWithFrame(rect,CAColor_black))
+    if (!CAView::initWithFrame(rect))
     {
         return false;
     }
@@ -100,7 +100,7 @@ bool CALabel::initWithFrame(const DRect& rect)
 
 bool CALabel::initWithCenter(const DRect& rect)
 {
-    if (!CAView::initWithCenter(rect,CAColor_black))
+    if (!CAView::initWithCenter(rect))
     {
         return false;
     }
@@ -215,7 +215,7 @@ void CALabel::updateImage()
     {
         if (!size.equals(m_obContentSize))
         {
-            if (m_bFrame)
+            if (m_eLayoutType == 0)
             {
                 DRect rect = this->getFrame();
                 rect.size = size;

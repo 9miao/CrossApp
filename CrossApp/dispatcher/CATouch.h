@@ -13,15 +13,7 @@ class CC_DLL CATouch : public CAObject
 {
 public:
 
-    CATouch()
-        : m_nId(0)
-        ,m_startPointCaptured(false)
-        ,m_bDelta(false)
-        ,m_startPoint(DPoint(0xffffffff, 0xffffffff))
-        ,m_point(DPoint(0xffffffff, 0xffffffff))
-        ,m_prevPoint(DPoint(0xffffffff, 0xffffffff))
-    {}
-
+    CATouch();
 
     DPoint getLocation() const;
 

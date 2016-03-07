@@ -98,7 +98,7 @@ CAView* CAScale9ImageView::copy()
 {
     CAScale9ImageView* pReturn = CAScale9ImageView::createWithImage(this->getImage());
     pReturn->setColor(this->getColor());
-    if (m_bFrame)
+    if (m_eLayoutType == 0)
     {
         pReturn->setFrame(this->getFrame());
     }

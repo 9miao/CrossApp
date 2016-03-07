@@ -6,6 +6,17 @@
 
 NS_CC_BEGIN
 
+CATouch::CATouch()
+: m_nId(0)
+,m_startPointCaptured(false)
+,m_bDelta(false)
+,m_startPoint(DPoint(0xffffffff, 0xffffffff))
+,m_point(DPoint(0xffffffff, 0xffffffff))
+,m_prevPoint(DPoint(0xffffffff, 0xffffffff))
+{
+
+}
+
 // returns the current touch location in OpenGL coordinates
 DPoint CATouch::getLocation() const
 { 

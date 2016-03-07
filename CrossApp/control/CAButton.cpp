@@ -226,17 +226,14 @@ void CAButton::setBackgroundViewForState(const CAControlState& controlState, CAV
         CC_SAFE_RETAIN(var);
         this->removeSubview(m_pBackgroundView[controlState]);
         CC_SAFE_RELEASE(m_pBackgroundView[controlState]);
+        if (var)
+        {
+            var->setLayout(DRectLayout(0, 0, 0, 0));
+        }
         m_pBackgroundView[controlState] = var;
         this->setControlState(m_eControlState);
     }
-    
-    CC_RETURN_IF(var == NULL);
-    
-    if (this->getBounds().equals(DRectZero))
-    {
-        this->setBounds(DRect(0, 0, var->getFrame().size.width, var->getFrame().size.height));
-    }
-    
+
     this->updateWithPreferredSize();
 }
 
@@ -355,14 +352,6 @@ void CAButton::setTitleFontName(const std::string& var)
 
 void CAButton::updateWithPreferredSize()
 {
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        CC_CONTINUE_IF(m_pBackgroundView[i] == NULL);
-        CC_CONTINUE_IF(this->getBounds().equals(m_pBackgroundView[i]->getBounds()));
-        
-        m_pBackgroundView[i]->setFrame(this->getBounds());
-    }
-    
     if (m_fTitleFontSize < FLT_EPSILON)
     {
         m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
@@ -503,12 +492,10 @@ void CAButton::setControlState(const CAControlState& var)
     
     if (m_pBackgroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
     {
-        m_pBackgroundView[m_eControlState]->setFrame(this->getBounds());
         this->insertSubview(m_pBackgroundView[m_eControlState], -1);
     }
     else if (m_pBackgroundView[CAControlStateNormal])
     {
-        m_pBackgroundView[CAControlStateNormal]->setFrame(this->getBounds());
         this->insertSubview(m_pBackgroundView[CAControlStateNormal], -1);
     }
     
@@ -695,11 +682,6 @@ void CAButton::setContentSize(const DSize & var)
 //        size.width = MAX(size.width, 60);
 //    }
     CAView::setContentSize(size);
-    for(int i=0; i<CAControlStateAll; i++)
-    {
-        CC_CONTINUE_IF(m_pBackgroundView[i] == NULL);
-        m_pBackgroundView[i]->setFrame(this->getBounds());
-    }
     
     this->updateWithPreferredSize();
     this->setControlState(m_eControlState);

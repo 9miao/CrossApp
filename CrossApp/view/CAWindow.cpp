@@ -29,6 +29,7 @@ bool CAWindow::init()
         DRect rect = DRectZero;
         rect.size = pApplication->getWinSize();
         this->setFrame(rect);
+        m_bRunning = true;
         bRet = true;
     }
     return bRet;

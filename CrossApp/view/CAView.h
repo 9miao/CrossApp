@@ -79,6 +79,10 @@ public:
     
     static CAView* createWithCenter(const DRect& rect, const CAColor4B& color4B);
     
+    static CAView* createWithLayout(const DRectLayout& layout);
+    
+    static CAView* createWithLayout(const DRectLayout& layout, const CAColor4B& color4B);
+    
     static CAView* createWithColor(const CAColor4B& color4B);
     
     CAView();
@@ -89,11 +93,9 @@ public:
 
     virtual bool initWithFrame(const DRect& rect);
     
-    virtual bool initWithFrame(const DRect& rect, const CAColor4B& color4B);
-    
     virtual bool initWithCenter(const DRect& rect);
     
-    virtual bool initWithCenter(const DRect& rect, const CAColor4B& color4B);
+    virtual bool initWithLayout(const DRectLayout& layout);
     
     virtual bool initWithColor(const CAColor4B& color4B);
 
@@ -159,6 +161,10 @@ public:
     
     virtual DPoint getCenterOrigin();
 
+    virtual void setLayout(const DRectLayout& layout);
+    
+    const DRectLayout& getLayout();
+    
     virtual void setVisible(bool visible);
 
     virtual bool isVisible();
@@ -222,6 +228,8 @@ public:
     virtual void visit(void);
 
     virtual void visitEve(void);
+    
+    void visitLayout(const DSize& contentSize);
     
     virtual CAResponder* nextResponder();
     
@@ -360,10 +368,10 @@ protected:
     virtual void updateImageRect();
     
 protected:
-
+ 
     CC_SYNTHESIZE(CAContentContainer*, m_pContentContainer, ContentContainer);
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bFrame, Frame);
+    CC_SYNTHESIZE_READONLY(int, m_eLayoutType, LayoutType);
     
     CC_SYNTHESIZE_READONLY(CABatchView*, m_pobBatchView, Batch);
     
@@ -386,6 +394,8 @@ protected:
     DPoint m_obAnchorPoint;            ///< anchor point normalized (NOT in points)
     
     DSize m_obContentSize;             ///< untransformed size of the node
+    
+    DRectLayout m_obLayout;
     
     DRect m_obFrameRect;
     
@@ -455,8 +465,6 @@ class CC_DLL CAContentContainer: public CAResponder
 public:
     
     virtual ~CAContentContainer(){};
-    
-    virtual void getSuperViewRect(const DRect& rect) = 0;
     
     virtual void viewOnEnterTransitionDidFinish() = 0;
     

@@ -36,7 +36,7 @@ public:
     
     virtual bool init();
     
-    const char* getNibName();
+    std::string getNibName();
     
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTitle, Title);
     
@@ -94,8 +94,6 @@ public:
     
     virtual void viewDidDisappear() {};
     
-    virtual void reshapeViewRectDidFinish() {};
-    
     virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
@@ -105,8 +103,6 @@ public:
     virtual void removeViewFromSuperview();
     
 private:
-    
-    void getSuperViewRect(const DRect& rect);
     
     void viewOnEnterTransitionDidFinish();
     

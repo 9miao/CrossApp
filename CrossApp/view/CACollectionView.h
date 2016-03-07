@@ -304,8 +304,6 @@ protected:
     
     void setControlState(const CAControlState& var);
     
-    void setContentSize(const DSize& var);
-    
 private:
     
     void resetCollectionViewCell();
