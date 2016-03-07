@@ -40,9 +40,9 @@ private:
 typedef struct CallbackTarget
 {
 	CallbackTarget(CAObject* t, SEL_CallFunc s, const std::string& szBtnText)
-	: target(t)
-	, selector(s)
-	, cszButtonText(szBtnText)
+		: target(t)
+		, selector(s)
+		, cszButtonText(szBtnText)
 	{
 
 	}
@@ -66,15 +66,15 @@ public:
 	static CATextToolBarView *create();
 	static bool isTextToolBarShow();
 	static void hideTextToolBar();
-    
+
 	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
-	void show(CAView* pView=NULL);
+	void show(CAView* pView = NULL);
 
 protected:
 	bool init();
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+
 	void addGrayLine(int x);
 	void alertViewCallback(CAControl* btn, DPoint point);
 
@@ -82,94 +82,7 @@ private:
 	std::vector<CallbackTarget> m_CallbackTargets;
 
 	CAClippingView *m_pBackView;
-    CAView* m_pControlView;
-};
-
-
-class CATextSelectView : public CAView
-{
-public:
-	CATextSelectView();
-	virtual ~CATextSelectView();
-
-	static CATextSelectView *create();
-	static void hideTextSelectView();
-
-	void showTextSelView(const DRect& rect, CAView* pControlView, bool showLeft = true, bool showRight = true);
-
-protected:
-	virtual bool init();
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-	
-	void hideTextSelView();
-	void ccCopyToClipboard();
-	void ccCutToClipboard();
-	void ccPasteFromClipboard();
-	
-private:
-
-	CAImageView* m_pCursorMarkL;
-	CAImageView* m_pCursorMarkR;
-	
-	CAView* m_pTextViewMask;
 	CAView* m_pControlView;
-	int m_iSelViewTouchPos;
-};
-
-class CATextSelViewEx : public CAControl
-{
-public:
-	CATextSelViewEx();
-	virtual ~CATextSelViewEx();
-
-	static CATextSelViewEx *create();
-
-	void showTextSelView(CAView* pControlView, const std::vector<DRect>& vt, float iLineHeight);
-	void hideTextSelView();
-	void showTextViewMark(const std::vector<DRect>& vt);
-	void hideTextViewMark();
-    bool isTextViewShow();
-    
-protected:
-	virtual bool init();
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-	bool touchSelectText(CATouch *pTouch);
-
-private:
-	CAImageView* m_pCursorMarkL;
-	CAImageView* m_pCursorMarkR;
-	CAView* m_pControlView;
-
-	int m_iSelViewTouchPos;
-	std::vector<CAView*> m_pTextViewMask;
-};
-
-
-class CATextArrowView : public CAView
-{
-public:
-	CATextArrowView();
-	virtual ~CATextArrowView();
-
-	static CATextArrowView *create();
-
-	void showTextArrView(const DPoint& pt);
-	void hideTextArrView();
-
-
-protected:
-	virtual bool init();
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-	void ccTouchTimer(float interval);
-
-private:
-	bool m_isBtnPress;
-	CAImageView* m_pArrowView;
 };
 
 class CC_DLL CATextResponder

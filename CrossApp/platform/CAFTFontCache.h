@@ -26,6 +26,7 @@ typedef struct FontDataTable
 
 class CC_DLL CAFTFontCache
 {
+	friend class CAFTRichFont;
 public:
 	CAFTFontCache();
 	virtual ~CAFTFontCache();
@@ -53,7 +54,6 @@ protected:
 
 	void setCurrentFontData(const char* pFontName, int nSize);
 
-private:
 	FontDataTable* m_pCurFontData;
 
 	std::vector<FontDataTable*> m_FontDataVect;

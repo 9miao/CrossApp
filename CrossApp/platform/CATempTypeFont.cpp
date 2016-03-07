@@ -19,6 +19,12 @@ CATempTypeFont::~CATempTypeFont()
 	finiTempTypeFont();
 }
 
+CATempTypeFont& CATempTypeFont::getInstance()
+{
+	static CATempTypeFont instance;
+	return instance;
+}
+
 void CATempTypeFont::initTempTypeFont(unsigned long nSize)
 {
 	std::map<unsigned long, FT_Face>::iterator it=m_mTempFontMap.find(nSize);

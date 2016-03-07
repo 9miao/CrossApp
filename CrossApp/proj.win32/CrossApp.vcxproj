@@ -210,6 +210,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\platform\CAEmojiFont.cpp" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
+    <ClCompile Include="..\platform\CAFTRichFont.cpp" />
     <ClCompile Include="..\platform\CATempTypeFont.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
@@ -296,6 +297,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\view\CAPickerView.cpp" />
     <ClCompile Include="..\view\CAPullToRefreshView.cpp" />
     <ClCompile Include="..\view\CARenderImage.cpp" />
+    <ClCompile Include="..\view\CARichLabel.cpp" />
     <ClCompile Include="..\view\CAScale9ImageView.cpp" />
     <ClCompile Include="..\view\CAScrollView.cpp" />
     <ClCompile Include="..\view\CATableView.cpp" />
@@ -355,6 +357,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\platform\CAEmojiFont.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
+    <ClInclude Include="..\platform\CAFTRichFont.h" />
     <ClInclude Include="..\platform\CATempTypeFont.h" />
     <ClInclude Include="..\platform\CATextField.h" />
     <ClInclude Include="..\platform\CATextView.h" />
@@ -474,6 +477,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\view\CAPickerView.h" />
     <ClInclude Include="..\view\CAPullToRefreshView.h" />
     <ClInclude Include="..\view\CARenderImage.h" />
+    <ClInclude Include="..\view\CARichLabel.h" />
     <ClInclude Include="..\view\CAScale9ImageView.h" />
     <ClInclude Include="..\view\CAScrollView.h" />
     <ClInclude Include="..\view\CATableView.h" />
