@@ -5,7 +5,7 @@
 NS_CC_BEGIN
 
 CAFont::CAFont()
-	: m_nfontSize(36)
+	: m_nfontSize(24)
 	, m_cTextColor(CAColor_black)
 	, m_bItalics(false)
 	, m_bBold(false)

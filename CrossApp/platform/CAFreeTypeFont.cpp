@@ -1146,7 +1146,7 @@ FT_Face CAFreeTypeFont::initFreeType(const std::string& pFontName, unsigned long
 	unsigned long size = 0; int face_index = 0;
 	unsigned char* pBuffer = loadFont(pFontName, &size, face_index);
 	if (pBuffer == NULL)
-		return false;
+		return NULL;
 	
 	FT_Error error = 0;
 	if (!s_FreeTypeLibrary)

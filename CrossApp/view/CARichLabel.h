@@ -40,7 +40,9 @@ public:
 class CC_DLL CARichLabel : public CAView
 {
 public:
+    
 	CARichLabel();
+    
 	virtual ~CARichLabel();
 
 	static CARichLabel* create();
