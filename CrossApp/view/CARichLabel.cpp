@@ -4,7 +4,7 @@
 
 NS_CC_BEGIN
 
-CALabelFont::CALabelFont()
+CAFont::CAFont()
 	: m_nfontSize(36)
 	, m_cTextColor(CAColor_black)
 	, m_bItalics(false)
@@ -13,57 +13,6 @@ CALabelFont::CALabelFont()
 	, m_bDeleteLine(false)
 {
 
-}
-
-CALabelFont* CALabelFont::create()
-{
-	CALabelFont* labelFont = new CALabelFont();
-	if (labelFont && labelFont->init())
-	{
-		labelFont->autorelease();
-		return labelFont;
-	}
-	CC_SAFE_DELETE(labelFont);
-	return NULL;
-}
-
-CALabelFontText::CALabelFontText()
-	: m_pLabelFont(NULL)
-{
-
-}
-
-CALabelFontText::~CALabelFontText()
-{
-	CC_SAFE_RELEASE_NULL(m_pLabelFont);
-}
-
-
-bool CALabelFontText::init()
-{
-	setLabelFont(CALabelFont::create());
-	return true;
-}
-
-
-CALabelFontText* CALabelFontText::create(const std::string& szText)
-{
-	CALabelFontText* fontText = new CALabelFontText();
-	if (fontText && fontText->init())
-	{
-		fontText->setText(szText);
-		fontText->autorelease();
-		return fontText;
-	}
-	CC_SAFE_DELETE(fontText);
-	return NULL;
-}
-
-CALabelFontText* CALabelFontText::create(const std::string& szText, CALabelFont* ft)
-{
-	CALabelFontText* text = CALabelFontText::create(szText);
-	text->setLabelFont(ft);
-	return text;
 }
 
 ///////////////////////////////////////////////////
@@ -172,11 +121,12 @@ float CARichLabel::getMaxFontHeight()
 
 	for (int i = 0; i < m_vLabelFontVect.size(); i++)
 	{
-		int tFSize = m_vLabelFontVect.at(i)->getLabelFont()->getFontSize();
+		const CAFont& ft = m_vLabelFontVect[i].second;
+		int tFSize = ft.getFontSize();
 		if (tFSize > iFontSize)
 		{
 			iFontSize = tFSize;
-			cszFontName = m_vLabelFontVect.at(i)->getLabelFont()->getFontName();
+			cszFontName = ft.getFontName();
 		}
 	}
 	return CAImage::getFontHeight(cszFontName.c_str(), iFontSize);
@@ -231,13 +181,13 @@ bool CARichLabel::init()
 
 void CARichLabel::appendText(const std::string& cszText)
 {
-	m_vLabelFontVect.pushBack(CALabelFontText::create(cszText));
+	m_vLabelFontVect.push_back(std::make_pair(cszText, CAFont()));
 	updateImageDraw();
 }
 
-void CARichLabel::appendText(CALabelFontText* ftText)
+void CARichLabel::appendText(const std::string& text, const CAFont& font)
 {
-	m_vLabelFontVect.pushBack(ftText);
+	m_vLabelFontVect.push_back(std::make_pair(text, font));
 	updateImageDraw();
 }
 

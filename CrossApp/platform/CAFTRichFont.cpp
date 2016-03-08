@@ -26,7 +26,7 @@ CAFTRichFont::~CAFTRichFont()
 }
 
 
-CAImage* CAFTRichFont::initWithString(const CAVector<CALabelFontText*>& labels, const DSize& sz)
+CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz)
 {
 	m_inSize = sz;
 	m_textSize = DSizeZero;
@@ -44,7 +44,6 @@ CAImage* CAFTRichFont::initWithString(const CAVector<CALabelFontText*>& labels, 
 	{
 		CC_SAFE_RELEASE_NULL(image);
 	}
-//	image->saveToFile("c:\\xxx.png");
 	delete[]pData;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 	image->releaseData();
@@ -93,32 +92,32 @@ void CAFTRichFont::destroyAllLines()
 	m_pCurrentLine = NULL;
 }
 
-void CAFTRichFont::initGlyphs(const CAVector<CALabelFontText*>& labels)
+void CAFTRichFont::initGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels)
 {
-	CAVector<CALabelFontText*> labeltexts;
+	std::vector<std::pair<std::string, CAFont>> labeltexts;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		CALabelFontText* pLabelText = labels.at(i);
+		const std::pair<std::string, CAFont>& label = labels[i];
 
-		const std::string& line = pLabelText->getText();
+		const std::string& line = label.first;
 
 		size_t pos = 0;
 		size_t first = line.find('\n');
 		while (first != std::string::npos)
 		{
-			labeltexts.pushBack(CALabelFontText::create(line.substr(pos, first - pos), pLabelText->getLabelFont()));
+			labeltexts.push_back(std::make_pair(line.substr(pos, first - pos), label.second));
 			initGlyphsLine(labeltexts);
 			labeltexts.clear();
 
 			pos = first + 1;
 			first = line.find('\n', pos);
 		}
-		labeltexts.pushBack(CALabelFontText::create(line.substr(pos, line.size()), pLabelText->getLabelFont()));
+		labeltexts.push_back(std::make_pair(line.substr(pos, line.size()), label.second));
 	}
 	initGlyphsLine(labeltexts);
 }
 
-void CAFTRichFont::initGlyphsLine(const CAVector<CALabelFontText*>& labels)
+void CAFTRichFont::initGlyphsLine(const std::vector<std::pair<std::string, CAFont>>& labels)
 {
 	if (!labels.empty())
 	{
@@ -131,7 +130,7 @@ void CAFTRichFont::initGlyphsLine(const CAVector<CALabelFontText*>& labels)
 }
 
 
-void CAFTRichFont::initGlyphsLineEx(const CAVector<CALabelFontText*>& labels)
+void CAFTRichFont::initGlyphsLineEx(const std::vector<std::pair<std::string, CAFont>>& labels)
 {
 	FT_BBox bbox;   // bounding box containing all of the glyphs in the word
 	std::vector<TGlyphEx> glyphs; // glyphs for the word
@@ -174,12 +173,12 @@ void CAFTRichFont::initGlyphsLineEx(const CAVector<CALabelFontText*>& labels)
 	}
 }
 
-FT_Error CAFTRichFont::initWordGlyphs(const CAVector<CALabelFontText*>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
+FT_Error CAFTRichFont::initWordGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
 {
 	glyphs.clear();
 	for (int i = 0; i < labels.size(); i++)
 	{
-		CALabelFontText* label = labels.at(i);
+		const std::pair<std::string, CAFont>& label = labels[i];
 
 		if (-1 == initWordGlyph(label, glyphs, pen))
 			return -1;
@@ -187,17 +186,17 @@ FT_Error CAFTRichFont::initWordGlyphs(const CAVector<CALabelFontText*>& labels, 
 	return 0;
 }
 
-FT_Error CAFTRichFont::initWordGlyph(CALabelFontText* label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
+FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
 {
-	CALabelFont* lft = label->getLabelFont();
-	const std::string& szText = label->getText();
-	FT_Face face = convertToSPFont(lft);
-	CAColor4B col = lft->getTextColor();
-	bool bBold = lft->getBold();
-	bool bItalics = lft->getItalics();
-	bool bDeleteLine = lft->getDeleteLine();
-	bool bUnderLine = lft->getUnderLine();
-	int iFontSize = lft->getFontSize();
+	const CAFont& ft = label.second;
+	const std::string& szText = label.first;
+	FT_Face face = convertToSPFont(ft);
+	CAColor4B col = ft.getTextColor();
+	bool bBold = ft.getBold();
+	bool bItalics = ft.getItalics();
+	bool bDeleteLine = ft.getDeleteLine();
+	bool bUnderLine = ft.getUnderLine();
+	int iFontSize = ft.getFontSize();
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
 	iLineHeight += iLineHeight / 5;
@@ -223,7 +222,7 @@ FT_Error CAFTRichFont::initWordGlyph(CALabelFontText* label, std::vector<TGlyphE
 		FT_UInt glyph_index = FT_Get_Char_Index(face, c);
 		glyph->isEmoji = false;
 		glyph->face = face;
-		glyph->fontSize = lft->getFontSize();
+		glyph->fontSize = iFontSize;
 		glyph->col = col;
 		glyph->deleteLine = bDeleteLine;
 		glyph->underLine = bUnderLine;
@@ -309,9 +308,9 @@ FT_Error CAFTRichFont::initWordGlyph(CALabelFontText* label, std::vector<TGlyphE
 	return error;
 }
 
-FT_Face CAFTRichFont::convertToSPFont(CALabelFont* ft)
+FT_Face CAFTRichFont::convertToSPFont(const CAFont& ft)
 {
-	g_AFTFontCache.setCurrentFontData(ft->getFontName().c_str(), ft->getFontSize());
+	g_AFTFontCache.setCurrentFontData(ft.getFontName().c_str(), ft.getFontSize());
 	return g_AFTFontCache.m_pCurFontData->ftFont.m_face;
 }
 

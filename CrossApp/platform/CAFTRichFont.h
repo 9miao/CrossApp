@@ -14,8 +14,7 @@
 
 NS_CC_BEGIN
 
-class CALabelFont;
-class CALabelFontText;
+class CAFont;
 
 typedef struct TGlyphEx_
 {
@@ -52,18 +51,18 @@ public:
 	CAFTRichFont();
 	virtual ~CAFTRichFont();
 
-	CAImage* initWithString(const CAVector<CALabelFontText*>& labels, const DSize& sz);
+	CAImage* initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz);
 
 protected:
 	void newLine();
 	void endLine();
 	void destroyAllLines();
-	void initGlyphs(const CAVector<CALabelFontText*>& labels);
-	void initGlyphsLine(const CAVector<CALabelFontText*>& labels);
-	void initGlyphsLineEx(const CAVector<CALabelFontText*>& labels);
-	FT_Error initWordGlyphs(const CAVector<CALabelFontText*>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
-	FT_Error initWordGlyph(CALabelFontText* label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
-	FT_Face convertToSPFont(CALabelFont* ft);
+	void initGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels);
+	void initGlyphsLine(const std::vector<std::pair<std::string, CAFont>>& labels);
+	void initGlyphsLineEx(const std::vector<std::pair<std::string, CAFont>>& labels);
+	FT_Error initWordGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
+	FT_Error initWordGlyph(const std::pair<std::string, CAFont>& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
+	FT_Face convertToSPFont(const CAFont& ft);
 	void compute_bbox(std::vector<TGlyphEx>& glyphs, FT_BBox *abbox);
 	void calcuMultiLines(std::vector<TGlyphEx>& glyphs);
 	void getLineYBBox(std::vector<TGlyphEx>& glyphs, FT_Pos& yPosMin, FT_Pos& yPosMax);

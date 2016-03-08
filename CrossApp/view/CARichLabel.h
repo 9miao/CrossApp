@@ -15,12 +15,11 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CALabelFont : public CAObject
+
+class CC_DLL CAFont
 {
 public:
-	CALabelFont();
-
-	static CALabelFont* create();
+	CAFont();
 
 	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sFontName, FontName);
 
@@ -37,24 +36,6 @@ public:
 	CC_SYNTHESIZE(bool, m_bDeleteLine, DeleteLine);
 };
 
-
-class CC_DLL CALabelFontText : public CAObject
-{
-public:
-	CALabelFontText();
-
-	virtual ~CALabelFontText();
-
-	bool init();
-
-	static CALabelFontText* create(const std::string& szText);
-
-	static CALabelFontText* create(const std::string& szText, CALabelFont* ft);
-
-	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sText, Text);
-	
-	CC_SYNTHESIZE_RETAIN(CALabelFont*, m_pLabelFont, LabelFont);
-};
 
 class CC_DLL CARichLabel : public CAView
 {
@@ -77,9 +58,8 @@ public:
 	virtual bool init();
 
 	void appendText(const std::string& cszText);
-	void appendText(CALabelFontText* ftText);
+	void appendText(const std::string& text, const CAFont& font);
 
-    void appendText(const std::string& text, CAFont* font);
 protected:
 	virtual void setContentSize(const DSize& var);
 
@@ -94,7 +74,7 @@ protected:
 private:
 	bool m_bUpdateImage;
 	float m_fTextHeight;
-	CAVector<CALabelFontText*> m_vLabelFontVect;
+	std::vector<std::pair<std::string, CAFont>> m_vLabelFontVect;
 };
 
 
