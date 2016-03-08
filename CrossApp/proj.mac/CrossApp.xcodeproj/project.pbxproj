@@ -337,6 +337,10 @@
 		B0D890461B9D3A59004A0830 /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0D890441B9D3A59004A0830 /* CAEmojiFont.h */; };
 		B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECE1B256B6D0011E87D /* CAGif.cpp */; };
 		B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DAEECF1B256B6D0011E87D /* CAGif.h */; };
+		B0F9B6691C8E7F2B00BE7B1B /* CAFTRichFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F9B6671C8E7F2B00BE7B1B /* CAFTRichFont.cpp */; };
+		B0F9B66A1C8E7F2B00BE7B1B /* CAFTRichFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F9B6681C8E7F2B00BE7B1B /* CAFTRichFont.h */; };
+		B0F9B66D1C8E7F4F00BE7B1B /* CARichLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F9B66B1C8E7F4F00BE7B1B /* CARichLabel.cpp */; };
+		B0F9B66E1C8E7F4F00BE7B1B /* CARichLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F9B66C1C8E7F4F00BE7B1B /* CARichLabel.h */; };
 		B0FCA6771C2BECB60014CDCF /* CATextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0FCA6761C2BECB60014CDCF /* CATextField.mm */; };
 		B0FCA6791C2BECBB0014CDCF /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FCA6781C2BECBB0014CDCF /* CATextField.h */; };
 /* End PBXBuildFile section */
@@ -715,6 +719,10 @@
 		B0E9515D1BC645F900DBAB6A /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
 		B0E9515E1BC645F900DBAB6A /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
 		B0E9515F1BC645F900DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
+		B0F9B6671C8E7F2B00BE7B1B /* CAFTRichFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTRichFont.cpp; sourceTree = "<group>"; };
+		B0F9B6681C8E7F2B00BE7B1B /* CAFTRichFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTRichFont.h; sourceTree = "<group>"; };
+		B0F9B66B1C8E7F4F00BE7B1B /* CARichLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CARichLabel.cpp; sourceTree = "<group>"; };
+		B0F9B66C1C8E7F4F00BE7B1B /* CARichLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARichLabel.h; sourceTree = "<group>"; };
 		B0FCA6761C2BECB60014CDCF /* CATextField.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextField.mm; sourceTree = "<group>"; };
 		B0FCA6781C2BECBB0014CDCF /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -955,6 +963,8 @@
 		04EAA0E21956D74D00198A8E /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B0F9B6671C8E7F2B00BE7B1B /* CAFTRichFont.cpp */,
+				B0F9B6681C8E7F2B00BE7B1B /* CAFTRichFont.h */,
 				B07E827A1C33E7F700A39C95 /* CATextView.h */,
 				B0FCA6781C2BECBB0014CDCF /* CATextField.h */,
 				B0D890431B9D3A59004A0830 /* CAEmojiFont.cpp */,
@@ -1390,6 +1400,8 @@
 		B0B05F641BB1483200B891CE /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B0F9B66B1C8E7F4F00BE7B1B /* CARichLabel.cpp */,
+				B0F9B66C1C8E7F4F00BE7B1B /* CARichLabel.h */,
 				B074CCEC1C31546F00493A8A /* CATextEditHelper.cpp */,
 				B074CCED1C31546F00493A8A /* CATextEditHelper.h */,
 				020F5F861BF34BAB0098C44C /* CAWaterfallView.cpp */,
@@ -1557,6 +1569,7 @@
 				04EAB14A1956D75600198A8E /* CCAccelerometer.h in Headers */,
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
 				04EAB14F1956D75600198A8E /* CCFileUtilsMac.h in Headers */,
+				B0F9B66E1C8E7F4F00BE7B1B /* CARichLabel.h in Headers */,
 				04EAB1511956D75600198A8E /* CCGL.h in Headers */,
 				B08F4BCE19C7E66C008DE306 /* CAFreeTypeFont.h in Headers */,
 				04EAB1531956D75600198A8E /* CCPlatformDefine.h in Headers */,
@@ -1620,6 +1633,7 @@
 				3E21540B1B817AB80075448E /* HttpRequest.h in Headers */,
 				04EABA8C1956D75A00198A8E /* TGAlib.h in Headers */,
 				04EABA8E1956D75A00198A8E /* tinyxml2.h in Headers */,
+				B0F9B66A1C8E7F2B00BE7B1B /* CAFTRichFont.h in Headers */,
 				04EABA901956D75A00198A8E /* TransformUtils.h in Headers */,
 				B02CE48419AD869600B905FB /* CAPageControl.h in Headers */,
 				B0B05FB21BB1483200B891CE /* CALabel.h in Headers */,
@@ -1756,6 +1770,7 @@
 				020F5F881BF34BAB0098C44C /* CAWaterfallView.cpp in Sources */,
 				04EAB0D11956D75600198A8E /* mat4stack.c in Sources */,
 				04EAB0D21956D75600198A8E /* matrix.c in Sources */,
+				B0F9B6691C8E7F2B00BE7B1B /* CAFTRichFont.cpp in Sources */,
 				04EAB0D31956D75600198A8E /* mat3.c in Sources */,
 				B0B05FCB1BB1483200B891CE /* CAView.cpp in Sources */,
 				B0A11DA51AE8C5C500933BF6 /* dgif_lib.c in Sources */,
@@ -1792,6 +1807,7 @@
 				B02A12CC197CE15D00F4F2C5 /* CATransformation.cpp in Sources */,
 				B0B05FA51BB1483200B891CE /* CACollectionView.cpp in Sources */,
 				04EAB1591956D75600198A8E /* EAGLView.mm in Sources */,
+				B0F9B66D1C8E7F4F00BE7B1B /* CARichLabel.cpp in Sources */,
 				04EAB15C1956D75600198A8E /* platform.cpp in Sources */,
 				04EABA5D1956D75A00198A8E /* ccGLStateCache.cpp in Sources */,
 				04EABA6E1956D75A00198A8E /* CAShaderCache.cpp in Sources */,

@@ -117,7 +117,7 @@ CARichLabel* CARichLabel::createWithCenter(const DRect& rect)
 
 bool CARichLabel::initWithFrame(const DRect& rect)
 {
-	if (!CAView::initWithFrame(rect, CAColor_black))
+	if (!CAView::initWithFrame(rect))
 	{
 		return false;
 	}
@@ -126,7 +126,7 @@ bool CARichLabel::initWithFrame(const DRect& rect)
 
 bool CARichLabel::initWithCenter(const DRect& rect)
 {
-	if (!CAView::initWithCenter(rect, CAColor_black))
+	if (!CAView::initWithCenter(rect))
 	{
 		return false;
 	}

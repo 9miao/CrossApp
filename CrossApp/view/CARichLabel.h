@@ -79,6 +79,7 @@ public:
 	void appendText(const std::string& cszText);
 	void appendText(CALabelFontText* ftText);
 
+    void appendText(const std::string& text, CAFont* font);
 protected:
 	virtual void setContentSize(const DSize& var);
 
