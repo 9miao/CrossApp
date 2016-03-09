@@ -165,7 +165,6 @@ void CAApplication::drawScene(float dt)
         
         if (m_pRootWindow)
         {
-            m_pRootWindow->visitLayout(m_obWinSizeInPoints);
             m_pRootWindow->visitEve();
         }
         
@@ -506,6 +505,7 @@ void CAApplication::runWindow(CAWindow *pWindow)
 {
     if (m_pRootWindow)
     {
+        m_pRootWindow->reViewlayout(m_obWinSizeInPoints);
         m_pRootWindow->onExitTransitionDidStart();
         m_pRootWindow->onExit();
         m_pRootWindow->release();

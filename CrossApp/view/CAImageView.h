@@ -71,7 +71,7 @@ protected:
     
     virtual void asyncFinish(CAObject* var);
     
-    virtual void setContentSize(const DSize& size);
+    virtual void setContentSize(const DSize& contentSize);
     
     virtual void updateByImageViewScaleType();
     

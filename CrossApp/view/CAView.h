@@ -229,8 +229,6 @@ public:
 
     virtual void visitEve(void);
     
-    void visitLayout(const DSize& contentSize);
-    
     virtual CAResponder* nextResponder();
     
     virtual CAView* copy();
@@ -297,7 +295,7 @@ public:
 
     virtual void update(float fDelta);
     
-    void reViewlayout();
+    void reViewlayout(const DSize& contentSize);
     
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
     

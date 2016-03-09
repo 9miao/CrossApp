@@ -185,30 +185,26 @@ void CAImageView::updateByImageViewScaleType()
     m_bUpdateByImageViewScaleType = false;
 }
 
-void CAImageView::setContentSize(const DSize & size)
+void CAImageView::setContentSize(const DSize & contentSize)
 {
     if (CAViewAnimation::areAnimationsEnabled()
          && CAViewAnimation::areBeginAnimations())
     {
-        CAViewAnimation::getInstance()->setContentSize(size, this);
+        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
     }
-    else if (!size.equals(m_obContentSize))
+    else if (!contentSize.equals(m_obContentSize))
     {
-        m_obContentSize = size;
-        
-        m_obAnchorPointInPoints = DPoint(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
+        m_obContentSize = contentSize;
+        m_obAnchorPointInPoints.x = m_obContentSize.width * m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
         
         this->updateByImageViewScaleType();
         
-        if(!m_obSubviews.empty())
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            CAVector<CAView*>::iterator itr;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-            {
-                (*itr)->reViewlayout();
-            }
+            (*itr)->reViewlayout(m_obContentSize);
         }
-        
         this->updateDraw();
     }
 }

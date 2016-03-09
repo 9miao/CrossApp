@@ -639,13 +639,10 @@ void CAView::setContentSize(const DSize & contentSize)
         
         this->updateImageRect();
         
-        if(!m_obSubviews.empty())
+        CAVector<CAView*>::iterator itr;
+        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
         {
-            CAVector<CAView*>::iterator itr;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-            {
-                (*itr)->reViewlayout();
-            }
+            (*itr)->reViewlayout(m_obContentSize);
         }
         
         this->updateDraw();
@@ -859,9 +856,50 @@ const char* CAView::description()
     return crossapp_format_string("<CAView | TextTag = %s | Tag = %d >", m_sTextTag.c_str(), m_nTag).c_str();
 }
 
-void CAView::reViewlayout()
+void CAView::reViewlayout(const DSize& contentSize)
 {
-    m_bTransformDirty = m_bInverseDirty = true;
+    if (m_eLayoutType == 2)
+    {
+        DRect rect;
+        
+        if (m_obLayout.left < 0xffffffff && m_obLayout.right < 0xffffffff)
+        {
+            rect.size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
+            rect.origin.x = m_obLayout.left;
+        }
+        else if (m_obLayout.left < 0xffffffff && m_obLayout.width < 0xffffffff)
+        {
+            rect.size.width = m_obLayout.width;
+            rect.origin.x = m_obLayout.left;
+        }
+        else if (m_obLayout.right < 0xffffffff && m_obLayout.width < 0xffffffff)
+        {
+            rect.size.width = m_obLayout.width;
+            rect.origin.x = contentSize.width - m_obLayout.right - m_obLayout.width;
+        }
+        
+        if (m_obLayout.top < 0xffffffff && m_obLayout.bottom < 0xffffffff)
+        {
+            rect.size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
+            rect.origin.y = m_obLayout.top;
+        }
+        else if (m_obLayout.top < 0xffffffff && m_obLayout.height < 0xffffffff)
+        {
+            rect.size.height = m_obLayout.height;
+            rect.origin.y = m_obLayout.top;
+        }
+        else if (m_obLayout.bottom < 0xffffffff && m_obLayout.height < 0xffffffff)
+        {
+            rect.size.height = m_obLayout.height;
+            rect.origin.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
+        }
+        
+        this->setContentSize(rect.size);
+        
+        DPoint p = m_obAnchorPointInPoints;
+        p = ccpAdd(p, rect.origin);
+        this->setPoint(p);
+    }
 }
 
 void CAView::updateDraw()
@@ -875,7 +913,7 @@ void CAView::updateDraw()
     }
     
     SET_DIRTY_RECURSIVELY();
-    this->reViewlayout();
+    m_bTransformDirty = m_bInverseDirty = true;
     CAApplication::getApplication()->updateDraw();
 }
 
@@ -945,7 +983,7 @@ void CAView::insertSubview(CAView* subview, int z)
     
     if(m_bRunning)
     {
-        subview->visitLayout(m_obContentSize);
+        subview->reViewlayout(m_obContentSize);
         subview->onEnter();
         subview->onEnterTransitionDidFinish();
     }
@@ -1267,58 +1305,6 @@ void CAView::visitEve(void)
     while (itr!=m_obSubviews.end())
     {
         (*itr)->visitEve();
-        itr++;
-    }
-}
-
-void CAView::visitLayout(const DSize& contentSize)
-{
-    if (m_eLayoutType == 2)
-    {
-        DRect rect;
-        
-        if (m_obLayout.left < 0xffffffff && m_obLayout.right < 0xffffffff)
-        {
-            rect.size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
-            rect.origin.x = m_obLayout.left;
-        }
-        else if (m_obLayout.left < 0xffffffff && m_obLayout.width < 0xffffffff)
-        {
-            rect.size.width = m_obLayout.width;
-            rect.origin.x = m_obLayout.left;
-        }
-        else if (m_obLayout.right < 0xffffffff && m_obLayout.width < 0xffffffff)
-        {
-            rect.size.width = m_obLayout.width;
-            rect.origin.x = contentSize.width - m_obLayout.right - m_obLayout.width;
-        }
-        
-        if (m_obLayout.top < 0xffffffff && m_obLayout.bottom < 0xffffffff)
-        {
-            rect.size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
-            rect.origin.y = m_obLayout.top;
-        }
-        else if (m_obLayout.top < 0xffffffff && m_obLayout.height < 0xffffffff)
-        {
-            rect.size.height = m_obLayout.height;
-            rect.origin.y = m_obLayout.top;
-        }
-        else if (m_obLayout.bottom < 0xffffffff && m_obLayout.height < 0xffffffff)
-        {
-            rect.size.height = m_obLayout.height;
-            rect.origin.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
-        }
-        
-        this->setContentSize(rect.size);
-        
-        DPoint p = m_obAnchorPointInPoints;
-        p = ccpAdd(p, rect.origin);
-        this->setPoint(p);
-    }
-    CAVector<CAView*>::iterator itr=m_obSubviews.begin();
-    while (itr!=m_obSubviews.end())
-    {
-        (*itr)->visitLayout(m_obContentSize);
         itr++;
     }
 }
