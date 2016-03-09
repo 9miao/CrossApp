@@ -197,7 +197,6 @@ void CAImageView::setContentSize(const DSize & size)
         m_obContentSize = size;
         
         m_obAnchorPointInPoints = DPoint(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
-        m_obFrameRect.size = DSize(m_obContentSize.width * m_fScaleX, m_obContentSize.height * m_fScaleY);
         
         this->updateByImageViewScaleType();
         

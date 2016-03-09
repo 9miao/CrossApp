@@ -22,7 +22,6 @@ CAScale9ImageView::CAScale9ImageView()
 , m_pScale9ImageView(NULL)
 , m_bUpdatePositions(false)
 {
-    m_obFrameRect = DRectZero;
     memset(m_pImageView, 0, sizeof(m_pImageView));
 }
 
