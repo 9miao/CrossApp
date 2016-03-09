@@ -76,7 +76,7 @@ protected:
 private:
 	bool m_bUpdateImage;
 	float m_fTextHeight;
-	std::vector<std::pair<std::string, CAFont>> m_vLabelFontVect;
+	std::vector<std::pair<std::string, CAFont> > m_vLabelFontVect;
 };
 
 

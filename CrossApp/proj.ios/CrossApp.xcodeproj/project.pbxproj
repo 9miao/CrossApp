@@ -288,6 +288,10 @@
 		B0412DD81BC7968400E2C118 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B06E0C961AC8F7BF004F12F2 /* libswscale.a */; };
 		B0412DDB1BC7968400E2C118 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0412DD91BC7968400E2C118 /* libavdevice.a */; };
 		B0412DDC1BC7968400E2C118 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0412DDA1BC7968400E2C118 /* libavfilter.a */; };
+		B04455E91C8FBB8A00B949BF /* CAFTRichFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */; };
+		B04455EA1C8FBB8A00B949BF /* CAFTRichFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */; };
+		B04455ED1C8FBB9300B949BF /* CARichLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04455EB1C8FBB9300B949BF /* CARichLabel.cpp */; };
+		B04455EE1C8FBB9300B949BF /* CARichLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B04455EC1C8FBB9300B949BF /* CARichLabel.h */; };
 		B04BCA841985DE5500CE0BC1 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */; };
 		B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */; };
 		B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */; };
@@ -654,6 +658,10 @@
 		B0412DCB1BC7966C00E2C118 /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
 		B0412DD91BC7968400E2C118 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libavdevice.a; sourceTree = "<group>"; };
 		B0412DDA1BC7968400E2C118 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libavfilter.a; sourceTree = "<group>"; };
+		B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTRichFont.cpp; sourceTree = "<group>"; };
+		B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTRichFont.h; sourceTree = "<group>"; };
+		B04455EB1C8FBB9300B949BF /* CARichLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CARichLabel.cpp; sourceTree = "<group>"; };
+		B04455EC1C8FBB9300B949BF /* CARichLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARichLabel.h; sourceTree = "<group>"; };
 		B04BCA821985DE5500CE0BC1 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
 		B04BCA831985DE5500CE0BC1 /* CAIndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIndexPath.h; sourceTree = "<group>"; };
 		B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFreeTypeFont.cpp; sourceTree = "<group>"; };
@@ -886,6 +894,8 @@
 		04EA9FC41956CE2500198A8E /* view */ = {
 			isa = PBXGroup;
 			children = (
+				B04455EB1C8FBB9300B949BF /* CARichLabel.cpp */,
+				B04455EC1C8FBB9300B949BF /* CARichLabel.h */,
 				020F5F811BF31A250098C44C /* CAWaterfallView.cpp */,
 				020F5F821BF31A250098C44C /* CAWaterfallView.h */,
 				3E2154781B81AAAE0075448E /* CAAutoCollectionView.cpp */,
@@ -1115,6 +1125,8 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */,
+				B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */,
 				B07E81131C33B34800A39C95 /* CATextView.h */,
 				022160761C1FAD38009FFCFC /* CATextField.h */,
 				B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */,
@@ -1630,6 +1642,7 @@
 				B0ADAE981B2E7F1B00BE8FA3 /* CAView.h in Headers */,
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
+				B04455EA1C8FBB8A00B949BF /* CAFTRichFont.h in Headers */,
 				B0ADAE901B2E7F1B00BE8FA3 /* CATableView.h in Headers */,
 				3E19F2AA1B8B0ED100720027 /* CABrightness_iOS.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
@@ -1685,6 +1698,7 @@
 				04EA9FE41956CE2500198A8E /* CAObject.h in Headers */,
 				04EA9FE61956CE2500198A8E /* CAResponder.h in Headers */,
 				B0ADAE761B2E7F1B00BE8FA3 /* CADrawView.h in Headers */,
+				B04455EE1C8FBB9300B949BF /* CARichLabel.h in Headers */,
 				04EA9FE81956CE2500198A8E /* CAScheduler.h in Headers */,
 				04EA9FEA1956CE2500198A8E /* CABar.h in Headers */,
 				04EA9FEC1956CE2500198A8E /* CAButton.h in Headers */,
@@ -1847,6 +1861,7 @@
 				B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */,
 				B0B0A2E51AF0DCA900BAC0B0 /* CAAnimation.cpp in Sources */,
 				1551A842158F2ADF00E66CFE /* ccUtils.cpp in Sources */,
+				B04455ED1C8FBB9300B949BF /* CARichLabel.cpp in Sources */,
 				B0ADAE8B1B2E7F1B00BE8FA3 /* CAScale9ImageView.cpp in Sources */,
 				1551A844158F2ADF00E66CFE /* CCVertex.cpp in Sources */,
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
@@ -1864,6 +1879,7 @@
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
 				B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */,
+				B04455E91C8FBB8A00B949BF /* CAFTRichFont.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,
 				B0412DCC1BC7966C00E2C118 /* CAVideoPlayerControlView.cpp in Sources */,

@@ -143,11 +143,11 @@ public:
     
     virtual void setFrame(const DRect& rect);
     
-    virtual const DRect& getFrame() const;
+    virtual DRect getFrame() const;
     
     virtual void setFrameOrigin(const DPoint& point);
     
-    virtual const DPoint& getFrameOrigin();
+    virtual DPoint getFrameOrigin();
     
     virtual void setCenter(const DRect& rect);
     
@@ -396,8 +396,6 @@ protected:
     DSize m_obContentSize;             ///< untransformed size of the node
     
     DRectLayout m_obLayout;
-    
-    DRect m_obFrameRect;
     
     CATransformation m_sAdditionalTransform; ///< transform
     CATransformation m_sTransform;     ///< transform

@@ -66,7 +66,6 @@ CAView::CAView(void)
 , m_obAnchorPointInPoints(kCAViewPointInvalid)
 , m_obAnchorPoint(kCAViewPointInvalid)
 , m_obContentSize(kCAViewSizeInvalid)
-, m_obFrameRect(kCAViewRectInvalid)
 , m_obPoint(kCAViewPointInvalid)
 , m_obRect(DRectZero)
 , m_sAdditionalTransform(CATransformationMakeIdentity())
@@ -513,7 +512,6 @@ void CAView::setScaleY(float newScaleY)
 void CAView::setPoint(const DPoint& newPoint)
 {
     m_obPoint = newPoint;
-    m_obFrameRect.origin = ccpSub(m_obPoint, m_obAnchorPointInPoints);
     this->updateDraw();
 }
 
@@ -636,7 +634,6 @@ void CAView::setContentSize(const DSize & contentSize)
     else if (!contentSize.equals(m_obContentSize))
     {
         m_obContentSize = contentSize;
-        m_obFrameRect.size = m_obContentSize;
         float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
         float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
         m_obAnchorPointInPoints = DPoint(anchorPointInPointsX, anchorPointInPointsY);
@@ -656,9 +653,12 @@ void CAView::setContentSize(const DSize & contentSize)
     }
 }
 
-const DRect& CAView::getFrame() const
+DRect CAView::getFrame() const
 {
-    return m_obFrameRect;
+    DRect frame;
+    frame.origin = ccpSub(m_obPoint, m_obAnchorPointInPoints);
+    frame.size = m_obContentSize;
+    return frame;
 }
 
 void CAView::setFrame(const DRect &rect)
@@ -710,17 +710,19 @@ void CAView::setFrameOrigin(const DPoint& point)
     m_eLayoutType = 0;
 }
 
-const DPoint& CAView::getFrameOrigin()
+DPoint CAView::getFrameOrigin()
 {
-    return m_obFrameRect.origin;
+    return ccpSub(m_obPoint, m_obAnchorPointInPoints);
 }
 
 DRect CAView::getCenter()
 {
-    DRect rect = this->getFrame();
-    rect.origin = ccpAdd(rect.origin, ccpMult(rect.size, 0.5f));
-    rect.setType(DRect::Center);
-    return rect;
+    DRect center;
+    center.origin = ccpAdd(ccpSub(m_obPoint, m_obAnchorPointInPoints),
+                           ccpMult(m_obContentSize, 0.5f));
+    center.size = m_obContentSize;
+    center.setType(DRect::Center);
+    return center;
 }
 
 void CAView::setCenter(const DRect& rect)
@@ -756,7 +758,8 @@ void CAView::setCenter(const DRect& rect)
 
 DPoint CAView::getCenterOrigin()
 {
-    return this->getCenter().origin;
+    return ccpAdd(ccpSub(m_obPoint, m_obAnchorPointInPoints),
+                  ccpMult(m_obContentSize, 0.5f));
 }
 
 void CAView::setCenterOrigin(const DPoint& point)
