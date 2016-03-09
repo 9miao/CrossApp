@@ -634,9 +634,8 @@ void CAView::setContentSize(const DSize & contentSize)
     else if (!contentSize.equals(m_obContentSize))
     {
         m_obContentSize = contentSize;
-        float anchorPointInPointsX = m_obContentSize.width * m_obAnchorPoint.x;
-        float anchorPointInPointsY = m_obContentSize.height * m_obAnchorPoint.y;
-        m_obAnchorPointInPoints = DPoint(anchorPointInPointsX, anchorPointInPointsY);
+        m_obAnchorPointInPoints.x = m_obContentSize.width * m_obAnchorPoint.x;
+        m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
         
         this->updateImageRect();
         
@@ -695,8 +694,7 @@ void CAView::setFrame(const DRect &rect)
 void CAView::setFrameOrigin(const DPoint& point)
 {
     m_obLayout = DRectLayoutZero;
-    DPoint p = m_obAnchorPointInPoints;
-    p = ccpAdd(p, point);
+    DPoint p = ccpAdd(m_obAnchorPointInPoints, point);
     
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
