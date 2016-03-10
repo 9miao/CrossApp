@@ -740,9 +740,9 @@ CACollectionViewCell* CACollectionView::getHighlightCollectionCell()
 
 CACollectionViewCell::CACollectionViewCell()
 :m_pBackgroundView(NULL)
-, m_nSection(0xffffffff)
-, m_nRow(0xffffffff)
-, m_nItem(0xffffffff)
+, m_nSection(NONE)
+, m_nRow(NONE)
+, m_nItem(NONE)
 , m_bControlStateEffect(true)
 , m_bAllowsSelected(true)
 {

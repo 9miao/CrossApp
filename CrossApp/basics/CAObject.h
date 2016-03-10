@@ -107,6 +107,7 @@ public:
     CAObject *m_pCopyObject;
 };
 
+const int NONE = 0xffffffff;
 
 NS_CC_END
 

@@ -795,6 +795,11 @@ void CAView::setLayout(const CrossApp::DRectLayout &layout)
 {
     m_obLayout = layout;
     m_eLayoutType = 2;
+    
+    if (m_bRunning)
+    {
+        this->reViewlayout(this->getSuperview()->m_obContentSize);
+    }
 }
 
 const DRectLayout& CAView::getLayout()
@@ -862,33 +867,33 @@ void CAView::reViewlayout(const DSize& contentSize)
     {
         DRect rect;
         
-        if (m_obLayout.left < 0xffffffff && m_obLayout.right < 0xffffffff)
+        if (m_obLayout.left < NONE && m_obLayout.right < NONE)
         {
             rect.size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
             rect.origin.x = m_obLayout.left;
         }
-        else if (m_obLayout.left < 0xffffffff && m_obLayout.width < 0xffffffff)
+        else if (m_obLayout.left < NONE && m_obLayout.width < NONE)
         {
             rect.size.width = m_obLayout.width;
             rect.origin.x = m_obLayout.left;
         }
-        else if (m_obLayout.right < 0xffffffff && m_obLayout.width < 0xffffffff)
+        else if (m_obLayout.right < NONE && m_obLayout.width < NONE)
         {
             rect.size.width = m_obLayout.width;
             rect.origin.x = contentSize.width - m_obLayout.right - m_obLayout.width;
         }
         
-        if (m_obLayout.top < 0xffffffff && m_obLayout.bottom < 0xffffffff)
+        if (m_obLayout.top < NONE && m_obLayout.bottom < NONE)
         {
             rect.size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
             rect.origin.y = m_obLayout.top;
         }
-        else if (m_obLayout.top < 0xffffffff && m_obLayout.height < 0xffffffff)
+        else if (m_obLayout.top < NONE && m_obLayout.height < NONE)
         {
             rect.size.height = m_obLayout.height;
             rect.origin.y = m_obLayout.top;
         }
-        else if (m_obLayout.bottom < 0xffffffff && m_obLayout.height < 0xffffffff)
+        else if (m_obLayout.bottom < NONE && m_obLayout.height < NONE)
         {
             rect.size.height = m_obLayout.height;
             rect.origin.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
@@ -1336,7 +1341,7 @@ void CAView::transform()
     if ( m_pCamera != NULL)
     {
         DPoint anchorPointInPoints = DPoint(m_obAnchorPointInPoints.x,
-                                              m_obContentSize.height - m_obAnchorPointInPoints.y);
+                                            m_obContentSize.height - m_obAnchorPointInPoints.y);
         
         bool translate = (anchorPointInPoints.x != 0.0f || anchorPointInPoints.y != 0.0f);
 
@@ -1965,7 +1970,7 @@ void CAView::updateColor(void)
     
     if (m_pobBatchView && m_pobImage)
     {
-        if (m_uAtlasIndex != 0xffffffff)
+        if (m_uAtlasIndex != NONE)
         {
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
         }
@@ -2100,7 +2105,7 @@ void CAView::setBatch(CABatchView *batchView)
     // self render
     if( ! m_pobBatchView )
     {
-        m_uAtlasIndex = 0xffffffff;
+        m_uAtlasIndex = NONE;
         setImageAtlas(NULL);
         m_bRecursiveDirty = false;
         setDirty(false);

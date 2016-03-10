@@ -12,11 +12,10 @@ NS_CC_BEGIN
 
 #pragma CAIndexPath2E
 
-const unsigned int _max_unsigned_int = 0xffffffff;
 
 CAIndexPath2E::CAIndexPath2E()
-:section(_max_unsigned_int)
-,row(_max_unsigned_int)
+:section(NONE)
+,row(NONE)
 {
 
 }
@@ -61,9 +60,9 @@ bool CAIndexPath2E::operator> (const CAIndexPath2E& other) const
 #pragma CAIndexPath3E
 
 CAIndexPath3E::CAIndexPath3E()
-:section(_max_unsigned_int)
-,row(_max_unsigned_int)
-,item(_max_unsigned_int)
+:section(NONE)
+,row(NONE)
+,item(NONE)
 {
 
 }
