@@ -1138,7 +1138,7 @@ bool CANavigationController::isReachBoundaryLeft()
 
 CATabBarController::CATabBarController()
 :m_nSelectedIndex(0)
-,m_nLastSelectedIndex(NONE)
+,m_nLastSelectedIndex(UINT_NONE)
 ,m_pTabBar(NULL)
 ,m_pContainer(NULL)
 ,m_bTabBarHidden(false)

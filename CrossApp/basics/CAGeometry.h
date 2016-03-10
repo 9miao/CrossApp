@@ -341,7 +341,7 @@ public:
     
     DRectLayout(const DRectLayout& other);
     
-    DRectLayout(float left, float right, float top, float bottom, float width = NONE, float height = NONE);
+    DRectLayout(float left, float right, float top, float bottom, float width = FLOAT_NONE, float height = FLOAT_NONE);
     
     DRectLayout& operator= (const DRectLayout& other);
     

@@ -657,7 +657,7 @@ CAView* CAListView::dequeueReusableLine()
 CAListViewCell::CAListViewCell()
 :m_pBackgroundView(NULL)
 ,m_pContentView(NULL)
-,m_nIndex(NONE)
+,m_nIndex(UINT_NONE)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {

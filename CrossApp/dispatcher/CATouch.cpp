@@ -10,9 +10,9 @@ CATouch::CATouch()
 : m_nId(0)
 ,m_startPointCaptured(false)
 ,m_bDelta(false)
-,m_startPoint(DPoint(NONE, NONE))
-,m_point(DPoint(NONE, NONE))
-,m_prevPoint(DPoint(NONE, NONE))
+,m_startPoint(DPoint(FLOAT_NONE, FLOAT_NONE))
+,m_point(DPoint(FLOAT_NONE, FLOAT_NONE))
+,m_prevPoint(DPoint(FLOAT_NONE, FLOAT_NONE))
 {
 
 }
@@ -54,7 +54,7 @@ bool CATouch::isDelta() const
 void CATouch::setTouchInfo(int id, float x, float y)
 {
     m_nId = id;
-    m_prevPoint = m_point.equals(DPoint(NONE, NONE)) ? DPoint(x, y) : m_point;
+    m_prevPoint = m_point.equals(DPoint(FLOAT_NONE, FLOAT_NONE)) ? DPoint(x, y) : m_point;
     m_point.x   = x;
     m_point.y   = y;
     if (!m_startPointCaptured)

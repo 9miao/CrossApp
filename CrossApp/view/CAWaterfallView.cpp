@@ -642,8 +642,8 @@ CAWaterfallViewCell* CAWaterfallView::getHighlightWaterfallCell()
 #pragma CAWaterfallViewCell
 
 CAWaterfallViewCell::CAWaterfallViewCell()
-:m_pBackgroundView(NULL)
-, m_nItemIndex(NONE)
+: m_pBackgroundView(NULL)
+, m_nItemIndex(UINT_NONE)
 , m_bControlStateEffect(true)
 , m_bAllowsSelected(true)
 {

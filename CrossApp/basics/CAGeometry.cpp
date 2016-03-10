@@ -325,12 +325,12 @@ void DRect::InflateRect(float l, float t, float r, float b)
 
 
 DRectLayout::DRectLayout()
-:left(NONE)
-,right(NONE)
-,top(NONE)
-,bottom(NONE)
-,width(NONE)
-,height(NONE)
+:left(FLOAT_NONE)
+,right(FLOAT_NONE)
+,top(FLOAT_NONE)
+,bottom(FLOAT_NONE)
+,width(FLOAT_NONE)
+,height(FLOAT_NONE)
 {
 
 }

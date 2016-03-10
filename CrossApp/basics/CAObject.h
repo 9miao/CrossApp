@@ -4,6 +4,7 @@
 #define __CAObject_H__
 
 #include "platform/CCPlatformMacros.h"
+#include "float.h"
 #include <string>
 #include <vector>
 #include <deque>
@@ -107,7 +108,9 @@ public:
     CAObject *m_pCopyObject;
 };
 
-const int NONE = 0xffffffff;
+const float FLOAT_NONE = FLT_MAX;
+const int INT_NONE = 0x8FFFFFFF;
+const unsigned int UINT_NONE = 0XFFFFFFFF;
 
 NS_CC_END
 

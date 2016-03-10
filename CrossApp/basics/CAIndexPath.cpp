@@ -14,8 +14,8 @@ NS_CC_BEGIN
 
 
 CAIndexPath2E::CAIndexPath2E()
-:section(NONE)
-,row(NONE)
+:section(UINT_NONE)
+,row(UINT_NONE)
 {
 
 }
@@ -60,9 +60,9 @@ bool CAIndexPath2E::operator> (const CAIndexPath2E& other) const
 #pragma CAIndexPath3E
 
 CAIndexPath3E::CAIndexPath3E()
-:section(NONE)
-,row(NONE)
-,item(NONE)
+:section(UINT_NONE)
+,row(UINT_NONE)
+,item(UINT_NONE)
 {
 
 }

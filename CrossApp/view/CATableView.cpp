@@ -814,8 +814,8 @@ float CATableView::getRowHeightInSectionInRow(unsigned int section, unsigned int
 CATableViewCell::CATableViewCell()
 :m_pBackgroundView(NULL)
 ,m_pContentView(NULL)
-,m_nSection(NONE)
-,m_nRow(NONE)
+,m_nSection(UINT_NONE)
+,m_nRow(UINT_NONE)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
 {

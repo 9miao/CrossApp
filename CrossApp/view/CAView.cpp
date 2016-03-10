@@ -867,33 +867,33 @@ void CAView::reViewlayout(const DSize& contentSize)
     {
         DRect rect;
         
-        if (m_obLayout.left < NONE && m_obLayout.right < NONE)
+        if (m_obLayout.left < FLOAT_NONE && m_obLayout.right < FLOAT_NONE)
         {
             rect.size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
             rect.origin.x = m_obLayout.left;
         }
-        else if (m_obLayout.left < NONE && m_obLayout.width < NONE)
+        else if (m_obLayout.left < FLOAT_NONE && m_obLayout.width < FLOAT_NONE)
         {
             rect.size.width = m_obLayout.width;
             rect.origin.x = m_obLayout.left;
         }
-        else if (m_obLayout.right < NONE && m_obLayout.width < NONE)
+        else if (m_obLayout.right < FLOAT_NONE && m_obLayout.width < FLOAT_NONE)
         {
             rect.size.width = m_obLayout.width;
             rect.origin.x = contentSize.width - m_obLayout.right - m_obLayout.width;
         }
         
-        if (m_obLayout.top < NONE && m_obLayout.bottom < NONE)
+        if (m_obLayout.top < FLOAT_NONE && m_obLayout.bottom < FLOAT_NONE)
         {
             rect.size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
             rect.origin.y = m_obLayout.top;
         }
-        else if (m_obLayout.top < NONE && m_obLayout.height < NONE)
+        else if (m_obLayout.top < FLOAT_NONE && m_obLayout.height < FLOAT_NONE)
         {
             rect.size.height = m_obLayout.height;
             rect.origin.y = m_obLayout.top;
         }
-        else if (m_obLayout.bottom < NONE && m_obLayout.height < NONE)
+        else if (m_obLayout.bottom < FLOAT_NONE && m_obLayout.height < FLOAT_NONE)
         {
             rect.size.height = m_obLayout.height;
             rect.origin.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
@@ -1970,7 +1970,7 @@ void CAView::updateColor(void)
     
     if (m_pobBatchView && m_pobImage)
     {
-        if (m_uAtlasIndex != NONE)
+        if (m_uAtlasIndex != UINT_NONE)
         {
             m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
         }
@@ -2105,7 +2105,7 @@ void CAView::setBatch(CABatchView *batchView)
     // self render
     if( ! m_pobBatchView )
     {
-        m_uAtlasIndex = NONE;
+        m_uAtlasIndex = UINT_NONE;
         setImageAtlas(NULL);
         m_bRecursiveDirty = false;
         setDirty(false);

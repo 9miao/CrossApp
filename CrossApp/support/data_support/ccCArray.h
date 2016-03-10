@@ -28,7 +28,7 @@
 
 NS_CC_BEGIN
 
-#define CC_INVALID_INDEX NONE
+#define CC_INVALID_INDEX UINT_NONE
 
 // Easy integration
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\

@@ -26,9 +26,8 @@ bool CAWindow::init()
     bool bRet = false;
     if (CAApplication* pApplication = CAApplication::getApplication())
     {
-        DRect rect = DRectZero;
-        rect.size = pApplication->getWinSize();
-        this->setFrame(rect);
+        this->setContentSize(pApplication->getWinSize());
+        this->setPoint(m_obContentSize/2);
         m_bRunning = true;
         bRet = true;
     }
