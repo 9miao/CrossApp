@@ -52,6 +52,7 @@
 
 //controller
 #include "controller/CABarItem.h"
+#include "controller/CAFont.h"
 #include "controller/CAViewController.h"
 #include "controller/CADrawerController.h"
 

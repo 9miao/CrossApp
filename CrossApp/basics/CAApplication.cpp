@@ -25,7 +25,6 @@
 #include "support/CAProfiling.h"
 #include "CCEGLView.h"
 #include "platform/CADensityDpi.h"
-#include "view/CALabelStyle.h"
 
 
 
@@ -559,7 +558,6 @@ void CAApplication::purgeDirector()
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
     CCFileUtils::purgeFileUtils();
-	CALabelStyleCache::purgeSharedStyleCache();
 
     // CrossApp specific data structures
     CAUserDefault::purgeSharedUserDefault();

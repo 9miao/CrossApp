@@ -4,17 +4,6 @@
 
 NS_CC_BEGIN
 
-CAFont::CAFont()
-	: m_nfontSize(24)
-	, m_cTextColor(CAColor_black)
-	, m_bItalics(false)
-	, m_bBold(false)
-	, m_bUnderLine(false)
-	, m_bDeleteLine(false)
-{
-
-}
-
 ///////////////////////////////////////////////////
 CARichLabel::CARichLabel()
 	: m_fTextHeight(0)
@@ -122,11 +111,11 @@ float CARichLabel::getMaxFontHeight()
 	for (int i = 0; i < m_vLabelFontVect.size(); i++)
 	{
 		const CAFont& ft = m_vLabelFontVect[i].second;
-		int tFSize = ft.getFontSize();
+		int tFSize = ft.fontSize;
 		if (tFSize > iFontSize)
 		{
 			iFontSize = tFSize;
-			cszFontName = ft.getFontName();
+			cszFontName = ft.fontName;
 		}
 	}
 	return CAImage::getFontHeight(cszFontName.c_str(), iFontSize);

@@ -12,7 +12,7 @@
 #include <iostream>
 #include "CAView.h"
 #include "view/CATextEditHelper.h"
-
+#include "controller/CAFont.h"
 
 NS_CC_BEGIN
 using namespace std;
@@ -39,22 +39,40 @@ public:
     virtual void onEnterTransitionDidFinish();
     
     CC_PROPERTY_PASS_BY_REF(string, m_nText, Text);
+
+    CC_PROPERTY_PASS_BY_REF(CAFont, m_obFont, Font);
     
-    CC_PROPERTY(unsigned int, m_nfontSize, FontSize);
+    void setFontSize(unsigned int var);
     
-	CC_PROPERTY(bool, m_bWordWrap, WordWrap);
+    unsigned int getFontSize();
+    
+    void setFontName(const std::string& var);
+    
+    const std::string& getFontName();
+    
+    void setBold(bool var);
+    
+    bool isBold();
 
-	CC_PROPERTY(bool, m_bBold, Bold);
+    void setUnderLine(bool var);
+    
+    bool isUnderLine();
 
-	CC_PROPERTY(bool, m_bUnderLine, UnderLine);
-
-	CC_PROPERTY(bool, m_bDeleteLine, DeleteLine);
-
-	CC_PROPERTY(bool, m_bItalics, Italics);
+    void setDeleteLine(bool var);
+    
+    bool isDeleteLine();
+    
+    void setItalics(bool var);
+    
+    bool isItalics();
+    
+    void setColor(const CAColor4B& var);
+    
+    const CAColor4B& getColor();
 
 	CC_PROPERTY(int, m_iLineSpacing, LineSpacing);
     
-    CC_PROPERTY_PASS_BY_REF(string, m_nfontName, FontName);
+    CC_PROPERTY_IS(bool, m_bWordWrap, WordWrap);
     
     CC_PROPERTY_PASS_BY_REF(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
     
@@ -73,14 +91,6 @@ public:
     void sizeToFit();
     
     void unsizeToFit();
-    
-    void setColor(const CAColor4B& var);
-    
-    const CAColor4B& getColor();
-    
-	void applyStyle(const string& sStyleName);
-
-	void applyStyle(const CALabelStyle* pLabelStyle);
     
 protected:
 
@@ -101,8 +111,6 @@ protected:
     bool m_bFitFlag;
     
     bool m_bUpdateImage;
-    
-    CAColor4B m_cFontColor;
 };
 
 NS_CC_END

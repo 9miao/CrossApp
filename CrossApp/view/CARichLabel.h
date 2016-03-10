@@ -11,30 +11,9 @@
 #define __CrossApp__CARichLabel__
 
 #include "CAView.h"
-
+#include "controller/CAFont.h"
 
 NS_CC_BEGIN
-
-
-class CC_DLL CAFont
-{
-public:
-	CAFont();
-
-	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sFontName, FontName);
-
-	CC_SYNTHESIZE(unsigned int, m_nfontSize, FontSize);
-
-	CC_SYNTHESIZE_PASS_BY_REF(CAColor4B, m_cTextColor, TextColor);
-	
-	CC_SYNTHESIZE(bool, m_bItalics, Italics);
-
-	CC_SYNTHESIZE(bool, m_bBold, Bold);
-
-	CC_SYNTHESIZE(bool, m_bUnderLine, UnderLine);
-
-	CC_SYNTHESIZE(bool, m_bDeleteLine, DeleteLine);
-};
 
 
 class CC_DLL CARichLabel : public CAView

@@ -313,6 +313,8 @@
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
 		B094652F1969404400D96736 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B094652D1969404400D96736 /* CASTLContainer.h */; };
+		B09F30361C916B970090A5D4 /* CAFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09F30341C916B970090A5D4 /* CAFont.cpp */; };
+		B09F30371C916B970090A5D4 /* CAFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B09F30351C916B970090A5D4 /* CAFont.h */; };
 		B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */; };
 		B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */; };
 		B0A11DB91AE8E0B300933BF6 /* dgif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DB01AE8E0B300933BF6 /* dgif_lib.c */; };
@@ -346,8 +348,6 @@
 		B0ADAE7C1B2E7F1B00BE8FA3 /* CAImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE461B2E7F1B00BE8FA3 /* CAImageView.h */; };
 		B0ADAE7D1B2E7F1B00BE8FA3 /* CALabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE471B2E7F1B00BE8FA3 /* CALabel.cpp */; };
 		B0ADAE7E1B2E7F1B00BE8FA3 /* CALabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE481B2E7F1B00BE8FA3 /* CALabel.h */; };
-		B0ADAE7F1B2E7F1B00BE8FA3 /* CALabelStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE491B2E7F1B00BE8FA3 /* CALabelStyle.cpp */; };
-		B0ADAE801B2E7F1B00BE8FA3 /* CALabelStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE4A1B2E7F1B00BE8FA3 /* CALabelStyle.h */; };
 		B0ADAE811B2E7F1B00BE8FA3 /* CAListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE4B1B2E7F1B00BE8FA3 /* CAListView.cpp */; };
 		B0ADAE821B2E7F1B00BE8FA3 /* CAListView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0ADAE4C1B2E7F1B00BE8FA3 /* CAListView.h */; };
 		B0ADAE831B2E7F1B00BE8FA3 /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ADAE4D1B2E7F1B00BE8FA3 /* CAPageView.cpp */; };
@@ -689,6 +689,8 @@
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205D919D5645300CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
 		B094652D1969404400D96736 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
+		B09F30341C916B970090A5D4 /* CAFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFont.cpp; sourceTree = "<group>"; };
+		B09F30351C916B970090A5D4 /* CAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFont.h; sourceTree = "<group>"; };
 		B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
 		B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
 		B0A11DB01AE8E0B300933BF6 /* dgif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dgif_lib.c; sourceTree = "<group>"; };
@@ -722,8 +724,6 @@
 		B0ADAE461B2E7F1B00BE8FA3 /* CAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageView.h; sourceTree = "<group>"; };
 		B0ADAE471B2E7F1B00BE8FA3 /* CALabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabel.cpp; sourceTree = "<group>"; };
 		B0ADAE481B2E7F1B00BE8FA3 /* CALabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabel.h; sourceTree = "<group>"; };
-		B0ADAE491B2E7F1B00BE8FA3 /* CALabelStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabelStyle.cpp; sourceTree = "<group>"; };
-		B0ADAE4A1B2E7F1B00BE8FA3 /* CALabelStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabelStyle.h; sourceTree = "<group>"; };
 		B0ADAE4B1B2E7F1B00BE8FA3 /* CAListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAListView.cpp; sourceTree = "<group>"; };
 		B0ADAE4C1B2E7F1B00BE8FA3 /* CAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAListView.h; sourceTree = "<group>"; };
 		B0ADAE4D1B2E7F1B00BE8FA3 /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
@@ -865,6 +865,8 @@
 		04EA9FB21956CE2500198A8E /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				B09F30341C916B970090A5D4 /* CAFont.cpp */,
+				B09F30351C916B970090A5D4 /* CAFont.h */,
 				B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */,
 				B01D4BF719A5E8240071F6A3 /* CADrawerController.h */,
 				04EA9FB31956CE2500198A8E /* CABarItem.cpp */,
@@ -922,8 +924,6 @@
 				B0ADAE461B2E7F1B00BE8FA3 /* CAImageView.h */,
 				B0ADAE471B2E7F1B00BE8FA3 /* CALabel.cpp */,
 				B0ADAE481B2E7F1B00BE8FA3 /* CALabel.h */,
-				B0ADAE491B2E7F1B00BE8FA3 /* CALabelStyle.cpp */,
-				B0ADAE4A1B2E7F1B00BE8FA3 /* CALabelStyle.h */,
 				B0ADAE4B1B2E7F1B00BE8FA3 /* CAListView.cpp */,
 				B0ADAE4C1B2E7F1B00BE8FA3 /* CAListView.h */,
 				B0ADAE4D1B2E7F1B00BE8FA3 /* CAPageView.cpp */,
@@ -1549,7 +1549,6 @@
 				04EABB1C1956DAEA00198A8E /* CAKeypadDelegate.cpp in Headers */,
 				3E19F2A41B8B0ED100720027 /* CAAddress.h in Headers */,
 				3E0F755E1B7DD0C4004CFD41 /* libwebsockets.h in Headers */,
-				B0ADAE801B2E7F1B00BE8FA3 /* CALabelStyle.h in Headers */,
 				04EABB1D1956DAEA00198A8E /* CAKeypadDispatcher.cpp in Headers */,
 				04EABB1E1956DAEA00198A8E /* CATouch.cpp in Headers */,
 				B0ADAE741B2E7F1B00BE8FA3 /* CADrawingPrimitives.h in Headers */,
@@ -1578,6 +1577,7 @@
 				1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */,
 				1551A6BB158F2ADE00E66CFE /* kazmath.h in Headers */,
 				1551A6BC158F2ADE00E66CFE /* mat3.h in Headers */,
+				B09F30371C916B970090A5D4 /* CAFont.h in Headers */,
 				1551A6BD158F2ADE00E66CFE /* mat4.h in Headers */,
 				1551A6BE158F2ADE00E66CFE /* neon_matrix_impl.h in Headers */,
 				1551A6BF158F2ADE00E66CFE /* plane.h in Headers */,
@@ -1800,7 +1800,6 @@
 				B0B553D8193485BE0065053D /* CAImageCache.cpp in Sources */,
 				B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */,
 				B0ADAE991B2E7F1B00BE8FA3 /* CAWebView.cpp in Sources */,
-				B0ADAE7F1B2E7F1B00BE8FA3 /* CALabelStyle.cpp in Sources */,
 				02150DCB1C07172900BC3F9C /* CAUIEditorParser.cpp in Sources */,
 				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				3E19F2B21B8B0ED100720027 /* Reachability.m in Sources */,
@@ -1822,6 +1821,7 @@
 				3E19F2AB1B8B0ED100720027 /* CABrightness_iOS.mm in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
 				B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */,
+				B09F30361C916B970090A5D4 /* CAFont.cpp in Sources */,
 				B0ADAE9B1B2E7F1B00BE8FA3 /* CAWindow.cpp in Sources */,
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,

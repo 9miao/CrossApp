@@ -265,6 +265,8 @@
 		B09B73CC1BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C41BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp */; };
 		B09B73CD1BD1FD47001D82BC /* CAVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73C51BD1FD47001D82BC /* CAVideoPlayerView.h */; };
 		B09B73CE1BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C61BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp */; };
+		B09F30311C9161510090A5D4 /* CAFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09F302F1C9161510090A5D4 /* CAFont.cpp */; };
+		B09F30321C9161510090A5D4 /* CAFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B09F30301C9161510090A5D4 /* CAFont.h */; };
 		B0A02FED1A8D8E960005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */; };
 		B0A02FEE1A8D8E960005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */; };
 		B0A11D991AE8C47600933BF6 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A11D971AE8C47600933BF6 /* etc1.cpp */; };
@@ -305,8 +307,6 @@
 		B0B05FB01BB1483200B891CE /* CAImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B05F7A1BB1483200B891CE /* CAImageView.h */; };
 		B0B05FB11BB1483200B891CE /* CALabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B05F7B1BB1483200B891CE /* CALabel.cpp */; };
 		B0B05FB21BB1483200B891CE /* CALabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B05F7C1BB1483200B891CE /* CALabel.h */; };
-		B0B05FB31BB1483200B891CE /* CALabelStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B05F7D1BB1483200B891CE /* CALabelStyle.cpp */; };
-		B0B05FB41BB1483200B891CE /* CALabelStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B05F7E1BB1483200B891CE /* CALabelStyle.h */; };
 		B0B05FB51BB1483200B891CE /* CAListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B05F7F1BB1483200B891CE /* CAListView.cpp */; };
 		B0B05FB61BB1483200B891CE /* CAListView.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B05F801BB1483200B891CE /* CAListView.h */; };
 		B0B05FB71BB1483200B891CE /* CAPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B05F811BB1483200B891CE /* CAPageView.cpp */; };
@@ -637,6 +637,8 @@
 		B09B73C41BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerRenderMac.cpp; sourceTree = "<group>"; };
 		B09B73C51BD1FD47001D82BC /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
 		B09B73C61BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerViewMac.cpp; sourceTree = "<group>"; };
+		B09F302F1C9161510090A5D4 /* CAFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFont.cpp; sourceTree = "<group>"; };
+		B09F30301C9161510090A5D4 /* CAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFont.h; sourceTree = "<group>"; };
 		B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
 		B0A02FEC1A8D8E960005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
 		B0A11D971AE8C47600933BF6 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
@@ -677,8 +679,6 @@
 		B0B05F7A1BB1483200B891CE /* CAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageView.h; sourceTree = "<group>"; };
 		B0B05F7B1BB1483200B891CE /* CALabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabel.cpp; sourceTree = "<group>"; };
 		B0B05F7C1BB1483200B891CE /* CALabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabel.h; sourceTree = "<group>"; };
-		B0B05F7D1BB1483200B891CE /* CALabelStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALabelStyle.cpp; sourceTree = "<group>"; };
-		B0B05F7E1BB1483200B891CE /* CALabelStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALabelStyle.h; sourceTree = "<group>"; };
 		B0B05F7F1BB1483200B891CE /* CAListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAListView.cpp; sourceTree = "<group>"; };
 		B0B05F801BB1483200B891CE /* CAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAListView.h; sourceTree = "<group>"; };
 		B0B05F811BB1483200B891CE /* CAPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAPageView.cpp; sourceTree = "<group>"; };
@@ -842,6 +842,8 @@
 		04EAA09A1956D74D00198A8E /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				B09F302F1C9161510090A5D4 /* CAFont.cpp */,
+				B09F30301C9161510090A5D4 /* CAFont.h */,
 				B01D4BF119A5947C0071F6A3 /* CADrawerController.cpp */,
 				B01D4BF219A5947C0071F6A3 /* CADrawerController.h */,
 				04EAA09B1956D74D00198A8E /* CABarItem.cpp */,
@@ -1430,8 +1432,6 @@
 				B0B05F7A1BB1483200B891CE /* CAImageView.h */,
 				B0B05F7B1BB1483200B891CE /* CALabel.cpp */,
 				B0B05F7C1BB1483200B891CE /* CALabel.h */,
-				B0B05F7D1BB1483200B891CE /* CALabelStyle.cpp */,
-				B0B05F7E1BB1483200B891CE /* CALabelStyle.h */,
 				B0B05F7F1BB1483200B891CE /* CAListView.cpp */,
 				B0B05F801BB1483200B891CE /* CAListView.h */,
 				B0B05F811BB1483200B891CE /* CAPageView.cpp */,
@@ -1550,6 +1550,7 @@
 				04EAB0CC1956D75600198A8E /* utility.h in Headers */,
 				B0C3BD411ADE70B3009BE71A /* CAClipboard.h in Headers */,
 				04EAB0CD1956D75600198A8E /* vec2.h in Headers */,
+				B09F30321C9161510090A5D4 /* CAFont.h in Headers */,
 				B0B05FBC1BB1483200B891CE /* CAPullToRefreshView.h in Headers */,
 				04EAB0CE1956D75600198A8E /* vec3.h in Headers */,
 				04EAB0CF1956D75600198A8E /* vec4.h in Headers */,
@@ -1565,7 +1566,6 @@
 				04EAB1161956D75600198A8E /* CCSAXParser.h in Headers */,
 				04EAB1461956D75600198A8E /* CCApplication.h in Headers */,
 				B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */,
-				B0B05FB41BB1483200B891CE /* CALabelStyle.h in Headers */,
 				04EAB14A1956D75600198A8E /* CCAccelerometer.h in Headers */,
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
 				04EAB14F1956D75600198A8E /* CCFileUtilsMac.h in Headers */,
@@ -1735,7 +1735,6 @@
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
 				B0B05F9F1BB1483200B891CE /* CAAutoCollectionView.cpp in Sources */,
 				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
-				B0B05FB31BB1483200B891CE /* CALabelStyle.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				B0B05FCF1BB1483200B891CE /* CAWindow.cpp in Sources */,
 				B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */,
@@ -1760,6 +1759,7 @@
 				B0B05F9D1BB1483200B891CE /* CAAlertView.cpp in Sources */,
 				3E2153F31B817AB80075448E /* CSContentJsonDictionary.cpp in Sources */,
 				B02A776E19B82F9100C4A5EF /* CAStepper.cpp in Sources */,
+				B09F30311C9161510090A5D4 /* CAFont.cpp in Sources */,
 				04EAB0B01956D75600198A8E /* CATouchDispatcher.cpp in Sources */,
 				02150DC11C06B81300BC3F9C /* CAUIEditorParser.cpp in Sources */,
 				04EAB0B61956D75600198A8E /* CAImage.cpp in Sources */,

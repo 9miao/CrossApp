@@ -191,12 +191,12 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 	const CAFont& ft = label.second;
 	const std::string& szText = label.first;
 	FT_Face face = convertToSPFont(ft);
-	CAColor4B col = ft.getTextColor();
-	bool bBold = ft.getBold();
-	bool bItalics = ft.getItalics();
-	bool bDeleteLine = ft.getDeleteLine();
-	bool bUnderLine = ft.getUnderLine();
-	int iFontSize = ft.getFontSize();
+	CAColor4B col = ft.color;
+	bool bBold = ft.bold;
+	bool bItalics = ft.italics;
+	bool bDeleteLine = ft.deleteLine;
+	bool bUnderLine = ft.underLine;
+	int iFontSize = ft.fontSize;
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
 	iLineHeight += iLineHeight / 5;
@@ -310,7 +310,7 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 
 FT_Face CAFTRichFont::convertToSPFont(const CAFont& ft)
 {
-	g_AFTFontCache.setCurrentFontData(ft.getFontName().c_str(), ft.getFontSize());
+	g_AFTFontCache.setCurrentFontData(ft.fontName.c_str(), ft.fontSize);
 	return g_AFTFontCache.m_pCurFontData->ftFont.m_face;
 }
 
