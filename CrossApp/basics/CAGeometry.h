@@ -321,6 +321,20 @@ public:
  */
 class CC_DLL DRectLayout
 {
+    typedef enum
+    {
+        L_R_T_B = 0,
+        L_R_T_H,
+        L_R_H_B,
+        L_W_T_B,
+        L_W_T_H,
+        L_W_H_B,
+        W_R_T_B,
+        W_R_T_H,
+        W_R_H_B
+    }
+    Type;
+    
 public:
     
     float left;
@@ -342,6 +356,8 @@ public:
     DRectLayout(const DRectLayout& other);
     
     DRectLayout(float left, float right, float top, float bottom, float width = FLOAT_NONE, float height = FLOAT_NONE);
+    
+    DRectLayout(float var1, float var2, float var3, float var4, const Type& type);
     
     DRectLayout& operator= (const DRectLayout& other);
     

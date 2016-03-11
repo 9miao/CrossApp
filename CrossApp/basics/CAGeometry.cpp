@@ -357,6 +357,92 @@ DRectLayout::DRectLayout(float left, float right, float top, float bottom, float
 
 }
 
+DRectLayout::DRectLayout(float var1, float var2, float var3, float var4, const Type& type)
+:left(FLOAT_NONE)
+,right(FLOAT_NONE)
+,top(FLOAT_NONE)
+,bottom(FLOAT_NONE)
+,width(FLOAT_NONE)
+,height(FLOAT_NONE)
+{
+    switch (type) {
+        case L_R_T_B:
+        {
+            left = var1;
+            right = var2;
+            top = var3;
+            bottom = var4;
+        }
+            break;
+        case L_R_T_H:
+        {
+            left = var1;
+            right = var2;
+            top = var3;
+            height = var4;
+        }
+            break;
+        case L_R_H_B:
+        {
+            left = var1;
+            right = var2;
+            height = var3;
+            bottom = var4;
+        }
+            break;
+        case L_W_T_B:
+        {
+            left = var1;
+            width = var2;
+            top = var3;
+            bottom = var4;
+        }
+            break;
+        case L_W_T_H:
+        {
+            left = var1;
+            width = var2;
+            top = var3;
+            height = var4;
+        }
+            break;
+        case L_W_H_B:
+        {
+            left = var1;
+            width = var2;
+            height = var3;
+            bottom = var4;
+        }
+            break;
+        case W_R_T_B:
+        {
+            width = var1;
+            right = var2;
+            top = var3;
+            bottom = var4;
+        }
+            break;
+        case W_R_T_H:
+        {
+            width = var1;
+            right = var2;
+            top = var3;
+            height = var4;
+        }
+            break;
+        case W_R_H_B:
+        {
+            width = var1;
+            right = var2;
+            height = var3;
+            bottom = var4;
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 DRectLayout& DRectLayout:: operator= (const DRectLayout& other)
 {
     left    = other.left;
