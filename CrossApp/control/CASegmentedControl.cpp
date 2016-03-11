@@ -120,6 +120,18 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const DRect& rect, unsi
     return NULL;
 }
 
+CASegmentedControl* CASegmentedControl::createWithLayout(const CrossApp::DRectLayout &layout, unsigned int itemsCount)
+{
+    CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
+    if (segmentedControl && segmentedControl->initWithLayout(layout))
+    {
+        segmentedControl->autorelease();
+        return segmentedControl;
+    }
+    CC_SAFE_DELETE(segmentedControl);
+    return NULL;
+}
+
 bool CASegmentedControl::init()
 {
     if (!CAControl::init())

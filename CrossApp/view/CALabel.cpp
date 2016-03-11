@@ -76,27 +76,17 @@ CALabel* CALabel::createWithCenter(const DRect &rect)
     return NULL;
 }
 
-void CALabel::onEnterTransitionDidFinish()
+CALabel* CALabel::createWithLayout(const CrossApp::DRectLayout &layout)
 {
-    CAView::onEnterTransitionDidFinish();
-}
-
-bool CALabel::initWithFrame(const DRect& rect)
-{
-    if (!CAView::initWithFrame(rect))
+    CALabel *label = new CALabel();
+    if (label && label->initWithLayout(layout))
     {
-        return false;
+        label->autorelease();
+        return label;
     }
-    return true;
-}
-
-bool CALabel::initWithCenter(const DRect& rect)
-{
-    if (!CAView::initWithCenter(rect))
-    {
-        return false;
-    }
-    return true;
+    
+    CC_SAFE_DELETE(label);
+    return NULL;
 }
 
 void CALabel::updateImageDraw()

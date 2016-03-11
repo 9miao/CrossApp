@@ -88,6 +88,8 @@ public:
 
 	static CAWaterfallView* createWithCenter(const DRect& rect);
 
+    static CAWaterfallView* createWithLayout(const DRectLayout& layout);
+    
 	virtual bool init();
 
 	void reloadData();

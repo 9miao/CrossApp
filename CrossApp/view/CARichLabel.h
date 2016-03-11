@@ -2,7 +2,7 @@
 //  CARichLabel.h
 //  CrossApp
 //
-//  Created by �콨 on 16-2-22.
+//  Created by ÷ÏΩ® on 16-2-22.
 //  Copyright (c) 2016 http://www.9miao.com All rights reserved.
 //
 
@@ -30,6 +30,8 @@ public:
 
 	static CARichLabel* createWithCenter(const DRect& rect);
 
+    static CARichLabel* createWithLayout(const DRectLayout& layout);
+    
 	virtual bool initWithFrame(const DRect& rect);
 
 	virtual bool initWithCenter(const DRect& rect);
@@ -38,9 +40,10 @@ public:
 
 	virtual bool init();
 
-	void appendText(const std::string& cszText);
 	void appendText(const std::string& text, const CAFont& font);
-
+    
+    void clear();
+    
 protected:
 	virtual void setContentSize(const DSize& var);
 

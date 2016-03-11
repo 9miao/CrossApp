@@ -36,7 +36,8 @@ public:
     static CAPageControl* create();
     static CAPageControl* createWithFrame(const DRect& rect);
     static CAPageControl* createWithCenter(const DRect& rect);
-    
+    static CAPageControl* createWithLayout(const DRectLayout& layout);
+                                      
     virtual bool init();
     virtual bool initWithFrame(const DRect& rect);
     virtual bool initWithCenter(const DRect& rect);

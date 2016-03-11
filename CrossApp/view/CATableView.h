@@ -94,6 +94,8 @@ public:
     
     static CATableView* createWithCenter(const DRect& rect);
     
+    static CATableView* createWithLayout(const DRectLayout& layout);
+    
     virtual bool init();
     
     void reloadData();

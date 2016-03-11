@@ -30,12 +30,11 @@ CAGifView::~CAGifView()
     CC_SAFE_DELETE(m_pGif);
 }
 
-CAGifView* CAGifView::createWithCenter(const CrossApp::DRect &rect)
+CAGifView* CAGifView::createWithFrame(const CrossApp::DRect &rect)
 {
-    CAGifView * pRet = new CAGifView();
-    if (pRet && pRet->init())
+    CAGifView *pRet = new CAGifView();
+    if (pRet && pRet->initWithFrame(rect))
     {
-        pRet->setCenter(rect);
         pRet->autorelease();
         return pRet;
     }
@@ -43,12 +42,23 @@ CAGifView* CAGifView::createWithCenter(const CrossApp::DRect &rect)
     return NULL;
 }
 
-CAGifView* CAGifView::createWithFrame(const CrossApp::DRect &rect)
+CAGifView* CAGifView::createWithCenter(const CrossApp::DRect &rect)
 {
-    CAGifView *pRet = new CAGifView();
-    if (pRet && pRet->init())
+    CAGifView * pRet = new CAGifView();
+    if (pRet && pRet->initWithCenter(rect))
     {
-        pRet->setFrame(rect);
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+CAGifView* CAGifView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAGifView * pRet = new CAGifView();
+    if (pRet && pRet->initWithLayout(layout))
+    {
         pRet->autorelease();
         return pRet;
     }

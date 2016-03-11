@@ -73,6 +73,18 @@ CAWaterfallView* CAWaterfallView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
+CAWaterfallView* CAWaterfallView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAWaterfallView* pWaterfallView = new CAWaterfallView();
+    if (pWaterfallView && pWaterfallView->initWithLayout(layout))
+    {
+        pWaterfallView->autorelease();
+        return pWaterfallView;
+    }
+    CC_SAFE_DELETE(pWaterfallView);
+    return NULL;
+}
+
 bool CAWaterfallView::init()
 {
 	if (!CAScrollView::init())

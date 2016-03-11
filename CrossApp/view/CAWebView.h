@@ -49,6 +49,8 @@ public:
 
 	static CAWebView *createWithCenter(const DRect& rect);
 
+    static CAWebView* createWithLayout(const DRectLayout& layout);
+    
     /**
     * Set javascript interface scheme.
     * @see #onJsCallback

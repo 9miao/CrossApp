@@ -33,7 +33,8 @@ public:
                                       , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
     static CAStepper* createWithCenter(const DRect& rect
                                        , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
-    
+    static CAStepper* createWithLayout(const DRectLayout& layout
+                                      , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
     virtual bool init();
     
     virtual void onEnter();

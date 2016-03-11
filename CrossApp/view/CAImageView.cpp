@@ -31,9 +31,8 @@ CAImageView* CAImageView::createWithImage(CAImage* image)
 CAImageView* CAImageView::createWithFrame(const DRect& rect)
 {
 	CAImageView * pRet = new CAImageView();
-    if (pRet && pRet->init())
+    if (pRet && pRet->initWithFrame(rect))
     {
-        pRet->setFrame(rect);
         pRet->autorelease();
         return pRet;
     }
@@ -44,14 +43,25 @@ CAImageView* CAImageView::createWithFrame(const DRect& rect)
 CAImageView* CAImageView::createWithCenter(const DRect& rect)
 {
 	CAImageView * pRet = new CAImageView();
-    if (pRet && pRet->init())
+    if (pRet && pRet->initWithCenter(rect))
     {
-        pRet->setCenter(rect);
         pRet->autorelease();
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
 	return NULL;
+}
+
+CAImageView* CAImageView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAImageView * pRet = new CAImageView();
+    if (pRet && pRet->initWithLayout(layout))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return NULL;
 }
 
 CAImageView* CAImageView::create()
@@ -313,16 +323,6 @@ CAView* CAImageView::copy()
     pReturn->setImage(this->getImage());
     pReturn->setColor(this->getColor());
     return pReturn;
-}
-
-bool CAImageView::initWithFrame(const DRect& rect, const CAColor4B& color4B)
-{
-    return CAView::initWithFrame(rect);
-}
-
-bool CAImageView::initWithCenter(const DRect& rect, const CAColor4B& color4B)
-{
-    return CAView::initWithCenter(rect);
 }
 
 void CAImageView::setImageAsyncWithFile(const std::string& path)

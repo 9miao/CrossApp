@@ -109,6 +109,20 @@ CAStepper* CAStepper::createWithCenter(const DRect& rect, const CAStepperOrienta
     return NULL;
 }
 
+CAStepper* CAStepper::createWithLayout(const CrossApp::DRectLayout &layout, const CAStepperOrientation& type)
+{
+    CAStepper* page = new CAStepper(type);
+    
+    if (page && page->initWithLayout(layout))
+    {
+        page->autorelease();
+        return page;
+    }
+    
+    CC_SAFE_DELETE(page);
+    return NULL;
+}
+
 bool CAStepper::init()
 {
     if (!CAControl::init())

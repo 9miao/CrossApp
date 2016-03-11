@@ -29,6 +29,8 @@ public:
     
     static CAScale9ImageView* createWithCenter(const DRect& rect);
     
+    static CAScale9ImageView* createWithLayout(const DRectLayout& layout);
+    
     virtual bool init();
     
 	virtual bool initWithImage(CAImage* image);
@@ -82,10 +84,6 @@ protected:
     virtual void setContentSize(const DSize & size);
 
     virtual void updateDisplayedColor(const CrossApp::CAColor4B& parentColor);
-    
-    virtual bool initWithFrame(const DRect& rect, const CAColor4B& color4B);
-    
-    virtual bool initWithCenter(const DRect& rect, const CAColor4B& color4B);
     
     using CAView::initWithColor;
     

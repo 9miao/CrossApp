@@ -37,6 +37,7 @@ public:
     static CADatePickerView* create(const CADatePickerMode& m_mode);
     static CADatePickerView* createWithFrame(const DRect& rect,const CADatePickerMode& m_mode);
     static CADatePickerView* createWithCenter(const DRect& rect,const CADatePickerMode& m_mode);
+    static CADatePickerView* createWithLayout(const DRectLayout& layout,const CADatePickerMode& m_mode);
     
     CADatePickerView(const CADatePickerMode& m_mode);
     virtual ~CADatePickerView();

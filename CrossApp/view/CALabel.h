@@ -32,11 +32,7 @@ public:
     
     static CALabel* createWithCenter(const DRect& rect);
     
-    virtual bool initWithFrame(const DRect& rect);
-    
-    virtual bool initWithCenter(const DRect& rect);
-    
-    virtual void onEnterTransitionDidFinish();
+    static CALabel* createWithLayout(const DRectLayout& layout);
     
     CC_PROPERTY_PASS_BY_REF(string, m_nText, Text);
 

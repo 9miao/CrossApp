@@ -104,6 +104,18 @@ CAScrollView* CAScrollView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CAScrollView* CAScrollView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAScrollView* scrollView = new CAScrollView();
+    if (scrollView && scrollView->initWithLayout(layout))
+    {
+        scrollView->autorelease();
+        return scrollView;
+    }
+    CC_SAFE_DELETE(scrollView);
+    return NULL;
+}
+
 bool CAScrollView::init()
 {
     if (!CAView::init())

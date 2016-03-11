@@ -30,14 +30,20 @@ public:
     
     virtual ~CAProgress();
     
-    bool init();
-    
     static CAProgress* create();
+    
+    static CAProgress* createWithFrame(const DRect& rect);
+    
+    static CAProgress* createWithCenter(const DRect& rect);
+    
+    static CAProgress* createWithLayout(const DRectLayout& layout);
     
     virtual void onEnterTransitionDidFinish();
     
     virtual void onExitTransitionDidStart();
 
+    bool init();
+    
 	virtual void setColor(const CAColor4B& color);
     
 	void setProgress(float progress, bool animated = false);

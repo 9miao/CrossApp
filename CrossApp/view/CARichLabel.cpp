@@ -53,6 +53,19 @@ CARichLabel* CARichLabel::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
+CARichLabel* CARichLabel::createWithLayout(const DRectLayout& layout)
+{
+    CARichLabel *label = new CARichLabel();
+    if (label && label->initWithLayout(layout))
+    {
+        label->autorelease();
+        return label;
+    }
+    
+    CC_SAFE_DELETE(label);
+    return NULL;
+}
+
 bool CARichLabel::initWithFrame(const DRect& rect)
 {
 	if (!CAView::initWithFrame(rect))
@@ -168,19 +181,17 @@ bool CARichLabel::init()
 	return true;
 }
 
-void CARichLabel::appendText(const std::string& cszText)
-{
-	m_vLabelFontVect.push_back(std::make_pair(cszText, CAFont()));
-	updateImageDraw();
-}
-
 void CARichLabel::appendText(const std::string& text, const CAFont& font)
 {
 	m_vLabelFontVect.push_back(std::make_pair(text, font));
 	updateImageDraw();
 }
 
-
+void CARichLabel::clear()
+{
+    m_vLabelFontVect.clear();
+    updateImageDraw();
+}
 
 
 

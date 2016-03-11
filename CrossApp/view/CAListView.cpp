@@ -80,6 +80,18 @@ CAListView* CAListView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
+CAListView* CAListView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAListView* listView = new CAListView();
+    if (listView && listView->initWithLayout(layout))
+    {
+        listView->autorelease();
+        return listView;
+    }
+    CC_SAFE_DELETE(listView);
+    return NULL;
+}
+
 bool CAListView::init()
 {
 	if (!CAScrollView::init())

@@ -71,6 +71,18 @@ CAActivityIndicatorView* CAActivityIndicatorView::createWithCenter(const DRect& 
     return view;
 }
 
+CAActivityIndicatorView* CAActivityIndicatorView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAActivityIndicatorView* view = new CAActivityIndicatorView();
+    if (view && view->initWithLayout(layout)){
+        view->autorelease();
+    } else {
+        CC_SAFE_DELETE(view);
+    }
+    return view;
+}
+
+
 bool CAActivityIndicatorView::init()
 {
     if (!CAView::init())

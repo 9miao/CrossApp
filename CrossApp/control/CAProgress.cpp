@@ -49,6 +49,42 @@ CAProgress* CAProgress::create()
     return NULL;
 }
 
+CAProgress* CAProgress::createWithFrame(const DRect& rect)
+{
+    CAProgress *progress = new CAProgress();
+    if (progress && progress->initWithFrame(rect))
+    {
+        progress->autorelease();
+        return progress;
+    }
+    CC_SAFE_DELETE(progress);
+    return NULL;
+}
+
+CAProgress* CAProgress::createWithCenter(const DRect& rect)
+{
+    CAProgress *progress = new CAProgress();
+    if (progress && progress->initWithCenter(rect))
+    {
+        progress->autorelease();
+        return progress;
+    }
+    CC_SAFE_DELETE(progress);
+    return NULL;
+}
+
+CAProgress* CAProgress::createWithLayout(const DRectLayout& layout)
+{
+    CAProgress *progress = new CAProgress();
+    if (progress && progress->initWithLayout(layout))
+    {
+        progress->autorelease();
+        return progress;
+    }
+    CC_SAFE_DELETE(progress);
+    return NULL;
+}
+
 bool CAProgress::init()
 {
     if (!CAView::init())

@@ -103,6 +103,8 @@ public:
 
 	static CACollectionView* createWithCenter(const DRect& rect);
 
+    static CACollectionView* createWithLayout(const DRectLayout& layout);
+    
 	virtual bool init();
 
 	void clearData();

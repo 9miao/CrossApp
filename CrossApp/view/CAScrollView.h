@@ -71,6 +71,8 @@ public:
     
     static CAScrollView* createWithCenter(const DRect& rect);
     
+    static CAScrollView* createWithLayout(const DRectLayout& layout);
+    
     virtual bool init();
 
     virtual void addSubview(CAView* subview);

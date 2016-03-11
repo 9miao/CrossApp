@@ -42,6 +42,8 @@ public:
     
     static CASegmentedControl* createWithCenter(const DRect& rect, unsigned int itemsCount);
   
+    static CASegmentedControl* createWithLayout(const DRectLayout& layout, unsigned int itemsCount);
+    
     virtual bool init();
     
     unsigned int getNumberOfSegments();

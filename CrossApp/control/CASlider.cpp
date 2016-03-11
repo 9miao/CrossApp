@@ -93,6 +93,20 @@ CASlider* CASlider::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CASlider* CASlider::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CASlider* slider = new CASlider();
+    
+    if (slider && slider->initWithLayout(layout))
+    {
+        slider->autorelease();
+        return slider;
+    }
+    
+    CC_SAFE_DELETE(slider);
+    return NULL;
+}
+
 bool CASlider::init()
 {
     if (!CAControl::init())

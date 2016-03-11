@@ -38,9 +38,9 @@ CANavigationBar::~CANavigationBar()
     CC_SAFE_RELEASE(m_pBackgroundView);
 }
 
-static CANavigationBar* createWithFrame(const DRect& rect)
+CANavigationBar* CANavigationBar::createWithFrame(const DRect& rect, bool clearance)
 {
-    CANavigationBar* navigationBar = new CANavigationBar();
+    CANavigationBar* navigationBar = new CANavigationBar(clearance);
     if (navigationBar && navigationBar->initWithFrame(rect))
     {
         navigationBar->autorelease();
@@ -50,10 +50,22 @@ static CANavigationBar* createWithFrame(const DRect& rect)
     return NULL;
 }
 
-static CANavigationBar* createWithCenter(const DRect& rect)
+CANavigationBar* CANavigationBar::createWithCenter(const DRect& rect, bool clearance)
 {
-    CANavigationBar* navigationBar = new CANavigationBar();
+    CANavigationBar* navigationBar = new CANavigationBar(clearance);
     if (navigationBar && navigationBar->initWithFrame(rect))
+    {
+        navigationBar->autorelease();
+        return navigationBar;
+    }
+    CC_SAFE_DELETE(navigationBar);
+    return NULL;
+}
+
+CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DRectLayout &layout, bool clearance)
+{
+    CANavigationBar* navigationBar = new CANavigationBar(clearance);
+    if (navigationBar && navigationBar->initWithLayout(layout))
     {
         navigationBar->autorelease();
         return navigationBar;
@@ -69,30 +81,6 @@ bool CANavigationBar::init()
     this->addSubview(m_pContentView);
     m_pContentView->release();
     return true;
-}
-
-CANavigationBar* CANavigationBar::createWithFrame(const DRect& rect, bool clearance)
-{
-    CANavigationBar* nav = new CANavigationBar(clearance);
-    if (nav && nav->initWithFrame(rect))
-    {
-        nav->autorelease();
-        return nav;
-    }
-    CC_SAFE_DELETE(nav);
-    return NULL;
-}
-
-CANavigationBar* CANavigationBar::createWithCenter(const DRect& rect, bool clearance)
-{
-    CANavigationBar* nav = new CANavigationBar(clearance);
-    if (nav && nav->initWithCenter(rect))
-    {
-        nav->autorelease();
-        return nav;
-    }
-    CC_SAFE_DELETE(nav);
-    return NULL;
 }
 
 void CANavigationBar::onEnterTransitionDidFinish()
@@ -490,6 +478,18 @@ CATabBar* CATabBar::createWithCenter(const DRect& rect, bool clearance)
 {
     CATabBar* tabBar = new CATabBar(clearance);
     if (tabBar && tabBar->initWithCenter(rect))
+    {
+        tabBar->autorelease();
+        return tabBar;
+    }
+    CC_SAFE_DELETE(tabBar);
+    return NULL;
+}
+
+CATabBar* CATabBar::createWithLayout(const CrossApp::DRectLayout &layout, bool clearance)
+{
+    CATabBar* tabBar = new CATabBar(clearance);
+    if (tabBar && tabBar->initWithLayout(layout))
     {
         tabBar->autorelease();
         return tabBar;

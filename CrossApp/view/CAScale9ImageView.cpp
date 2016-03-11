@@ -57,7 +57,7 @@ CAScale9ImageView* CAScale9ImageView::createWithImage(CAImage* image)
 CAScale9ImageView* CAScale9ImageView::createWithFrame(const DRect& rect)
 {
 	CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->CAView::initWithFrame(rect))
+	if (pReturn && pReturn->initWithFrame(rect))
 	{
 		pReturn->autorelease();
 		return pReturn;
@@ -69,13 +69,25 @@ CAScale9ImageView* CAScale9ImageView::createWithFrame(const DRect& rect)
 CAScale9ImageView* CAScale9ImageView::createWithCenter(const DRect& rect)
 {
     CAScale9ImageView* pReturn = new CAScale9ImageView();
-	if (pReturn && pReturn->CAView::initWithCenter(rect))
+	if (pReturn && pReturn->initWithCenter(rect))
 	{
 		pReturn->autorelease();
 		return pReturn;
 	}
 	CC_SAFE_DELETE(pReturn);
 	return NULL;
+}
+
+CAScale9ImageView* CAScale9ImageView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAScale9ImageView* pReturn = new CAScale9ImageView();
+    if (pReturn && pReturn->initWithLayout(layout))
+    {
+        pReturn->autorelease();
+        return pReturn;
+    }
+    CC_SAFE_DELETE(pReturn);
+    return NULL;
 }
 
 bool CAScale9ImageView::init()
@@ -404,17 +416,6 @@ void CAScale9ImageView::setImage(CrossApp::CAImage *image)
     CAView::setImage(image);
     this->updateWithImage();
 }
-
-bool CAScale9ImageView::initWithFrame(const DRect& rect, const CAColor4B& color4B)
-{
-    return CAView::initWithFrame(rect);
-}
-
-bool CAScale9ImageView::initWithCenter(const DRect& rect, const CAColor4B& color4B)
-{
-    return CAView::initWithCenter(rect);
-}
-
 
 
 NS_CC_END

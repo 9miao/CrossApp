@@ -44,12 +44,14 @@ public:
 class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate, public CAScrollViewDelegate
 {
 public:
-    static CAPickerView* create();
-    static CAPickerView* createWithFrame(const DRect& rect);
-    static CAPickerView* createWithCenter(const DRect& rect);
     
     CAPickerView();
     virtual ~CAPickerView();
+    
+    static CAPickerView* create();
+    static CAPickerView* createWithFrame(const DRect& rect);
+    static CAPickerView* createWithCenter(const DRect& rect);
+    static CAPickerView* createWithLayout(const DRectLayout& layout);
     
     virtual bool init();
     virtual void onEnter();

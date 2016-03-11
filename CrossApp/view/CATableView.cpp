@@ -96,6 +96,18 @@ CATableView* CATableView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CATableView* CATableView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CATableView* tableView = new CATableView();
+    if (tableView && tableView->initWithLayout(layout))
+    {
+        tableView->autorelease();
+        return tableView;
+    }
+    CC_SAFE_DELETE(tableView);
+    return NULL;
+}
+
 bool CATableView::init()
 {
     if (!CAScrollView::init())

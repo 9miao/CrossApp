@@ -50,6 +50,8 @@ public:
     
     static CAPageView* createWithCenter(const DRect& rect, const CAPageViewDirection& type);
     
+    static CAPageView* createWithLayout(const DRectLayout& layout, const CAPageViewDirection& type);
+    
     bool init();
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAPageViewDirection, m_ePageViewDirection, PageViewDirection);

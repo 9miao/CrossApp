@@ -60,6 +60,18 @@ CAWebView *CAWebView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
+CAWebView *CAWebView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAWebView* webView = new CAWebView();
+    if (webView && webView->initWithLayout(layout))
+    {
+        webView->autorelease();
+        return webView;
+    }
+    CC_SAFE_DELETE(webView);
+    return NULL;
+}
+
 bool CAWebView::init()
 {
     CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);

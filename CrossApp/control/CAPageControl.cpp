@@ -75,6 +75,20 @@ CAPageControl* CAPageControl::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CAPageControl* CAPageControl::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAPageControl* page = new CAPageControl();
+    
+    if (page && page->initWithLayout(layout))
+    {
+        page->autorelease();
+        return page;
+    }
+    
+    CC_SAFE_DELETE(page);
+    return NULL;
+}
+
 bool CAPageControl::init()
 {
     setPageIndicatorImage(CAImage::create("source_material/page_n.png"));

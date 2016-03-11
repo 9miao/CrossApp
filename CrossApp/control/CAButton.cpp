@@ -130,6 +130,21 @@ CAButton* CAButton::createWithCenter(const DRect& rect, const CAButtonType& butt
     return NULL;
 }
 
+CAButton* CAButton::createWithLayout(const CrossApp::DRectLayout &layout, const CAButtonType &buttonType)
+{
+    
+    CAButton* btn = new CAButton(buttonType);
+    
+    if (btn && btn->initWithLayout(layout))
+    {
+        btn->autorelease();
+        return btn;
+    }
+    
+    CC_SAFE_DELETE(btn);
+    return NULL;
+}
+
 bool CAButton::init()
 {
     if (!CAControl::init())

@@ -58,7 +58,9 @@ public:
 class CC_DLL CAListView : public CAScrollView
 {
 public:
+    
 	CAListView();
+    
 	virtual ~CAListView();
 
 	virtual void onEnterTransitionDidFinish();
@@ -69,6 +71,8 @@ public:
 
 	static CAListView* createWithCenter(const DRect& rect);
 
+    static CAListView* createWithLayout(const DRectLayout& layout);
+    
 	virtual bool init();
 
 	void reloadViewSizeData();

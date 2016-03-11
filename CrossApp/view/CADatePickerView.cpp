@@ -64,6 +64,16 @@ CADatePickerView* CADatePickerView::createWithCenter(const DRect& rect,const CAD
     return view;
 }
 
+CADatePickerView* CADatePickerView::createWithLayout(const CrossApp::DRectLayout &layout, const CADatePickerMode &m_mode)
+{
+    CADatePickerView* view = new CADatePickerView(m_mode);
+    if (view && view->initWithLayout(layout)) {
+        view->autorelease();
+    } else {
+        CC_SAFE_DELETE(view);
+    }
+    return view;
+}
 
 bool CADatePickerView::init()
 {

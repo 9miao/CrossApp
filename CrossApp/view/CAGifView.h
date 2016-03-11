@@ -24,6 +24,7 @@ public:
 public:
     static CAGifView* createWithFrame(const DRect& rect);
     static CAGifView* createWithCenter(const DRect& rect);
+    static CAGifView* createWithLayout(const DRectLayout& layout);
     static CAGifView* createWithGif(CAGif* gif);
     
     virtual bool init();

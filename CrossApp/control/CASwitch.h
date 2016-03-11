@@ -32,6 +32,8 @@ public:
     
     static CASwitch* createWithCenter(const DRect& rect);
     
+    static CASwitch* createWithLayout(const DRectLayout& layout);
+    
     void addTarget(CAObject* target, SEL_CAControl selector);
     
     void removeTarget(CAObject* target, SEL_CAControl selector);

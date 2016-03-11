@@ -39,6 +39,81 @@ CASwitch::~CASwitch()
 	CC_SAFE_RELEASE_NULL(m_thumbTintImage);
 }
 
+CASwitch* CASwitch::create()
+{
+    CASwitch* switchControl = new CASwitch();
+    
+    if (switchControl && switchControl->init())
+    {
+        switchControl->autorelease();
+        return switchControl;
+    }
+    
+    CC_SAFE_DELETE(switchControl);
+    return NULL;
+}
+
+CASwitch* CASwitch::createWithFrame(const DRect& rect)
+{
+    CASwitch* switchControl = new CASwitch();
+    
+    if (switchControl && switchControl->initWithFrame(rect))
+    {
+        switchControl->autorelease();
+        return switchControl;
+    }
+    
+    CC_SAFE_DELETE(switchControl);
+    return NULL;
+}
+
+CASwitch* CASwitch::createWithCenter(const DRect& rect)
+{
+    CASwitch* switchControl = new CASwitch();
+    
+    if (switchControl && switchControl->initWithCenter(rect))
+    {
+        switchControl->autorelease();
+        return switchControl;
+    }
+    
+    CC_SAFE_DELETE(switchControl);
+    return NULL;
+}
+
+CASwitch* CASwitch::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CASwitch* switchControl = new CASwitch();
+    
+    if (switchControl && switchControl->initWithLayout(layout))
+    {
+        switchControl->autorelease();
+        return switchControl;
+    }
+    
+    CC_SAFE_DELETE(switchControl);
+    return NULL;
+}
+
+bool CASwitch::init()
+{
+    if (!CAControl::init())
+    {
+        return false;
+    }
+    this->setColor(CAColor_clear);
+
+    m_pOnImageView = CAImageView::createWithImage(m_onImage);
+    this->addSubview(m_pOnImageView);
+
+    m_pOffImageView = CAImageView::createWithImage(m_offImage);
+    this->addSubview(m_pOffImageView);
+    
+    m_pThumbTintImageView = CAImageView::createWithImage(m_thumbTintImage);
+    this->addSubview(m_pThumbTintImageView);
+ 
+    return true;
+}
 
 void CASwitch::onExitTransitionDidStart()
 {
@@ -158,68 +233,6 @@ void CASwitch::updateValueChanged()
     {
         ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, DPointZero);
     }
-}
-
-CASwitch* CASwitch::create()
-{
-    CASwitch* switchControl = new CASwitch();
-    
-    if (switchControl && switchControl->init())
-    {
-        switchControl->autorelease();
-        return switchControl;
-    }
-    
-    CC_SAFE_DELETE(switchControl);
-    return NULL;
-}
-
-CASwitch* CASwitch::createWithFrame(const DRect& rect)
-{
-    CASwitch* switchControl = new CASwitch();
-    
-    if (switchControl && switchControl->initWithFrame(rect))
-    {
-        switchControl->autorelease();
-        return switchControl;
-    }
-    
-    CC_SAFE_DELETE(switchControl);
-    return NULL;
-}
-
-CASwitch* CASwitch::createWithCenter(const DRect& rect)
-{
-    CASwitch* switchControl = new CASwitch();
-    
-    if (switchControl && switchControl->initWithCenter(rect))
-    {
-        switchControl->autorelease();
-        return switchControl;
-    }
-    
-    CC_SAFE_DELETE(switchControl);
-    return NULL;
-}
-
-bool CASwitch::init()
-{
-    if (!CAControl::init())
-    {
-        return false;
-    }
-    this->setColor(CAColor_clear);
-
-    m_pOnImageView = CAImageView::createWithImage(m_onImage);
-    this->addSubview(m_pOnImageView);
-
-    m_pOffImageView = CAImageView::createWithImage(m_offImage);
-    this->addSubview(m_pOffImageView);
-    
-    m_pThumbTintImageView = CAImageView::createWithImage(m_thumbTintImage);
-    this->addSubview(m_pThumbTintImageView);
- 
-    return true;
 }
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

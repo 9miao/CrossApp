@@ -32,7 +32,8 @@ CAPickerView::~CAPickerView()
 CAPickerView* CAPickerView::create()
 {
     CAPickerView* view = new CAPickerView();
-    if (view && view->init()) {
+    if (view && view->init())
+    {
         view->autorelease();
     } else {
         CC_SAFE_DELETE(view);
@@ -43,7 +44,8 @@ CAPickerView* CAPickerView::create()
 CAPickerView* CAPickerView::createWithFrame(const DRect& rect)
 {
     CAPickerView* view = new CAPickerView();
-    if (view && view->initWithFrame(rect)) {
+    if (view && view->initWithFrame(rect))
+    {
         view->autorelease();
     } else {
         CC_SAFE_DELETE(view);
@@ -54,7 +56,20 @@ CAPickerView* CAPickerView::createWithFrame(const DRect& rect)
 CAPickerView* CAPickerView::createWithCenter(const DRect& rect)
 {
     CAPickerView* view = new CAPickerView();
-    if (view && view->initWithCenter(rect)) {
+    if (view && view->initWithCenter(rect))
+    {
+        view->autorelease();
+    } else {
+        CC_SAFE_DELETE(view);
+    }
+    return view;
+}
+
+CAPickerView* CAPickerView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAPickerView* view = new CAPickerView();
+    if (view && view->initWithLayout(layout))
+    {
         view->autorelease();
     } else {
         CC_SAFE_DELETE(view);

@@ -81,6 +81,18 @@ CAAutoCollectionView* CAAutoCollectionView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
+CAAutoCollectionView* CAAutoCollectionView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CAAutoCollectionView* collectionView = new CAAutoCollectionView();
+    if (collectionView && collectionView->initWithLayout(layout))
+    {
+        collectionView->autorelease();
+        return collectionView;
+    }
+    CC_SAFE_DELETE(collectionView);
+    return NULL;
+}
+
 bool CAAutoCollectionView::init()
 {
 	if (!CAScrollView::init())
