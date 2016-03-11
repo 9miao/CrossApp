@@ -1250,7 +1250,7 @@ bool CAIndicator::init()
     {
         return false;
     }
-    this->setColor(CAColor_blue);
+    this->setColor(CAColor_clear);
     CAImage* image = CAImage::create("source_material/indicator.png");
     
     m_pIndicator = CAScale9ImageView::createWithImage(image);
