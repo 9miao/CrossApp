@@ -118,7 +118,7 @@ bool CAScrollView::init()
     this->addSubview(m_pContainer);
     m_pContainer->release();
     
-    this->updateIndicator();
+    this->initIndicator();
     return true;
 }
 
@@ -419,8 +419,7 @@ void CAScrollView::setContentSize(const CrossApp::DSize &var)
     DPoint point = m_pContainer->getFrameOrigin();
     this->getScrollWindowNotOutPoint(point);
     this->setContainerFrame(point);
-    
-    this->updateIndicator();
+
     this->update(0);
 }
 
@@ -437,9 +436,6 @@ void CAScrollView::setContainerFrame(const DPoint& point, const DSize& size)
     {
         m_pContainer->setFrameOrigin(point);
     }
-    
-    DRect rect = m_pContainer->getFrame();
-    
 }
 
 bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -929,11 +925,19 @@ void CAScrollView::deaccelerateScrolling(float dt)
     }
 }
 
-void CAScrollView::updateIndicator()
+void CAScrollView::initIndicator()
 {
+    const char indicatorSize = 6;
+    
     if (m_pIndicatorHorizontal == NULL)
     {
         m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::CAIndicatorTypeHorizontal, this);
+        m_pIndicatorHorizontal->setLayout(DRectLayout(indicatorSize * 2,
+                                                      indicatorSize * 2,
+                                                      FLOAT_NONE,
+                                                      indicatorSize,
+                                                      FLOAT_NONE,
+                                                      indicatorSize));
         m_vChildInThis.pushBack(m_pIndicatorHorizontal);
         this->insertSubview(m_pIndicatorHorizontal, 1);
     }
@@ -941,23 +945,15 @@ void CAScrollView::updateIndicator()
     if (m_pIndicatorVertical == NULL)
     {
         m_pIndicatorVertical = CAIndicator::create(CAIndicator::CAIndicatorTypeVertical, this);
+        m_pIndicatorVertical->setLayout(DRectLayout(FLOAT_NONE,
+                                                    indicatorSize,
+                                                    indicatorSize * 2,
+                                                    indicatorSize * 2,
+                                                    indicatorSize,
+                                                    FLOAT_NONE));
         m_vChildInThis.pushBack(m_pIndicatorVertical);
         this->insertSubview(m_pIndicatorVertical, 1);
     }
-    
-    const char indicatorSize = 6;
-
-    const DRect indicatorHorizontalFrame = DRect(indicatorSize * 2,
-                                                   this->getBounds().size.height - indicatorSize * 2,
-                                                   this->getBounds().size.width - indicatorSize * 4,
-                                                   indicatorSize);
-    m_pIndicatorHorizontal->setFrame(indicatorHorizontalFrame);
-    
-    const DRect indicatorVerticalFrame = DRect(this->getBounds().size.width - indicatorSize * 2,
-                                                 indicatorSize * 2,
-                                                 indicatorSize,
-                                                 this->getBounds().size.height - indicatorSize * 4);
-    m_pIndicatorVertical->setFrame(indicatorVerticalFrame);
 }
 
 void CAScrollView::showIndicator()
@@ -1254,7 +1250,7 @@ bool CAIndicator::init()
     {
         return false;
     }
-    this->setColor(CAColor_clear);
+    this->setColor(CAColor_blue);
     CAImage* image = CAImage::create("source_material/indicator.png");
     
     m_pIndicator = CAScale9ImageView::createWithImage(image);

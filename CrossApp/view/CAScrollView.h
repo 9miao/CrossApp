@@ -193,7 +193,7 @@ protected:
     
     void closeToPoint(float dt, float now, float total);
     
-    void updateIndicator();
+    void initIndicator();
     
     void showIndicator();
     
@@ -271,7 +271,7 @@ public:
     
     typedef enum
     {
-        CAIndicatorTypeHorizontal,
+        CAIndicatorTypeHorizontal = 0,
         CAIndicatorTypeVertical
     }
     CAIndicatorType;

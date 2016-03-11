@@ -125,6 +125,7 @@ void CAScale9ImageView::updateWithImage()
     CC_RETURN_IF(!m_pobImage);
 
     m_pScale9ImageView = CABatchView::createWithImage(m_pobImage);
+    m_pScale9ImageView->setLayout(DRectLayout(0, 0, 0, 0));
     this->addSubview(m_pScale9ImageView);
     
     m_obOriginalSize = m_pScale9ImageView->getImageAtlas()->getImage()->getContentSize();
@@ -258,7 +259,6 @@ void CAScale9ImageView::setContentSize(const DSize &size)
     CAView::setContentSize(size);
     
     this->updateCapInset();
-    this->updatePositions();
 }
 
 void CAScale9ImageView::draw(void)
@@ -403,7 +403,6 @@ void CAScale9ImageView::setImage(CrossApp::CAImage *image)
 {
     CAView::setImage(image);
     this->updateWithImage();
-    this->updatePositions();
 }
 
 bool CAScale9ImageView::initWithFrame(const DRect& rect, const CAColor4B& color4B)

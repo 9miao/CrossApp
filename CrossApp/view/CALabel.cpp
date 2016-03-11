@@ -332,6 +332,11 @@ void CALabel::setNumberOfLine(unsigned int var)
 void CALabel::setFont(const CrossApp::CAFont &var)
 {
     m_obFont = var;
+    if(m_nText.empty())
+    {
+        return;
+    }
+    this->updateImageDraw();
 }
 
 const CAFont& CALabel::getFont()

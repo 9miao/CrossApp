@@ -691,7 +691,7 @@ void CAView::setFrame(const DRect &rect)
 void CAView::setFrameOrigin(const DPoint& point)
 {
     m_obLayout = DRectLayoutZero;
-    DPoint p = ccpAdd(m_obAnchorPointInPoints, point);
+    DPoint p = ccpAdd(point, m_obAnchorPointInPoints);
     
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -760,10 +760,9 @@ DPoint CAView::getCenterOrigin()
 void CAView::setCenterOrigin(const DPoint& point)
 {
     m_obLayout = DRectLayoutZero;
-    DPoint p = ccpMult(m_obContentSize, 0.5f);
-    p = ccpSub(p, m_obAnchorPointInPoints);
-    p = ccpSub(point, p);
-    
+    DPoint p = ccpSub(point, ccpMult(m_obContentSize, 0.5f));
+    p = ccpAdd(p, m_obAnchorPointInPoints);
+
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
     {
@@ -1465,11 +1464,11 @@ CATransformation CAView::nodeToParentTransform(void)
         
         if (this->getSuperview())
         {
-            height= this->getSuperview()->getBounds().size.height;
+            height = this->getSuperview()->getBounds().size.height;
         }
         else
         {
-            height= CAApplication::getApplication()->getWinSize().height;
+            height = CAApplication::getApplication()->getWinSize().height;
         }
         
         
