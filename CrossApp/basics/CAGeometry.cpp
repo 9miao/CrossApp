@@ -382,12 +382,12 @@ DRectLayout::DRectLayout(float var1, float var2, float var3, float var4, const T
             height = var4;
         }
             break;
-        case L_R_H_B:
+        case L_R_B_H:
         {
             left = var1;
             right = var2;
-            height = var3;
-            bottom = var4;
+            bottom = var3;
+            height = var4;
         }
             break;
         case L_W_T_B:
@@ -406,41 +406,42 @@ DRectLayout::DRectLayout(float var1, float var2, float var3, float var4, const T
             height = var4;
         }
             break;
-        case L_W_H_B:
+        case L_W_B_H:
         {
             left = var1;
             width = var2;
-            height = var3;
-            bottom = var4;
+            bottom = var3;
+            height = var4;
         }
             break;
-        case W_R_T_B:
+        case R_W_T_B:
         {
-            width = var1;
-            right = var2;
+            right = var1;
+            width = var2;
             top = var3;
             bottom = var4;
         }
             break;
-        case W_R_T_H:
+        case R_W_T_H:
         {
-            width = var1;
-            right = var2;
+            right = var1;
+            width = var2;
             top = var3;
             height = var4;
         }
             break;
-        case W_R_H_B:
+        case R_W_B_H:
         {
-            width = var1;
-            right = var2;
-            height = var3;
-            bottom = var4;
+            right = var1;
+            width = var2;
+            bottom = var3;
+            height = var4;
         }
             break;
         default:
             break;
     }
+    
 }
 
 DRectLayout& DRectLayout:: operator= (const DRectLayout& other)

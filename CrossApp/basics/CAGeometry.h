@@ -325,13 +325,13 @@ class CC_DLL DRectLayout
     {
         L_R_T_B = 0,
         L_R_T_H,
-        L_R_H_B,
+        L_R_B_H,
         L_W_T_B,
         L_W_T_H,
-        L_W_H_B,
-        W_R_T_B,
-        W_R_T_H,
-        W_R_H_B
+        L_W_B_H,
+        R_W_T_B,
+        R_W_T_H,
+        R_W_B_H
     }
     Type;
     
