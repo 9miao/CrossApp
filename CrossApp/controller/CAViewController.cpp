@@ -1736,7 +1736,6 @@ void CATabBarController::update(float dt)
         DRect r = m_pContainer->getSubViewAtIndex((int)i)->getFrame();
         r.size = rect.size;
         m_pContainer->getSubViewAtIndex((int)i)->setFrame(r);
-        CAViewController* viewController = m_pViewControllers.at(i);
     }
 }
 

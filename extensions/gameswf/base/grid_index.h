@@ -735,7 +735,7 @@ struct grid_index_box
 	void	add(const box_t& bound, payload p)
 	// Insert a box, with the given payload, into our index.
 	{
-		index_box<int>	ib = get_containing_cells_clamped(bound);
+//		index_box<int>	ib = get_containing_cells_clamped(bound);
 
 		grid_entry_t*	new_entry = new grid_entry_t;
 		new_entry->bound = bound;

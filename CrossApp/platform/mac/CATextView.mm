@@ -387,6 +387,16 @@ void CATextView::setContentSize(const DSize& contentSize)
 }
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
+    DPoint point = this->convertTouchToNodeSpace(pTouch);
+    
+    if (this->getBounds().containsPoint(point))
+    {
+        becomeFirstResponder();
+    }
+    else
+    {
+        resignFirstResponder();
+    }
     return true;
 }
 
@@ -402,16 +412,6 @@ void CATextView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    DPoint point = this->convertTouchToNodeSpace(pTouch);
-    
-    if (this->getBounds().containsPoint(point))
-    {
-        becomeFirstResponder();
-    }
-    else
-    {
-        resignFirstResponder();
-    }
     
 }
 

@@ -172,7 +172,6 @@ void CAVideoPlayerControlView::buildCtrlViews()
 
 	// Title
 	do {
-		DRect frame = buttonBack->getFrame();
 		DRect r = DRectZero;
 		r.origin.x = buttonBack->getFrame().origin.x * 2 + buttonBack->getFrame().size.width;
 		r.origin.y = buttonBack->getFrame().origin.y;

@@ -45,7 +45,7 @@ namespace gameswf
 	// This should be at least 1.  The bigger it is, the smoother
 	// the boundaries of minified text will be, but the more
 	// texture space is wasted.
-	const int PAD_PIXELS = 3;
+//	const int PAD_PIXELS = 3;
 
 	// The raw non-antialiased render size for glyphs.
 	static int	s_glyph_render_size = s_glyph_nominal_size << OVERSAMPLE_BITS;

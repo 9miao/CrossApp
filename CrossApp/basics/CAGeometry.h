@@ -321,6 +321,8 @@ public:
  */
 class CC_DLL DRectLayout
 {
+public:
+    
     typedef enum
     {
         L_R_T_B = 0,
@@ -334,6 +336,14 @@ class CC_DLL DRectLayout
         R_W_B_H
     }
     Type;
+    /**
+     ** L: left
+     ** R: right
+     ** W: width
+     ** T: top
+     ** B: bottom
+     ** H: height
+     */
     
 public:
     

@@ -649,7 +649,7 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
     }
 }
 
-const DRect& CATabBar::getContentViewFrame()
+DRect CATabBar::getContentViewFrame()
 {
     return m_pContentView->getFrame();
 }

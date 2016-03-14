@@ -350,7 +350,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
     {
 
-		m_fAlertViewTitleHeight = _dip(CAImage::getFontHeight("", ALERT_VIEW_TITLE_FONT));
+		m_fAlertViewTitleHeight = CAImage::getFontHeight("", ALERT_VIEW_TITLE_FONT);
 		
 		m_fAlertViewHeight += m_fAlertViewTitleHeight;
 	}
@@ -360,7 +360,7 @@ void CAAlertView::calcuAlerViewSize()
 	if (m_pContentLabel && !m_pContentLabel->getText().empty())
     {
 		
-		m_fAlertViewMessageHeight = _dip(CAImage::getStringHeight(m_sMsgFontName.c_str(), ALERT_VIEW_MESG_FONT, m_pContentLabel->getText(), ALERT_VIEW_MESG_WIDTH, 0, false));
+		m_fAlertViewMessageHeight = CAImage::getStringHeight(m_sMsgFontName.c_str(), ALERT_VIEW_MESG_FONT, m_pContentLabel->getText(), ALERT_VIEW_MESG_WIDTH, 0, false);
 
         m_fAlertViewHeight += MIN(m_fAlertViewMessageHeight, alertViewMessageHeight);
 	}

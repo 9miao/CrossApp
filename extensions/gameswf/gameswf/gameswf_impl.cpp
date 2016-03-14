@@ -711,8 +711,8 @@ namespace gameswf
 
 		IF_VERBOSE_PARSE(log_msg("  define_bits_jpeg3_loader: charid = %d pos = 0x%x\n", character_id, in->get_position()));
 
-		Uint32	jpeg_size = in->read_u32();
-		Uint32	alpha_position = in->get_position() + jpeg_size;
+//		Uint32	jpeg_size = in->read_u32();
+//		Uint32	alpha_position = in->get_position() + jpeg_size;
 
 		bitmap_info*	bi = NULL;
 

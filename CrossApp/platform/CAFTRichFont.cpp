@@ -523,9 +523,9 @@ void CAFTRichFont::drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vect
 
 			if (pEmoji)
 			{
-				int dtValue = 0;
-				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
-				FT_Int y = (FT_Int)(pen->y - iEmojiSize) + dtValue;
+//				int dtValue = 0;
+//				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
+//				FT_Int y = (FT_Int)(pen->y - iEmojiSize) + dtValue;
 			//	draw_emoji(pBuffer, pEmoji, x, y, iEmojiSize);
 			}
 			continue;

@@ -191,7 +191,7 @@ public:
     
     void replaceItemAtIndex(size_t index, CATabBarItem* item);
     
-    const DRect& getContentViewFrame();
+    DRect getContentViewFrame();
 
 protected:
     

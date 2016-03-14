@@ -598,17 +598,6 @@ void CATextField::setContentSize(const DSize& contentSize)
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    
-    return true;
-}
-
-void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
-{
-    
-}
-
-void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
-{
     DPoint point = this->convertTouchToNodeSpace(pTouch);
     
     if (this->getBounds().containsPoint(point))
@@ -619,7 +608,17 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         resignFirstResponder();
     }
+    return true;
+}
+
+void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
     
+}
+
+void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+   
 }
 
 void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -677,7 +676,7 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     
     m_cPlaceHdolderColor = var;
     
-    NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
+//    NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
 //    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
     CGFloat scale = MAC_SCALE;
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
