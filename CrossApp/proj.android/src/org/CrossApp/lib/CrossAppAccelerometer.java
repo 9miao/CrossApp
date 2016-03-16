@@ -13,12 +13,12 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.os.Build.*;
 
-public class Cocos2dxAccelerometer implements SensorEventListener {
+public class CrossAppAccelerometer implements SensorEventListener {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	private static final String TAG = Cocos2dxAccelerometer.class.getSimpleName();
+	private static final String TAG = CrossAppAccelerometer.class.getSimpleName();
 
 	// ===========================================================
 	// Fields
@@ -33,7 +33,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	// Constructors
 	// ===========================================================
 
-	public Cocos2dxAccelerometer(final Context pContext) {
+	public CrossAppAccelerometer(final Context pContext) {
 		this.mContext = pContext;
 
 		this.mSensorManager = (SensorManager) this.mContext.getSystemService(Context.SENSOR_SERVICE);
@@ -96,7 +96,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 			y = -tmp;
 		}		
 		
-		Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
+		CrossAppGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
 		
 		/*
 		if(BuildConfig.DEBUG) {
@@ -111,7 +111,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 
 	// ===========================================================
 	// Methods
-        // Native method called from Cocos2dxGLSurfaceView (To be in the same thread)
+        // Native method called from CrossAppGLSurfaceView (To be in the same thread)
 	// ===========================================================
     
 	public static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);

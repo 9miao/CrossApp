@@ -215,7 +215,7 @@ void CCEGLView::setFrameSize(float width, float height)
 		CCEGLViewProtocol::setFrameSize(width, height);		
 
 		/* Updates its title */
-		glfwSetWindowTitle("Cocos2dx-Linux");
+		glfwSetWindowTitle("CrossApp-Linux");
 
 		//set the init flag
 		bIsInit = true;

@@ -5,7 +5,7 @@
 
 #define  LOG_TAG    "libSimpleAudioEngine"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  CLASS_NAME "org/CrossApp/lib/Cocos2dxHelper"
+#define  CLASS_NAME "org/CrossApp/lib/CrossAppHelper"
 
 typedef struct JniMethodInfo_
 {

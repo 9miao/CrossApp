@@ -12,10 +12,10 @@ extern "C"
 	void JAVAsetPasteBoardString(const char* str)
 	{
 		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "getContext", "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppActivity", "getContext", "()Lorg/CrossApp/lib/CrossAppActivity;"))
 		{
 			jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
-			bool isHave = JniHelper::getMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "setPasteBoardStr", "(Ljava/lang/String;)V");
+			bool isHave = JniHelper::getMethodInfo(jmi, "org/CrossApp/lib/CrossAppActivity", "setPasteBoardStr", "(Ljava/lang/String;)V");
 			if (isHave)
 			{
 				jstring strArg = jmi.env->NewStringUTF(str);
@@ -31,10 +31,10 @@ extern "C"
 	{
 		std::string cszResult;
 		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "getContext", "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppActivity", "getContext", "()Lorg/CrossApp/lib/CrossAppActivity;"))
 		{
 			jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
-			bool isHave = JniHelper::getMethodInfo(jmi, "org/CrossApp/lib/Cocos2dxActivity", "getPasteBoardStr", "()Ljava/lang/String;");
+			bool isHave = JniHelper::getMethodInfo(jmi, "org/CrossApp/lib/CrossAppActivity", "getPasteBoardStr", "()Ljava/lang/String;");
 			if (isHave)
 			{
 				jstring a = (jstring)jmi.env->CallObjectMethod(obj, jmi.methodID);

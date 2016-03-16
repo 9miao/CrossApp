@@ -6,7 +6,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.graphics.Typeface;
 
-public class Cocos2dxTypefaces {
+public class CrossAppTypefaces {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -34,7 +34,7 @@ public class Cocos2dxTypefaces {
 	// ===========================================================
 
 	public static synchronized Typeface get(final Context pContext, final String pAssetName) {
-		if (!Cocos2dxTypefaces.sTypefaceCache.containsKey(pAssetName)) {
+		if (!CrossAppTypefaces.sTypefaceCache.containsKey(pAssetName)) {
 			Typeface typeface = null;
 			if (pAssetName.startsWith("/"))
 			{
@@ -44,10 +44,10 @@ public class Cocos2dxTypefaces {
 			{
 				typeface = Typeface.createFromAsset(pContext.getAssets(), pAssetName);
 			}
-			Cocos2dxTypefaces.sTypefaceCache.put(pAssetName, typeface);
+			CrossAppTypefaces.sTypefaceCache.put(pAssetName, typeface);
 		}
 
-		return Cocos2dxTypefaces.sTypefaceCache.get(pAssetName);
+		return CrossAppTypefaces.sTypefaceCache.get(pAssetName);
 	}
 
 	// ===========================================================

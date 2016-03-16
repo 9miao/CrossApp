@@ -6,22 +6,22 @@
 #echo $NDK_ROOT
 CUR=$(pwd)
 #tmp=$(pwd)
-#COCOS2DX=$($CYGWIN/bin/cygpath.exe $tmp)
-#echo $COCOS2DX
+#CrossApp=$($CYGWIN/bin/cygpath.exe $tmp)
+#echo $CrossApp
 
 #var1=NDK_ROOT_LOCAL=
 #_NDK_ROOT=${var1}${NDK_ROOT}
 
-#var2=COCOS2DX_ROOT_LOCAL=
-#_COCOS2DX_ROOT=${var2}${COCOS2DX}
+#var2=CrossApp_ROOT_LOCAL=
+#_CrossApp_ROOT=${var2}${CrossApp}
 #echo $_NDK_ROOT
-#echo $_COCOS2DX_ROOT
+#echo $_CrossApp_ROOT
 
 #Modify the configuration files
 #sed -i '3,4d' $CUR/build_native.sh
 sed -i '13d' $CUR/project.properties
 #sed -i "3 i\\$_NDK_ROOT" $CUR/build_native.sh
-#sed -i "4 i\\$_COCOS2DX_ROOT" $CUR/build_native.sh
+#sed -i "4 i\\$_CrossApp_ROOT" $CUR/build_native.sh
 
 #Modify the project name
 if [ $1 = TestCpp ]; then

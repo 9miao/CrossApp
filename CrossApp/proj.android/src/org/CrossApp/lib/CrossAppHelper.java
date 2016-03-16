@@ -14,46 +14,46 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-public class Cocos2dxHelper {
+public class CrossAppHelper {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	private static final String PREFS_NAME = "Cocos2dxPrefsFile";
+	private static final String PREFS_NAME = "CrossAppPrefsFile";
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-	private static Cocos2dxMusic sCocos2dMusic;
-	private static Cocos2dxSound sCocos2dSound;
+	private static CrossAppMusic sCocos2dMusic;
+	private static CrossAppSound sCocos2dSound;
 	private static AssetManager sAssetManager;
-	private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
+	private static CrossAppAccelerometer sCrossAppAccelerometer;
 	private static boolean sAccelerometerEnabled;
 	private static String sPackageName;
 	private static String sFileDirectory;
 	private static Context sContext = null;
-	private static Cocos2dxHelperListener sCocos2dxHelperListener;
-    private static Cocos2dxSDL sSDL;
+	private static CrossAppHelperListener sCrossAppHelperListener;
+    private static CrossAppSDL sSDL;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public static void init(final Context pContext, final Cocos2dxHelperListener pCocos2dxHelperListener) {
+	public static void init(final Context pContext, final CrossAppHelperListener pCrossAppHelperListener) {
 		final ApplicationInfo applicationInfo = pContext.getApplicationInfo();
 		
-		Cocos2dxHelper.sContext = pContext;
-		Cocos2dxHelper.sCocos2dxHelperListener = pCocos2dxHelperListener;
+		CrossAppHelper.sContext = pContext;
+		CrossAppHelper.sCrossAppHelperListener = pCrossAppHelperListener;
 
-		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
-		Cocos2dxHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
-		Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
+		CrossAppHelper.sPackageName = applicationInfo.packageName;
+		CrossAppHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
+		CrossAppHelper.nativeSetApkPath(applicationInfo.sourceDir);
 
-		Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(pContext);
-		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(pContext);
-		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(pContext);
-		Cocos2dxHelper.sAssetManager = pContext.getAssets();
-		Cocos2dxHelper.sSDL = new Cocos2dxSDL(pContext);
-		Cocos2dxBitmap.setContext(pContext);
+		CrossAppHelper.sCrossAppAccelerometer = new CrossAppAccelerometer(pContext);
+		CrossAppHelper.sCocos2dMusic = new CrossAppMusic(pContext);
+		CrossAppHelper.sCocos2dSound = new CrossAppSound(pContext);
+		CrossAppHelper.sAssetManager = pContext.getAssets();
+		CrossAppHelper.sSDL = new CrossAppSDL(pContext);
+		CrossAppBitmap.setContext(pContext);
 	}
 
 	// ===========================================================
@@ -72,12 +72,12 @@ public class Cocos2dxHelper {
 
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
 
-	public static String getCocos2dxPackageName() {
-		return Cocos2dxHelper.sPackageName;
+	public static String getCrossAppPackageName() {
+		return CrossAppHelper.sPackageName;
 	}
 
-	public static String getCocos2dxWritablePath() {
-		return Cocos2dxHelper.sFileDirectory;
+	public static String getCrossAppWritablePath() {
+		return CrossAppHelper.sFileDirectory;
 	}
 
 	public static String getCurrentLanguage() {
@@ -89,118 +89,118 @@ public class Cocos2dxHelper {
     }
 
 	public static AssetManager getAssetManager() {
-		return Cocos2dxHelper.sAssetManager;
+		return CrossAppHelper.sAssetManager;
 	}
 
 	public static void enableAccelerometer() {
-		Cocos2dxHelper.sAccelerometerEnabled = true;
-		Cocos2dxHelper.sCocos2dxAccelerometer.enable();
+		CrossAppHelper.sAccelerometerEnabled = true;
+		CrossAppHelper.sCrossAppAccelerometer.enable();
 	}
 
 
 	public static void setAccelerometerInterval(float interval) {
-		Cocos2dxHelper.sCocos2dxAccelerometer.setInterval(interval);
+		CrossAppHelper.sCrossAppAccelerometer.setInterval(interval);
 	}
 
 	public static void disableAccelerometer() {
-		Cocos2dxHelper.sAccelerometerEnabled = false;
-		Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+		CrossAppHelper.sAccelerometerEnabled = false;
+		CrossAppHelper.sCrossAppAccelerometer.disable();
 	}
 
 	public static void preloadBackgroundMusic(final String pPath) {
-		Cocos2dxHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);
+		CrossAppHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);
 	}
 
 	public static void playBackgroundMusic(final String pPath, final boolean isLoop) {
-		Cocos2dxHelper.sCocos2dMusic.playBackgroundMusic(pPath, isLoop);
+		CrossAppHelper.sCocos2dMusic.playBackgroundMusic(pPath, isLoop);
 	}
 
 	public static void resumeBackgroundMusic() {
-		Cocos2dxHelper.sCocos2dMusic.resumeBackgroundMusic();
+		CrossAppHelper.sCocos2dMusic.resumeBackgroundMusic();
 	}
 
 	public static void pauseBackgroundMusic() {
-		Cocos2dxHelper.sCocos2dMusic.pauseBackgroundMusic();
+		CrossAppHelper.sCocos2dMusic.pauseBackgroundMusic();
 	}
 
 	public static void stopBackgroundMusic() {
-		Cocos2dxHelper.sCocos2dMusic.stopBackgroundMusic();
+		CrossAppHelper.sCocos2dMusic.stopBackgroundMusic();
 	}
 
 	public static void rewindBackgroundMusic() {
-		Cocos2dxHelper.sCocos2dMusic.rewindBackgroundMusic();
+		CrossAppHelper.sCocos2dMusic.rewindBackgroundMusic();
 	}
 
 	public static boolean isBackgroundMusicPlaying() {
-		return Cocos2dxHelper.sCocos2dMusic.isBackgroundMusicPlaying();
+		return CrossAppHelper.sCocos2dMusic.isBackgroundMusicPlaying();
 	}
 
 	public static float getBackgroundMusicVolume() {
-		return Cocos2dxHelper.sCocos2dMusic.getBackgroundVolume();
+		return CrossAppHelper.sCocos2dMusic.getBackgroundVolume();
 	}
 
 	public static void setBackgroundMusicVolume(final float volume) {
-		Cocos2dxHelper.sCocos2dMusic.setBackgroundVolume(volume);
+		CrossAppHelper.sCocos2dMusic.setBackgroundVolume(volume);
 	}
 
 	public static void preloadEffect(final String path) {
-		Cocos2dxHelper.sCocos2dSound.preloadEffect(path);
+		CrossAppHelper.sCocos2dSound.preloadEffect(path);
 	}
 
 	public static int playEffect(final String path, final boolean isLoop) {
-		return Cocos2dxHelper.sCocos2dSound.playEffect(path, isLoop);
+		return CrossAppHelper.sCocos2dSound.playEffect(path, isLoop);
 	}
 
 	public static void resumeEffect(final int soundId) {
-		Cocos2dxHelper.sCocos2dSound.resumeEffect(soundId);
+		CrossAppHelper.sCocos2dSound.resumeEffect(soundId);
 	}
 
 	public static void pauseEffect(final int soundId) {
-		Cocos2dxHelper.sCocos2dSound.pauseEffect(soundId);
+		CrossAppHelper.sCocos2dSound.pauseEffect(soundId);
 	}
 
 	public static void stopEffect(final int soundId) {
-		Cocos2dxHelper.sCocos2dSound.stopEffect(soundId);
+		CrossAppHelper.sCocos2dSound.stopEffect(soundId);
 	}
 
 	public static float getEffectsVolume() {
-		return Cocos2dxHelper.sCocos2dSound.getEffectsVolume();
+		return CrossAppHelper.sCocos2dSound.getEffectsVolume();
 	}
 
 	public static void setEffectsVolume(final float volume) {
-		Cocos2dxHelper.sCocos2dSound.setEffectsVolume(volume);
+		CrossAppHelper.sCocos2dSound.setEffectsVolume(volume);
 	}
 
 	public static void unloadEffect(final String path) {
-		Cocos2dxHelper.sCocos2dSound.unloadEffect(path);
+		CrossAppHelper.sCocos2dSound.unloadEffect(path);
 	}
 
 	public static void pauseAllEffects() {
-		Cocos2dxHelper.sCocos2dSound.pauseAllEffects();
+		CrossAppHelper.sCocos2dSound.pauseAllEffects();
 	}
 
 	public static void resumeAllEffects() {
-		Cocos2dxHelper.sCocos2dSound.resumeAllEffects();
+		CrossAppHelper.sCocos2dSound.resumeAllEffects();
 	}
 
 	public static void stopAllEffects() {
-		Cocos2dxHelper.sCocos2dSound.stopAllEffects();
+		CrossAppHelper.sCocos2dSound.stopAllEffects();
 	}
 
 	public static void end() {
-		Cocos2dxHelper.sCocos2dMusic.end();
-		Cocos2dxHelper.sCocos2dSound.end();
+		CrossAppHelper.sCocos2dMusic.end();
+		CrossAppHelper.sCocos2dSound.end();
 	}
 
 	public static void onResume() {
-		if (Cocos2dxHelper.sAccelerometerEnabled) {
-			Cocos2dxHelper.sCocos2dxAccelerometer.enable();
+		if (CrossAppHelper.sAccelerometerEnabled) {
+			CrossAppHelper.sCrossAppAccelerometer.enable();
 		}
 	}
 
 	public static void onPause() {
-		if (Cocos2dxHelper.sAccelerometerEnabled) {
-			Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+		if (CrossAppHelper.sAccelerometerEnabled) {
+			CrossAppHelper.sCrossAppAccelerometer.disable();
 		}
 	}
 
@@ -209,21 +209,21 @@ public class Cocos2dxHelper {
 	}
 
 	private static void showDialog(final String pTitle, final String pMessage) {
-		Cocos2dxHelper.sCocos2dxHelperListener.showDialog(pTitle, pMessage);
+		CrossAppHelper.sCrossAppHelperListener.showDialog(pTitle, pMessage);
 	}
 
 	private static void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) {
-		Cocos2dxHelper.sCocos2dxHelperListener.showEditTextDialog(pTitle, pMessage, pInputMode, pInputFlag, pReturnType, pMaxLength);
+		CrossAppHelper.sCrossAppHelperListener.showEditTextDialog(pTitle, pMessage, pInputMode, pInputFlag, pReturnType, pMaxLength);
 	}
 
 	public static void setEditTextDialogResult(final String pResult) {
 		try {
 			final byte[] bytesUTF8 = pResult.getBytes("UTF8");
 
-			Cocos2dxHelper.sCocos2dxHelperListener.runOnGLThread(new Runnable() {
+			CrossAppHelper.sCrossAppHelperListener.runOnGLThread(new Runnable() {
 				@Override
 				public void run() {
-					Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);
+					CrossAppHelper.nativeSetEditTextDialogResult(bytesUTF8);
 				}
 			});
 		} catch (UnsupportedEncodingException pUnsupportedEncodingException) {
@@ -255,47 +255,47 @@ public class Cocos2dxHelper {
  	// ===========================================================
     
     public static boolean getBoolForKey(String key, boolean defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	return settings.getBoolean(key, defaultValue);
     }
     
     public static int getIntegerForKey(String key, int defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	return settings.getInt(key, defaultValue);
     }
     
     public static float getFloatForKey(String key, float defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	return settings.getFloat(key, defaultValue);
     }
     
     public static double getDoubleForKey(String key, double defaultValue) {
     	// SharedPreferences doesn't support saving double value
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	return settings.getFloat(key, (float)defaultValue);
     }
     
     public static String getStringForKey(String key, String defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	return settings.getString(key, defaultValue);
     }
     
     public static void setBoolForKey(String key, boolean value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putBoolean(key, value);
     	editor.commit();
     }
     
     public static void setIntegerForKey(String key, int value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putInt(key, value);
     	editor.commit();
     }
     
     public static void setFloatForKey(String key, float value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putFloat(key, value);
     	editor.commit();
@@ -303,14 +303,14 @@ public class Cocos2dxHelper {
     
     public static void setDoubleForKey(String key, double value) {
     	// SharedPreferences doesn't support recording double value
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putFloat(key, (float)value);
     	editor.commit();
     }
     
     public static void setStringForKey(String key, String value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
     	SharedPreferences.Editor editor = settings.edit();
     	editor.putString(key, value);
     	editor.commit();
@@ -320,7 +320,7 @@ public class Cocos2dxHelper {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	public static interface Cocos2dxHelperListener {
+	public static interface CrossAppHelperListener {
 		public void showDialog(final String pTitle, final String pMessage);
 		public void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength);
 

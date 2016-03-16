@@ -321,7 +321,7 @@ CCEGLView::CCEGLView()
 	, m_initialized(false)
 {
 	s_pEglView = this;
-    strcpy(m_szViewName, "Cocos2dxWinRT");
+    strcpy(m_szViewName, "CrossAppWinRT");
 }
 
 CCEGLView::~CCEGLView()

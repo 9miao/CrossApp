@@ -77,8 +77,8 @@ echo -e "$_CONTENTS"
 echo -e "$_CONTENTS" > "$_CONF_INI_FILE"
 echo ---
 
-# Generate bindings for cocos2dx
+# Generate bindings for CrossApp
 echo "Generating bindings for CrossApp..."
 set -x
-LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/CrossApp.ini -s cocos2d-x -o ${CROSSAPP_ROOT}/scripting/javascript/bindings/generated -n jsb_CrossApp_auto
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/CrossApp.ini -s CrossApp -o ${CROSSAPP_ROOT}/scripting/javascript/bindings/generated -n jsb_CrossApp_auto
 

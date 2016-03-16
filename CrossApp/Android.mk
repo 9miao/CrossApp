@@ -140,12 +140,12 @@ platform/android/CAWebViewImpl.cpp \
 platform/android/CATextField.cpp \
 platform/android/CATextView.cpp \
 platform/android/CAClipboard.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/TouchesJni.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSDL.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppSDL.cpp \
 script_support/JSViewController.cpp \
 script_support/CCScriptSupport.cpp \
 

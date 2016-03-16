@@ -141,7 +141,7 @@ static bool glew_dynamic_binding()
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
 static CCEGLView* s_pMainWindow = NULL;
-static const WCHAR* kWindowClassName = L"Cocos2dxWin32";
+static const WCHAR* kWindowClassName = L"CrossAppWin32";
 CCEGLView* CCEGLView::s_pEglView = NULL;
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -166,7 +166,7 @@ CCEGLView::CCEGLView()
 , m_fFrameZoomFactor(1.0f)
 , m_bSupportTouch(false)
 {
-    strcpy(m_szViewName, "Cocos2dxWin32");
+    strcpy(m_szViewName, "CrossAppWin32");
 }
 
 CCEGLView::~CCEGLView()

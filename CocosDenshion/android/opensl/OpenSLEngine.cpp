@@ -18,7 +18,7 @@ OpenSLEngine::~OpenSLEngine()
 /**********************************************************************************
  *   jni
  **********************************************************************************/
-#define  CLASS_NAME "org/CrossApp/lib/Cocos2dxHelper"
+#define  CLASS_NAME "org/CrossApp/lib/CrossAppHelper"
 
 typedef struct JniMethodInfo_
 {

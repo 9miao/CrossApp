@@ -9,28 +9,28 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
-public class Cocos2dxGLSurfaceView extends GLSurfaceView {
+public class CrossAppGLSurfaceView extends GLSurfaceView {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	private static final String TAG = Cocos2dxGLSurfaceView.class.getSimpleName();
+	private static final String TAG = CrossAppGLSurfaceView.class.getSimpleName();
 
-	private static Cocos2dxGLSurfaceView mGLSurfaceView;
+	private static CrossAppGLSurfaceView mGLSurfaceView;
 
-	private Cocos2dxRenderer mRenderer;
+	private CrossAppRenderer mRenderer;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public Cocos2dxGLSurfaceView(final Context context)
+	public CrossAppGLSurfaceView(final Context context)
 	{
 		super(context);
 
 		this.initView();
 	}
 
-	public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) 
+	public CrossAppGLSurfaceView(final Context context, final AttributeSet attrs) 
 	{
 		super(context, attrs);
 		
@@ -41,7 +41,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	{
 		this.setEGLContextClientVersion(2);
 		this.setFocusableInTouchMode(true);
-		Cocos2dxGLSurfaceView.mGLSurfaceView = this;
+		CrossAppGLSurfaceView.mGLSurfaceView = this;
 	}
 
 	// ===========================================================
@@ -49,7 +49,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	// ===========================================================
 
 
-	public static Cocos2dxGLSurfaceView getInstance()
+	public static CrossAppGLSurfaceView getInstance()
 	{
 		return mGLSurfaceView;
 	}
@@ -61,12 +61,12 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run() 
 			{
-				Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
+				CrossAppAccelerometer.onSensorChanged(x, y, z, timestamp);
 			}
 		});
 	}
 
-	public void setCocos2dxRenderer(final Cocos2dxRenderer renderer)
+	public void setCrossAppRenderer(final CrossAppRenderer renderer)
 	{
 		this.mRenderer = renderer;
 		this.setRenderer(this.mRenderer);
@@ -88,7 +88,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run()
 			{
-				Cocos2dxGLSurfaceView.this.mRenderer.handleOnResume();
+				CrossAppGLSurfaceView.this.mRenderer.handleOnResume();
 			}
 		});
 	}
@@ -101,7 +101,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 			@Override
 			public void run()
 			{
-				Cocos2dxGLSurfaceView.this.mRenderer.handleOnPause();
+				CrossAppGLSurfaceView.this.mRenderer.handleOnPause();
 			}
 		});
 		
@@ -138,7 +138,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleActionDown(idPointerDown, xPointerDown, yPointerDown);
+						CrossAppGLSurfaceView.this.mRenderer.handleActionDown(idPointerDown, xPointerDown, yPointerDown);
 						
 					}
 				});
@@ -155,7 +155,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleActionDown(idDown, xDown, yDown);
+						CrossAppGLSurfaceView.this.mRenderer.handleActionDown(idDown, xDown, yDown);
 					}
 				});
 				break;
@@ -166,7 +166,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run()
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleActionMove(ids, xs, ys);
+						CrossAppGLSurfaceView.this.mRenderer.handleActionMove(ids, xs, ys);
 					}
 				});
 				break;
@@ -182,7 +182,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run()
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleActionUp(idPointerUp, xPointerUp, yPointerUp);
+						CrossAppGLSurfaceView.this.mRenderer.handleActionUp(idPointerUp, xPointerUp, yPointerUp);
 					}
 				});
 				break;
@@ -198,7 +198,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleActionUp(idUp, xUp, yUp);
+						CrossAppGLSurfaceView.this.mRenderer.handleActionUp(idUp, xUp, yUp);
 					}
 				});
 				break;
@@ -209,7 +209,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleActionCancel(ids, xs, ys);
+						CrossAppGLSurfaceView.this.mRenderer.handleActionCancel(ids, xs, ys);
 					}
 				});
 				break;
@@ -217,14 +217,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
         /*
 		if (BuildConfig.DEBUG) {
-			Cocos2dxGLSurfaceView.dumpMotionEvent(pMotionEvent);
+			CrossAppGLSurfaceView.dumpMotionEvent(pMotionEvent);
 		}
 		*/
 		return true;
 	}
 
 	/*
-	 * This function is called before Cocos2dxRenderer.nativeInit(), so the
+	 * This function is called before CrossAppRenderer.nativeInit(), so the
 	 * width and height is correct.
 	 */
 	@Override
@@ -254,7 +254,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleKeyDown(pKeyCode);
+						CrossAppGLSurfaceView.this.mRenderer.handleKeyDown(pKeyCode);
 					}
 				});
 				return true;
@@ -264,7 +264,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleKeyDown(pKeyCode);
+						CrossAppGLSurfaceView.this.mRenderer.handleKeyDown(pKeyCode);
 					}
 				});
 				return true;
@@ -274,7 +274,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 					@Override
 					public void run() 
 					{
-						Cocos2dxGLSurfaceView.this.mRenderer.handleKeyDown(pKeyCode);
+						CrossAppGLSurfaceView.this.mRenderer.handleKeyDown(pKeyCode);
 					}
 				});
 				return true;
@@ -315,6 +315,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		}
 		
 		sb.append("]");
-		Log.d(Cocos2dxGLSurfaceView.TAG, sb.toString());
+		Log.d(CrossAppGLSurfaceView.TAG, sb.toString());
 	}
 }

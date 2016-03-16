@@ -7,4 +7,4 @@ class GLNode : public CAView {
   void draw();
 };
 
-//void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global);
+//void js_register_CrossApp_GLNode(JSContext *cx, JSObject *global);

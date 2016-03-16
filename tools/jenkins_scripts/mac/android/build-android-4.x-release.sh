@@ -2,7 +2,7 @@
 #This script is used to finish a android automated compiler.
 #You should make sure have finished the environment setting.
 #Here are the environment variables you should set.
-#$COCOS2DX_ROOT $ANDROID_SDK_ROOT $ANDROID_NDK_ROOT $NDK_ROOT
+#$CrossApp_ROOT $ANDROID_SDK_ROOT $ANDROID_NDK_ROOT $NDK_ROOT
 
 antcompile()
 {

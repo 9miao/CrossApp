@@ -1,6 +1,6 @@
 
-#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
-#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
+#ifndef __Java_org_CrossApp_lib_CrossAppHelper_H__
+#define __Java_org_CrossApp_lib_CrossAppHelper_H__
 
 #include <string>
 
@@ -28,4 +28,4 @@ extern void setFloatForKeyJNI(const char* pKey, float value);
 extern void setDoubleForKeyJNI(const char* pKey, double value);
 extern void setStringForKeyJNI(const char* pKey, const char* value);
 
-#endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
+#endif /* __Java_org_CrossApp_lib_CrossAppHelper_H__ */

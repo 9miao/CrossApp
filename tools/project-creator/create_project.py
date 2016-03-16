@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # create_project.py
-# Create cross-platform cocos2d-x project
-# Copyright (c) 2012 cocos2d-x.org
+# Create cross-platform CrossApp project
+# Copyright (c) 2012 CrossApp
 # Author: WangZhe
 
 # define global variables
@@ -123,7 +123,7 @@ def processPlatformProjects(platform):
     f = open("%s.json" % platform)
     data = json.load(f)
 
-    # rename package path, like "org.cocos2dx.hello" to "com.company.game". This is a special process for android
+    # rename package path, like "org.CrossApp.hello" to "com.company.game". This is a special process for android
     if (platform == "android"):
         src_pkg = context["src_package_name"].split('.')
         dst_pkg = context["dst_package_name"].split('.')
@@ -181,7 +181,7 @@ checkParams(context)
 # import pprint
 # pprint.pprint(context)
 
-# copy "lauguage"(cpp/lua/javascript) platform.proj into cocos2d-x/projects/<project_name>/folder
+# copy "lauguage"(cpp/lua/javascript) platform.proj into CrossApp/projects/<project_name>/folder
 if (os.path.exists(context["dst_project_path"]) == True):
     print "Error:" + context["dst_project_path"] + " folder is already existing"
     print "Please remove the old project or choose a new PROJECT_NAME in -project parameter"

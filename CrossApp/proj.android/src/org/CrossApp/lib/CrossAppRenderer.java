@@ -8,7 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
 
-public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
+public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -16,7 +16,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private final static long NANOSECONDSPERSECOND = 1000000000L;
 	private final static long NANOSECONDSPERMICROSECOND = 1000000;
 
-	private static long sAnimationInterval = (long) (1.0 / 60 * Cocos2dxRenderer.NANOSECONDSPERSECOND);
+	private static long sAnimationInterval = (long) (1.0 / 60 * CrossAppRenderer.NANOSECONDSPERSECOND);
 
 	// ===========================================================
 	// Fields
@@ -35,7 +35,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 
 	public static void setAnimationInterval(final double pAnimationInterval) {
-		Cocos2dxRenderer.sAnimationInterval = (long) (pAnimationInterval * Cocos2dxRenderer.NANOSECONDSPERSECOND);
+		CrossAppRenderer.sAnimationInterval = (long) (pAnimationInterval * CrossAppRenderer.NANOSECONDSPERSECOND);
 	}
 
 	public void setScreenWidthAndHeight(final int pSurfaceWidth, final int pSurfaceHeight) {
@@ -49,7 +49,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onSurfaceCreated(final GL10 pGL10, final EGLConfig pEGLConfig) {
-		Cocos2dxRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
+		CrossAppRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
 		this.mLastTickInNanoSeconds = System.nanoTime();
 	}
 
@@ -71,14 +71,14 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 
 		// should render a frame when onDrawFrame() is called or there is a
 		// "ghost"
-		Cocos2dxRenderer.nativeRender();
+		CrossAppRenderer.nativeRender();
 
 		/*
 		// fps controlling
-		if (interval < Cocos2dxRenderer.sAnimationInterval) {
+		if (interval < CrossAppRenderer.sAnimationInterval) {
 			try {
 				// because we render it before, so we should sleep twice time interval
-				Thread.sleep((Cocos2dxRenderer.sAnimationInterval - interval) / Cocos2dxRenderer.NANOSECONDSPERMICROSECOND);
+				Thread.sleep((CrossAppRenderer.sAnimationInterval - interval) / CrossAppRenderer.NANOSECONDSPERMICROSECOND);
 			} catch (final Exception e) {
 			}
 		}
@@ -104,41 +104,41 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private static native void nativeOpenKeyPad();
 
 	public void handleActionDown(final int pID, final float pX, final float pY) {
-		Cocos2dxRenderer.nativeTouchesBegin(pID, pX, pY);
+		CrossAppRenderer.nativeTouchesBegin(pID, pX, pY);
 	}
 
 	public void handleActionUp(final int pID, final float pX, final float pY) {
-		Cocos2dxRenderer.nativeTouchesEnd(pID, pX, pY);
+		CrossAppRenderer.nativeTouchesEnd(pID, pX, pY);
 	}
 
 	public void handleActionCancel(final int[] pIDs, final float[] pXs, final float[] pYs) {
-		Cocos2dxRenderer.nativeTouchesCancel(pIDs, pXs, pYs);
+		CrossAppRenderer.nativeTouchesCancel(pIDs, pXs, pYs);
 	}
 
 	public void handleActionMove(final int[] pIDs, final float[] pXs, final float[] pYs) {
-		Cocos2dxRenderer.nativeTouchesMove(pIDs, pXs, pYs);
+		CrossAppRenderer.nativeTouchesMove(pIDs, pXs, pYs);
 	}
 
 	public void handleKeyDown(final int pKeyCode) {
-		Cocos2dxRenderer.nativeKeyDown(pKeyCode);
+		CrossAppRenderer.nativeKeyDown(pKeyCode);
 	}
 
 	public void handleOnPause() {
-		Cocos2dxRenderer.nativeOnPause();
+		CrossAppRenderer.nativeOnPause();
 	}
 	
 	public void handleCloseKeyPad()
 	{
-		Cocos2dxRenderer.nativeCloseKeyPad();
+		CrossAppRenderer.nativeCloseKeyPad();
 	}
 
 	public void handleOpenKeyPad()
 	{
-		Cocos2dxRenderer.nativeOpenKeyPad();
+		CrossAppRenderer.nativeOpenKeyPad();
 	}
 	
 	public void handleOnResume() {
-		Cocos2dxRenderer.nativeOnResume();
+		CrossAppRenderer.nativeOnResume();
 	}
 
 	// ===========================================================

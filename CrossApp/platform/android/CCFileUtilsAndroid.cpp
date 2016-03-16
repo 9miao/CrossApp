@@ -2,7 +2,7 @@
 #include "CCFileUtilsAndroid.h"
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "jni/Java_org_CrossApp_lib_CrossAppHelper.h"
 
 using namespace std;
 
@@ -77,7 +77,7 @@ bool CCFileUtilsAndroid::isAbsolutePath(const std::string& strPath)
 {
     // On Android, there are two situations for full path.
     // 1) Files in APK, e.g. assets/path/path/file.png
-    // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
+    // 2) Files not in APK, e.g. /data/data/org.CrossApp.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
     // So these two situations need to be checked on Android.
     if (strPath[0] == '/' || strPath.find(m_strDefaultResRootPath) == 0)
     {

@@ -7,7 +7,7 @@
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
 
-#define CLASS_NAME "org/CrossApp/lib/Cocos2dxWebViewHelper"
+#define CLASS_NAME "org/CrossApp/lib/CrossAppWebViewHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
 
 
@@ -18,50 +18,50 @@ static std::string s_cszWebViewHtmSource;
 
 extern "C" {
 
-    JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_shouldStartLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
+    JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_shouldStartLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
         const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
         env->ReleaseStringUTFChars(jurl, charUrl);
         return CAWebViewImpl::shouldStartLoading(index, url);
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFinishLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_didFinishLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
         env->ReleaseStringUTFChars(jurl, charUrl);
 		CAWebViewImpl::didFinishLoading(index, url);
     }
 
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jstring jurl) {
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_didLoadHtmlSource(JNIEnv *env, jclass, jstring jurl) {
 		const char* charHtml = env->GetStringUTFChars(jurl, NULL);
 		s_cszWebViewHtmSource = charHtml;
 		env->ReleaseStringUTFChars(jurl, charHtml);
 	}
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_didFailLoading(JNIEnv *env, jclass, jint index, jstring jurl) {
 		const char* charUrl = env->GetStringUTFChars(jurl, NULL);
         std::string url = charUrl;
         env->ReleaseStringUTFChars(jurl, charUrl);
 		CAWebViewImpl::didFailLoading(index, url);
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_onJsCallback(JNIEnv *env, jclass, jint index, jstring jmessage) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_onJsCallback(JNIEnv *env, jclass, jint index, jstring jmessage) {
 		const char* charMessage = env->GetStringUTFChars(jmessage, NULL);
         std::string message = charMessage;
         env->ReleaseStringUTFChars(jmessage, charMessage);
 		CAWebViewImpl::onJsCallback(index, message);
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jbyteArray buf, jint len) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jbyteArray buf, jint len) {
 			s_cszWebViewImageData.resize(len);
 			env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_pause() {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_pause() {
         CrossApp::CAApplication::getApplication()->pause();
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxWebViewHelper_resume() {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_resume() {
         CrossApp::CAApplication::getApplication()->resume();
     }
 }

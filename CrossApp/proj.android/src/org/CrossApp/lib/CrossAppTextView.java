@@ -46,7 +46,7 @@ import android.widget.TextView.OnEditorActionListener;
 {
 	private EditText textView = null; 
 	private static FrameLayout layout = null;
-	private static Cocos2dxActivity context = null;
+	private static CrossAppActivity context = null;
 	private static Handler handler = null;
 	private static HashMap<Integer, CrossAppTextView> dict = null;
 	private int mykey = -1;
@@ -100,20 +100,20 @@ import android.widget.TextView.OnEditorActionListener;
 		
 		if (context == null)
     	{
-    		context =  (Cocos2dxActivity)Cocos2dxActivity.getContext();
+    		context =  (CrossAppActivity)CrossAppActivity.getContext();
     	}
 		
 		if (layout == null)
     	{
-    		layout = Cocos2dxActivity.getFrameLayout();
+    		layout = CrossAppActivity.getFrameLayout();
     	}
 	}
 	
 	public static void reload()
 	{
 		handler = new Handler(Looper.myLooper());
-		context =  (Cocos2dxActivity)Cocos2dxActivity.getContext();
-		layout = Cocos2dxActivity.getFrameLayout();
+		context =  (CrossAppActivity)CrossAppActivity.getContext();
+		layout = CrossAppActivity.getFrameLayout();
 		
 		Set<Integer> keys = (Set<Integer>) dict.keySet() ; 
 		Iterator<Integer> iterator = keys.iterator() ; 
@@ -396,7 +396,7 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void becomeFirstResponder()
     {
-    	Cocos2dxActivity.setSingleTextView(this);
+    	CrossAppActivity.setSingleTextView(this);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
@@ -426,7 +426,7 @@ import android.widget.TextView.OnEditorActionListener;
     
     public void resignFirstResponder()
     {
-    	Cocos2dxActivity.setSingleTextView(null);
+    	CrossAppActivity.setSingleTextView(null);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override

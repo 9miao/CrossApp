@@ -36,7 +36,7 @@ def check_activity(a):
     f1 = open('running_activities.txt')
     while True:
         line = f1.readline()
-        if not line.find('org.cocos2dx.testcpp') == -1:
+        if not line.find('org.CrossApp.testcpp') == -1:
             break;
         if len(line) == 0:
             str = "TestCpp wasn't running,maybe it has crashes,please checkout:"
@@ -69,11 +69,11 @@ else:
     sys.exit(1)
 
 # sets a variable with the package's internal name
-package = 'org.cocos2dx.testcpp'
+package = 'org.CrossApp.testcpp'
 print "Package name: "+ package
 
 # sets a variable with the name of an Activity in the package
-activity = 'org.cocos2dx.testcpp.TestCpp'
+activity = 'org.CrossApp.testcpp.TestCpp'
 print "Activity name: " + activity
 
 # sets the name of the component to start

@@ -19,12 +19,12 @@ import android.text.TextUtils;
 import android.util.FloatMath;
 import android.util.Log;
 
-public class Cocos2dxBitmap {
+public class CrossAppBitmap {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	/* The values are the same as cocos2dx/platform/CCImage.h. */
+	/* The values are the same as CrossApp/platform/CCImage.h. */
 	private static final int HORIZONTALALIGN_LEFT = 1;
 	private static final int HORIZONTALALIGN_RIGHT = 2;
 	private static final int HORIZONTALALIGN_CENTER = 3;
@@ -47,7 +47,7 @@ public class Cocos2dxBitmap {
 	// ===========================================================
 
 	public static void setContext(final Context pContext) {
-		Cocos2dxBitmap.sContext = pContext;
+		CrossAppBitmap.sContext = pContext;
 	}
 
 	// ===========================================================
@@ -89,13 +89,13 @@ public class Cocos2dxBitmap {
 		final int horizontalAlignment = pAlignment & 0x0F;
 		final int verticalAlignment   = (pAlignment >> 4) & 0x0F;
 
-		pString = Cocos2dxBitmap.refactorString(pString);
-		final Paint paint = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
+		pString = CrossAppBitmap.refactorString(pString);
+		final Paint paint = CrossAppBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 		
 		// set the paint color
 		paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
 
-		final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
+		final TextProperty textProperty = CrossAppBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
 		final int bitmapTotalHeight = (pHeight == 0 ? textProperty.mTotalHeight: pHeight);
 		
 		// padding needed when using shadows (not used otherwise)
@@ -132,13 +132,13 @@ public class Cocos2dxBitmap {
 		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
 		
 		int x = 0;
-		int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
+		int y = CrossAppBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 		
 		final String[] lines = textProperty.mLines;
 		
 		for (final String line : lines) {
 			
-			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+			x = CrossAppBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
 			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
 			y += textProperty.mHeightPerLine;
 			
@@ -147,18 +147,18 @@ public class Cocos2dxBitmap {
 		// draw again with stroke on if needed 
 		if ( stroke ) {
 			
-			final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
+			final Paint paintStroke = CrossAppBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
 			paintStroke.setStrokeWidth(strokeSize * 0.5f);
 			paintStroke.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
 			
 			x = 0;
-			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
+			y = CrossAppBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 			final String[] lines2 = textProperty.mLines;
 			
 			for (final String line : lines2) {
 				
-				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+				x = CrossAppBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
 				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
 				y += textProperty.mHeightPerLine;
 				
@@ -166,7 +166,7 @@ public class Cocos2dxBitmap {
 			
 		}
 		
-		Cocos2dxBitmap.initNativeObject(bitmap);
+		CrossAppBitmap.initNativeObject(bitmap);
 	}
 
 	private static Paint newPaint(final String pFontName, final int pFontSize,
@@ -179,11 +179,11 @@ public class Cocos2dxBitmap {
 		/* Set type face for paint, now it support .ttf file. */
 		if (pFontName.endsWith(".ttf")) {
 			try {
-				final Typeface typeFace = Cocos2dxTypefaces.get(
-						Cocos2dxBitmap.sContext, pFontName);
+				final Typeface typeFace = CrossAppTypefaces.get(
+						CrossAppBitmap.sContext, pFontName);
 				paint.setTypeface(typeFace);
 			} catch (final Exception e) {
-				Log.e("Cocos2dxBitmap", "error to create ttf type face: "
+				Log.e("CrossAppBitmap", "error to create ttf type face: "
 						+ pFontName);
 
 				/* The file may not find, use system font. */
@@ -215,7 +215,7 @@ public class Cocos2dxBitmap {
 		final int h = (int) Math.ceil(fm.bottom - fm.top);
 		int maxContentWidth = 0;
 
-		final String[] lines = Cocos2dxBitmap.splitString(pString, pWidth,
+		final String[] lines = CrossAppBitmap.splitString(pString, pWidth,
 				pHeight, pPaint);
 
 		if (pWidth != 0) {
@@ -301,7 +301,7 @@ public class Cocos2dxBitmap {
 				final int lineWidth = (int) FloatMath.ceil(pPaint
 						.measureText(line));
 				if (lineWidth > pMaxWidth) {
-					strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidth(
+					strList.addAll(CrossAppBitmap.divideStringWithMaxWidth(
 							line, pMaxWidth, pPaint));
 				} else {
 					strList.add(line);
@@ -416,12 +416,12 @@ public class Cocos2dxBitmap {
 	}
 
 	private static void initNativeObject(final Bitmap pBitmap) {
-		final byte[] pixels = Cocos2dxBitmap.getPixels(pBitmap);
+		final byte[] pixels = CrossAppBitmap.getPixels(pBitmap);
 		if (pixels == null) {
 			return;
 		}
 
-		Cocos2dxBitmap.nativeInitBitmapDC(pBitmap.getWidth(),
+		CrossAppBitmap.nativeInitBitmapDC(pBitmap.getWidth(),
 				pBitmap.getHeight(), pixels);
 	}
 

@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
-public class Cocos2dxLocalStorage {
+public class CrossAppLocalStorage {
 
-    private static final String TAG = "Cocos2dxLocalStorage";
+    private static final String TAG = "CrossAppLocalStorage";
 
     private static String DATABASE_NAME = "jsb.sqlite";
     private static String TABLE_NAME = "data";
@@ -24,10 +24,10 @@ public class Cocos2dxLocalStorage {
      * @return 
      */
     public static boolean init(String dbName, String tableName) {
-    	if (Cocos2dxActivity.getContext() != null) {
+    	if (CrossAppActivity.getContext() != null) {
     		DATABASE_NAME = dbName;
     		TABLE_NAME = tableName;
-    		mDatabaseOpenHelper = new DBOpenHelper(Cocos2dxActivity.getContext());
+    		mDatabaseOpenHelper = new DBOpenHelper(CrossAppActivity.getContext());
     		mDatabase = mDatabaseOpenHelper.getWritableDatabase();
     		return true;
     	}

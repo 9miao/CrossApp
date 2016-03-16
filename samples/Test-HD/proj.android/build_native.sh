@@ -37,16 +37,16 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
-COCOS2DX_ROOT="$DIR/../../.."
+CROSSAPP_ROOT="$DIR/../../.."
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
 
 echo "NDK_ROOT = $NDK_ROOT"
-echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"
+echo "CROSSAPP_ROOT = $CROSSAPP_ROOT"
 echo "APP_ROOT = $APP_ROOT"
 echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
 echo "Using prebuilt externals"
 "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-"NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/CrossApp/the_third_party/"
+"NDK_MODULE_PATH=${CROSSAPP_ROOT}:${CROSSAPP_ROOT}/CrossApp/the_third_party/"
 
 

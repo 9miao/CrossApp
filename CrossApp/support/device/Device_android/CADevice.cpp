@@ -47,7 +47,7 @@ extern "C"
     void JAVAgetWifiList()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getWifiList" , "()V"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getWifiList" , "()V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
         }
@@ -55,7 +55,7 @@ extern "C"
     CAWifiInfo JAVAgetWifiConnection()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getWifiConnectionInfo" , "()Lorg/CrossApp/lib/CustomScanResult;"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getWifiConnectionInfo" , "()Lorg/CrossApp/lib/CustomScanResult;"))
         {
             jobject obj = (jobject)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
             jclass cls_arraylist = jmi.env->GetObjectClass(obj);
@@ -79,11 +79,11 @@ extern "C"
     void JAVABlueToothManager()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getContext" , "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getContext" , "()Lorg/CrossApp/lib/CrossAppActivity;"))
         {
             jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
             
-            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/Cocos2dxActivity","initBlueTooth","()V");
+            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/CrossAppActivity","initBlueTooth","()V");
             if (isHave) {
                 jmi.env->CallVoidMethod(obj, jmi.methodID);
             }
@@ -93,10 +93,10 @@ extern "C"
     void JAVABlueSetType(int type)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getContext" , "()Lorg/CrossApp/lib/Cocos2dxActivity;"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getContext" , "()Lorg/CrossApp/lib/CrossAppActivity;"))
         {
             jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/Cocos2dxActivity","setBlueToothActionType","(I)V");
+            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/CrossAppActivity","setBlueToothActionType","(I)V");
             if (isHave)
             {
                 jmi.env->CallVoidMethod(obj, jmi.methodID,type);
@@ -152,7 +152,7 @@ extern "C"
     float JAVAgetBattery()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getBatteryLevel" , "()I"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getBatteryLevel" , "()I"))
         {
             jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
             int b = a;
@@ -163,7 +163,7 @@ extern "C"
                            ,const std::string &appId)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "getNewVersion" , "(Ljava/lang/String;I)V"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getNewVersion" , "(Ljava/lang/String;I)V"))
         {
             
             jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()),versionNumber);
@@ -264,7 +264,7 @@ double* getGPSLocation()
 void start()//ex
 {
     JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/Cocos2dxActivity" , "startGps" , "()V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "startGps" , "()V"))
 	{
         jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
         
@@ -530,7 +530,7 @@ extern "C"
         const char* str = env->GetStringUTFChars(arg1, false);
         ToMainThread::sharedMain()->getPath(str);
     }
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnBlueToothState(JNIEnv *env,jobject obj,jint sender)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnBlueToothState(JNIEnv *env,jobject obj,jint sender)
     {
         int type = sender;
         
@@ -540,7 +540,7 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnStartedDiscoveryDevice(JNIEnv *env,jobject obj)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnStartedDiscoveryDevice(JNIEnv *env,jobject obj)
     {
         if(bluetoothdelegate)
         {
@@ -548,7 +548,7 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnFinfishedDiscoveryDevice(JNIEnv *env,jobject obj)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnFinfishedDiscoveryDevice(JNIEnv *env,jobject obj)
     {
         if(bluetoothdelegate)
         {
@@ -557,7 +557,7 @@ extern "C"
     }
     
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_returnDiscoveryDevice(JNIEnv *env,jobject obj,jobject sender)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnDiscoveryDevice(JNIEnv *env,jobject obj,jobject sender)
     {
         jclass bluetoothtype = env->GetObjectClass(sender);
         jmethodID getaddress = env->GetMethodID(bluetoothtype,"getAddress","()Ljava/lang/String;");
@@ -579,7 +579,7 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxActivity_getWifiList(JNIEnv *env,jobject obj,jobject obj_wifiArray)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_getWifiList(JNIEnv *env,jobject obj,jobject obj_wifiArray)
     {
         jclass cls_arraylist = env->GetObjectClass(obj_wifiArray);
         jmethodID   mGetID      = env->GetMethodID(cls_arraylist,"get","(I)Ljava/lang/Object;");

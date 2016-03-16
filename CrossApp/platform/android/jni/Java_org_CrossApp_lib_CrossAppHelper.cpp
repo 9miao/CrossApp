@@ -3,13 +3,13 @@
 #include <android/log.h>
 #include <string>
 #include "JniHelper.h"
-#include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "Java_org_CrossApp_lib_CrossAppHelper.h"
 
 
-#define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
+#define  LOG_TAG    "Java_org_CrossApp_lib_CrossAppHelper.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-#define  CLASS_NAME "org/CrossApp/lib/Cocos2dxHelper"
+#define  CLASS_NAME "org/CrossApp/lib/CrossAppHelper"
 
 static EditTextCallback s_pfEditTextCallback = NULL;
 static void* s_ctx = NULL;
@@ -21,11 +21,11 @@ string g_apkPath;
 
 extern "C" {
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
         g_apkPath = JniHelper::jstring2string(apkPath);
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
         jsize  size = env->GetArrayLength(text);
 
         if (size > 0) {
@@ -115,7 +115,7 @@ std::string getPackageNameJNI() {
     JniMethodInfo t;
     std::string ret("");
 
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getCocos2dxPackageName", "()Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getCrossAppPackageName", "()Ljava/lang/String;")) {
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
         ret = JniHelper::jstring2string(str);
@@ -128,7 +128,7 @@ std::string getFileDirectoryJNI() {
     JniMethodInfo t;
     std::string ret("");
 
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getCocos2dxWritablePath", "()Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getCrossAppWritablePath", "()Ljava/lang/String;")) {
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
         ret = JniHelper::jstring2string(str);

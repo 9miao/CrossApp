@@ -8,12 +8,12 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-public class Cocos2dxMusic {
+public class CrossAppMusic {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	private static final String TAG = Cocos2dxMusic.class.getSimpleName();
+	private static final String TAG = CrossAppMusic.class.getSimpleName();
 
 	// ===========================================================
 	// Fields
@@ -30,7 +30,7 @@ public class Cocos2dxMusic {
 	// Constructors
 	// ===========================================================
 
-	public Cocos2dxMusic(final Context pContext) {
+	public CrossAppMusic(final Context pContext) {
 		this.mContext = pContext;
 
 		this.initData();
@@ -85,7 +85,7 @@ public class Cocos2dxMusic {
 		}
 
 		if (this.mBackgroundMediaPlayer == null) {
-			Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: background media player is null");
+			Log.e(CrossAppMusic.TAG, "playBackgroundMusic: background media player is null");
 		} else {
 			// if the music is playing or paused, stop it
 			this.mBackgroundMediaPlayer.stop();
@@ -99,7 +99,7 @@ public class Cocos2dxMusic {
 
 				this.mPaused = false;
 			} catch (final Exception e) {
-				Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: error state");
+				Log.e(CrossAppMusic.TAG, "playBackgroundMusic: error state");
 			}
 		}
 	}
@@ -139,7 +139,7 @@ public class Cocos2dxMusic {
 
 				this.mPaused = false;
 			} catch (final Exception e) {
-				Log.e(Cocos2dxMusic.TAG, "rewindBackgroundMusic: error state");
+				Log.e(CrossAppMusic.TAG, "rewindBackgroundMusic: error state");
 			}
 		}
 	}
@@ -220,7 +220,7 @@ public class Cocos2dxMusic {
 			mediaPlayer.setVolume(this.mLeftVolume, this.mRightVolume);
 		} catch (final Exception e) {
 			mediaPlayer = null;
-			Log.e(Cocos2dxMusic.TAG, "error: " + e.getMessage(), e);
+			Log.e(CrossAppMusic.TAG, "error: " + e.getMessage(), e);
 		}
 
 		return mediaPlayer;

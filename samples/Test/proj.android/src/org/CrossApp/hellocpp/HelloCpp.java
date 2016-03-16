@@ -1,20 +1,20 @@
 
 package org.CrossApp.hellocpp;
 
-import org.CrossApp.lib.Cocos2dxActivity;
-import org.CrossApp.lib.Cocos2dxGLSurfaceView;
+import org.CrossApp.lib.CrossAppActivity;
+import org.CrossApp.lib.CrossAppGLSurfaceView;
 
 import android.os.Bundle;
 
-public class HelloCpp extends Cocos2dxActivity{
+public class HelloCpp extends CrossAppActivity{
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
 		
 	}
 
-    public Cocos2dxGLSurfaceView onCreateView() {
-    	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+    public CrossAppGLSurfaceView onCreateView() {
+    	CrossAppGLSurfaceView glSurfaceView = new CrossAppGLSurfaceView(this);
     	// HelloCpp should create stencil buffer
     	glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
     	

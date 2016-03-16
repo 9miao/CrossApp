@@ -1,7 +1,7 @@
 
 package org.CrossApp.lib;
 
-import org.CrossApp.lib.Cocos2dxActivity;
+import org.CrossApp.lib.CrossAppActivity;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -21,16 +21,16 @@ public class CrossAppCamera
 	
     static public void openCamera()
     {
-    	Cocos2dxActivity.getContext().runOnUiThread(new Runnable() 
+    	CrossAppActivity.getContext().runOnUiThread(new Runnable() 
     	{
             @Override
             public void run()
             {
-            	SurfaceView surfaceView = new SurfaceView(Cocos2dxActivity.getContext());
+            	SurfaceView surfaceView = new SurfaceView(CrossAppActivity.getContext());
             	surfaceView.setBackgroundColor(Color.RED);
             	
 
-        		FrameLayout layout = Cocos2dxActivity.getFrameLayout();
+        		FrameLayout layout = CrossAppActivity.getFrameLayout();
         		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
             	params.leftMargin = 100; 
             	params.topMargin = 100;
@@ -77,7 +77,7 @@ public class CrossAppCamera
 //        					Size vSize = vSizes.get(i);
 //        				}
 
-        				if(Cocos2dxActivity.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) 
+        				if(CrossAppActivity.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) 
         				{ 
         					mParameters.set("orientation", "landscape");
         				} 

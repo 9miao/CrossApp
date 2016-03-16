@@ -3,28 +3,28 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-COCOS2DX_ROOT="$DIR"/../..
+CrossApp_ROOT="$DIR"/../..
 
 if [ "$GEN_JSB"x = "YES"x ]; then
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
     fi
-    cd $COCOS2DX_ROOT/tools/travis-scripts
+    cd $CrossApp_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 fi
 
 build_android()
 {
-    cd $COCOS2DX_ROOT/samples/$1/$2/proj.android
+    cd $CrossApp_ROOT/samples/$1/$2/proj.android
     ln -s ../../../../android_build_objs obj
     ./build_native.sh
 }
 
 if [ "$PLATFORM"x = "android"x ]; then
-    cd $COCOS2DX_ROOT/tools/travis-scripts
+    cd $CrossApp_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
     
-    cd $COCOS2DX_ROOT
+    cd $CrossApp_ROOT
     mkdir android_build_objs
     build_android Cpp HelloCpp
     build_android Cpp TestCpp
@@ -35,17 +35,17 @@ if [ "$PLATFORM"x = "android"x ]; then
 fi
 
 if [ "$PLATFORM"x = "nacl"x ]; then
-    cd $COCOS2DX_ROOT
+    cd $CrossApp_ROOT
     make -j4
 fi
 
 if [ "$PLATFORM"x = "linux"x ]; then
-    cd $COCOS2DX_ROOT
+    cd $CrossApp_ROOT
     make -j4
 fi
 
 if [ "$PLATFORM"x = "emscripten"x ]; then
-    cd $COCOS2DX_ROOT
+    cd $CrossApp_ROOT
     export PYTHON=/usr/bin/python
     export LLVM=$HOME/bin/clang+llvm-3.2/bin
     sudo mkdir -p /Library/Fonts
@@ -54,10 +54,10 @@ if [ "$PLATFORM"x = "emscripten"x ]; then
 fi
 
 if [ "$PLATFORM"x = "ios"x ]; then
-    cd $COCOS2DX_ROOT/tools/travis-scripts
+    cd $CrossApp_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
-    cd $COCOS2DX_ROOT
+    cd $CrossApp_ROOT
     xctool/xctool.sh -project samples/Cpp/HelloCpp/proj.ios/HelloCpp.xcodeproj -scheme HelloCpp test
     xctool/xctool.sh -project samples/Cpp/SimpleGame/proj.ios/SimpleGame.xcodeproj -scheme SimpleGame test
     xctool/xctool.sh -project samples/Cpp/TestCpp/proj.ios/TestCpp.xcodeproj -scheme TestCpp test

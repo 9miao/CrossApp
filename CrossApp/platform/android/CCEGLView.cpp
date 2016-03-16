@@ -4,7 +4,7 @@
 #include "basics/CAApplication.h"
 #include "ccMacros.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "jni/Java_org_CrossApp_lib_CrossAppHelper.h"
 #include "CCGL.h"
 
 #include <stdlib.h>

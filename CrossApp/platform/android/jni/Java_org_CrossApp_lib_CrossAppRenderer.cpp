@@ -9,17 +9,17 @@
 using namespace CrossApp;
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeRender(JNIEnv* env) {
         CrossApp::CAApplication::getApplication()->mainLoop();
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeOnPause() {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnPause() {
         CCApplication::sharedApplication()->applicationDidEnterBackground();
 
         CANotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeOnResume() {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnResume() {
         if (CrossApp::CAApplication::getApplication()->getOpenGLView()) {
             CCApplication::sharedApplication()->applicationWillEnterForeground();
         }

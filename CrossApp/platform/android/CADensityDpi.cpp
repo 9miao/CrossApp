@@ -14,7 +14,7 @@ float CADensityDpi::getDensityDpi()
     }
     
     JniMethodInfo jni;
-    if(!JniHelper::getStaticMethodInfo(jni , "org/CrossApp/lib/Cocos2dxHelper" , "getDPI" , "()F"))
+    if(!JniHelper::getStaticMethodInfo(jni , "org/CrossApp/lib/CrossAppHelper" , "getDPI" , "()F"))
     {
         return 320.0f;
     }

@@ -24,10 +24,10 @@ void GLNode::draw() {
 }
 
 
-JSClass  *js_cocos2dx_GLNode_class;
-JSObject *js_cocos2dx_GLNode_prototype;
+JSClass  *js_CrossApp_GLNode_class;
+JSObject *js_CrossApp_GLNode_prototype;
 
-JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_CrossApp_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
   if (argc == 0) {
@@ -56,10 +56,10 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
   return JS_FALSE;
 }
 
-void js_cocos2dx_GLNode_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_CrossApp_GLNode_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
-static JSBool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+static JSBool js_CrossApp_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
     GLNode *nobj = new GLNode();
@@ -70,7 +70,7 @@ static JSBool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 }
 
-JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_CrossApp_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
   GLNode* ret = new GLNode();
   jsval jsret;
@@ -88,38 +88,38 @@ JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 
 //extern JSObject* jsb_CCNode_prototype;
 
-//void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
-//  js_cocos2dx_GLNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-//  js_cocos2dx_GLNode_class->name = "GLNode";
-//  js_cocos2dx_GLNode_class->addProperty = JS_PropertyStub;
-//  js_cocos2dx_GLNode_class->delProperty = JS_PropertyStub;
-//  js_cocos2dx_GLNode_class->getProperty = JS_PropertyStub;
-//  js_cocos2dx_GLNode_class->setProperty = JS_StrictPropertyStub;
-//  js_cocos2dx_GLNode_class->enumerate = JS_EnumerateStub;
-//  js_cocos2dx_GLNode_class->resolve = JS_ResolveStub;
-//  js_cocos2dx_GLNode_class->convert = JS_ConvertStub;
-//  js_cocos2dx_GLNode_class->finalize = js_cocos2dx_GLNode_finalize;
-//  js_cocos2dx_GLNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+//void js_register_CrossApp_GLNode(JSContext *cx, JSObject *global) {
+//  js_CrossApp_GLNode_class = (JSClass *)calloc(1, sizeof(JSClass));
+//  js_CrossApp_GLNode_class->name = "GLNode";
+//  js_CrossApp_GLNode_class->addProperty = JS_PropertyStub;
+//  js_CrossApp_GLNode_class->delProperty = JS_PropertyStub;
+//  js_CrossApp_GLNode_class->getProperty = JS_PropertyStub;
+//  js_CrossApp_GLNode_class->setProperty = JS_StrictPropertyStub;
+//  js_CrossApp_GLNode_class->enumerate = JS_EnumerateStub;
+//  js_CrossApp_GLNode_class->resolve = JS_ResolveStub;
+//  js_CrossApp_GLNode_class->convert = JS_ConvertStub;
+//  js_CrossApp_GLNode_class->finalize = js_CrossApp_GLNode_finalize;
+//  js_CrossApp_GLNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 //    
 //  static JSPropertySpec properties[] = {
 //    {0, 0, 0, 0, 0}
 //  };
 //    
 //  static JSFunctionSpec funcs[] = {
-//      JS_FN("ctor", js_cocos2dx_GLNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//      JS_FN("ctor", js_CrossApp_GLNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 //      JS_FS_END
 //  };
 //    
 //  static JSFunctionSpec st_funcs[] = {
-//    JS_FN("create", js_cocos2dx_GLNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//    JS_FN("create", js_CrossApp_GLNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 //    JS_FS_END
 //  };
 //  
-//  js_cocos2dx_GLNode_prototype = JS_InitClass(
+//  js_CrossApp_GLNode_prototype = JS_InitClass(
 //					      cx, global,
 //					      jsb_CCNode_prototype,
-//					      js_cocos2dx_GLNode_class,
-//					      js_cocos2dx_GLNode_constructor, 0, // constructor
+//					      js_CrossApp_GLNode_class,
+//					      js_CrossApp_GLNode_constructor, 0, // constructor
 //					      properties,
 //					      funcs,
 //					      NULL, // no static properties
@@ -136,8 +136,8 @@ JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 //  if (!p) {
 //    p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
 //    p->type = typeId;
-//    p->jsclass = js_cocos2dx_GLNode_class;
-//    p->proto = js_cocos2dx_GLNode_prototype;
+//    p->jsclass = js_CrossApp_GLNode_class;
+//    p->proto = js_CrossApp_GLNode_prototype;
 //    p->parentProto = jsb_CCNode_prototype;
 //    HASH_ADD_INT(_js_global_type_ht, type, p);
 //  }

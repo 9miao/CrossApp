@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.CrossApp.lib.Cocos2dxGLSurfaceView;
+import org.CrossApp.lib.CrossAppGLSurfaceView;
 
 import android.R.integer;
 import android.R.string;
@@ -149,7 +149,7 @@ public class AndroidNativeTool
 	public static void setScreenBrightness( int value) 
 	{
 		 
-	   Cocos2dxActivity mActivity = (Cocos2dxActivity)s_pContext;
+	   CrossAppActivity mActivity = (CrossAppActivity)s_pContext;
 	   mActivity.mLightHandler.sendEmptyMessage(value);
 	}
 	
@@ -225,7 +225,7 @@ public class AndroidNativeTool
             	
             	Log.i("qiaoxin", "String fileStr:"+fileStr);
             	
-                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+                CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
 					@Override
 					public void run() {
 		                NativeReturn( uriStr , null );
@@ -257,7 +257,7 @@ public class AndroidNativeTool
                 final String path1 = cursor1.getString(column_index1);
                 Log.i("qiaoxin","qiaoxin2"+ path1);
 
-                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+                CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
 					@Override
 					public void run() {
 		                NativeReturn( path1 , null );
@@ -287,7 +287,7 @@ public class AndroidNativeTool
 
                 final String path = cursor.getString(column_index);
 
-                Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable()
+                CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable()
                 {
 					@Override
 					public void run() 

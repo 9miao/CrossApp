@@ -9,7 +9,7 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 
-public class Cocos2dxHandler extends Handler {
+public class CrossAppHandler extends Handler {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -19,13 +19,13 @@ public class Cocos2dxHandler extends Handler {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private WeakReference<Cocos2dxActivity> mActivity;
+	private WeakReference<CrossAppActivity> mActivity;
 	
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-	public Cocos2dxHandler(Cocos2dxActivity activity) {
-		this.mActivity = new WeakReference<Cocos2dxActivity>(activity);
+	public CrossAppHandler(CrossAppActivity activity) {
+		this.mActivity = new WeakReference<CrossAppActivity>(activity);
 	}
 
 	// ===========================================================
@@ -42,7 +42,7 @@ public class Cocos2dxHandler extends Handler {
 
 	public void handleMessage(Message msg) {
 		switch (msg.what) {
-		case Cocos2dxHandler.HANDLER_SHOW_DIALOG:
+		case CrossAppHandler.HANDLER_SHOW_DIALOG:
 			showDialog(msg);
 			break;
 
@@ -50,7 +50,7 @@ public class Cocos2dxHandler extends Handler {
 	}
 	
 	private void showDialog(Message msg) {
-		Cocos2dxActivity theActivity = this.mActivity.get();
+		CrossAppActivity theActivity = this.mActivity.get();
 		DialogMessage dialogMessage = (DialogMessage)msg.obj;
 		new AlertDialog.Builder(theActivity)
 		.setTitle(dialogMessage.titile)

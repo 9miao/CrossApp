@@ -11,7 +11,7 @@
 using namespace CrossApp;
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y)
     {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
@@ -19,7 +19,7 @@ extern "C" {
         theEvent->release();
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesEnd(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y)
     {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
@@ -27,7 +27,7 @@ extern "C" {
         theEvent->release();
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
         int size = env->GetArrayLength(ids);
         jint id[size];
         jfloat x[size];
@@ -43,7 +43,7 @@ extern "C" {
         theEvent->release();
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
         int size = env->GetArrayLength(ids);
         jint id[size];
         jfloat x[size];
@@ -62,7 +62,7 @@ extern "C" {
     #define KEYCODE_BACK 0x04
     #define KEYCODE_MENU 0x52
 
-    JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv * env, jobject thiz, jint keyCode) {
+    JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeKeyDown(JNIEnv * env, jobject thiz, jint keyCode) {
         CAApplication* pDirector = CAApplication::getApplication();
         switch (keyCode) {
             case KEYCODE_BACK:

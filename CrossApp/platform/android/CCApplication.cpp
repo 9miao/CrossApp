@@ -1,5 +1,5 @@
 #include "jni/JniHelper.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "jni/Java_org_CrossApp_lib_CrossAppHelper.h"
 #include "CCApplication.h"
 #include "basics/CAApplication.h"
 #include "CCEGLView.h"
@@ -41,7 +41,7 @@ int CCApplication::run()
 void CCApplication::setAnimationInterval(double interval)
 {
     JniMethodInfo methodInfo;
-    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/Cocos2dxRenderer", "setAnimationInterval", 
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppRenderer", "setAnimationInterval", 
         "(D)V"))
     {
         CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
