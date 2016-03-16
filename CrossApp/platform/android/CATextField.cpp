@@ -297,8 +297,6 @@ extern "C"
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
         imageView->setVisible(true);
-        s_map[(int)key]->reViewlayout();
-        CAApplication::getApplication()->updateDraw();
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)

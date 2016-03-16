@@ -35,6 +35,7 @@ control/CAStepper.cpp \
 controller/CABarItem.cpp \
 controller/CAViewController.cpp \
 controller/CADrawerController.cpp \
+controller/CAFont.cpp \
 dispatcher/CAKeypadDelegate.cpp \
 dispatcher/CAKeypadDispatcher.cpp \
 dispatcher/CATouchDispatcher.cpp \
@@ -104,7 +105,6 @@ view/CADatePickerView.cpp \
 view/CAActivityIndicatorView.cpp \
 view/CAPullToRefreshView.cpp \
 view/CATextEditHelper.cpp \
-view/CALabelStyle.cpp \
 view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \

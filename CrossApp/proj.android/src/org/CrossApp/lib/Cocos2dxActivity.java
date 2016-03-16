@@ -145,6 +145,40 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	     
 	}
 
+	@Override
+	protected void onResume() 
+	{
+		super.onResume();
+		if (_sTextField != null) 
+		{
+			_sTextField.resume();
+		}
+		
+		if (_sTextView != null)
+		{
+			_sTextView.resume();
+		}
+
+		Cocos2dxHelper.onResume();
+		this.mGLSurfaceView.onResume();
+		if (AndroidGPS.locationManager!=null)
+		{
+			AndroidGPS.locationManager.requestLocationUpdates(AndroidGPS.locationManager.GPS_PROVIDER, 1000, 1, AndroidGPS.locationListener);
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		Cocos2dxHelper.onPause();
+		this.mGLSurfaceView.onPause();
+		if (AndroidGPS.locationManager!=null)
+		{
+			AndroidGPS.locationManager.removeUpdates(AndroidGPS.locationListener);
+		}
+	}
+	
 //	@Override
 //	protected void onDestroy() 
 //	{
@@ -490,40 +524,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		AndroidGPS.Init(crossAppActivity);
 
 	}
-	@Override
-	protected void onResume() 
-	{
-		super.onResume();
-		if (_sTextField != null) 
-		{
-			_sTextField.resume();
-		}
-		
-		if (_sTextView != null)
-		{
-			_sTextView.resume();
-		}
-
-		Cocos2dxHelper.onResume();
-		this.mGLSurfaceView.onResume();
-		if (AndroidGPS.locationManager!=null)
-		{
-			AndroidGPS.locationManager.requestLocationUpdates(AndroidGPS.locationManager.GPS_PROVIDER, 1000, 1, AndroidGPS.locationListener);
-		}
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-		Cocos2dxHelper.onPause();
-		this.mGLSurfaceView.onPause();
-		if (AndroidGPS.locationManager!=null)
-		{
-			AndroidGPS.locationManager.removeUpdates(AndroidGPS.locationListener);
-		}
-	}
-
+	
 	@Override
 	public void showDialog(final String pTitle, final String pMessage) {
 		Message msg = new Message();

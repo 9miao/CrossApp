@@ -295,7 +295,7 @@ public:
 
     virtual void update(float fDelta);
     
-    void reViewlayout(const DSize& contentSize);
+    virtual void reViewlayout(const DSize& contentSize);
     
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
     
