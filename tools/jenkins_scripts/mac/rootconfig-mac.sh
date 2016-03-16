@@ -7,16 +7,16 @@ cd ../../..
 #var1=NDK_ROOT_LOCAL=
 #_NDK_ROOT=${var1}${ANDROID_NDK}
 
-#var2=CrossApp_ROOT_LOCAL=
-#_CrossApp_ROOT=${var2}${CrossApp}
+#var2=CROSSAPP_ROOT_LOCAL=
+#_CROSSAPP_ROOT=${var2}${CrossApp}
 #echo $_NDK_ROOT
-#echo $_CrossApp_ROOT
+#echo $_CROSSAPP_ROOT
 
 #Modify the configuration files
 #sed -i  '' '3,4d' $CUR/build_native.sh
 sed -i  '' '13d' $CUR/project.properties
 #gsed -i "3 i\\$_NDK_ROOT" $CUR/build_native.sh
-#gsed -i "4 i\\$_CrossApp_ROOT" $CUR/build_native.sh
+#gsed -i "4 i\\$_CROSSAPP_ROOT" $CUR/build_native.sh
 
 #Modify the xml file
 if [ $1 = TestCpp ]; then

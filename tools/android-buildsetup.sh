@@ -37,25 +37,25 @@ WORKINGDIR="$(pwd)"
 
 # paths with defaults hardcoded to relative paths
 
-if [ -z "${CrossApp_ROOT+aaa}" ]; then
-    CrossApp_ROOT="$WORKINGDIR"
+if [ -z "${CROSSAPP_ROOT+aaa}" ]; then
+    CROSSAPP_ROOT="$WORKINGDIR"
 fi
 
-if [ ! -f "$CrossApp_ROOT/tools/android-buildsetup.sh" ]
+if [ ! -f "$CROSSAPP_ROOT/tools/android-buildsetup.sh" ]
 then
     echo "Run..."
     echo "> ./tools/android-buildsetup.sh"
     echo "... from the top level of the cocos2d-x source tree"
     echo "OR"
     echo "Run..."
-    echo "> CrossApp_ROOT=<path/to/cocos2d-x> <path/to/cocos2d-x>/build/setupandroid.sh"
+    echo "> CROSSAPP_ROOT=<path/to/cocos2d-x> <path/to/cocos2d-x>/build/setupandroid.sh"
     exit -1
 fi
 
 echo "Paths :"
 echo "    ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
 echo "    ANDROID_NDK_ROOT: $ANDROID_NDK_ROOT"
-echo "    CrossApp_ROOT   : $CrossApp_ROOT"
+echo "    CROSSAPP_ROOT   : $CROSSAPP_ROOT"
 echo "    WORKINGDIR      : $WORKINGDIR"
 echo "    SCRIPTDIR       : $SCRIPTDIR"
 
@@ -68,8 +68,8 @@ echo "---"
 echo -e "$_CONTENTS"
 echo "---"
 
-_ANDROIDMANIFESTS=(`find "$CrossApp_ROOT/CrossApp" -type f -name "AndroidManifest.xml"`)
-_ANDROIDMANIFESTS+=(`find "$CrossApp_ROOT/samples" -type f -name "AndroidManifest.xml"`)
+_ANDROIDMANIFESTS=(`find "$CROSSAPP_ROOT/CrossApp" -type f -name "AndroidManifest.xml"`)
+_ANDROIDMANIFESTS+=(`find "$CROSSAPP_ROOT/samples" -type f -name "AndroidManifest.xml"`)
 
 for a in "${_ANDROIDMANIFESTS[@]}"; do
     _LOCAL_PROPERTIES_FILE=${a/AndroidManifest\.xml/local\.properties}

@@ -4,7 +4,7 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-CrossApp_ROOT="$DIR"/../..
+CROSSAPP_ROOT="$DIR"/../..
 HOST_NAME=""
 mkdir -p $HOME/bin
 pushd $HOME/bin
@@ -72,7 +72,7 @@ fi
 
 if [ "$PLATFORM"x = "linux"x ]; then
     sudo apt-get update
-    bash $CrossApp_ROOT/install-deps-linux.sh
+    bash $CROSSAPP_ROOT/install-deps-linux.sh
 fi
 
 if [ "$PLATFORM"x = "nacl"x ]; then
@@ -98,7 +98,7 @@ if [ "$PLATFORM"x = "ios"x ]; then
     install_android_ndk
     install_llvm
     
-    pushd $CrossApp_ROOT
+    pushd $CROSSAPP_ROOT
     git submodule add https://github.com/facebook/xctool.git ./xctool
     git submodule init
     git submodule update
