@@ -169,6 +169,21 @@ public class CrossAppWebViewHelper {
             }
         });
     }
+    
+    @SuppressWarnings("unused")
+    public static void loadUrlWithRect(final int index, final String url, final String size) {
+        CrossAppActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CrossAppWebView webView = webViews.get(index);
+                if (webView != null) {
+					String[] s = size.split("-");
+					webView.setWebViewRect(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
+					webView.loadUrl(url);
+                }
+            }
+        });
+    }
 
     @SuppressWarnings("unused")
     public static void loadFile(final int index, final String filePath) {
@@ -333,7 +348,7 @@ public class CrossAppWebViewHelper {
     
     public static String[] getAllWebviews() {
 
-    	String [] strs = new String[1 + webViews.size() * 2];
+    	String [] strs = new String[1 + webViews.size() * 3];
     	
     	int index = 0;
     	strs[index++] = String.valueOf(viewTag);
@@ -342,21 +357,22 @@ public class CrossAppWebViewHelper {
     		CrossAppWebView webView = webViews.get(webViews.keyAt(i));
             if (webView != null) {
             	strs[index++] = String.valueOf(webView.getViewTag());
-            	strs[index++] = webView.getUrl();
+				strs[index++] = webView.getUrl();
+            	strs[index++] = webView.getWebViewRectString();
             }
     	}
     	return strs;
     }
     
     public static void setAllWebviews(String[] strs) {
-    	int cnt = (strs.length-1) / 2;
+    	int cnt = (strs.length-1) / 3;
     	
     	viewTag = Integer.parseInt(strs[0]);
     	
     	for (int i=0; i<cnt; i++) {
-    		int index = Integer.parseInt(strs[2*i+1]);
+    		int index = Integer.parseInt(strs[3*i+1]);
     		createWebView(index);
-    		loadUrl(index, strs[2*i+2]);
+    		loadUrlWithRect(index, strs[3*i+2], strs[3*i+3]);
     	}
     }
 }

@@ -22,6 +22,7 @@ public class CrossAppWebView extends WebView {
 
     private int viewTag;
     private String jsScheme;
+    private String szWebViewRect;
 
     public CrossAppWebView(Context context) {
         this(context, -1);
@@ -32,6 +33,7 @@ public class CrossAppWebView extends WebView {
         super(context);
         this.viewTag = viewTag;
         this.jsScheme = "";
+        this.szWebViewRect = "0-0-0-0";
 
         this.setFocusable(true);
         this.setFocusableInTouchMode(true);
@@ -112,11 +114,15 @@ public class CrossAppWebView extends WebView {
 
     public void setWebViewRect(int left, int top, int maxWidth, int maxHeight) {
         fixSize(left, top, maxWidth, maxHeight);
+        this.szWebViewRect = String.format("%d-%d-%d-%d", left, top, maxWidth, maxHeight);
     }
+    public String getWebViewRectString(){
+    	return szWebViewRect;
+    }
+    
     public int getViewTag() {
     	return viewTag;
     }
-    
 
     private void fixSize(int left, int top, int width, int height) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
