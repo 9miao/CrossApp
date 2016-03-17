@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -56,6 +57,14 @@ public class CrossAppWebView extends WebView {
         this.setWebChromeClient(new WebChromeClient());
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if (keyCode == KeyEvent.KEYCODE_BACK) {
+    		return CrossAppGLSurfaceView.getInstance().onKeyDown(keyCode, event);
+    	}
+        return super.onKeyDown(keyCode, event);
+    }
+    
     public void setJavascriptInterfaceScheme(String scheme) {
         this.jsScheme = scheme != null ? scheme : "";
     }
