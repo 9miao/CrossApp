@@ -2,7 +2,7 @@
 //  CARichLabel.h
 //  CrossApp
 //
-//  Created by ÷ÏΩ® on 16-2-22.
+//  Created by �콨 on 16-2-22.
 //  Copyright (c) 2016 http://www.9miao.com All rights reserved.
 //
 
@@ -40,6 +40,7 @@ public:
 
 	virtual bool init();
 
+	void appendText(const std::string& text);
 	void appendText(const std::string& text, const CAFont& font);
     
     void clear();
@@ -49,16 +50,25 @@ protected:
 
 	virtual void updateImageRect();
 
+	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+
 	void updateImageDraw();
 
 	void updateImage();
 
 	float getMaxFontHeight();
 
+	void splitUrlStrings(const std::string& text, std::vector<std::pair<int, int>>& vIntVect);
+
+	void appendTextEx(const std::string& text, const CAFont& font);
+
 private:
 	bool m_bUpdateImage;
 	float m_fTextHeight;
 	std::vector<std::pair<std::string, CAFont> > m_vLabelFontVect;
+	std::vector<std::vector<DRect>> m_vHyperlinkRects;
+	std::vector<std::string> m_vLabelUrls;
 };
 
 

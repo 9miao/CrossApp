@@ -1,6 +1,8 @@
 #include "CARichLabel.h"
 #include "ccMacros.h"
 #include "platform/CAFTRichFont.h"
+#include "support/deelx.h"
+#include "support/device/CADevice.h"
 
 NS_CC_BEGIN
 
@@ -110,6 +112,28 @@ void CARichLabel::updateImageRect()
 	m_sQuad.tr.vertices = vertex3(x2, y2, m_fVertexZ);
 }
 
+bool CARichLabel::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+	return true;
+}
+
+void CARichLabel::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+	DPoint point = this->convertTouchToNodeSpace(pTouch);
+
+	for (int i = 0; i < m_vHyperlinkRects.size(); i++)
+	{
+		for (int j = 0; j < m_vHyperlinkRects[i].size(); j++)
+		{
+			if (m_vHyperlinkRects[i][j].containsPoint(point))
+			{
+				CADevice::OpenURL(m_vLabelUrls[i]);
+				return;
+			}
+		}
+	}
+}
+
 void CARichLabel::updateImageDraw()
 {
 	m_bUpdateImage = true;
@@ -134,6 +158,71 @@ float CARichLabel::getMaxFontHeight()
 	return CAImage::getFontHeight(cszFontName.c_str(), iFontSize);
 }
 
+void CARichLabel::splitUrlStrings(const std::string& text, std::vector<std::pair<int, int>>& vIntVect)
+{
+	static CRegexpT<char> regexp("((http|ftp|https)://)(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\\&%_\\./-~-]*)?");
+
+	CContext* pContext = regexp.PrepareMatch(text.c_str());
+
+	MatchResult result = regexp.Match(pContext);
+
+	// matched or not
+	while (result.IsMatched())
+	{
+		vIntVect.push_back(std::make_pair(result.GetStart(), result.GetEnd()));
+		// get next
+		result = regexp.Match(pContext);
+	}
+
+	regexp.ReleaseContext(pContext);
+}
+
+void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
+{
+	std::vector<std::pair<int, int>> vIntVect;
+	splitUrlStrings(text, vIntVect);
+
+	if (vIntVect.empty())
+	{
+		m_vLabelFontVect.push_back(std::make_pair(text, font));
+	}
+	else
+	{
+		int ipos = 0;
+		for (int i = 0; i < vIntVect.size(); i++)
+		{
+			const std::pair<int, int>& pa = vIntVect[i];
+
+			std::string cszStrTemp = text.substr(ipos, pa.first - ipos);
+			if (!cszStrTemp.empty())
+			{
+				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, font));
+			}
+
+			cszStrTemp = text.substr(pa.first, pa.second - pa.first);
+			if (!cszStrTemp.empty())
+			{
+				CAFont t(font);
+				t.hyperlink = true;
+				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, t));
+				m_vLabelUrls.push_back(cszStrTemp);
+			}
+
+			ipos = pa.second;
+		}
+
+		if (ipos < text.size())
+		{
+			std::string cszStrTemp = text.substr(ipos, text.size() - ipos);
+			if (!cszStrTemp.empty())
+			{
+				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, font));
+			}
+		}
+	}
+	updateImageDraw();
+}
+
 void CARichLabel::updateImage()
 {
 	int fontHeight = getMaxFontHeight();
@@ -150,9 +239,11 @@ void CARichLabel::updateImage()
 		size = DSize(m_obContentSize.width, (defaultLineSpace + fontHeight) * (linenumber+1));
 	}
 
-	CAImage* image = g_AFTRichFont.initWithString(m_vLabelFontVect, size);
+	m_vHyperlinkRects.clear();
+	CAImage* image = g_AFTRichFont.initWithString(m_vLabelFontVect, size, m_vHyperlinkRects);
 	this->setImage(image);
 	CC_RETURN_IF(image == NULL);
+	CC_RETURN_IF(m_vLabelUrls.size() != m_vHyperlinkRects.size());
 
 	DRect rect = DRectZero;
 	rect.size.width = MIN(m_obContentSize.width, image->getContentSize().width);
@@ -181,10 +272,14 @@ bool CARichLabel::init()
 	return true;
 }
 
+void CARichLabel::appendText(const std::string& text)
+{
+	appendTextEx(text, CAFont());
+}
+
 void CARichLabel::appendText(const std::string& text, const CAFont& font)
 {
-	m_vLabelFontVect.push_back(std::make_pair(text, font));
-	updateImageDraw();
+	appendTextEx(text, font);
 }
 
 void CARichLabel::clear()
