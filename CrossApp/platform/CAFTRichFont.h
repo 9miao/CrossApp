@@ -28,9 +28,11 @@ typedef struct TGlyphEx_
 	FT_Face	   face;
 	FT_UInt	   fontSize;
 	FT_UInt	   width;
+	FT_Int	   x, y;
 	CAColor4B  col;
 	bool	   underLine;
 	bool	   deleteLine;
+	bool	   hyperlink;
 
 } TGlyphEx, *PGlyphEx;
 
@@ -51,7 +53,7 @@ public:
 	CAFTRichFont();
 	virtual ~CAFTRichFont();
 
-	CAImage* initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz);
+	CAImage* initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<DRect>>& rects);
 
 protected:
 	void newLine();
@@ -66,14 +68,18 @@ protected:
 	void compute_bbox(std::vector<TGlyphEx>& glyphs, FT_BBox *abbox);
 	void calcuMultiLines(std::vector<TGlyphEx>& glyphs);
 	void getLineYBBox(std::vector<TGlyphEx>& glyphs, FT_Pos& yPosMin, FT_Pos& yPosMax);
-	unsigned char* getBitmap(int* outWidth, int* outHeight);
+	unsigned char* getBitmap(int* outWidth, int* outHeight, std::vector<std::vector<DRect>>& rects);
 	void drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vector *pen);
+	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize);
 	void draw_bitmap(unsigned char* pBuffer, FT_Bitmap* bitmap, const CAColor4B& col, FT_Int x, FT_Int y);
 	void draw_line(unsigned char* pBuffer, const CAColor4B& col, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
+	void getTextSize(int& width, int& height);
+	void calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std::vector<std::vector<DRect>>& rects, std::vector<DRect>& cc);
 
 private:
 	DSize m_inSize;
 	DSize m_textSize;
+	DRect m_hyperlinkRect;
 	FTLineInfoEx* m_pCurrentLine;
 	std::vector<FTLineInfoEx*> m_lines;
 	FT_Matrix m_ItalicMatrix;

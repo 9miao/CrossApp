@@ -334,6 +334,7 @@ protected:
     
     unsigned long m_uImageDataLenght;
     
+	friend class CAFTRichFont;
     friend class CAFreeTypeFont;
 };
 

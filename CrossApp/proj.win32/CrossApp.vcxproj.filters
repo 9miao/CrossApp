@@ -394,9 +394,6 @@
     <ClCompile Include="..\script_support\JSViewController.cpp">
       <Filter>script_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\view\CALabelStyle.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
     <ClCompile Include="..\view\CAWebView.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -519,6 +516,9 @@
     </ClCompile>
     <ClCompile Include="..\platform\CAFTRichFont.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\controller\CAFont.cpp">
+      <Filter>controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -902,9 +902,6 @@
     <ClInclude Include="..\script_support\JSViewController.h">
       <Filter>script_support</Filter>
     </ClInclude>
-    <ClInclude Include="..\view\CALabelStyle.h">
-      <Filter>view</Filter>
-    </ClInclude>
     <ClInclude Include="..\view\CAWebView.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -1046,6 +1043,12 @@
     </ClInclude>
     <ClInclude Include="..\platform\CAFTRichFont.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\deelx.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\controller\CAFont.h">
+      <Filter>controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

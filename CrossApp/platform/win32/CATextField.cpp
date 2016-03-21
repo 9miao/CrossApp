@@ -378,7 +378,7 @@ public:
 		{
 			*r = rr;
 		}
-		int y = (m_obFrameRect.size.height - m_obRect.size.height) / 2;
+		int y = (getFrame().size.height - m_obRect.size.height) / 2;
 		return DRect((ll ? (l1 + m_iString_o_length) : 0) + ld, y, dd, m_iFontHeight);
 	}
 	void setText(const std::string &var)
@@ -562,7 +562,7 @@ public:
 			x1 = 0;
 		}
 
-		y1 = (m_obFrameRect.size.height - m_obRect.size.height) / 2;
+		y1 = (getFrame().size.height - m_obRect.size.height) / 2;
 		x2 = x1 + m_obRect.size.width;
 		y2 = y1 + m_obRect.size.height;
 		m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);

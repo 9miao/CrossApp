@@ -7,6 +7,7 @@ CAFont::CAFont()
 : fontSize(24)
 , fontName("")
 , color(CAColor_black)
+, hyperlink(false)
 , italics(false)
 , bold(false)
 , underLine(false)
@@ -19,6 +20,7 @@ CAFont::CAFont(const CAFont& other)
 : fontSize(other.fontSize)
 , fontName(other.fontName)
 , color(other.color)
+, hyperlink(other.hyperlink)
 , italics(other.italics)
 , bold(other.bold)
 , underLine(other.underLine)
@@ -32,6 +34,7 @@ CAFont& CAFont::operator= (const CAFont& other)
     fontSize = other.fontSize;
     fontName = other.fontName;
     color = other.color;
+	hyperlink = other.hyperlink;
     italics = other.italics;
     bold = other.bold;
     underLine = other.underLine;

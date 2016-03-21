@@ -26,14 +26,14 @@ CAFTRichFont::~CAFTRichFont()
 }
 
 
-CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz)
+CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<CCRect>>& rects)
 {
 	m_inSize = sz;
 	m_textSize = DSizeZero;
 	initGlyphs(labels);
 
 	int width = 0, height = 0;
-	unsigned char* pData = getBitmap(&width, &height);
+	unsigned char* pData = getBitmap(&width, &height, rects);
 	if (pData == NULL)
 	{
 		return NULL;
@@ -196,6 +196,7 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 	bool bItalics = ft.italics;
 	bool bDeleteLine = ft.deleteLine;
 	bool bUnderLine = ft.underLine;
+	bool bHyperlink = ft.hyperlink;
 	int iFontSize = ft.fontSize;
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
@@ -223,9 +224,10 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 		glyph->isEmoji = false;
 		glyph->face = face;
 		glyph->fontSize = iFontSize;
-		glyph->col = col;
+		glyph->col = bHyperlink ? ccc4(0, 0, 255, 255):col;
 		glyph->deleteLine = bDeleteLine;
-		glyph->underLine = bUnderLine;
+		glyph->underLine = bHyperlink?true:bUnderLine;
+		glyph->hyperlink = bHyperlink;
 
 		FT_Bool isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
@@ -470,13 +472,10 @@ void CAFTRichFont::calcuMultiLines(std::vector<TGlyphEx>& glyphs)
 	}
 }
 
-unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight)
+unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight, std::vector<std::vector<DRect>>& rects)
 {
-	int lineNumber = 0;
-	int totalLines = (int)m_lines.size();
-
-	int width = m_inSize.width ? m_inSize.width : m_textSize.width;
-	int height = m_inSize.height ? m_inSize.height : m_textSize.height;
+	int width, height;
+	getTextSize(width, height);
 
 	unsigned int size = width * height * 4;
 	unsigned char* pBuffer = new unsigned char[size];
@@ -486,22 +485,38 @@ unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight)
 	}
 	memset(pBuffer, 0, size);
 
+	m_hyperlinkRect = DRectZero;
+	std::vector<CCRect> cc;
+
+	FT_Vector pen;
+	pen.x = pen.y = 0;
 	for (int i = 0; i < m_lines.size(); i++)
 	{
 		FTLineInfoEx* line = m_lines[i];
 
-		FT_Vector pen;
-		pen.x = 0; pen.y = 0;
-		pen.x -= line->bbox.xMin;
-		pen.y = line->bbox.yMax + (lineNumber * line->height);
+		pen.x = - line->bbox.xMin;
+		pen.y += line->height;
 
 		drawText(line, pBuffer, &pen);
 
-		lineNumber++;
+		calcuHyperlinkRects(line, &pen, rects, cc);
+		if (!m_hyperlinkRect.equals(DRectZero))
+		{
+			cc.push_back(m_hyperlinkRect);
+		}
+		m_hyperlinkRect = DRectZero;
 	}
 	*outWidth = width;
 	*outHeight = height;
 
+	if (!m_hyperlinkRect.equals(DRectZero))
+	{
+		cc.push_back(m_hyperlinkRect);
+	}
+	if (!cc.empty())
+	{
+		rects.push_back(cc);
+	}
 	return pBuffer;
 }
 
@@ -513,7 +528,7 @@ void CAFTRichFont::drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vect
 		FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-			int iEmojiSize = (pInfo->height % 2) ? (pInfo->height - 1) : pInfo->height;
+			int iEmojiSize = (glyph->fontSize % 2) ? (glyph->fontSize - 1) : glyph->fontSize;
 
 			CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage((unsigned int)glyph->c, iEmojiSize);
 			if (pEmoji)
@@ -523,10 +538,9 @@ void CAFTRichFont::drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vect
 
 			if (pEmoji)
 			{
-//				int dtValue = 0;
-//				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
-//				FT_Int y = (FT_Int)(pen->y - iEmojiSize) + dtValue;
-			//	draw_emoji(pBuffer, pEmoji, x, y, iEmojiSize);
+				glyph->x = (FT_Int)(pen->x + glyph->pos.x);
+				glyph->y = (FT_Int)(pen->y - iEmojiSize);
+				draw_emoji(pBuffer, pEmoji, glyph->x, glyph->y, iEmojiSize);
 			}
 			continue;
 		}
@@ -536,26 +550,47 @@ void CAFTRichFont::drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vect
 		{
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
 
-			int dtValue = 0;
-			FT_Int x = (FT_Int)(pen->x + glyph->pos.x + bit->left);
-			FT_Int y = (FT_Int)(pen->y - bit->top + dtValue);
-			draw_bitmap(pBuffer, &bit->bitmap, glyph->col, x, y);
+			glyph->x = (FT_Int)(pen->x + glyph->pos.x + bit->left);
+			glyph->y = (FT_Int)(pen->y - bit->top);
+			draw_bitmap(pBuffer, &bit->bitmap, glyph->col, glyph->x, glyph->y);
 			FT_Done_Glyph(image);
 
 			if (glyph->underLine)
 			{
-				draw_line(pBuffer, glyph->col, x, pen->y + 2, x + glyph->width, pen->y + 2);
+				draw_line(pBuffer, glyph->col, glyph->x, pen->y + 2, glyph->x + glyph->width, pen->y + 2);
 			}
 			if (glyph->deleteLine)
 			{
-				draw_line(pBuffer, glyph->col, x, pen->y - glyph->fontSize / 3, x + glyph->width, pen->y - glyph->fontSize / 3);
+				draw_line(pBuffer, glyph->col, glyph->x, pen->y - glyph->fontSize / 3, glyph->x + glyph->width, pen->y - glyph->fontSize / 3);
 			}
 		}
-
-		
 	}
 }
 
+void CAFTRichFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize)
+{
+	FT_Int  x_max = x + iEmojiSize;
+	FT_Int  y_max = y + iEmojiSize;
+
+	int width, height;
+	getTextSize(width, height);
+
+	uint8_t* src = pEmoji->m_pData;
+	for (FT_Int i = y; i < y_max; i++)
+	{
+		for (FT_Int j = x; j < x_max; j++)
+		{
+			if (i < 0 || j < 0 || j >= width || i >= height)
+				continue;
+		
+			FT_Int index = (i * width * 4) + (j * 4);
+			for (int k = 0; k < 4; k++)
+			{
+				pBuffer[index + k] = *src++;
+			}
+		}
+	}
+}
 
 void CAFTRichFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap* bitmap, const CAColor4B& col, FT_Int x, FT_Int y)
 {
@@ -563,8 +598,8 @@ void CAFTRichFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap* bitmap, const 
 	FT_Int  x_max = x + bitmap->width;
 	FT_Int  y_max = y + bitmap->rows;
 
-	int width = m_inSize.width ? m_inSize.width : m_textSize.width;
-	int height = m_inSize.height ? m_inSize.height : m_textSize.height;
+	int width, height;
+	getTextSize(width, height);
 
 	for (i = x, p = 0; i < x_max; i++, p++)
 	{
@@ -589,9 +624,8 @@ void CAFTRichFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap* bitmap, const 
 
 void CAFTRichFont::draw_line(unsigned char* pBuffer, const CAColor4B& col, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2)
 {
-	int width = m_inSize.width ? m_inSize.width : m_textSize.width;
-	int height = m_inSize.height ? m_inSize.height : m_textSize.height;
-
+	int width, height;
+	getTextSize(width, height);
 	for (FT_Int i = x1; i <= x2; i++)
 	{
 		for (FT_Int j = y1; j <= y2; j++)
@@ -608,5 +642,48 @@ void CAFTRichFont::draw_line(unsigned char* pBuffer, const CAColor4B& col, FT_In
 	}
 }
 
+void CAFTRichFont::getTextSize(int& width, int& height)
+{
+	int w = MIN(m_inSize.width, m_textSize.width);
+	int h = MIN(m_inSize.height, m_textSize.height);
+
+	width  = MIN(1.5f*w, m_inSize.width);
+	height = MIN(1.5f*h, m_inSize.height);
+}
+
+void CAFTRichFont::calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std::vector<std::vector<DRect>>& rects, std::vector<DRect>& cc)
+{
+	std::vector<TGlyphEx>& glyphs = pInfo->glyphs;
+	for (std::vector<TGlyphEx>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
+	{
+		FT_Glyph image = glyph->image;
+
+		if (glyph->hyperlink && image != NULL)
+		{
+			if (m_hyperlinkRect.equals(DRectZero))
+			{
+				int dt = 2;
+				m_hyperlinkRect.origin.x = glyph->x;
+				m_hyperlinkRect.origin.y = glyph->y - dt;
+				m_hyperlinkRect.size.width = glyph->width;
+				m_hyperlinkRect.size.height = glyph->fontSize + 2*dt;
+			}
+			else
+			{
+				m_hyperlinkRect.size.width = glyph->x + glyph->width - m_hyperlinkRect.origin.x;
+			}
+		}
+		else
+		{
+			if (!m_hyperlinkRect.equals(DRectZero))
+			{
+				cc.push_back(m_hyperlinkRect);
+				rects.push_back(cc);
+				cc.clear();
+			}
+			m_hyperlinkRect = DRectZero;
+		}
+	}
+}
 
 NS_CC_END

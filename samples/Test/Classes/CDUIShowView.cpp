@@ -842,10 +842,38 @@ void CDUIShowView::showIndicatorByIndex()
 
 void CDUIShowView::showLabel()
 {
-    showNum = 6;
+	showNum = 1;// 6;
     pageViewIndex = 1;
     VIEWLIST.clear();
     for (int i=0; i<showNum; i++) {
+		
+
+		
+		
+		CARichLabel* label = CARichLabel::createWithCenter(DRect(winSize.width / 2, winSize.height / 2, winSize.width-50, 400));
+		label->appendText("Hello World");
+
+		CAFont ft;
+		ft.fontSize = 48;
+		ft.color = ccc4(255, 0, 255, 100);
+		label->appendText(UTF8("阿斯蒂芬"), ft);
+
+		label->appendText(UTF8("欢迎访问我的网站 http://www.baidu.com、以及我的微博：http://www.xxx.com"));
+		ft.fontSize = 64;
+		ft.color = ccc4(255, 0, 0, 100);
+		label->appendText(UTF8("阿斯顿的双方各大发光火发过火各环节饭锅夫人"), ft);
+
+		std::string s = "Hello World";
+
+		std::u32string c;
+		StringUtils::UTF8ToUTF32(s, c);
+		c += 0x1F604;
+
+		std::string cc;
+		StringUtils::UTF32ToUTF8(c, cc);
+		label->appendText(cc);
+
+		/*
 		CALabel* label = CALabel::createWithCenter(DRect(winSize.width / 2, winSize.height / 2, 300, 400));
 
 		std::string s = "Hello World";
@@ -856,16 +884,6 @@ void CDUIShowView::showLabel()
 
 		std::string cc;
 		StringUtils::UTF32ToUTF8(c, cc);
-		/*
-		CARichLabel* label = CARichLabel::createWithCenter(DRect(winSize.width / 2, winSize.height / 2, 300, 400));
-		label->appendText("Hello World");
-
-		CAFont ft;
-		ft.setFontSize(56);
-		ft.setUnderLine(true);
-		ft.setTextColor(ccc4(255, 0, 255, 100));
-		label->appendText(UTF8("阿斯蒂芬"), ft);
-		*/
 		
         label->setText(cc);
         label->setColor(CAColor_red);
@@ -890,6 +908,7 @@ void CDUIShowView::showLabel()
             label->setLineSpacing(20);
             label->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, 200));
         }
+		*/
         
         CAView* view = CAView::createWithFrame(DRect(0,0,winSize.width,winSize.height-100));
         view->addSubview(label);

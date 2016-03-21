@@ -182,6 +182,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\cocoa\CCSet.cpp" />
     <ClCompile Include="..\controller\CABarItem.cpp" />
     <ClCompile Include="..\controller\CADrawerController.cpp" />
+    <ClCompile Include="..\controller\CAFont.cpp" />
     <ClCompile Include="..\controller\CAViewController.cpp" />
     <ClCompile Include="..\control\CABar.cpp" />
     <ClCompile Include="..\control\CAButton.cpp" />
@@ -291,7 +292,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\view\CAGifView.cpp" />
     <ClCompile Include="..\view\CAImageView.cpp" />
     <ClCompile Include="..\view\CALabel.cpp" />
-    <ClCompile Include="..\view\CALabelStyle.cpp" />
     <ClCompile Include="..\view\CAListView.cpp" />
     <ClCompile Include="..\view\CAPageView.cpp" />
     <ClCompile Include="..\view\CAPickerView.cpp" />
@@ -331,6 +331,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\cocoa\CCSet.h" />
     <ClInclude Include="..\controller\CABarItem.h" />
     <ClInclude Include="..\controller\CADrawerController.h" />
+    <ClInclude Include="..\controller\CAFont.h" />
     <ClInclude Include="..\controller\CAViewController.h" />
     <ClInclude Include="..\control\CABar.h" />
     <ClInclude Include="..\control\CAButton.h" />
@@ -410,6 +411,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\CCVertex.h" />
     <ClInclude Include="..\support\ConvertUTF.h" />
+    <ClInclude Include="..\support\deelx.h" />
     <ClInclude Include="..\support\device\CADevice.h" />
     <ClInclude Include="..\support\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\support\Json\lib_json\autolink.h" />
@@ -471,7 +473,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\view\CAGifView.h" />
     <ClInclude Include="..\view\CAImageView.h" />
     <ClInclude Include="..\view\CALabel.h" />
-    <ClInclude Include="..\view\CALabelStyle.h" />
     <ClInclude Include="..\view\CAListView.h" />
     <ClInclude Include="..\view\CAPageView.h" />
     <ClInclude Include="..\view\CAPickerView.h" />
