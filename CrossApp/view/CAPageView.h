@@ -84,6 +84,8 @@ protected:
     
     virtual void contentOffsetFinish(float dt);
     
+    virtual void setContentSize(const DSize& contentSize);
+    
     void runAnimation(bool animated);
     
 private:

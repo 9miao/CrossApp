@@ -25,7 +25,7 @@ CDWebViewController::~CDWebViewController()
 
 void CDWebViewController::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
+//    winSize = this->getView()->getBounds().size;
     this->getNavigationBarItem()->setShowGoBackButton(true);
 }
 
@@ -36,7 +36,9 @@ void CDWebViewController::viewDidUnload()
 
 void CDWebViewController::initWebView(string url)
 {
-    p_webView = CAWebView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
+//    p_webView = CAWebView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
+    p_webView = CAWebView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
     p_webView->loadURL(url);
+    p_webView->loadURL("wwww.baidu.com");
     this->getView()->addSubview(p_webView);
 }

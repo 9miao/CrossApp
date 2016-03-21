@@ -15,7 +15,7 @@ class CDUIShowCollectionView : public CAViewController, CACollectionViewDelegate
 {
     
 public:
-    
+        
     CDUIShowCollectionView();
     
     virtual ~CDUIShowCollectionView();

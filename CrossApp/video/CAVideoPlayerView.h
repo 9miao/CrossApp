@@ -40,7 +40,8 @@ public:
 	static CAVideoPlayerView* create();
 	static CAVideoPlayerView* createWithFrame(const DRect& rect);
 	static CAVideoPlayerView* createWithCenter(const DRect& rect);
-
+    static CAVideoPlayerView* createWithLayout(const DRectLayout& layout);
+    
 	void initWithPath(const std::string& szPath, bool showFirstFrame = true);
 	void initWithUrl(const std::string& szUrl, bool showFirstFrame = true);
 	void play();

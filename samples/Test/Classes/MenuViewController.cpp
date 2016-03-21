@@ -24,9 +24,10 @@ void MenuViewController::viewDidLoad()
 {
     this->getView()->removeAllSubviews();
     this->getView()->setColor(CAColor_clear);
-    size = this->getView()->getBounds().size;
+//    size = this->getView()->getBounds().size;
     
-    tableView = CATableView::createWithFrame(DRect(0, size.height/3, size.width, size.height*0.6));
+//    tableView = CATableView::createWithFrame(DRect(0, size.height/3, size.width, size.height*0.6));
+    tableView = CATableView::createWithLayout(DRectLayout(0,0,450,0,DRectLayout::L_R_T_B));
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
@@ -80,16 +81,14 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
 
 CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
-    DSize _size = cellSize;
+//    DSize _size = cellSize;
     CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
     if (cell == NULL)
     {
         cell = CATableViewCell::create("CrossApp");
         cell->setBackgroundView(NULL);
-        CALabel* test = CALabel::createWithCenter(DRect(_size.width/2+30,
-                                                            _size.height/2,
-                                                            _size.width,
-                                                            _size.height));
+//        CALabel* test = CALabel::createWithCenter(DRect(_size.width/2+30,_size.height/2,_size.width,_size.height));
+        CALabel* test = CALabel::createWithLayout(DRectLayout(50,0,0,0,DRectLayout::L_R_T_B));
         test->setTextAlignment(CATextAlignmentLeft);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         test->setFontSize(32);
@@ -97,7 +96,8 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         test->setTag(100);
         cell->addSubview(test);
         
-        CAImageView* arrow = CAImageView::createWithCenter(DRect(_size.width-64,_size.height/2,64,64));
+//        CAImageView* arrow = CAImageView::createWithCenter(DRect(_size.width-64,_size.height/2,64,64));
+        CAImageView* arrow = CAImageView::createWithLayout(DRectLayout(0,64,20,64,DRectLayout::R_W_T_H));
         arrow->setTag(101);
         cell->addSubview(arrow);
     }

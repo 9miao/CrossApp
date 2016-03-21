@@ -93,16 +93,10 @@ bool CAGifView::initWithGif(CAGif* gif)
     return false;
 }
 
-void CAGifView::setFrame(DRect rect)
+void CAGifView::setContentSize(const DSize& contentSize)
 {
-    CAView::setFrame(rect);
-    this->setGifBounds(rect.size);
-}
-
-void CAGifView::setCenter(DRect rect)
-{
-    CAView::setCenter(rect);
-    this->setGifBounds(rect.size);
+    CAView::setContentSize(contentSize);
+    this->setGifBounds(m_obContentSize);
 }
 
 void CAGifView::updateImageRect()
@@ -130,7 +124,7 @@ void CAGifView::setGif(CAGif* gif)
             m_nGifcount = m_pGif->getGifImageCounts();
             CAScheduler::schedule(schedule_selector(CAGifView::updateGif), this, 0);
         }
-        this->setGifBounds(this->getBounds().size);
+        this->setGifBounds(m_obContentSize);
     }
 }
 

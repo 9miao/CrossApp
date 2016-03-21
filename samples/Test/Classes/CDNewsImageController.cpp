@@ -46,10 +46,7 @@ void CDNewsImageTableCell::initWithCell(int num)
 {
     cell_tag = CCRANDOM_0_1()*4+1;
     DSize _size = this->getFrame().size;
-    CALabel* test = CALabel::createWithFrame(DRect(40,
-                                                       _size.height-150,
-                                                       _size.width-90,
-                                                       40));
+    CALabel* test = CALabel::createWithFrame(DRect(40,_size.height-150,_size.width-90,40));
 	test->setColor(CAColor_black);
     test->setTextAlignment(CATextAlignmentLeft);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -58,10 +55,7 @@ void CDNewsImageTableCell::initWithCell(int num)
     test->setTag(100);
     this->addSubview(test);
     
-    CALabel* dsc = CALabel::createWithFrame(DRect(40,
-                                                      _size.height-90,
-                                                      _size.width-90,
-                                                      70));
+    CALabel* dsc = CALabel::createWithFrame(DRect(40,_size.height-90,_size.width-90,70));
 	dsc->setColor(CAColor_black);
     dsc->setTextAlignment(CATextAlignmentLeft);
     dsc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -129,6 +123,7 @@ string CDNewsImageController::getSign(std::map<std::string,std::string> key_valu
 
 void CDNewsImageController::viewDidLoad()
 {
+    CCLog("NewsImageController");
     winSize = this->getView()->getBounds().size;
     m_ImageMsg.clear();
     m_ImageNum.clear();
@@ -175,7 +170,8 @@ void CDNewsImageController::initImageTableView()
         this->getView()->removeSubview(p_TableView);
         p_TableView = NULL;
     }
-    p_TableView= CATableView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+//    p_TableView= CATableView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+    p_TableView= CATableView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
@@ -210,10 +206,7 @@ void CDNewsImageController::showAlert()
     btn5->addTarget(this, CAControl_selector(CDNewsImageController::buttonCallBack), CAControlEventTouchUpInSide);
     p_alertView->addSubview(btn5);
     
-    CALabel* test = CALabel::createWithCenter(DRect(winSize.width/2,
-                                                        winSize.height-100,
-                                                        winSize.width,
-                                                        40));
+    CALabel* test = CALabel::createWithCenter(DRect(winSize.width/2,winSize.height-100,winSize.width,40));
 	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);

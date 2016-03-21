@@ -42,7 +42,7 @@ public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void tableViewWillDisplayCellAtIndex(CATableView* table, CATableViewCell* cell, unsigned int section, unsigned int row);
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const CCSize& cellSize, unsigned int section, unsigned int row);
+    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int numberOfSections(CATableView *table);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
@@ -50,7 +50,7 @@ public:
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view);
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
 
-    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const CCPoint& point);
+    virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
     
     virtual void pageViewDidBeginTurning(CAPageView* pageView);
     virtual void pageViewDidEndTurning(CAPageView* pageView);
@@ -60,13 +60,13 @@ public:
     void onRefreshRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
     void initNewsTableView();
     void initNewsPageView();
-    void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::CCPoint point);
+    void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point);
     void showAlert();
-    void buttonCallBack(CAControl* btn,CCPoint point);
+    void buttonCallBack(CAControl* btn,DPoint point);
     void tempCallBack();
 public:
     string getSign(std::map<std::string,std::string> key_value);
-    CADipSize winSize;
+    DSize winSize;
     std::vector<std::string> tempList;
     std::vector<newsMsg > m_msg;
     //std::vector<std::vector<newsMsg > > m_MSG;

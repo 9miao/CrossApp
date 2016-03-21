@@ -9,6 +9,7 @@
 #include "CDNewsViewController.h"
 #include "CDWebViewController.h"
 
+
 extern int page_index;
 float temp_time = 0;
 CDNewsTableCell::CDNewsTableCell()
@@ -26,6 +27,7 @@ CDNewsTableCell::~CDNewsTableCell()
 
 CDNewsTableCell* CDNewsTableCell::create(const std::string& identifier, const DRect& _rect)
 {
+    CCLog("CDNewsTableCell");
     CDNewsTableCell* tableViewCell = new CDNewsTableCell();
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
     {
@@ -93,7 +95,8 @@ CDNewsViewController::CDNewsViewController(int index)
     m_msg.clear();
 }
 
-CDNewsViewController::~CDNewsViewController(){
+CDNewsViewController::~CDNewsViewController()
+{
     
 }
 

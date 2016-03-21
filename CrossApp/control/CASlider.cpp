@@ -159,11 +159,10 @@ void CASlider::layoutSubViews()
         && m_pMinTrackTintImageView
         && m_pMaxTrackTintImageView)
     {
-        DSize thumbSize = m_pThumbTintImageView->getBounds().size;
-        float halfThumbWidth = thumbSize.width / 2;
+        float halfThumbWidth = m_obContentSize.height / 2;
         float totalWidth = m_obContentSize.width;
         float percent = m_fValue / (m_fMaxValue - m_fMinValue);
-        float centerX = ((totalWidth - thumbSize.width) * percent) + halfThumbWidth;
+        float centerX = ((totalWidth - m_obContentSize.height) * percent) + halfThumbWidth;
         float trackOriginY = (m_obContentSize.height - m_fTrackHeight) / 2;
         float minRight = centerX - halfThumbWidth;
         float maxLeft = centerX + halfThumbWidth;
@@ -221,7 +220,6 @@ void CASlider::setMinTrackTintImage(CAImage* image)
         {
             ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pMinTrackTintImage);
         }
-//        this->layoutSubViews();
     }
 }
 
@@ -236,7 +234,6 @@ void CASlider::setMaxTrackTintImage(CAImage* image)
         {
             ((CAScale9ImageView*)m_pMaxTrackTintImageView)->setImage(m_pMaxTrackTintImage);
         }
-//        this->layoutSubViews();
     }
 }
 

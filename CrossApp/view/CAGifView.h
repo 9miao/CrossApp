@@ -29,8 +29,6 @@ public:
     
     virtual bool init();
     virtual bool initWithGif(CAGif* gif);
-    virtual void setFrame(DRect rect);
-    virtual void setCenter(DRect rect);
 
     void setGif(CAGif* gif);
     void setTimes(float times);
@@ -39,6 +37,7 @@ public:
 protected:
     virtual void updateImageRect();
     virtual void updateGif(float delta);
+    virtual void setContentSize(const DSize& contentSize);
     void setGifBounds(DSize size);
     DSize compareSize(DSize setSize, DSize gifSize);
 private:

@@ -207,6 +207,7 @@ extern "C"
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textView"));
         imageView->setImage(image);
         imageView->setVisible(true);
+        free(data);
     }
     
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_hideImageView(JNIEnv *env, jclass cls, jint key)

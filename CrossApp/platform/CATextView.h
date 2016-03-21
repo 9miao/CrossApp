@@ -90,6 +90,7 @@ public:
     
     static CATextView* createWithCenter(const DRect& rect);
     
+    static CATextView* createWithLayout(const DRectLayout& layout);
     
     //delegate
     CC_SYNTHESIZE(CATextViewDelegate*, m_pDelegate, Delegate);
