@@ -72,7 +72,12 @@ namespace CADevice
     }
     void OpenURL(const std::string &url)
     {
-		::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+        ::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
+#else
+        
+#endif
+		
     }
     
     float getBatteryLevel()

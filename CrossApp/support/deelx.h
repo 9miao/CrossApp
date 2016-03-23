@@ -7,7 +7,7 @@
 //
 // http://www.regexlab.com/deelx/
 //
-// Author:  ∑ ŸŒ∞ (sswater shi)
+// Author: (sswater shi)
 // sswater@gmail.com
 //
 // $Revision: 864 $
@@ -504,7 +504,7 @@ template <class T> void CSortedBufferT <T> :: Add(const T & rT)
 {
 	if(m_bSortFreezed != 0)
 	{
-		Append(rT);
+		this->Append(rT);
 		return;
 	}
 
@@ -521,7 +521,7 @@ template <class T> void CSortedBufferT <T> :: Add(const T & rT)
 		c = (a + b + 1) / 2;
 	}
 
-	Insert(c, rT);
+	this->Insert(c, rT);
 }
 
 template <class T> void CSortedBufferT <T> :: Add(const T * pT, int nSize)

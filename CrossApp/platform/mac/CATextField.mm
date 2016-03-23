@@ -563,6 +563,7 @@ bool CATextField::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
@@ -606,7 +607,6 @@ void CATextField::setContentSize(const DSize& contentSize)
     size.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textField_MAC setContentSize:size];
 
-    m_pBackgroundView->setFrame(this->getBounds());
     m_pImgeView->setFrame([textField_MAC getDRect]);
 }
 
@@ -796,15 +796,16 @@ void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& fil
     setMarginLeft(imgSize.width);
     
     //setimage
-    CAImageView* ima = (CAImageView*)this->getSubviewByTag(1010);
-    if (!ima)
+    CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTag(1010);
+    if (!leftMarginView)
     {
-        ima = CAImageView::create();
-        ima->setTag(1010);
-        this->addSubview(ima);
+        leftMarginView = CAImageView::create();
+        leftMarginView->setTag(1010);
+        leftMarginView->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+        this->addSubview(leftMarginView);
     }
-    ima->setCenter(DRect(imgSize.width / 2, m_obContentSize.height / 2, imgSize.width, imgSize.height));
-    ima->setImage(CAImage::create(filePath));
+    leftMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::L_W_T_B));
+    leftMarginView->setImage(CAImage::create(filePath));
 }
 
 void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& filePath)
@@ -821,7 +822,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
         rightMarginView->setTag(1011);
         this->addSubview(rightMarginView);
     }
-    rightMarginView->setCenter(DRect(m_obContentSize.width - imgSize.width / 2, m_obContentSize.height / 2, imgSize.width, imgSize.height));
+    rightMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::R_W_T_B));
     rightMarginView->setImageSize(rightMarginView->getBounds().size);
     rightMarginView->setImageForState(CAControlStateAll, CAImage::create(filePath));
 }

@@ -259,6 +259,7 @@ bool CATextView::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
@@ -409,8 +410,7 @@ void CATextView::setContentSize(const DSize& contentSize)
     NSRect rect = [textView_Mac frame];
     rect.size = size;
     textView_Mac.frame = rect;
-    
-    m_pBackgroundView->setFrame(this->getBounds());
+
     m_pShowImageView->setFrame(this->getBounds());
 }
 

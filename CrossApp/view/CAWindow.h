@@ -42,6 +42,8 @@ protected:
     CC_PROPERTY(CAViewController*, m_pRootViewController, RootViewController);
     
     CC_SYNTHESIZE_READONLY(CAViewController*, m_pModalViewController, ModalViewController);
+    
+    CAMap<std::string, CAViewController*> m_obViewControllerMap;
 };
 
 NS_CC_END

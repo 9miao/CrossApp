@@ -281,6 +281,7 @@
 		B0A11DAC1AE8C5C500933BF6 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DA31AE8C5C500933BF6 /* gifalloc.c */; };
 		B0A11DAD1AE8C5C500933BF6 /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = B0A11DA41AE8C5C500933BF6 /* quantize.c */; };
 		B0A2E7DE1C46168800C1C22B /* CATextView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0A2E7DD1C46168800C1C22B /* CATextView.mm */; };
+		B0A452EA1C9FF2B2004CBF45 /* deelx.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A452E91C9FF2B2004CBF45 /* deelx.h */; };
 		B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */; };
 		B0A7157F1A43F6DE00A85FB9 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */; };
 		B0B05F9B1BB1483200B891CE /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B05F651BB1483200B891CE /* CAActivityIndicatorView.cpp */; };
@@ -653,6 +654,7 @@
 		B0A11DA31AE8C5C500933BF6 /* gifalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gifalloc.c; sourceTree = "<group>"; };
 		B0A11DA41AE8C5C500933BF6 /* quantize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quantize.c; sourceTree = "<group>"; };
 		B0A2E7DD1C46168800C1C22B /* CATextView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextView.mm; sourceTree = "<group>"; };
+		B0A452E91C9FF2B2004CBF45 /* deelx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deelx.h; sourceTree = "<group>"; };
 		B0A7157C1A43F6DE00A85FB9 /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
 		B0A7157D1A43F6DE00A85FB9 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
 		B0B05F651BB1483200B891CE /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
@@ -1102,6 +1104,7 @@
 				04EAB02B1956D75500198A8E /* tinyxml2 */,
 				04EAB0281956D75500198A8E /* image_support */,
 				04EAB0231956D75500198A8E /* data_support */,
+				B0A452E91C9FF2B2004CBF45 /* deelx.h */,
 				B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */,
 				B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */,
 				B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */,
@@ -1544,6 +1547,7 @@
 				3E2154081B817AB80075448E /* DownloadManager.h in Headers */,
 				B03407F91991CA27005DB179 /* md5.h in Headers */,
 				04EAB0CA1956D75600198A8E /* quaternion.h in Headers */,
+				B0A452EA1C9FF2B2004CBF45 /* deelx.h in Headers */,
 				04EAB0CB1956D75600198A8E /* ray2.h in Headers */,
 				B0B05FB61BB1483200B891CE /* CAListView.h in Headers */,
 				B09B73CB1BD1FD47001D82BC /* CAVideoPlayerRender.h in Headers */,
