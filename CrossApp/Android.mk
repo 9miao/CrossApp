@@ -109,6 +109,7 @@ view/CAWebView.cpp \
 view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
 view/CAGifView.cpp \
+view/CARichLabel.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -126,6 +127,7 @@ platform/CCSAXParser.cpp \
 platform/CCFileUtils.cpp \
 platform/platform.cpp \
 platform/CAFreeTypeFont.cpp \
+platform/CAFTRichFont.cpp \
 platform/CAEmojiFont.cpp \
 platform/CAFTFontCache.cpp \
 platform/CCEGLViewProtocol.cpp \

@@ -15,7 +15,6 @@ WebViewTest::~WebViewTest()
 
 void WebViewTest::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
     this->getView()->setColor(CAColor_gray);
     
     CAWebView* web = CAWebView::createWithLayout(DRectLayout(0, 0, 200, 240, DRectLayout::L_R_T_B));

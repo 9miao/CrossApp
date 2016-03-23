@@ -263,7 +263,7 @@ bool CATextView::init()
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
-    m_pShowImageView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
+    m_pShowImageView = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
     this->addSubview(m_pShowImageView);
     m_pShowImageView->setTextTag("textView");
     return true;
@@ -410,8 +410,6 @@ void CATextView::setContentSize(const DSize& contentSize)
     NSRect rect = [textView_Mac frame];
     rect.size = size;
     textView_Mac.frame = rect;
-
-    m_pShowImageView->setFrame(this->getBounds());
 }
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

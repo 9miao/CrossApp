@@ -22,7 +22,6 @@ void ActivityIndicatorViewTest::viewDidLoad()
     showIndex = 0;
     VIEWLIST.clear();
     
-//    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
     CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
     idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
     idc1->startAnimating();
@@ -60,9 +59,10 @@ void ActivityIndicatorViewTest::viewDidLoad()
     VIEWLIST.pushBack(view4);
     
     CAImage* image = CAImage::create("image/indicator2.png");
-    CAImageView* imageView = CAImageView::createWithCenter(DRect(0, 0, 100, 100));
-//    CAImageView* imageView = CAImageView::createWithLayout(DRectLayout(100,100,100,100,DRectLayout::L_R_T_B));
+//    CAImageView* imageView = CAImageView::createWithCenter(DRect(0, 0, 100, 100));
+    CAImageView* imageView = CAImageView::createWithLayout(DRectLayout(100,100,100,100,DRectLayout::L_W_T_H));
     imageView->setImage(image);
+    CCLog("imageeView.w = ");
     CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithLayout(DRectLayout(100,100,100,100,DRectLayout::L_R_T_B));
     idc5->setStyle(CAActivityIndicatorViewStyleImage);
     idc5->setActivityIndicatorView(imageView);

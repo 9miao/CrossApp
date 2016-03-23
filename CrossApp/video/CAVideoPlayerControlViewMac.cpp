@@ -11,6 +11,8 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 , m_playButton(NULL)
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
+, m_bShowBackButton(false)
+, m_bWaitingSlide(false)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
@@ -65,10 +67,22 @@ bool CAVideoPlayerControlView::init()
 	}
     
 	this->setColor(ccc4(0, 0, 0, 255));
-    
     this->buildCtrlViews();
-    
 	return true;
+}
+
+void CAVideoPlayerControlView::setShowBackButton(bool val)
+{
+    m_bShowBackButton = val;
+    if (m_backButton)
+    {
+        m_backButton->setVisible(val);
+    }
+}
+
+bool CAVideoPlayerControlView::getShowBackButton()
+{
+    return m_bShowBackButton;
 }
 
 void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
@@ -79,16 +93,6 @@ void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
 void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
 {
 	return m_glView->initWithUrl(szUrl);
-}
-
-bool CAVideoPlayerControlView::getShowBackButton()
-{
-    return m_bShowBackButton;
-}
-
-void CAVideoPlayerControlView::setShowBackButton(bool var)
-{
-    m_bShowBackButton = var;
 }
 
 void CAVideoPlayerControlView::buildCtrlViews()

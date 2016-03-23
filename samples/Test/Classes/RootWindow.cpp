@@ -44,7 +44,8 @@ bool RootWindow::init()
     {
         return false;
     }
-
+    DSize winSize = this->getBounds().size;
+    
     CAApplication::getApplication()->setNotificationView(CAView::createWithFrame(this->getBounds(), CAColor_green));
     
     this->initUIView();
@@ -74,9 +75,7 @@ void RootWindow::initUIView()
 {
     do
     {
-        CAViewController* viewController =
-        m_pRootNavigationController
-        ? m_pRootNavigationController->getViewControllerAtIndex(0) : NULL;
+        CAViewController* viewController = m_pRootNavigationController ? m_pRootNavigationController->getViewControllerAtIndex(0) : NULL;
         
         CC_BREAK_IF(dynamic_cast<CDUIShowCollectionView*>(viewController));
 
@@ -111,10 +110,12 @@ void RootWindow::initUIView()
     
     CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleLightContent);
 }
+
 void RootWindow::buttonCallBack(CAControl* btn,DPoint point)
 {
     this->getDrawerController()->showLeftViewController(true);
 }
+
 void RootWindow::intNewsView()
 {
     do
@@ -122,7 +123,7 @@ void RootWindow::intNewsView()
         CAViewController* viewController = m_pRootNavigationController->getViewControllerAtIndex(0);
         CC_BREAK_IF(dynamic_cast<CATabBarController*>(viewController));
         
-        
+
         CAVector<CAViewController*> vec_news;
         
         CATabBarItem* item = CATabBarItem::create(unicode_to_utf8(newsTitle[0]), CAImage::create(""), CAImage::create(""));

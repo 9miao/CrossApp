@@ -681,7 +681,6 @@ void CATextView::delayShowImage()
 
 void CATextView::showImage()
 {
-    m_pShowImageView->setFrame(this->getBounds());
 	((CATextViewWin32*)m_pTextView)->updateImage();
 }
 
@@ -711,6 +710,19 @@ CATextView* CATextView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CATextView* CATextView::createWithLayout(const DRectLayout& layout)
+{
+    CATextView* textView = new CATextView();
+    if (textView&&textView->initWithLayout(layout))
+    {
+        textView->autorelease();
+        return textView;
+    }
+    
+    CC_SAFE_RELEASE_NULL(textView);
+    return NULL;
+}
+
 bool CATextView::init()
 {
 	if (!CAView::init())
@@ -723,16 +735,13 @@ bool CATextView::init()
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
 	m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
 	m_pBackgroundView->setCapInsets(capInsets);
 	m_pBackgroundView->setImage(image);
 	this->insertSubview(m_pBackgroundView, -1);
-    
-	m_pShowImageView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
-	m_pShowImageView->setTextTag("textView");
-	this->addSubview(m_pShowImageView);
 	
 	CATextViewWin32 *text = new CATextViewWin32(this);
-	text->initWithFrame(DRect(0, 0, 1, 1));
+	text->initWithLayout(DRectLayout(5, 5, 5, 5, DRectLayout::L_R_T_B));
 	text->autorelease();
 	this->addSubview(text);
 
@@ -759,21 +768,6 @@ void CATextView::update(float dt)
 void CATextView::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
-    
-	if (m_pBackgroundView)
-	{
-		m_pBackgroundView->setFrame(this->getBounds());
-	}
-	if (m_pShowImageView)
-	{
-		m_pShowImageView->setFrame(this->getBounds());
-	}
-	if (m_pTextView)
-	{
-		DRect r = this->getBounds();
-		r.InflateRect(-5);
-		((CATextViewWin32*)m_pTextView)->setFrame(r);
-	}
 }
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

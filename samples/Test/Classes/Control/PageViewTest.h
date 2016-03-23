@@ -26,8 +26,6 @@ public:
     
     CAPageView* p_PageViewVec;
     
-    DSize winSize;
-    DRect winRect;
     int showIndex;
     int showNum;
     int pageViewIndex;

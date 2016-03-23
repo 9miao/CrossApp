@@ -1,8 +1,6 @@
 #include "AppDelegate.h"
-#include "CrossApp.h"
 #include "ccTypes.h"
 #include "platform/android/jni/JniHelper.h"
-#include "platform/android/CAWebViewImpl.h"
 #include <jni.h>
 #include <android/log.h>
 

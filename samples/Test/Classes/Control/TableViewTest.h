@@ -36,7 +36,7 @@ public:
     ETableView();
     virtual ~ETableView();
     
-    virtual bool init();
+    virtual bool init(const CrossApp::DRect &rect);
     static ETableView* createWithLayout(const DRectLayout& layout);
     
 public:
@@ -53,6 +53,7 @@ public:
     CC_SYNTHESIZE(CDETableViewDelegate*, m_pETableViewDelegate, ETableViewDelegate);
 public:
     CATableView* p_TableView;
+    DSize size;
 };
 
 class TableViewTest: public CAViewController, public CATableViewDataSource, public CDETableViewDelegate, public CATableViewDelegate
@@ -77,7 +78,6 @@ public:
     int showIndex;
     int showNum;
     int pageViewIndex;
-    
     
     CAPageControl* pageControl;
     CAVector<CAView* > VIEWLIST;

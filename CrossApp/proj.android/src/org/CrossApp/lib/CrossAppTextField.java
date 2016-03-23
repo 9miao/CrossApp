@@ -542,7 +542,6 @@ import android.widget.TextView.OnEditorActionListener;
                 	{
                 		textField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 	}
-                	
                 }
             });
     	}
@@ -767,10 +766,6 @@ import android.widget.TextView.OnEditorActionListener;
 			{
 				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
-				if (isSetText)
-				{
-					return;
-				}
 
 				String string = arg0.toString();
 				
@@ -788,25 +783,32 @@ import android.widget.TextView.OnEditorActionListener;
 
 				if (!textChange(mykey, beforeTextString, changedText, arg1, arg2))
 				{
-					isSetText = true;
-					textField.setText(beforeTextString);
-					textField.setSelection(selection);
-					isSetText = false;
+					if (isSetText == false)
+					{
+						isSetText = true;
+						textField.setText(beforeTextString);
+						textField.setSelection(selection);
+						isSetText = false;
+					}
+					
 				}
 				else
 				{
-					isSetText = true;
-					textField.setText(string);
-					textField.setSelection(selection - arg2 + arg3);
-//					context.runOnGLThread(new Runnable() 
-//	            	{
-//	                    @Override
-//	                    public void run()
-//	                    {
-//	                    	ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
-//	    					text(mykey, textBuffer.array(), textBuffer.array().length);
-//	                    }
-//	                });
+					if (isSetText == false)
+					{
+						isSetText = true;
+						textField.setText(string);
+						textField.setSelection(selection - arg2 + arg3);
+//						context.runOnGLThread(new Runnable() 
+//		            	{
+//		                    @Override
+//		                    public void run()
+//		                    {
+//		                    	ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
+//		    					text(mykey, textBuffer.array(), textBuffer.array().length);
+//		                    }
+//		                });
+					}
 					ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
 					isSetText = false;

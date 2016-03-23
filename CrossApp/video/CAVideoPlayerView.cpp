@@ -113,7 +113,7 @@ bool CAVideoPlayerView::init()
         return false;
     }
     
-	setColor(ccc4(0, 0, 0, 255));
+	this->setColor(ccc4(0, 0, 0, 255));
 
     return true;
 }
@@ -332,12 +332,8 @@ void CAVideoPlayerView::showLoadingView(bool on)
 {
 	if (m_pLoadingView == NULL && on)
 	{
-		m_pLoadingView = CAActivityIndicatorView::create();
+		m_pLoadingView = CAActivityIndicatorView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
 		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
-		float x = m_viewRect.origin.x + m_viewRect.size.width / 2;
-		float y = m_viewRect.origin.y + m_viewRect.size.height / 2;
-		m_pLoadingView->setCenterOrigin(DPoint(x, y));
-		m_pLoadingView->resignFirstResponder();
 		this->addSubview(m_pLoadingView);
 	}
 	if (m_pLoadingView)
@@ -383,7 +379,6 @@ bool CAVideoPlayerView::createDecoder()
 		CC_SAFE_DELETE(m_pDecoder);
 		return false;
 	}
-	setFrame(getFrame());
 
 	CAThread::setMaxMsgCount(8);
 	CAThread::startAndWait(decodeProcessThread);

@@ -72,6 +72,7 @@ bool CAVideoPlayerControlView::init()
 	}
 
 	this->setColor(ccc4(0, 0, 0, 255));
+    this->buildCtrlViews();
 	return true;
 }
 
@@ -117,14 +118,14 @@ void CAVideoPlayerControlView::setPlayerViewDelegate(CAVideoPlayerViewDelegate* 
 
 void CAVideoPlayerControlView::buildCtrlViews()
 {
-    m_glView = CAVideoPlayerView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
-    m_glView->setColor(CAColor_black);
+    m_glView = CAVideoPlayerView::create();
+    m_glView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     this->addSubview(m_glView);
-    
+
     // Bottom Panel Back
     CAImageView* bottomPanel = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 188, DRectLayout::L_R_B_H));
     bottomPanel->setImage(CAImage::create("source_material/vdo_panel_bottom_bg.png"));
-    m_glView->addSubview(bottomPanel);
+    m_glView->insertSubview(bottomPanel, 100);
     
     // Slider
     CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");

@@ -16,8 +16,6 @@ RenderImageTest::~RenderImageTest()
 
 void RenderImageTest::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
-    winRect = this->getView()->getBounds();
     this->getView()->setColor(CAColor_gray);
     
     dle_ren_index = 0;
@@ -48,10 +46,11 @@ void RenderImageTest::renderCallBack(CAControl* control, DPoint point)
     {
         m_clvImage->setClippingEnabled(true);
         CARenderImage* rm = CARenderImage::create(winSize.width-100, winSize.width-100);//123456
+        
         rm->printscreenWithView(m_clvImage);
         
-//        renderImage = CAView::createWithFrame(DRect(50,winSize.height/4,winSize.width-100,winSize.width-100));
-        renderImage = CAView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+        renderImage = CAView::createWithFrame(DRect(50,winSize.height/4,winSize.width-100,winSize.width-100));
+//        renderImage = CAView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
         this->getView()->addSubview(renderImage);
         
         m_clvImage->setClippingEnabled(false);

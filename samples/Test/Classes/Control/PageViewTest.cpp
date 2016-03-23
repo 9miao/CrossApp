@@ -15,9 +15,6 @@ PageViewTest::~PageViewTest()
 
 void PageViewTest::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
-    winRect = this->getView()->getBounds();
-    
     CAImageView* view1 = CAImageView::createWithImage(CAImage::create("image/1.jpg"));
     CAImageView* view2 = CAImageView::createWithImage(CAImage::create("image/2.jpg"));
     CAImageView* view3 = CAImageView::createWithImage(CAImage::create("image/3.jpg"));

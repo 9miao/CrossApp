@@ -60,8 +60,9 @@ ETableView::ETableView(){
 ETableView::~ETableView(){
 }
 
-bool ETableView::init()
+bool ETableView::init(const CrossApp::DRect &rect)
 {
+    size = rect.size;
     p_TableView = CATableView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
     p_TableView->setAllowsSelection(true);
     p_TableView->setTableViewDelegate(this);
@@ -127,7 +128,7 @@ unsigned int ETableView::numberOfSections(CATableView *table)
 
 unsigned int ETableView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    return sectionTitle.size()*1.5;
+    return size.height/sectionTitle.size();
 }
 
 unsigned int ETableView::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
@@ -199,7 +200,7 @@ void TableViewTest::viewDidLoad()
     this->getView()->addSubview(p_TableView);
     
     ETableView* p_TableView1 = ETableView::createWithLayout(DRectLayout(0,50,0,0,DRectLayout::R_W_T_B));
-    p_TableView1->init();
+    p_TableView1->init(this->getView()->getBounds());
     p_TableView1->setETableViewDelegate(this);
     this->getView()->addSubview(p_TableView1);
 }

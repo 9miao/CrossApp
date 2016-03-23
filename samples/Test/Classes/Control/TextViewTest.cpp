@@ -15,8 +15,6 @@ TextViewTest::~TextViewTest()
 
 void TextViewTest::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
-    winRect = this->getView()->getBounds();
     this->getView()->setColor(CAColor_gray);
     
     CATextView* textView = CATextView::createWithLayout(DRectLayout(100,100,100,100, DRectLayout::L_R_T_B));

@@ -4,16 +4,20 @@ NS_CC_BEGIN
 
 
 CAVideoPlayerView::CAVideoPlayerView()
-: m_pRenderer(NULL)
+: m_pPlayerViewDelegate(NULL)
+, m_pRenderer(NULL)
 , m_pDecoder(NULL)
 , m_isPlaying(false)
+, m_isBuffered(false)
 , m_fMinBufferedDuration(0)
 , m_fMaxBufferedDuration(0)
 , m_fBufferedDuration(0)
 , m_fMoviePosition(0)
+, m_tickCorrectionPosition(0)
 , m_pCurVideoFrame(NULL)
 , m_pCurAudioFrame(NULL)
 , m_uCurAudioFramePos(0)
+, m_pLoadingView(NULL)
 {
 }
 

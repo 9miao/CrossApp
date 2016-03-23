@@ -157,21 +157,45 @@ CATextView* CATextView::createWithFrame(const DRect& frame)
     CC_SAFE_RELEASE_NULL(textView);
     return NULL;
 }
-CATextView* CATextView::createWithCenter(const CrossApp::DRect &rect){
+
+CATextView* CATextView::createWithCenter(const CrossApp::DRect &rect)
+{
+    CATextView* textView = new CATextView();
+    if (textView&&textView->initWithCenter(rect))
+    {
+        textView->autorelease();
+        return textView;
+    }
+    
+    CC_SAFE_RELEASE_NULL(textView);
     return NULL;
 }
+
+CATextView* CATextView::createWithLayout(const DRectLayout& layout)
+{
+    CATextView* textView = new CATextView();
+    if (textView&&textView->initWithLayout(layout))
+    {
+        textView->autorelease();
+        return textView;
+    }
+    
+    CC_SAFE_RELEASE_NULL(textView);
+    return NULL;
+}
+
 bool CATextView::init()
 {
     //bg
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
-    m_pBackgroundView = CAScale9ImageView::createWithFrame(DRectZero);
-    m_pBackgroundView->setImage(image);
+    m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
 
     //show
-    m_pShowImageView = CAImageView::createWithFrame(DRect(0,0,0,0));
+    m_pShowImageView = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     this->addSubview(m_pShowImageView);
     m_pShowImageView->setTextTag("textView");
 
@@ -280,7 +304,6 @@ void CATextView::showImage()
     free(data);
     
     m_pShowImageView->setImage(image);
-    m_pShowImageView->setFrame(this->getBounds());
     this->updateDraw();
 }
 void CATextView::showTextView()
@@ -312,9 +335,7 @@ void CATextView::setContentSize(const DSize& contentSize)
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textView_iOS setContentSize:rect.size];
-    
-    m_pBackgroundView->setFrame(this->getBounds());
-    m_pShowImageView->setFrame(this->getBounds());
+
 }
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {

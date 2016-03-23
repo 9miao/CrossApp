@@ -22,7 +22,7 @@ void LabelTest::viewDidLoad()
     showIndex = 0;
     VIEWLIST.clear();
     
-    for (int i=0; i<showNum; i++) {//DRectLayout
+    for (int i=0; i<showNum; i++) {
         CALabel* label = CALabel::createWithLayout(DRectLayout(100, 100, 100, 100, DRectLayout::L_R_T_B));
         std::string s = "Hello World";
         

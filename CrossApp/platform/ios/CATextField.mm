@@ -318,7 +318,6 @@ void CATextField::showImage()
     free(data);
 
     m_pImgeView->setImage(image);
-    m_pImgeView->setFrame(this->getBounds());
     this->updateDraw();
 }
 
@@ -337,13 +336,23 @@ CATextField* CATextField::createWithFrame(const DRect& frame)
 CATextField* CATextField::createWithCenter(const DRect& rect)
 {
     CATextField* textField = new CATextField();
-    
     if (textField && textField->initWithCenter(rect))
     {
         textField->autorelease();
         return textField;
     }
-    
+    CC_SAFE_DELETE(textField);
+    return NULL;
+}
+
+CATextField* CATextField::createWithLayout(const DRectLayout& layout)
+{
+    CATextField* textField = new CATextField();
+    if (textField && textField->initWithLayout(layout))
+    {
+        textField->autorelease();
+        return textField;
+    }
     CC_SAFE_DELETE(textField);
     return NULL;
 }
@@ -353,10 +362,11 @@ bool CATextField::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
-    m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
+    m_pImgeView = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     this->addSubview(m_pImgeView);
     m_pImgeView->setTextTag("textField");
 
@@ -390,9 +400,6 @@ void CATextField::setContentSize(const DSize& contentSize)
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     textField_iOS.frame = rect;
-
-    m_pBackgroundView->setFrame(this->getBounds());
-    m_pImgeView->setFrame(this->getBounds());
 }
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

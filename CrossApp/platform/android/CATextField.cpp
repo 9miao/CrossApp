@@ -527,8 +527,6 @@ void CATextField::delayShowImage()
 void CATextField::showImage()
 {
     getTextFieldImageJNI(m_u__ID);
-    
-    m_pImgeView->setFrame(this->getBounds());
 }
 
 CATextField* CATextField::createWithFrame(const DRect& frame)
@@ -557,15 +555,28 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CATextField* CATextField::createWithLayout(const DRectLayout& layout)
+{
+    CATextField* textField = new CATextField();
+    if (textField && textField->initWithLayout(layout))
+    {
+        textField->autorelease();
+        return textField;
+    }
+    CC_SAFE_DELETE(textField);
+    return NULL;
+}
+
 bool CATextField::init()
 {
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
-	m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
+    m_pImgeView = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
 	this->addSubview(m_pImgeView);
     m_pImgeView->setTag(0xbcda);
     
@@ -596,9 +607,6 @@ void CATextField::setContentSize(const DSize& contentSize)
     size.width = s_dip_to_px(worldContentSize.width);
     size.height =  s_dip_to_px(worldContentSize.height);
     setTextFieldSizeJNI(m_u__ID, size.width, size.height);
-
-    m_pBackgroundView->setFrame(this->getBounds());
-    m_pImgeView->setFrame(this->getBounds());
 }
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -693,15 +701,15 @@ void CATextField::setMarginImageLeft(const DSize& imgSize, const std::string& fi
 	setMarginLeft(imgSize.width);
 
 	//setimage
-	CAImageView* ima = (CAImageView*)this->getSubviewByTag(1010);
-	if (!ima)
+	CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTag(1010);
+	if (!leftMarginView)
 	{
-		ima = CAImageView::create();
-		ima->setTag(1010);
-		this->addSubview(ima);
+		leftMarginView = CAImageView::create();
+		leftMarginView->setTag(1010);
+		this->addSubview(leftMarginView);
 	}
-	ima->setCenter(DRect(imgSize.width / 2, getBounds().size.height / 2, imgSize.width, imgSize.height));
-	ima->setImage(CAImage::create(filePath));
+	leftMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::L_W_T_B));
+	leftMarginView->setImage(CAImage::create(filePath));
 }
 
 void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& filePath)
@@ -712,15 +720,15 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
     if (m_eClearBtn == None)
     {
         //setimage
-        CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
-        if (!ima)
+        CAImageView* rightMarginView = (CAImageView*)this->getSubviewByTag(1011);
+        if (!rightMarginView)
         {
-            ima = CAImageView::create();
-            ima->setTag(1011);
-            this->addSubview(ima);
+            rightMarginView = CAImageView::create();
+            rightMarginView->setTag(1011);
+            this->addSubview(rightMarginView);
         }
-        ima->setCenter(DRect(getBounds().size.width - imgSize.width / 2, getBounds().size.height / 2, imgSize.width, imgSize.height));
-        ima->setImage(CAImage::create(filePath));
+        rightMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::R_W_T_B));
+        rightMarginView->setImage(CAImage::create(filePath));
     }
 }
 

@@ -55,16 +55,14 @@ static const CHAR* adressTag[34] =
 
 void PickerViewTest::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
-    winRect = this->getView()->getBounds();
     this->getView()->setColor(CAColor_gray);
     
     pageViewIndex = 1;
     showIndex = 0;
     VIEWLIST.clear();
     
-//    p_pickerView = CAPickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280));
-    p_pickerView = CAPickerView::createWithLayout(DRectLayout(10, 10, 100, 100, DRectLayout::L_R_T_B));
+    p_pickerView = CAPickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280));
+//    p_pickerView = CAPickerView::createWithLayout(DRectLayout(10, 10, 100, 100, DRectLayout::L_R_T_B));
     p_pickerView->setPickerViewDelegate(this);
     p_pickerView->setPickerViewDataSource(this);
     p_pickerView->setFontSizeNormal(40);

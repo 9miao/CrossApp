@@ -24,7 +24,6 @@ protected:
     
 public:
     
-    DSize winSize;
     
 };
 

@@ -24,8 +24,6 @@ protected:
     
 public:
 
-    DSize winSize;
-    DRect winRect;
     
 };
 

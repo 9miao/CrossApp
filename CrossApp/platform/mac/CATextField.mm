@@ -823,7 +823,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
         this->addSubview(rightMarginView);
     }
     rightMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::R_W_T_B));
-    rightMarginView->setImageSize(rightMarginView->getBounds().size);
+    rightMarginView->setImageSize(imgSize);
     rightMarginView->setImageForState(CAControlStateAll, CAImage::create(filePath));
 }
 
