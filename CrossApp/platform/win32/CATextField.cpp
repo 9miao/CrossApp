@@ -742,6 +742,18 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CATextField* CATextField::createWithLayout(const DRectLayout& layout)
+{
+	CATextField* textField = new CATextField();
+	if (textField && textField->initWithLayout(layout))
+	{
+		textField->autorelease();
+		return textField;
+	}
+	CC_SAFE_DELETE(textField);
+	return NULL;
+}
+
 
 bool CATextField::init()
 {

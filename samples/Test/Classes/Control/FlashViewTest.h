@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "CrossApp.h"
+#include "CrossAppExt.h"
 
 USING_NS_CC;
 

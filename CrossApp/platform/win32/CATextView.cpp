@@ -711,6 +711,18 @@ CATextView* CATextView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
+CATextView* CATextView::createWithLayout(const DRectLayout& layout)
+{
+	CATextView* textView = new CATextView();
+	if (textView && textView->initWithLayout(layout))
+	{
+		textView->autorelease();
+		return textView;
+	}
+	CC_SAFE_DELETE(textView);
+	return NULL;
+}
+
 bool CATextView::init()
 {
 	if (!CAView::init())

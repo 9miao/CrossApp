@@ -53,7 +53,7 @@ public:
 	CAFTRichFont();
 	virtual ~CAFTRichFont();
 
-	CAImage* initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<DRect>>& rects);
+	CAImage* initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<DRect>>& rects, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol);
 
 protected:
 	void newLine();
@@ -80,6 +80,8 @@ private:
 	DSize m_inSize;
 	DSize m_textSize;
 	DRect m_hyperlinkRect;
+	CAColor4B m_linkColor;
+	CAColor4B m_linkVisitedColor;
 	FTLineInfoEx* m_pCurrentLine;
 	std::vector<FTLineInfoEx*> m_lines;
 	FT_Matrix m_ItalicMatrix;

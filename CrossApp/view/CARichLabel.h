@@ -44,6 +44,20 @@ public:
 	void appendText(const std::string& text, const CAFont& font);
     
     void clear();
+
+	bool getAutoLinkMask();
+	void setAutoLinkMask(bool var);
+
+	bool getLinksClickable();
+	void setLinksClickable(bool var);
+
+	const CAColor4B& getLinkTextColor();
+	void setLinkTextColor(const CAColor4B& col);
+
+	const CAColor4B& getLinkVisitedTextColor();
+	void setLinkVisitedTextColor(const CAColor4B& col);
+
+	const std::vector<std::string>& getUrls();
     
 protected:
 	virtual void setContentSize(const DSize& var);
@@ -68,6 +82,10 @@ protected:
 private:
 	bool m_bUpdateImage;
 	float m_fTextHeight;
+	bool m_bAutoLinkMask;
+	bool m_bLinksClickable;
+	CAColor4B m_linkColor;
+	CAColor4B m_linkVisitedColor;
 	std::vector<std::pair<std::string, CAFont> > m_vLabelFontVect;
 	std::vector<std::vector<DRect>> m_vHyperlinkRects;
 	std::vector<std::string> m_vLabelUrls;
