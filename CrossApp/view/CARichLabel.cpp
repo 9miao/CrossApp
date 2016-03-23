@@ -128,6 +128,7 @@ void CARichLabel::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			if (m_vHyperlinkRects[i][j].containsPoint(point))
 			{
 				CADevice::OpenURL(m_vLabelUrls[i]);
+				setUrlVisited(m_vLabelUrls[i]);
 				return;
 			}
 		}
@@ -203,7 +204,7 @@ void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 			if (!cszStrTemp.empty())
 			{
 				CAFont t(font);
-				t.hyperlink = true;
+				t.hyperlink = 1;
 				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, t));
 				m_vLabelUrls.push_back(cszStrTemp);
 			}
@@ -218,6 +219,18 @@ void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 			{
 				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, font));
 			}
+		}
+	}
+	updateImageDraw();
+}
+
+void CARichLabel::setUrlVisited(const std::string& cszUrl)
+{
+	for (int i = 0; i < m_vLabelFontVect.size(); i++)
+	{
+		if (m_vLabelFontVect[i].first == cszUrl)
+		{
+			m_vLabelFontVect[i].second.hyperlink = 2;
 		}
 	}
 	updateImageDraw();
