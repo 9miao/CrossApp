@@ -63,6 +63,8 @@ protected:
 
 	void appendTextEx(const std::string& text, const CAFont& font);
 
+	void setUrlVisited(const std::string& cszUrl);
+
 private:
 	bool m_bUpdateImage;
 	float m_fTextHeight;

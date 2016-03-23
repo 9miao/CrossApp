@@ -11,7 +11,7 @@ NS_CC_BEGIN
 class CC_DLL CAFont
 {
 public:
-	bool hyperlink;
+	char hyperlink;
 
     bool bold;
     

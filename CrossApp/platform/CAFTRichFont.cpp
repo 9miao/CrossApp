@@ -23,11 +23,14 @@ CAFTRichFont::CAFTRichFont()
 
 CAFTRichFont::~CAFTRichFont()
 {
+	destroyAllLines();
 }
 
 
 CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<CCRect>>& rects)
 {
+	destroyAllLines();
+
 	m_inSize = sz;
 	m_textSize = DSizeZero;
 	initGlyphs(labels);
@@ -196,7 +199,7 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 	bool bItalics = ft.italics;
 	bool bDeleteLine = ft.deleteLine;
 	bool bUnderLine = ft.underLine;
-	bool bHyperlink = ft.hyperlink;
+	int iHyperlink = ft.hyperlink;
 	int iFontSize = ft.fontSize;
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
@@ -224,10 +227,21 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 		glyph->isEmoji = false;
 		glyph->face = face;
 		glyph->fontSize = iFontSize;
-		glyph->col = bHyperlink ? ccc4(0, 0, 255, 255):col;
+		if (iHyperlink==1)
+		{
+			glyph->col = ccc4(0, 0, 255, 255);
+		}
+		else if (iHyperlink==2)
+		{
+			glyph->col = ccc4(0, 0, 100, 255);
+		}
+		else
+		{
+			glyph->col = col;
+		}
 		glyph->deleteLine = bDeleteLine;
-		glyph->underLine = bHyperlink?true:bUnderLine;
-		glyph->hyperlink = bHyperlink;
+		glyph->underLine = (iHyperlink>0) ? true : bUnderLine;
+		glyph->hyperlink = (iHyperlink>0);
 
 		FT_Bool isOpenType = (glyph_index == 0);
 		if (glyph_index == 0)
