@@ -130,9 +130,9 @@ protected:
     
     virtual void update(float dt);
 
-	void recoveryCollectionCell();
+	void recoveryCell();
 
-	void loadCollectionCell();
+	void loadCell();
     
     CAView* dequeueReusableLine();
     

@@ -368,7 +368,6 @@ void CATouchController::touchMoved()
                 }
             }
         }
-
     }
 
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());

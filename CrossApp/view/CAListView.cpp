@@ -528,7 +528,7 @@ void CAListView::reloadData()
             addSubview(m_pListFooterView);
         }
     }
-	loadCollectionCell();
+	loadCell();
     this->layoutPullToRefreshView();
     this->startDeaccelerateScroll();
 }
@@ -539,7 +539,7 @@ void CAListView::firstReloadData()
     this->reloadData();
 }
 
-void CAListView::recoveryCollectionCell()
+void CAListView::recoveryCell()
 {
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
@@ -569,7 +569,7 @@ void CAListView::recoveryCollectionCell()
 	}
 }
 
-void CAListView::loadCollectionCell()
+void CAListView::loadCell()
 {
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
@@ -622,9 +622,9 @@ void CAListView::update(float dt)
 {
     CAScrollView::update(dt);
 
-    recoveryCollectionCell();
+    recoveryCell();
     
-    loadCollectionCell();
+    loadCell();
 }
 
 float CAListView::maxSpeed(float dt)
