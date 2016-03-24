@@ -133,7 +133,7 @@
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
 #include "support/base64.h"
-//#include "support/deelx.h"
+#include "support/deelx.h"
 #include "support/network/HttpRequest.h"
 #include "support/network/HttpResponse.h"
 #include "support/network/HttpClient.h"

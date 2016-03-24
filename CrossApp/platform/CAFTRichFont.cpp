@@ -27,12 +27,14 @@ CAFTRichFont::~CAFTRichFont()
 }
 
 
-CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<CCRect>>& rects)
+CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<CCRect>>& rects, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol)
 {
 	destroyAllLines();
 
 	m_inSize = sz;
 	m_textSize = DSizeZero;
+	m_linkColor = linkCol;
+	m_linkVisitedColor = linkVisitedCol;
 	initGlyphs(labels);
 
 	int width = 0, height = 0;
@@ -229,11 +231,11 @@ FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label
 		glyph->fontSize = iFontSize;
 		if (iHyperlink==1)
 		{
-			glyph->col = ccc4(0, 0, 255, 255);
+			glyph->col = m_linkColor;
 		}
 		else if (iHyperlink==2)
 		{
-			glyph->col = ccc4(0, 0, 100, 255);
+			glyph->col = m_linkVisitedColor;
 		}
 		else
 		{

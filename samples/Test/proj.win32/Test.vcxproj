@@ -67,7 +67,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;..\Classes\Control;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -138,6 +138,32 @@
     <ClCompile Include="..\Classes\CDUIShowView.cpp" />
     <ClCompile Include="..\Classes\CDWebViewController.cpp" />
     <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
+    <ClCompile Include="..\Classes\Control\1GifViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1ListViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1PageViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1PickerViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1RenderImageTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1ScrollViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1TextFieldTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1TextViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1VideoPlayerControlViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\1ViewAnimationTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AlertViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ButtonTest.cpp" />
+    <ClCompile Include="..\Classes\Control\CollectionViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\FlashViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\LabelTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ProgressTest.cpp" />
+    <ClCompile Include="..\Classes\Control\Scale9ImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\SegmentedControlTest.cpp" />
+    <ClCompile Include="..\Classes\Control\SliderTest.cpp" />
+    <ClCompile Include="..\Classes\Control\StepperTest.cpp" />
+    <ClCompile Include="..\Classes\Control\SwitchTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TabBarControllerTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TableViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\WebViewTest.cpp" />
     <ClCompile Include="..\Classes\MenuViewController.cpp" />
     <ClCompile Include="..\Classes\RootWindow.cpp" />
     <ClCompile Include="main.cpp" />

@@ -10,9 +10,12 @@ NS_CC_BEGIN
 CARichLabel::CARichLabel()
 	: m_fTextHeight(0)
 	, m_bUpdateImage(false)
+	, m_bAutoLinkMask(true)
+	, m_bLinksClickable(true)
+	, m_linkColor(ccc4(0, 0, 255, 255))
+	, m_linkVisitedColor(ccc4(0, 0, 100, 255))
 {
 }
-
 
 CARichLabel::~CARichLabel()
 {
@@ -114,7 +117,7 @@ void CARichLabel::updateImageRect()
 
 bool CARichLabel::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	return true;
+	return m_bLinksClickable;
 }
 
 void CARichLabel::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -204,7 +207,7 @@ void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 			if (!cszStrTemp.empty())
 			{
 				CAFont t(font);
-				t.hyperlink = 1;
+				t.hyperlink = m_bAutoLinkMask?1:0;
 				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, t));
 				m_vLabelUrls.push_back(cszStrTemp);
 			}
@@ -253,7 +256,7 @@ void CARichLabel::updateImage()
 	}
 
 	m_vHyperlinkRects.clear();
-	CAImage* image = g_AFTRichFont.initWithString(m_vLabelFontVect, size, m_vHyperlinkRects);
+	CAImage* image = g_AFTRichFont.initWithString(m_vLabelFontVect, size, m_vHyperlinkRects, m_linkColor, m_linkVisitedColor);
 	this->setImage(image);
 	CC_RETURN_IF(image == NULL);
 	CC_RETURN_IF(m_vLabelUrls.size() != m_vHyperlinkRects.size());
@@ -301,6 +304,51 @@ void CARichLabel::clear()
     updateImageDraw();
 }
 
+bool CARichLabel::getAutoLinkMask()
+{
+	return m_bAutoLinkMask;
+}
 
+void CARichLabel::setAutoLinkMask(bool var)
+{
+	m_bAutoLinkMask = var;
+}
+
+bool CARichLabel::getLinksClickable()
+{
+	return m_bLinksClickable;
+}
+
+void CARichLabel::setLinksClickable(bool var)
+{
+	m_bLinksClickable = var;
+}
+
+const CAColor4B& CARichLabel::getLinkTextColor()
+{
+	return m_linkColor;
+}
+
+void CARichLabel::setLinkTextColor(const CAColor4B& col)
+{
+	m_linkColor = col;
+	updateImageDraw();
+}
+
+const CAColor4B& CARichLabel::getLinkVisitedTextColor()
+{
+	return m_linkVisitedColor;
+}
+
+void CARichLabel::setLinkVisitedTextColor(const CAColor4B& col)
+{
+	m_linkVisitedColor = col;
+	updateImageDraw();
+}
+
+const std::vector<std::string>& CARichLabel::getUrls()
+{
+	return m_vLabelUrls;
+}
 
 NS_CC_END
