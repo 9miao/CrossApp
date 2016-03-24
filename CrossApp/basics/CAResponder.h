@@ -59,6 +59,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAVector<CATouch*>, m_vTouches, Touches);
     
+    CC_SYNTHESIZE_READONLY(bool, m_bScrollRunning, ScrollRunning);
+    
     virtual bool isReachBoundaryLeft() {return false;}
     
     virtual bool isReachBoundaryRight() {return false;}
@@ -95,7 +97,11 @@ public:
      * @lua NA
      */
     virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
-
+    
+protected:
+    
+    void setScrollRunning(bool var);
+    
     friend class CATouchController;
 };
 

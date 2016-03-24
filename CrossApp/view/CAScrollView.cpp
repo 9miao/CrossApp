@@ -789,7 +789,7 @@ void CAScrollView::stopDeaccelerateScroll()
     CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     m_tInertia = DPointZero;
     m_bDecelerating = false;
-    
+    this->setScrollRunning(false);
     if (m_bTouchEnabledAtSubviews)
     {
         m_pContainer->setTouchEnabled(true);
@@ -804,6 +804,7 @@ void CAScrollView::startDeaccelerateScroll()
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
     CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
     m_bDecelerating = true;
+    this->setScrollRunning(true);
     if (m_bTouchEnabledAtSubviews)
     {
         m_pContainer->setTouchEnabled(false);

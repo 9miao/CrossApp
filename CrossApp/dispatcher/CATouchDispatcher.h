@@ -164,11 +164,21 @@ public:
      * @lua NA
      */
     virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
+    /**
+     * @lua NA
+     */
+    void setScrollRunningResponder(CAResponder* var);
+    /**
+     * @lua NA
+     */
+    void removeScrollRunningResponder(CAResponder* var);
     
 protected:
 
     CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);
-
+    
+    CC_SYNTHESIZE_READONLY(CAResponder*, m_pScrollRunningResponder, ScrollRunningResponder);
+    
     int m_iDispatchEvents;
     
     bool m_bLocked;

@@ -23,6 +23,7 @@ CAResponder::CAResponder()
 ,m_bTouchEventScrollHandOverToSuperview(true)
 ,m_bMouseMovedEnabled(false)
 ,m_bMouseScrollWheelEnabled(false)
+,m_bScrollRunning(false)
 ,m_uZLevel(0)
 {
 
@@ -148,5 +149,17 @@ bool CAResponder::isMouseScrollWheelEnabled()
     return m_bMouseScrollWheelEnabled;
 }
 
+void CAResponder::setScrollRunning(bool var)
+{
+    m_bScrollRunning = var;
+    if (m_bScrollRunning)
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->setScrollRunningResponder(this);
+    }
+    else
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->removeScrollRunningResponder(this);
+    }
+}
 
 NS_CC_END;
