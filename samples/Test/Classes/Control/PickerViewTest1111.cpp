@@ -1,4 +1,4 @@
-﻿
+
 #include "PickerViewTest.h"
 //#include "support/device/CADevice.h"
 
@@ -61,15 +61,16 @@ void PickerViewTest::viewDidLoad()
     showIndex = 0;
     VIEWLIST.clear();
     
-    p_pickerView = CAPickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280));
 //    p_pickerView = CAPickerView::createWithLayout(DRectLayout(10, 10, 100, 100, DRectLayout::L_R_T_B));
+    p_pickerView = CAPickerView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,280));
     p_pickerView->setPickerViewDelegate(this);
     p_pickerView->setPickerViewDataSource(this);
     p_pickerView->setFontSizeNormal(40);
     p_pickerView->setFontSizeSelected(40);
     p_pickerView->reloadAllComponents();
     
-    city_value = CALabel::createWithLayout(DRectLayout(0, winSize.width, 100, 40, DRectLayout::L_W_T_H));
+//    city_value = CALabel::createWithLayout(DRectLayout(0, winSize.width, 100, 40, DRectLayout::L_W_T_H));
+    city_value = CALabel::createWithFrame(DRect(0, 100, winSize.width, 40));
     city_value->setText(UTF8("天津市"));
     city_value->setColor(CAColor_black);
     city_value->setFontSize(28);
@@ -118,7 +119,6 @@ void PickerViewTest::viewDidLoad()
     VIEWLIST.pushBack(view5);
 #endif
     
-    CCLog("VIEWLIST.size = %zu", VIEWLIST.size());
     showNum = VIEWLIST.size();
     showUI();
     p_PageViewVec->setViews(VIEWLIST);

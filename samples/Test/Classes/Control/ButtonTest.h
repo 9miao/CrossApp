@@ -3,10 +3,11 @@
 #define __Test__ButtonTest__
 
 #include "CrossApp.h"
+#include "UiShow.h"
 
 USING_NS_CC;
 
-class ButtonTest: public CAViewController, public CAPageViewDelegate
+class ButtonTest: public CAViewController
 {
     
 public:
@@ -23,30 +24,7 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAPageControl* pageControl;
-    CAVector<CAView* > VIEWLIST;
-    
-public:
-    
     void Buttoncallback(CAControl* btn, DPoint point);
-    
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
-    
-    
     
 };
 

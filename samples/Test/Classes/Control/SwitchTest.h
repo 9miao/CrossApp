@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class SwitchTest: public CAViewController, public CAPageViewDelegate
+class SwitchTest: public CAViewController
 {
     
 public:
@@ -24,31 +24,7 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAPageControl* pageControl;
-    CAVector<CAView* > VIEWLIST;
-    
-public:
-    
     void switchStateChange(CAControl* btn, DPoint point);
-    
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
-    
-
-
     
 };
 

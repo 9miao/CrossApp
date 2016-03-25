@@ -169,6 +169,7 @@
 		B0DB99281B14531900710982 /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99251B14531900710982 /* information.json */; };
 		B0DB99291B14531900710982 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99261B14531900710982 /* test.html */; };
 		B0FFB61D1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB61B1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp */; };
+		B0FFB6201CA54B0D00A5CDBE /* UiShow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB61E1CA54B0D00A5CDBE /* UiShow.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -521,6 +522,8 @@
 		B0DB99261B14531900710982 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		B0FFB61B1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDUIShowAutoCollectionView.cpp; path = ../Classes/CDUIShowAutoCollectionView.cpp; sourceTree = "<group>"; };
 		B0FFB61C1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDUIShowAutoCollectionView.h; path = ../Classes/CDUIShowAutoCollectionView.h; sourceTree = "<group>"; };
+		B0FFB61E1CA54B0D00A5CDBE /* UiShow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiShow.cpp; path = ../Classes/Control/UiShow.cpp; sourceTree = "<group>"; };
+		B0FFB61F1CA54B0D00A5CDBE /* UiShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UiShow.h; path = ../Classes/Control/UiShow.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -718,6 +721,8 @@
 		3EA1531A1C9F8B3800984D91 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				B0FFB61E1CA54B0D00A5CDBE /* UiShow.cpp */,
+				B0FFB61F1CA54B0D00A5CDBE /* UiShow.h */,
 				B0CF188C1CA236A1007AA1B0 /* ActivityIndicatorViewTest.h */,
 				B0CF188D1CA236A1007AA1B0 /* ActivityIndicatorViewTest1111.cpp */,
 				B0CF188E1CA236A1007AA1B0 /* AlertViewTest.cpp */,
@@ -1262,6 +1267,7 @@
 				B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */,
 				B0DB988C1B1452EC00710982 /* CDShowNewsImage.cpp in Sources */,
 				3EF48A4C1B7C7E0B00179E69 /* gameswf_character.cpp in Sources */,
+				B0FFB6201CA54B0D00A5CDBE /* UiShow.cpp in Sources */,
 				3EF48A301B7C7E0B00179E69 /* as_date.cpp in Sources */,
 				B0CF18D31CA236A1007AA1B0 /* TabBarControllerTest.cpp in Sources */,
 				3EF48A0D1B7C7E0B00179E69 /* component_hackery.cpp in Sources */,

@@ -1,7 +1,7 @@
 
 #include "ImageViewTest.h"
 
-ImageViewTest::ImageViewTest():pageViewIndex(0)
+ImageViewTest::ImageViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(false);
@@ -30,7 +30,7 @@ void ImageViewTest::viewDidLoad()
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CAImageView* image2 = CAImageView::createWithLayout(DRectLayout(175,400,400,400,DRectLayout::L_W_T_H));
+    CAImageView* image2 = CAImageView::createWithLayout(DRectLayout(200,200,100,400,DRectLayout::L_R_T_H));
     image2->setImageViewScaleType(CAImageViewScaleTypeFitImageXY);
     image2->setImage(CAImage::create("image/h1.png"));
     
@@ -39,7 +39,7 @@ void ImageViewTest::viewDidLoad()
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
     
-    CAImageView* image3 = CAImageView::createWithLayout(DRectLayout(175,400,400,400,DRectLayout::L_W_T_H));
+    CAImageView* image3 = CAImageView::createWithLayout(DRectLayout(100,400,100,400,DRectLayout::L_W_T_H));
     image3->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     image3->setImage(CAImage::create("image/h1.png"));
     
@@ -49,7 +49,7 @@ void ImageViewTest::viewDidLoad()
     VIEWLIST.pushBack(view3);
     
 //    CAImageView* image4 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
-    CAImageView* image4 = CAImageView::createWithLayout(DRectLayout(175,400,400,400,DRectLayout::L_W_T_H));
+    CAImageView* image4 = CAImageView::createWithLayout(DRectLayout(200,200,100,400,DRectLayout::L_R_T_H));
     image4->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
     image4->setImage(CAImage::create("image/h1.png"));
     
@@ -58,7 +58,7 @@ void ImageViewTest::viewDidLoad()
     view4->setColor(CAColor_gray);
     VIEWLIST.pushBack(view4);
     
-    CAImageView* image5 = CAImageView::createWithLayout(DRectLayout(175,400,300,400,DRectLayout::L_W_T_H));
+    CAImageView* image5 = CAImageView::createWithLayout(DRectLayout(100,400,100,400,DRectLayout::L_W_T_H));
     image5->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
     image5->setImage(CAImage::create("image/h1.png"));
     
@@ -67,7 +67,7 @@ void ImageViewTest::viewDidLoad()
     view5->setColor(CAColor_gray);
     VIEWLIST.pushBack(view5);
     
-    CAImageView* image6 = CAImageView::createWithLayout(DRectLayout(240,400,400,400,DRectLayout::L_W_T_H));
+    CAImageView* image6 = CAImageView::createWithLayout(DRectLayout(200,200,100,400,DRectLayout::L_R_T_H));
     image6->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
     image6->setImage(CAImage::create("image/h1.png"));
     
@@ -84,7 +84,7 @@ void ImageViewTest::viewDidLoad()
         img.pushBack(im);
     }
     CAImageView* image7 = CAImageView::createWithImage(CAImage::create("animation/npc_382-1.png"));
-    image7->setLayout(DRectLayout(320,320,500,500,DRectLayout::L_R_T_B));
+    image7->setLayout(DRectLayout(240,240,100,280,DRectLayout::L_R_T_H));
     image7->setAnimationImages(img);
     image7->setAnimationDuration(0.2);
     image7->startAnimating();
@@ -104,85 +104,4 @@ void ImageViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void ImageViewTest::showUI()
-{
-    CAButton* btn_Left = CAButton::create(CAButtonTypeSquareRect);
-    btn_Left->setTag(1);
-    btn_Left->setLayout(DRectLayout(200, 64, 20, 64, DRectLayout::L_W_B_H));
-    btn_Left->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
-    btn_Left->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
-    btn_Left->addTarget(this, CAControl_selector(ImageViewTest::buttonControlCallBack), CAControlEventTouchDown);
-    this->getView()->insertSubview(btn_Left, 10);
-    
-    CAButton* btn_Right = CAButton::create(CAButtonTypeSquareRect);
-    btn_Right->setTag(2);
-    btn_Right->setLayout(DRectLayout(200, 64, 20, 64, DRectLayout::R_W_B_H));
-    btn_Right->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
-    btn_Right->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
-    btn_Right->addTarget(this, CAControl_selector(ImageViewTest::buttonControlCallBack), CAControlEventTouchDown);
-    this->getView()->insertSubview(btn_Right, 10);
-    
-    p_PageViewVec = CAPageView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);
-    p_PageViewVec->setPageViewDelegate(this);
-    p_PageViewVec->setBackgroundColor(CAColor_gray);
-    p_PageViewVec->setPageViewDelegate(this);
-    p_PageViewVec->setScrollEnabled(false);
-    
-    this->getView()->addSubview(p_PageViewVec);}
 
-void ImageViewTest::buttonControlCallBack(CAControl* btn, DPoint point)
-{
-    point = btn->convertToWorldSpace(point);
-    CAButton* button = (CAButton*)btn;
-    //CCLog("btn_tag===%d",button->getTag());
-    int temIndex = button->getTag();
-    if (temIndex==1) {
-        if (showIndex>0) {
-            showIndex--;
-            p_PageViewVec->setCurrPage(showIndex, true); //123456
-        }else if(showIndex==0){
-            showIndex=showNum-1;
-            p_PageViewVec->setCurrPage(showIndex, false);
-        }
-    }else if(temIndex==2){
-        if (showIndex<showNum) {
-            showIndex++;
-            if (showIndex==showNum) {
-                showIndex=0;
-                p_PageViewVec->setCurrPage(showIndex, false);
-            }else{
-                p_PageViewVec->setCurrPage(showIndex, true);
-            }
-        }
-    }
-    if (showIndex==0) {
-        this->setNavigationBarItem(CANavigationBarItem::create("ImageView"));
-    }else if(showIndex==1){
-        this->setNavigationBarItem(CANavigationBarItem::create("ScaleTypeFitImageXY"));
-    }else if(showIndex==2){
-        this->setNavigationBarItem(CANavigationBarItem::create("ScaleTypeFitImageCrop"));
-    }else if(showIndex==3){
-        this->setNavigationBarItem(CANavigationBarItem::create("ScaleTypeFitImageInside"));
-    }else if(showIndex==4){
-        this->setNavigationBarItem(CANavigationBarItem::create("ScaleTypeFitViewByHorizontal"));
-    }else if(showIndex==5){
-        this->setNavigationBarItem(CANavigationBarItem::create("ScaleTypeFitViewByVertical"));
-    }else if(showIndex==6){
-        this->setNavigationBarItem(CANavigationBarItem::create("Frame animation"));
-    }
-}
-
-void ImageViewTest::pageViewDidBeginTurning(CAPageView* pageView)
-{
-
-}
-
-void ImageViewTest::pageViewDidEndTurning(CAPageView* pageView)
-{
-
-}
-
-void ImageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point)
-{
-
-}

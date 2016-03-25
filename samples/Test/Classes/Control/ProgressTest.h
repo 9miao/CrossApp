@@ -24,15 +24,6 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAPageControl* pageControl;
-    CAVector<CAView* > VIEWLIST;
-    
     CALabel* progress_value;
     CAProgress* progress;
     

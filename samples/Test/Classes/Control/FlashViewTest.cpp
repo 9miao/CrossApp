@@ -1,7 +1,7 @@
 
 #include "FlashViewTest.h"
-#include "gameswf/CAFlashView.h"
-#include "gameswf/CAFlash.h"
+#include "CAFlashView.h"
+#include "CAFlash.h"
 
 FlashViewTest::FlashViewTest()
 {

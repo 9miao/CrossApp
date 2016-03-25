@@ -1,7 +1,7 @@
 
 #include "SliderTest.h"
 
-SliderTest::SliderTest():pageViewIndex(0)
+SliderTest::SliderTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(false);
@@ -16,7 +16,6 @@ SliderTest::~SliderTest()
 void SliderTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
-    
     showNum = 2;
     pageViewIndex = 1;
     showIndex = 0;
@@ -48,7 +47,8 @@ void SliderTest::viewDidLoad()
     sliderValue2->setTextAlignment(CATextAlignmentCenter);
     sliderValue2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    CASlider* slider2 = CASlider::createWithLayout(DRectLayout(120,120,500,56,DRectLayout::L_R_T_H));    slider2->setTag(101);
+    CASlider* slider2 = CASlider::createWithLayout(DRectLayout(120,120,500,56,DRectLayout::L_R_T_H));
+    slider2->setTag(101);
     slider2->setMaxTrackTintImage(CAImage::create("source_material/ex1.png"));
     slider2->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
     slider2->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));

@@ -25,12 +25,8 @@ protected:
 public:
     
     CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
+
     int pageViewIndex;
-    
-    CAVector<CAView* > VIEWLIST;
     
     CAPageView* p_pageView;
     CAPageControl* pageControl;
@@ -38,8 +34,6 @@ public:
 public:
     
     void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point);
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
     
     void pageViewDidBeginTurning(CAPageView* pageView);
     

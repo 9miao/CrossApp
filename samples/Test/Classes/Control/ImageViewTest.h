@@ -4,12 +4,13 @@
 
 #include <iostream>
 #include "CrossApp.h"
+#include "UiShow.h"
 
 USING_NS_CC;
 
 #define MAX_COUNT 5  
 
-class ImageViewTest: public CAViewController, public CAPageViewDelegate
+class ImageViewTest: public UiShow
 {
     
 public:
@@ -26,28 +27,8 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAPageControl* pageControl;
-    CAVector<CAView* > VIEWLIST;
-    
-public:
-    
     CAImageView* AnimationImages();
     
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
 };
 
 

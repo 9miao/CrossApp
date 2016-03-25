@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class SegmentedControlTest: public CAViewController, public CAPageViewDelegate
+class SegmentedControlTest: public CAViewController
 {
     
 public:
@@ -24,28 +24,7 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAPageControl* pageControl;
-    CAVector<CAView* > VIEWLIST;
-    
-public:
-    
     void segmentCallback(CASegmentedControl* btn, int index);
-    
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point); 
     
 };
 

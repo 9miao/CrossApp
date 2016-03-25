@@ -17,7 +17,7 @@ void StepperTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-    step_value = CALabel::createWithLayout(DRectLayout(100,100,100,100,DRectLayout::L_R_T_B));
+    step_value = CALabel::createWithLayout(DRectLayout(100,100,200,100,DRectLayout::L_R_T_H));
     step_value->setText("step_value:0");
     step_value->setColor(CAColor_black);
     step_value->setFontSize(28);
@@ -25,7 +25,7 @@ void StepperTest::viewDidLoad()
     step_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     this->getView()->addSubview(step_value);
     
-    step = CAStepper::createWithLayout(DRectLayout(240,240,300,56,DRectLayout::L_R_B_H),CAStepperOrientationHorizontal);
+    step = CAStepper::createWithLayout(DRectLayout(200,200,300,56,DRectLayout::L_R_B_H),CAStepperOrientationHorizontal);
     //step->setWraps(true);//是否循环,默认循环
     step->setMinValue(0);
     step->setMaxValue(50);

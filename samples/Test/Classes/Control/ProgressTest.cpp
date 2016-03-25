@@ -1,7 +1,7 @@
 
 #include "ProgressTest.h"
 
-ProgressTest::ProgressTest():pageViewIndex(0)
+ProgressTest::ProgressTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(false);
@@ -27,11 +27,9 @@ void ProgressTest::viewDidLoad()
     this->getView()->addSubview(progress_value);
     
     progress = CAProgress::create();
-    progress->setLayout(DRectLayout(150,150,550,0,DRectLayout::L_R_T_H));
+    progress->setLayout(DRectLayout(100,100,550,0,DRectLayout::L_R_T_H));
     CAScheduler::schedule(schedule_selector(ProgressTest::progressValueChange), this, 0.01, false);
-    
     this->getView()->addSubview(progress);
-    showNum = 1;
 }
 
 void ProgressTest::viewDidUnload()

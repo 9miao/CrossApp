@@ -4,10 +4,11 @@
 
 #include <iostream>
 #include "CrossApp.h"
+#include "UiShow.h"
 
 USING_NS_CC;
 
-class ActivityIndicatorViewTest: public CAViewController, public CAPageViewDelegate
+class ActivityIndicatorViewTest: public UiShow
 {
     
 public:
@@ -21,29 +22,6 @@ protected:
     void viewDidLoad();
     
     void viewDidUnload();
-    
-public:
-    
-    CAPageView* p_PageViewVec;
-    
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAPageControl* pageControl;
-    CAVector<CAView* > VIEWLIST;
-    
-public:
-    
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
     
 };
 
