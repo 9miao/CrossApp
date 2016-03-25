@@ -89,22 +89,20 @@ CAViewController* CADrawerController::getRightViewController()
 
 void CADrawerController::viewDidLoad()
 {
-    DSize size = this->getView()->getBounds().size;
-    
-    m_rHideFrame[0] = DRect(-m_fDivision, 0, m_fDivision, size.height);
-    m_rHideFrame[1] = DRect(0 , 0, size.width, size.height);
-    m_rShowFrame[0] = DRect(0, 0, m_fDivision, size.height);
-    m_rShowFrame[1] = DRect(m_fDivision , 0, size.width, size.height);
-    
+    m_rHideLayout[0] = DRectLayout(-m_fDivision,   FLOAT_NONE, 0, 0, m_fDivision, FLOAT_NONE);
+    m_rHideLayout[1] = DRectLayout(           0,            0, 0, 0,  FLOAT_NONE, FLOAT_NONE);
+    m_rShowLayout[0] = DRectLayout(           0,   FLOAT_NONE, 0, 0, m_fDivision, FLOAT_NONE);
+    m_rShowLayout[1] = DRectLayout( m_fDivision, -m_fDivision, 0, 0,  FLOAT_NONE, FLOAT_NONE);
     
     for (int i=0; i<2; i++)
     {
         m_pContainer[i] = new CAView();
-        m_pContainer[i]->setFrame(m_rHideFrame[i]);
+        m_pContainer[i]->setLayout(m_rHideLayout[i]);
         this->getView()->addSubview(m_pContainer[i]);
         m_pContainer[i]->release();
     }
     
+    m_pContainer[0]->setColor(CAColor_yellow);
     m_pContainer[0]->setAnchorPoint(DPoint(0.5f, 0.5f));
     m_pContainer[1]->setAnchorPoint(DPoint(0.0f, 0.5f));
     
@@ -141,29 +139,6 @@ void CADrawerController::viewDidDisappear()
     else
     {
         m_pRightViewController->viewDidDisappear();
-    }
-}
-
-void CADrawerController::reshapeViewRectDidFinish()
-{
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setFrame(this->getView()->getBounds());
-    }
-    
-    DRect* rect;
-    if (m_bShow)
-    {
-        rect = m_rShowFrame;
-    }
-    else
-    {
-        rect = m_rHideFrame;
-    }
-    
-    for (int i=0; i<2; i++)
-    {
-        m_pContainer[i]->setFrame(rect[i]);
     }
 }
 
@@ -246,19 +221,28 @@ void CADrawerController::updateViewFrame()
         DPoint(m_fCurrDivision, 0)
     };
     
-    if (m_bEffect3D)
-    {
-        float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
-        float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
-        
-        m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
-        m_pContainer[0]->setScale(scale0);
-        m_pContainer[1]->setScale(scale1);
-        point[0].x = (point[1].x - m_pContainer[0]->getFrame().size.width) / 3;
-    }
+//    if (m_bEffect3D)
+//    {
+//        float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
+//        float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
+//        
+//        m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
+//        m_pContainer[0]->setScale(scale0);
+//        m_pContainer[1]->setScale(scale1);
+//        point[0].x = (point[1].x - m_fCurrDivision) / 3;
+//    }
+    DRectLayout layout[2];
+    layout[0] = m_rHideLayout[0];
+    layout[0].left = point[0].x;
     
-    m_pContainer[0]->setFrameOrigin(point[0]);
-    m_pContainer[1]->setFrameOrigin(point[1]);
+    layout[1] = m_rHideLayout[1];
+    layout[1].left = point[1].x;
+    layout[1].right = -point[1].x;
+    
+    for (int i=0; i<2; i++)
+    {
+        m_pContainer[i]->setLayout(layout[i]);
+    }
 }
 
 void CADrawerController::scheduleShowAction(float dt)

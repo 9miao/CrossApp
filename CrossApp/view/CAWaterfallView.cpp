@@ -98,6 +98,15 @@ bool CAWaterfallView::init()
 	return true;
 }
 
+void CAWaterfallView::setContentSize(const CrossApp::DSize &var)
+{
+    CAScrollView::setContentSize(var);
+    
+    if (!m_mpUsedWaterfallCells.empty())
+    {
+        this->reloadData();
+    }
+}
 
 void CAWaterfallView::setAllowsSelection(bool var)
 {

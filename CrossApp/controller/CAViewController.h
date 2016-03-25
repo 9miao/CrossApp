@@ -196,13 +196,9 @@ protected:
     
     virtual void viewDidDisappear();
     
-    virtual void reshapeViewRectDidFinish();
-    
 protected:
     
     void createWithContainer(CAViewController* viewController);
-    
-    void layoutNewContainer();
     
     void popBack();
     
@@ -222,11 +218,7 @@ protected:
 
     void update(float dt);
     
-    DPoint getNavigationBarOpenPoint();
-    
-    DPoint getNavigationBarTakeBackPoint();
-    
-    DPoint getNavigationBarNowPoint(CAViewController* viewController);
+    int getNavigationBarNowY(CAViewController* viewController);
     
 protected:
 
@@ -242,7 +234,7 @@ protected:
     
     bool m_bPopViewController;
 
-    DSize m_tNavigationBarSize;
+    int m_iNavigationBarHeight;
     
     bool m_bClearance;
 };
@@ -308,8 +300,6 @@ protected:
     virtual void viewDidAppear();
     
     virtual void viewDidDisappear();
-    
-    virtual void reshapeViewRectDidFinish();
     
 protected:
     

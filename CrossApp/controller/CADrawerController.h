@@ -80,8 +80,6 @@ protected:
     
     virtual void viewDidDisappear();
     
-    virtual void reshapeViewRectDidFinish();
-    
     void setLeftViewController(CAViewController* leftViewController);
     
     void setRightViewController(CAViewController* rightViewController);
@@ -102,8 +100,8 @@ protected:
     
     bool m_bAnimation;
     
-    DRect m_rShowFrame[2];
-    DRect m_rHideFrame[2];
+    DRectLayout m_rShowLayout[2];
+    DRectLayout m_rHideLayout[2];
 };
 
 NS_CC_END

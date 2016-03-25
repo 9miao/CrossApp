@@ -73,6 +73,8 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
     m_fScale = s_dip_to_px(1.0f);
     
     m_obViewPortRect.setRect(0, 0, m_obScreenSize.width, m_obScreenSize.height);
+    
+    CAApplication::getApplication()->reshapeProjection(m_obDesignResolutionSize);
 }
 
 DSize  CCEGLViewProtocol::getVisibleSize() const

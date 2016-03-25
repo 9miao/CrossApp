@@ -124,6 +124,11 @@ bool CATableView::init()
 void CATableView::setContentSize(const CrossApp::DSize &var)
 {
     CAScrollView::setContentSize(var);
+    
+    if (!m_mpUsedTableCells.empty())
+    {
+        this->reloadData();
+    }
 }
 
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

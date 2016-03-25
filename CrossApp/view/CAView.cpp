@@ -864,44 +864,45 @@ void CAView::reViewlayout(const DSize& contentSize)
 {
     if (m_eLayoutType == 2)
     {
-        DRect rect;
+        DPoint point;
+        DSize size;
         
         if (m_obLayout.left < FLOAT_NONE && m_obLayout.right < FLOAT_NONE)
         {
-            rect.size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
-            rect.origin.x = m_obLayout.left;
+            size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
+            point.x = m_obLayout.left;
         }
         else if (m_obLayout.left < FLOAT_NONE && m_obLayout.width < FLOAT_NONE)
         {
-            rect.size.width = m_obLayout.width;
-            rect.origin.x = m_obLayout.left;
+            size.width = m_obLayout.width;
+            point.x = m_obLayout.left;
         }
         else if (m_obLayout.right < FLOAT_NONE && m_obLayout.width < FLOAT_NONE)
         {
-            rect.size.width = m_obLayout.width;
-            rect.origin.x = contentSize.width - m_obLayout.right - m_obLayout.width;
+            size.width = m_obLayout.width;
+            point.x = contentSize.width - m_obLayout.right - m_obLayout.width;
         }
         
         if (m_obLayout.top < FLOAT_NONE && m_obLayout.bottom < FLOAT_NONE)
         {
-            rect.size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
-            rect.origin.y = m_obLayout.top;
+            size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
+            point.y = m_obLayout.top;
         }
         else if (m_obLayout.top < FLOAT_NONE && m_obLayout.height < FLOAT_NONE)
         {
-            rect.size.height = m_obLayout.height;
-            rect.origin.y = m_obLayout.top;
+            size.height = m_obLayout.height;
+            point.y = m_obLayout.top;
         }
         else if (m_obLayout.bottom < FLOAT_NONE && m_obLayout.height < FLOAT_NONE)
         {
-            rect.size.height = m_obLayout.height;
-            rect.origin.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
+            size.height = m_obLayout.height;
+            point.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
         }
         
-        this->setContentSize(rect.size);
+        this->setContentSize(size);
         
         DPoint p = m_obAnchorPointInPoints;
-        p = ccpAdd(p, rect.origin);
+        p = ccpAdd(p, point);
         this->setPoint(p);
     }
 }

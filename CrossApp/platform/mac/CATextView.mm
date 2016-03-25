@@ -371,7 +371,6 @@ void CATextView::showImage()
     free(data);
     m_pShowImageView->setImage(image);
     
-    this->updateDraw();
     CAScheduler::unschedule(schedule_selector(CATextView::showImage), this);
 }
 
@@ -410,6 +409,8 @@ void CATextView::setContentSize(const DSize& contentSize)
     NSRect rect = [textView_Mac frame];
     rect.size = size;
     textView_Mac.frame = rect;
+    
+    this->showImage();
 }
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

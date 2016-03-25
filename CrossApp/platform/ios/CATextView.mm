@@ -304,7 +304,6 @@ void CATextView::showImage()
     free(data);
     
     m_pShowImageView->setImage(image);
-    this->updateDraw();
 }
 void CATextView::showTextView()
 {
@@ -335,7 +334,8 @@ void CATextView::setContentSize(const DSize& contentSize)
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textView_iOS setContentSize:rect.size];
-
+    
+    this->showImage();
 }
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {

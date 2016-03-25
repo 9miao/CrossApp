@@ -513,8 +513,7 @@ void CATextField::showImage()
     CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
     free(data);
     m_pImgeView->setImage(image);
-    
-    this->updateDraw();
+
     CAScheduler::unschedule(schedule_selector(CATextField::showImage), this);
 }
 
@@ -608,6 +607,8 @@ void CATextField::setContentSize(const DSize& contentSize)
     [textField_MAC setContentSize:size];
 
     m_pImgeView->setFrame([textField_MAC getDRect]);
+    
+    this->showImage();
 }
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

@@ -2,7 +2,7 @@
 
 #include "RootWindow.h"
 #include "MenuViewController.h"
-#include "CDUIShowCollectionView.h"
+#include "CDUIShowAutoCollectionView.h"
 #include "CDNewsViewController.h"
 #include "CDNewsImageController.h"
 #include "CDNewsAboutController.h"
@@ -77,9 +77,9 @@ void RootWindow::initUIView()
     {
         CAViewController* viewController = m_pRootNavigationController ? m_pRootNavigationController->getViewControllerAtIndex(0) : NULL;
         
-        CC_BREAK_IF(dynamic_cast<CDUIShowCollectionView*>(viewController));
+        CC_BREAK_IF(dynamic_cast<CDUIShowAutoCollectionView*>(viewController));
 
-        CDUIShowCollectionView* tabBarController = new CDUIShowCollectionView();
+        CDUIShowAutoCollectionView* tabBarController = new CDUIShowAutoCollectionView();
         tabBarController->init();
         tabBarController->autorelease();
         

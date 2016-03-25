@@ -384,6 +384,12 @@ void CAApplication::reshapeProjection(const DSize& newWindowSize)
 		m_obWinSizeInPoints = DSize(newWindowSize.width, newWindowSize.height);
 		setProjection(m_eProjection);
 	}
+    if (m_pRootWindow)
+    {
+        DRect rect = DRectZero;
+        rect.size = newWindowSize;
+        m_pRootWindow->setFrame(rect);
+    }
 
 }
 

@@ -104,6 +104,16 @@ bool CAListView::init()
 	return true;
 }
 
+void CAListView::setContentSize(const CrossApp::DSize &var)
+{
+    CAScrollView::setContentSize(var);
+    
+    if (!m_mpUsedListCells.empty())
+    {
+        this->reloadData();
+    }
+}
+
 void CAListView::setAllowsSelection(bool var)
 {
     m_bAllowsSelection = var;
@@ -452,11 +462,11 @@ void CAListView::reloadViewSizeData()
     
     if (m_pListViewOrientation == CAListViewOrientationVertical)
     {
-        this->setViewSize(DSize(width, iStartPosition));
+        this->setViewSize(DSize(0, iStartPosition));
     }
     else
     {
-        this->setViewSize(DSize(iStartPosition, height));
+        this->setViewSize(DSize(iStartPosition, 0));
     }
 }
 

@@ -17,28 +17,6 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-	CACollectionViewOrientationHorizontal,
-	CACollectionViewOrientationVertical
-}
-CACollectionViewOrientation;
-
-typedef enum
-{
-	eCollectionViewCellHoriAlignLeft,
-	eCollectionViewCellHoriAlignCenter,
-	eCollectionViewCellHoriAlignRight,
-}
-CACollectionViewCellHoriAlign;
-
-typedef enum
-{
-	eCollectionViewCellVertAlignTop,
-	eCollectionViewCellVertAlignCenter,
-	eCollectionViewCellVertAlignBottom,
-}
-CACollectionViewCellVertAlign;
 
 class CACollectionViewCell;
 class CAAutoCollectionView;
@@ -56,8 +34,10 @@ public:
 
 class CAAutoCollectionViewDataSource
 {
+
 public:
-	virtual ~CAAutoCollectionViewDataSource(){};
+    
+    virtual ~CAAutoCollectionViewDataSource(){};
 
     //Necessary
 	virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
@@ -136,7 +116,34 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 	};
 
 public:
+    
+    typedef enum
+    {
+        Horizontal,
+        Vertical
+    }
+    Orientation;
+    
+    typedef enum
+    {
+        HoriAlignLeft,
+        HoriAlignCenter,
+        HoriAlignRight
+    }
+    CellHoriAlign;
+    
+    typedef enum
+    {
+        VertAlignTop,
+        VertAlignCenter,
+        VertAlignBottom
+    }
+    CellVertAlign;
+    
+public:
+    
 	CAAutoCollectionView();
+    
 	virtual ~CAAutoCollectionView();
 
 	virtual void onEnterTransitionDidFinish();
@@ -181,9 +188,11 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_PROPERTY(CACollectionViewOrientation, m_pCollectionViewOrientation, CollectionViewOrientation);
-	CC_SYNTHESIZE(CACollectionViewCellHoriAlign, m_pCollectionViewCellHoriAlign, CollectionViewCellHoriAlign);
-	CC_SYNTHESIZE(CACollectionViewCellVertAlign, m_pCollectionViewCellVertAlign, CollectionViewCellVertAlign);
+	CC_PROPERTY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
+    
+	CC_SYNTHESIZE(CellHoriAlign, m_eCellHoriAlign, CellHoriAlign);
+    
+	CC_SYNTHESIZE(CellVertAlign, m_eCellVertAlign, CellVertAlign);
 
 	CC_SYNTHESIZE(unsigned int, m_nHoriCellInterval, HoriCellInterval);
 	CC_SYNTHESIZE(unsigned int, m_nVertCellInterval, VertCellInterval);
@@ -204,6 +213,8 @@ public:
     virtual void switchPCMode(bool var);
     
 protected:
+    
+    virtual void setContentSize(const DSize& var);
     
     inline virtual float maxSpeed(float dt);
     

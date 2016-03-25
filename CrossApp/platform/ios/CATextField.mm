@@ -318,7 +318,6 @@ void CATextField::showImage()
     free(data);
 
     m_pImgeView->setImage(image);
-    this->updateDraw();
 }
 
 CATextField* CATextField::createWithFrame(const DRect& frame)
@@ -400,6 +399,8 @@ void CATextField::setContentSize(const DSize& contentSize)
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     textField_iOS.frame = rect;
+    
+    this->showImage();
 }
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

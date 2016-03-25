@@ -100,6 +100,16 @@ bool CACollectionView::init()
 	return true;
 }
 
+void CACollectionView::setContentSize(const CrossApp::DSize &var)
+{
+    CAScrollView::setContentSize(var);
+    
+    if (!m_mpUsedCollectionCells.empty())
+    {
+        this->reloadData();
+    }
+}
+
 void CACollectionView::setAllowsSelection(bool var)
 {
 	m_bAllowsSelection = var;

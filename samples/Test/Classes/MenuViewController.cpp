@@ -8,7 +8,7 @@
 
 #include "MenuViewController.h"
 #include "CDWebViewController.h"
-#include "CDUIShowCollectionView.h"
+#include "CDUIShowAutoCollectionView.h"
 
 MenuViewController::MenuViewController()
 {
@@ -24,9 +24,7 @@ void MenuViewController::viewDidLoad()
 {
     this->getView()->removeAllSubviews();
     this->getView()->setColor(CAColor_clear);
-//    size = this->getView()->getBounds().size;
     
-//    tableView = CATableView::createWithFrame(DRect(0, size.height/3, size.width, size.height*0.6));
     tableView = CATableView::createWithLayout(DRectLayout(0,0,450,0,DRectLayout::L_R_T_B));
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);

@@ -161,7 +161,6 @@
 		B0DB98891B1452EC00710982 /* CDNewsAboutController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98771B1452EC00710982 /* CDNewsAboutController.cpp */; };
 		B0DB988B1B1452EC00710982 /* CDNewsViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB987B1B1452EC00710982 /* CDNewsViewController.cpp */; };
 		B0DB988C1B1452EC00710982 /* CDShowNewsImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB987D1B1452EC00710982 /* CDShowNewsImage.cpp */; };
-		B0DB988D1B1452EC00710982 /* CDUIShowCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB987F1B1452EC00710982 /* CDUIShowCollectionView.cpp */; };
 		B0DB988F1B1452EC00710982 /* CDWebViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98831B1452EC00710982 /* CDWebViewController.cpp */; };
 		B0DB98901B1452EC00710982 /* CommonHttpManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98851B1452EC00710982 /* CommonHttpManager.cpp */; };
 		B0DB98911B1452EC00710982 /* MenuViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98871B1452EC00710982 /* MenuViewController.cpp */; };
@@ -169,6 +168,7 @@
 		B0DB99231B14530F00710982 /* image in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99211B14530F00710982 /* image */; };
 		B0DB99281B14531900710982 /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99251B14531900710982 /* information.json */; };
 		B0DB99291B14531900710982 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = B0DB99261B14531900710982 /* test.html */; };
+		B0FFB61D1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FFB61B1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -509,8 +509,6 @@
 		B0DB987C1B1452EC00710982 /* CDNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsViewController.h; path = ../Classes/CDNewsViewController.h; sourceTree = "<group>"; };
 		B0DB987D1B1452EC00710982 /* CDShowNewsImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDShowNewsImage.cpp; path = ../Classes/CDShowNewsImage.cpp; sourceTree = "<group>"; };
 		B0DB987E1B1452EC00710982 /* CDShowNewsImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDShowNewsImage.h; path = ../Classes/CDShowNewsImage.h; sourceTree = "<group>"; };
-		B0DB987F1B1452EC00710982 /* CDUIShowCollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDUIShowCollectionView.cpp; path = ../Classes/CDUIShowCollectionView.cpp; sourceTree = "<group>"; };
-		B0DB98801B1452EC00710982 /* CDUIShowCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDUIShowCollectionView.h; path = ../Classes/CDUIShowCollectionView.h; sourceTree = "<group>"; };
 		B0DB98831B1452EC00710982 /* CDWebViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDWebViewController.cpp; path = ../Classes/CDWebViewController.cpp; sourceTree = "<group>"; };
 		B0DB98841B1452EC00710982 /* CDWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDWebViewController.h; path = ../Classes/CDWebViewController.h; sourceTree = "<group>"; };
 		B0DB98851B1452EC00710982 /* CommonHttpManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommonHttpManager.cpp; path = ../Classes/CommonHttpManager.cpp; sourceTree = "<group>"; };
@@ -521,6 +519,8 @@
 		B0DB99211B14530F00710982 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		B0DB99251B14531900710982 /* information.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = information.json; sourceTree = "<group>"; };
 		B0DB99261B14531900710982 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		B0FFB61B1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDUIShowAutoCollectionView.cpp; path = ../Classes/CDUIShowAutoCollectionView.cpp; sourceTree = "<group>"; };
+		B0FFB61C1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDUIShowAutoCollectionView.h; path = ../Classes/CDUIShowAutoCollectionView.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -636,6 +636,8 @@
 				3EA1531A1C9F8B3800984D91 /* Control */,
 				B08BBA211BC8A6A50044340B /* CDNewsImageController.cpp */,
 				B08BBA221BC8A6A50044340B /* CDNewsImageController.h */,
+				B0FFB61B1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp */,
+				B0FFB61C1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.h */,
 				B0DB98761B1452EC00710982 /* CDData.h */,
 				B0DB98771B1452EC00710982 /* CDNewsAboutController.cpp */,
 				B0DB98781B1452EC00710982 /* CDNewsAboutController.h */,
@@ -643,8 +645,6 @@
 				B0DB987C1B1452EC00710982 /* CDNewsViewController.h */,
 				B0DB987D1B1452EC00710982 /* CDShowNewsImage.cpp */,
 				B0DB987E1B1452EC00710982 /* CDShowNewsImage.h */,
-				B0DB987F1B1452EC00710982 /* CDUIShowCollectionView.cpp */,
-				B0DB98801B1452EC00710982 /* CDUIShowCollectionView.h */,
 				B0DB98831B1452EC00710982 /* CDWebViewController.cpp */,
 				B0DB98841B1452EC00710982 /* CDWebViewController.h */,
 				B0DB98851B1452EC00710982 /* CommonHttpManager.cpp */,
@@ -1192,7 +1192,6 @@
 				3EF48A2B1B7C7E0B00179E69 /* as_boolean.cpp in Sources */,
 				B0CF18D71CA236A1007AA1B0 /* VideoPlayerControlViewTest.cpp in Sources */,
 				3EF48A1E1B7C7E0B00179E69 /* tu_gc_test.cpp in Sources */,
-				B0DB988D1B1452EC00710982 /* CDUIShowCollectionView.cpp in Sources */,
 				3EF48A291B7C7E0B00179E69 /* gameswf_action.cpp in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				3EF48A151B7C7E0B00179E69 /* image_filters.cpp in Sources */,
@@ -1248,6 +1247,7 @@
 				B0DB98911B1452EC00710982 /* MenuViewController.cpp in Sources */,
 				B0CF18D81CA236A1007AA1B0 /* ViewAnimationTest.cpp in Sources */,
 				B0CF18CE1CA236A1007AA1B0 /* ScrollViewTest.cpp in Sources */,
+				B0FFB61D1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp in Sources */,
 				3EF48A531B7C7E0B00179E69 /* gameswf_freetype.cpp in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
 				3EF48A4E1B7C7E0B00179E69 /* gameswf_dlist.cpp in Sources */,

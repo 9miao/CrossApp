@@ -1,12 +1,6 @@
-﻿//
-//  CDUIShowCollectionView.cpp
-//  Test
-//
-//  Created by renhongguang on 15/4/7.
-//
-//
+
 #define CAColor_blueStyle ccc4(51,204,255,255)
-#include "CDUIShowCollectionView.h"
+#include "CDUIShowAutoCollectionView.h"
 
 #include "CDWebViewController.h"
 //#include "CDUIShowView.h"
@@ -38,9 +32,9 @@
 #include "VideoPlayerControlViewTest.h"
 
 
-CDUIShowCollectionView::CDUIShowCollectionView()
+CDUIShowAutoCollectionView::CDUIShowAutoCollectionView()
 {
-	m_vTitle.push_back("AlertView");
+    m_vTitle.push_back("AlertView");
     m_vTitle.push_back("Button");
     m_vTitle.push_back("ImageView");
     m_vTitle.push_back("Scale9ImageView");
@@ -68,52 +62,49 @@ CDUIShowCollectionView::CDUIShowCollectionView()
     m_vTitle.push_back("VideoPlayer");
 }
 
-CDUIShowCollectionView::~CDUIShowCollectionView()
+CDUIShowAutoCollectionView::~CDUIShowAutoCollectionView()
 {
     
 }
 
-void CDUIShowCollectionView::viewDidLoad()
+void CDUIShowAutoCollectionView::viewDidLoad()
 {
-    size = this->getView()->getBounds().size;
-
-//    CACollectionView* p_Conllection = CACollectionView::createWithFrame(this->getView()->getBounds());
-    CACollectionView* p_Conllection = CACollectionView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
-    p_Conllection->setAllowsSelection(true);
-    p_Conllection->setCollectionViewDelegate(this);
-    p_Conllection->setCollectionViewDataSource(this);
-    p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHoriInterval(3);
-    p_Conllection->setVertInterval(3);
+    //    CACollectionView* p_Conllection = CACollectionView::createWithFrame(this->getView()->getBounds());
+    p_AutoCollection = CAAutoCollectionView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+    p_AutoCollection->setAllowsSelection(true);
+    p_AutoCollection->setCollectionViewDelegate(this);
+    p_AutoCollection->setCollectionViewDataSource(this);
+    p_AutoCollection->setScrollViewDelegate(this);
+    p_AutoCollection->setHoriCellInterval(3);
+    p_AutoCollection->setVertCellInterval(3);
     
-    this->getView()->addSubview(p_Conllection);
+    this->getView()->addSubview(p_AutoCollection);
 }
 
-void CDUIShowCollectionView::viewDidUnload()
+void CDUIShowAutoCollectionView::viewDidUnload()
 {
-
+    
 }
 
-void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+//选中
+void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    int index = row * 3 + item;
-    
-    switch (index)
+    switch (item)
     {
         case 0:
         {
             AlertViewTest* ViewContrllerAlertViewTest = new AlertViewTest();
             ViewContrllerAlertViewTest->init();
-            ViewContrllerAlertViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerAlertViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerAlertViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAlertViewTest, true);
-             break;
+            break;
         }
         case 1:
         {
             ButtonTest* ViewContrllerButton = new ButtonTest();
             ViewContrllerButton->init();
-            ViewContrllerButton->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerButton->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerButton->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerButton, true);
             break;
@@ -122,7 +113,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             ImageViewTest* ViewContrllerImageViewTest = new ImageViewTest();
             ViewContrllerImageViewTest->init();
-            ViewContrllerImageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerImageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerImageViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerImageViewTest, true);
             break;
@@ -131,7 +122,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             Scale9ImageViewTest* ViewContrllerScale9ImageViewTest = new Scale9ImageViewTest();
             ViewContrllerScale9ImageViewTest->init();
-            ViewContrllerScale9ImageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerScale9ImageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerScale9ImageViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerScale9ImageViewTest, true);
             break;
@@ -140,7 +131,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             ActivityIndicatorViewTest* ViewContrllerIndicatorViewTest = new ActivityIndicatorViewTest();
             ViewContrllerIndicatorViewTest->init();
-            ViewContrllerIndicatorViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerIndicatorViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerIndicatorViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerIndicatorViewTest, true);
             break;
@@ -149,7 +140,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             LabelTest* ViewContrllerLabelTest = new LabelTest();
             ViewContrllerLabelTest->init();
-            ViewContrllerLabelTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerLabelTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerLabelTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerLabelTest, true);
             break;
@@ -158,7 +149,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             ProgressTest* ViewContrllerProgressTest = new ProgressTest();
             ViewContrllerProgressTest->init();
-            ViewContrllerProgressTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerProgressTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerProgressTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerProgressTest, true);
             break;
@@ -167,7 +158,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             SliderTest* ViewContrllerSliderTest = new SliderTest();
             ViewContrllerSliderTest->init();
-            ViewContrllerSliderTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerSliderTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerSliderTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerSliderTest, true);
             break;
@@ -176,7 +167,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             SwitchTest* ViewContrllerSwitchTest = new SwitchTest();
             ViewContrllerSwitchTest->init();
-            ViewContrllerSwitchTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerSwitchTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerSwitchTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerSwitchTest, true);
             break;
@@ -185,7 +176,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             TextFieldTest* ViewContrllerTextFieldTest = new TextFieldTest();
             ViewContrllerTextFieldTest->init();
-            ViewContrllerTextFieldTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerTextFieldTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerTextFieldTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTextFieldTest, true);
             break;
@@ -194,7 +185,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             TextViewTest* ViewContrllerTextViewTest = new TextViewTest();
             ViewContrllerTextViewTest->init();
-            ViewContrllerTextViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerTextViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerTextViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTextViewTest, true);
             break;
@@ -203,7 +194,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             SegmentedControlTest* ViewContrllerSegmentedControlTest = new SegmentedControlTest();
             ViewContrllerSegmentedControlTest->init();
-            ViewContrllerSegmentedControlTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerSegmentedControlTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerSegmentedControlTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerSegmentedControlTest, true);
             break;
@@ -212,7 +203,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             TabBarControllerTest* ViewContrllerTabBarControllerTest = new TabBarControllerTest();
             ViewContrllerTabBarControllerTest->init();
-            ViewContrllerTabBarControllerTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerTabBarControllerTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerTabBarControllerTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTabBarControllerTest, true);
             break;
@@ -221,7 +212,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             PageViewTest* ViewContrllerPageViewTest = new PageViewTest();
             ViewContrllerPageViewTest->init();
-            ViewContrllerPageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerPageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerPageViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPageViewTest, true);
             break;
@@ -230,7 +221,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             TableViewTest* ViewContrllerTableViewTest = new TableViewTest();
             ViewContrllerTableViewTest->init();
-            ViewContrllerTableViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerTableViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerTableViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTableViewTest, true);
             break;
@@ -239,7 +230,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             ListViewTest* ViewContrllerListViewTest = new ListViewTest();
             ViewContrllerListViewTest->init();
-            ViewContrllerListViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerListViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerListViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerListViewTest, true);
             break;
@@ -248,7 +239,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             CollectionViewTest* ViewContrllerCollectionViewTest = new CollectionViewTest();
             ViewContrllerCollectionViewTest->init();
-            ViewContrllerCollectionViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerCollectionViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerCollectionViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerCollectionViewTest, true);
             break;
@@ -257,7 +248,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             ScrollViewTest* ViewContrllerScrollViewTest = new ScrollViewTest();
             ViewContrllerScrollViewTest->init();
-            ViewContrllerScrollViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerScrollViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerScrollViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerScrollViewTest, true);
             break;
@@ -266,7 +257,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             WebViewTest* ViewContrllerWebViewTest = new WebViewTest();
             ViewContrllerWebViewTest->init();
-            ViewContrllerWebViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerWebViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerWebViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerWebViewTest, true);
             break;
@@ -275,7 +266,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             FlashViewTest* ViewContrllerFlashViewTest = new FlashViewTest();
             ViewContrllerFlashViewTest->init();
-            ViewContrllerFlashViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerFlashViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerFlashViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerFlashViewTest, true);
             break;
@@ -284,7 +275,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             GifViewTest* ViewContrllerGifViewTest = new GifViewTest();
             ViewContrllerGifViewTest->init();
-            ViewContrllerGifViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerGifViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerGifViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerGifViewTest, true);
             break;
@@ -293,7 +284,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             PickerViewTest* ViewContrllerPickerViewTest = new PickerViewTest();
             ViewContrllerPickerViewTest->init();
-            ViewContrllerPickerViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerPickerViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerPickerViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPickerViewTest, true);
             break;
@@ -302,7 +293,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             StepperTest* ViewContrllerStepperTest = new StepperTest();
             ViewContrllerStepperTest->init();
-            ViewContrllerStepperTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerStepperTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerStepperTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerStepperTest, true);
             break;
@@ -311,7 +302,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             RenderImageTest* ViewContrllerRenderImageTest = new RenderImageTest();
             ViewContrllerRenderImageTest->init();
-            ViewContrllerRenderImageTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerRenderImageTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerRenderImageTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerRenderImageTest, true);
             break;
@@ -320,7 +311,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             ViewAnimationTest* ViewContrllerViewAnimationTest = new ViewAnimationTest();
             ViewContrllerViewAnimationTest->init();
-            ViewContrllerViewAnimationTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerViewAnimationTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerViewAnimationTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerViewAnimationTest, true);
             break;
@@ -329,7 +320,7 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         {
             VideoPlayerControlViewTest* ViewContrllerVideoPlayerControlViewTest = new VideoPlayerControlViewTest();
             ViewContrllerVideoPlayerControlViewTest->init();
-            ViewContrllerVideoPlayerControlViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
+            ViewContrllerVideoPlayerControlViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerVideoPlayerControlViewTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerVideoPlayerControlViewTest, true);
             break;
@@ -337,27 +328,18 @@ void CDUIShowCollectionView::collectionViewDidSelectCellAtIndexPath(CACollection
         default:
             break;
     }
-
-//    CDUIShowView* viewContrller = new CDUIShowView();
-//    viewContrller->init();
-//    viewContrller->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(index)));
-//    viewContrller->autorelease();
-//    RootWindow::getInstance()->getRootNavigationController()->pushViewController(viewContrller, true);
-//    viewContrller->showUiWithIndex(index);
 }
 
-void CDUIShowCollectionView::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+//取消选中
+void CDUIShowAutoCollectionView::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-
+    //取消选中
+    CCLog("取消选中");
 }
 
-CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
+//获取指定cell
+CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    if (row * 3 + item >= m_vTitle.size())
-    {
-        return NULL;
-    }
-    
     DSize _size = cellSize;
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
@@ -365,22 +347,21 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
         p_Cell = CACollectionViewCell::create("CrossApp");
         p_Cell->setAllowsSelected(false);
         
-//        CAView* itemImage = CAView::createWithFrame(DRect(0, 0, _size.width, _size.height));
-        CAView* itemImage = CAView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+        //        CAView* itemImage = CAView::createWithFrame(DRect(0, 0, _size.width, _size.height));
+        CAView* itemImage = CAView::createWithLayout(DRectLayout(0, 0, 0, 0,DRectLayout::L_R_T_B));
         itemImage->setTag(99);
         p_Cell->addSubview(itemImage);
         
         DSize itemSize = itemImage->getBounds().size;
-//        CALabel* itemText = CALabel::createWithCenter(DRect(itemSize.width/2, itemSize.height-40, itemSize.width,40));
-        CALabel* itemText = CALabel::createWithLayout(DRectLayout(0,0,120,0,DRectLayout::L_R_T_B));
+        CALabel* itemText = CALabel::createWithLayout(DRectLayout(0, 0, 0, 40,DRectLayout::L_R_B_H));
         itemText->setTag(100);
         itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->addSubview(itemText);
         
-//        CAImageView* icon = CAImageView::createWithCenter(DRect(itemSize.width/2,itemSize.height/3,189,123));
-        CAImageView* icon = CAImageView::createWithLayout(DRectLayout(30,30,20,90,DRectLayout::L_R_T_B));
+        CAImageView* icon = CAImageView::createWithLayout(DRectLayout(30, 30, 20, 123,DRectLayout::L_R_T_H));
+        icon->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         icon->setTag(101);
         icon->setScale(0.6f);
         p_Cell->addSubview(icon);
@@ -389,38 +370,32 @@ CACollectionViewCell* CDUIShowCollectionView::collectionCellAtIndex(CACollection
     CAView* itemImageView = p_Cell->getSubviewByTag(99);
     itemImageView->setColor(ccc4(244, 243, 243, 255));
     
-    int index = row * 3 + item;
-    
     CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
-    itemText->setText(m_vTitle.at(index));
-	itemText->setColor(ccc4(34, 151, 254, 255));
+    itemText->setText(m_vTitle.at(item));
+    itemText->setColor(ccc4(34, 151, 254, 255));
     
     CAImageView* icon = (CAImageView*)p_Cell->getSubviewByTag(101);
-    icon->setImage(CAImage::create(iconTag[index]));
-
+    icon->setImage(CAImage::create(iconTag[item]));
+    
     return p_Cell;
 }
 
-unsigned int CDUIShowCollectionView::numberOfSections(CACollectionView *collectionView)
+//项目大小
+DSize CDUIShowAutoCollectionView::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+{
+    return DSize(240, 240);
+}
+
+//每个Section中Item的个数
+unsigned int CDUIShowAutoCollectionView::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+{
+    return (unsigned int)m_vTitle.size();
+}
+
+//section的个数
+unsigned int CDUIShowAutoCollectionView::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;
 }
-
-unsigned int CDUIShowCollectionView::numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
-{
-    return m_vTitle.size() % 3 == 0 ? m_vTitle.size() / 3 : m_vTitle.size() / 3 + 1;
-}
-
-unsigned int CDUIShowCollectionView::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
-{
-    return 3;
-}
-
-unsigned int CDUIShowCollectionView::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
-{
-    return (this->getView()->getBounds().size.width - 10 * 4) / 3;
-}
-
-
 
 

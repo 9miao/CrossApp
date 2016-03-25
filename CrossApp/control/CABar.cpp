@@ -163,11 +163,6 @@ void CANavigationBar::showBackground()
 
 void CANavigationBar::showTitle()
 {
-    DRect rect;
-    rect.size = m_pContentView->getBounds().size;
-    rect.origin = rect.size/2;
-    rect.size.width = rect.size.width - rect.size.height * 4;
-
     if (m_pTitle)
     {
         m_pContentView->removeSubview(m_pTitle);
@@ -176,6 +171,11 @@ void CANavigationBar::showTitle()
     
     if (CAView* titleView = m_pItem->getTitleView())
     {
+        DRect rect;
+        rect.size = m_pContentView->getBounds().size;
+        rect.origin = rect.size/2;
+        rect.size.width = rect.size.width - rect.size.height * 4;
+        
         float aspectRatio = 0;
         if (!titleView->getFrame().size.equals(DSizeZero))
         {
@@ -190,17 +190,14 @@ void CANavigationBar::showTitle()
     }
     else if (CAImage* image = m_pItem->getTitleViewImage())
     {
-        float height = MIN(image->getContentSize().height, rect.size.height * 0.75f);
-        float width =  height * image->getContentSize().width / image->getContentSize().height;
-        width = MIN(rect.size.width, width);
-        rect.size = DSize(width, height);
         m_pTitle = CAImageView::createWithImage(image);
-        m_pTitle->setCenter(rect);
+        m_pTitle->setLayout(DRectLayout(180, 180, 12, 12, DRectLayout::L_R_T_B));
+        ((CAImageView*)m_pTitle)->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         m_pContentView->addSubview(m_pTitle);
     }
     else
     {
-        CALabel* title = CALabel::createWithCenter(rect);
+        CALabel* title = CALabel::createWithLayout(DRectLayout(180, 180, 0, 0, DRectLayout::L_R_T_B));
         title->setTextAlignment(CATextAlignmentCenter);
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);

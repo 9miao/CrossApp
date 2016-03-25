@@ -158,6 +158,8 @@ public:
 
 protected:
 
+    virtual void setContentSize(const DSize& var);
+    
     inline virtual float maxSpeed(float dt);
 
     inline virtual float decelerationRatio(float dt);
@@ -165,8 +167,6 @@ protected:
     void clearData();
     
     void reloadViewSizeData();
-    
-    virtual void setContentSize(const DSize& var);
     
     virtual void update(float dt);
     

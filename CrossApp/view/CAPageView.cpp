@@ -107,11 +107,11 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
     
     if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
     {
-        this->setViewSize(DSize(m_obContentSize.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), m_obViewSize.height));
+        this->setViewSize(DSize(m_obContentSize.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), 0));
     }
     else
     {
-        this->setViewSize(DSize(m_obViewSize.width, m_obContentSize.height * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1)));
+        this->setViewSize(DSize(0, m_obContentSize.height * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1)));
     }
     
     for (size_t i=0; i<m_pViews.size(); i++)
@@ -138,11 +138,11 @@ void CAPageView::setContentSize(const DSize& contentSize)
     {
         if (m_ePageViewDirection == CAPageViewDirectionHorizontal)
         {
-            this->setViewSize(DSize(m_obContentSize.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), m_obViewSize.height));
+            this->setViewSize(DSize(m_obContentSize.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), 0));
         }
         else
         {
-            this->setViewSize(DSize(m_obViewSize.width, m_obContentSize.height * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1)));
+            this->setViewSize(DSize(0, m_obContentSize.height * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1)));
         }
         
         for (size_t i=0; i<m_pViews.size(); i++)
@@ -156,9 +156,10 @@ void CAPageView::setContentSize(const DSize& contentSize)
             {
                 rect.origin.y = (rect.size.height + m_fSpacing) * i;
             }
-            m_pContainer->addSubview(m_pViews.at(i));
             m_pViews.at(i)->setFrame(rect);
         }
+        
+        this->runAnimation(false);
     }
 }
 

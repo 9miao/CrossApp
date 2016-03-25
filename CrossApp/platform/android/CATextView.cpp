@@ -481,6 +481,8 @@ void CATextView::setContentSize(const DSize& contentSize)
     size.width = s_dip_to_px(worldContentSize.width);
     size.height =  s_dip_to_px(worldContentSize.height);
     textViewSetTextViewSizeJNI(m_u__ID, size.width, size.height);
+    
+    this->showImage();
 }
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

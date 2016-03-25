@@ -2,7 +2,7 @@
 
 
 @interface RootViewController : UIViewController {
-
+    id __glView;
 }
 
 @end
