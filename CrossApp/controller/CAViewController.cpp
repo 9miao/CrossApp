@@ -243,7 +243,7 @@ CANavigationController::CANavigationController()
     m_pView->setDisplayRange(false);
     this->setHaveNextResponder(false);
     this->setTouchMoved(true);
-
+    this->setVerticalScrollEnabled(false);
     this->setNavigationBarBackgroundImage(CAImage::create("source_material/navigation_bg.png"));
 }
 

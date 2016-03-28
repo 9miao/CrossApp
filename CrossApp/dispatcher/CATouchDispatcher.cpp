@@ -343,7 +343,7 @@ void CATouchController::touchMoved()
                             pointOffSet = ccpSub(m_pTouch->getLocation(), m_pTouch->getPreviousLocation());
                         }
                         
-                        if (responder->isReachBoundaryHandOverToSuperview())
+                        if (responder->isReachBoundaryHandOverToSuperview() && !m_vTouchMovedsViewCache.empty())
                         {
                             if (responder->isHorizontalScrollEnabled()
                                 && fabsf(pointOffSet.x) >= fabsf(pointOffSet.y))
