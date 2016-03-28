@@ -44,6 +44,7 @@ public:
     
 	void initWithPath(const std::string& szPath, bool showFirstFrame = true);
 	void initWithUrl(const std::string& szUrl, bool showFirstFrame = true);
+	bool isDecoderInited() { return m_isDecoderInited; }
 	void play();
 	void pause();
 	bool isPlaying();
@@ -59,11 +60,13 @@ private:
 	virtual bool init();
 	virtual void visit();
 	virtual void draw();
+	virtual void update(float fDelta);
 	virtual void setContentSize(const DSize& size);
 	virtual void setImageCoords(DRect rect);
 	virtual void updateImageRect();
 
 	void showLoadingView(bool on);
+	void createDecoderSync();
 	bool createDecoder();
 	static bool decodeProcessThread(void* param);
 	void setVPPosition(float p);
@@ -88,6 +91,8 @@ private:
 
 	std::string m_cszPath;
 
+	bool m_isDecoderInited;
+	bool m_isShowFirstFrame;
 	bool m_isPlaying;
 	bool m_isBuffered;
 
