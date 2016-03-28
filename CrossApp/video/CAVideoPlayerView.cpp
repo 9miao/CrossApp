@@ -142,7 +142,7 @@ void CAVideoPlayerView::setFirstVideoFrame()
 	}
 }
 
-void CAVideoPlayerView::initWithPath(const std::string& szPath, bool showFirstFrame)
+void CAVideoPlayerView::setFullPath(const std::string& szPath, bool showFirstFrame)
 {
 	m_fMinBufferedDuration = LOCAL_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = LOCAL_MAX_BUFFERED_DURATION;
@@ -155,7 +155,7 @@ void CAVideoPlayerView::initWithPath(const std::string& szPath, bool showFirstFr
 	}
 }
 
-void CAVideoPlayerView::initWithUrl(const std::string& szUrl, bool showFirstFrame)
+void CAVideoPlayerView::setUrl(const std::string& szUrl, bool showFirstFrame)
 {
 	m_fMinBufferedDuration = NETWORK_MIN_BUFFERED_DURATION;
 	m_fMaxBufferedDuration = NETWORK_MAX_BUFFERED_DURATION;

@@ -42,8 +42,8 @@ public:
 	CC_SYNTHESIZE(CAVideoPlayerControlViewDelegate*, m_pPlayerControlViewDelegate, PlayerControlViewDelegate);
 	void setPlayerViewDelegate(CAVideoPlayerViewDelegate* var);
 	
-	void initWithPath(const std::string& szPath);
-	void initWithUrl(const std::string& szUrl);
+	void setFullPath(const std::string& szPath);
+	void setUrl(const std::string& szUrl);
 
 protected:
 	virtual bool init();

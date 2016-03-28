@@ -91,11 +91,11 @@ bool CAVideoPlayerControlView::getShowBackButton()
 }
 
 
-void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+void CAVideoPlayerControlView::setFullPath(const std::string& szPath)
 {
 	if (m_glView)
 	{
-		m_glView->initWithPath(szPath);
+		m_glView->setFullPath(szPath);
 	}
 }
 
@@ -103,7 +103,7 @@ void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
 {
 	if (m_glView)
 	{
-		m_glView->initWithUrl(szUrl);
+		m_glView->setUrl(szUrl);
 	}
 }
 
