@@ -87,44 +87,53 @@ bool CAPickerView::init()
     return true;
 }
 
-bool CAPickerView::initWithCenter(const CrossApp::DRect &rect)
-{
-    if (!CAView::initWithCenter(rect))
-    {
-        return false;
-    }
-    
-    return true;
-}
-
-bool CAPickerView::initWithFrame(const CrossApp::DRect &rect)
-{
-    if (!CAView::initWithFrame(rect))
-    {
-        return false;
-    }
-    
-    return true;
-}
-
-void CAPickerView::onEnter()
-{
-    CAView::onEnter();
-}
-
-void CAPickerView::onExit()
-{
-    CAView::onExit();
-}
 
 void CAPickerView::onEnterTransitionDidFinish()
 {
 	CAView::onEnterTransitionDidFinish();
+    if (!m_obContentSize.equals(DSizeZero))
+    {
+        this->reloadAllComponents();
+    }
 }
 
 void CAPickerView::onExitTransitionDidStart()
 {
 	CAView::onExitTransitionDidStart();
+}
+
+void CAPickerView::setContentSize(const DSize& size)
+{
+    CC_RETURN_IF(m_obContentSize.equals(size));
+    CAView::setContentSize(size);
+    if (m_bRunning)
+    {
+        std::vector<int> selected = m_selected;
+        this->reloadAllComponents();
+        
+        for (size_t i=0; i<selected.size(); i++)
+        {
+            if (CATableView* tableView = m_tableViews.at(i))
+            {
+                int maxRow = m_dataSource->numberOfRowsInComponent(this, (unsigned int)i);
+                float height = m_dataSource->rowHeightForComponent(this, (unsigned int)i);
+                DPoint offset = DPointZero;
+                int row = selected.at(i);
+                if (maxRow <= m_displayRow[i])
+                {
+                    m_selected[i] = row ;
+                    offset.y = row * height;
+                    tableView->setContentOffset(offset, false);
+                }
+                else
+                {
+                    m_selected[i] = row;
+                    offset.y = m_selected[i] * height + height/2 - tableView->getBounds().size.height/2;
+                    tableView->setContentOffset(offset, false);
+                }
+            }
+        }
+    }
 }
 
 int CAPickerView::numberOfComponents()
@@ -409,7 +418,7 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
             else
             {
                 m_selected[component] = maxRow + row;
-                offset.y = m_selected[component] * height + height/2 - tableView->getFrame().size.height/2;
+                offset.y = m_selected[component] * height + height/2 - tableView->getBounds().size.height/2;
                 tableView->setContentOffset(offset, false);
             }
         }

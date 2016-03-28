@@ -54,17 +54,12 @@ public:
     static CAPickerView* createWithLayout(const DRectLayout& layout);
     
     virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-	
+
 	virtual void onEnterTransitionDidFinish();
 
 	virtual void onExitTransitionDidStart();
 
     virtual void visitEve();
-    
-    virtual bool initWithFrame(const DRect& rect);
-    virtual bool initWithCenter(const DRect& rect);
     
     // info that was fetched and cached from the data source and delegate.
     // -1 if does not implement CAPickerViewDataSource
@@ -107,6 +102,8 @@ protected:
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     virtual void scrollViewDidEndDragging(CAScrollView* view);
+    
+    virtual void setContentSize(const DSize& size);
 private:
 
 	CAVector<CATableView*> m_tableViews;

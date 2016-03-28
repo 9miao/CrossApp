@@ -45,10 +45,6 @@ public:
     virtual bool init();
     virtual void onEnter();
     virtual void onExit();
-    virtual void visit();
-    
-    virtual bool initWithFrame(const DRect& rect);
-    virtual bool initWithCenter(const DRect& rect);
     
 public:
     void setDate(int year, int month, int day, bool animated);

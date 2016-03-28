@@ -145,7 +145,8 @@ void CATouchController::touchBegan()
     
     CAView* responder = (CAView*)CAApplication::getApplication()->getTouchDispatcher()->getScrollRunningResponder();
     
-    if (responder && responder->getBounds().containsPoint(responder->convertTouchToNodeSpace(m_pTouch)))
+    if (responder && responder->isRunning() && responder->isVisible()
+        && responder->getBounds().containsPoint(responder->convertTouchToNodeSpace(m_pTouch)))
     {
         m_vTouchesViews.pushBack(responder);
         CAApplication::getApplication()->getTouchDispatcher()->removeScrollRunningResponder(responder);
