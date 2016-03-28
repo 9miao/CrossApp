@@ -221,16 +221,17 @@ void CADrawerController::updateViewFrame()
         DPoint(m_fCurrDivision, 0)
     };
     
-//    if (m_bEffect3D)
-//    {
-//        float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
-//        float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
-//        
-//        m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
-//        m_pContainer[0]->setScale(scale0);
-//        m_pContainer[1]->setScale(scale1);
-//        point[0].x = (point[1].x - m_fCurrDivision) / 3;
-//    }
+    if (m_bEffect3D)
+    {
+        float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
+        float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
+        
+        m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
+        m_pContainer[0]->setScale(scale0);
+        m_pContainer[1]->setScale(scale1);
+        point[0].x = (m_fCurrDivision - m_fDivision) / 3;
+    }
+    
     DRectLayout layout[2];
     layout[0] = m_rHideLayout[0];
     layout[0].left = point[0].x;
