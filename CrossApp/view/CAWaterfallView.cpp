@@ -249,13 +249,13 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-		int deselectedIndex = 0;
+		int deselectedIndex = -1;
 		int selectedIndex = m_pHighlightedWaterfallCells->getItemIndex();
 
 		if (m_pSelectedWaterfallCells.count(selectedIndex) > 0 && m_bAllowsMultipleSelection)
 		{
 			deselectedIndex = selectedIndex;
-			selectedIndex = 0;
+			selectedIndex = -1;
 			m_pSelectedWaterfallCells.erase(deselectedIndex);
 		}
 		else
@@ -268,7 +268,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			m_pSelectedWaterfallCells.insert(selectedIndex);
 		}
 
-		if (deselectedIndex != 0)
+		if (deselectedIndex != -1)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[deselectedIndex])
 			{
@@ -280,7 +280,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			}
 		}
 
-		if (selectedIndex != 0)
+		if (selectedIndex != -1)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[selectedIndex])
 			{
@@ -382,10 +382,11 @@ void CAWaterfallView::reloadViewSizeData()
 	
 	unsigned int viewHeight = 0;
 
-	int iHeaderHeight = m_pWaterfallViewDataSource->waterfallViewHeightForHeader(this);
-	if (iHeaderHeight > 0)
+	m_nWaterfallHeaderHeight = m_pWaterfallViewDataSource->waterfallViewHeightForHeader(this);
+	if (m_nWaterfallHeaderHeight > 0)
 	{
-		viewHeight += iHeaderHeight;
+		setWaterfallHeaderView(m_pWaterfallViewDataSource->waterfallViewSectionViewForHeader(this, CCSizeMake(nColumnWidth, m_nWaterfallHeaderHeight)));
+		viewHeight += m_nWaterfallHeaderHeight;
 		viewHeight += m_nItemMargin;
 	}
 
@@ -410,10 +411,11 @@ void CAWaterfallView::reloadViewSizeData()
 	}
 	viewHeight += getMaxColumnValue();
 
-	int iFooterHeight = m_pWaterfallViewDataSource->waterfallViewHeightForFooter(this);
-	if (iFooterHeight > 0)
+	m_nWaterfallFooterHeight = m_pWaterfallViewDataSource->waterfallViewHeightForFooter(this);
+	if (m_nWaterfallFooterHeight > 0)
 	{
-		viewHeight += iFooterHeight;
+		setWaterfallFooterView(m_pWaterfallViewDataSource->waterfallViewSectionViewForFooter(this, CCSizeMake(nColumnWidth, m_nWaterfallFooterHeight)));
+		viewHeight += m_nWaterfallFooterHeight;
 		viewHeight += m_nItemMargin;
 	}
 

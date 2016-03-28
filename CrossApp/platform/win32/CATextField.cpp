@@ -304,7 +304,7 @@ public:
 	}
 	void setCursorPosition()
 	{
-		m_pCursorMark->setFrame(DRect(0, 0, 1.5f, m_iFontHeight));
+		m_pCursorMark->setFrame(DRect(0, 0, 2.5f, m_iFontHeight));
 		if (m_pTextFieldX->isSecureTextEntry())
 		{
 			m_pCursorMark->setCenterOrigin(DPoint((m_sText.empty() ? 0 : this->getImageRect().size.width), m_obContentSize.height / 2));
@@ -771,7 +771,7 @@ bool CATextField::init()
 	this->addSubview(m_pBackgroundView);
 
 	CATextFieldWin32 *text = new CATextFieldWin32(this);
-    text->initWithFrame(DRect(0, 0, 1, 1))
+	text->initWithFrame(DRect(0, 0, 1, 1));
 
 	this->addSubview(text);
 	text->release();
