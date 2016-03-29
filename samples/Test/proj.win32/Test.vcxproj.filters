@@ -30,9 +30,6 @@
     <ClCompile Include="..\Classes\CDShowNewsImage.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\CDUIShowCollectionView.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\CDWebViewController.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -123,6 +120,12 @@
     <ClCompile Include="..\Classes\Control\WebViewTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\UiShow.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -147,9 +150,6 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CDShowNewsImage.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\CDUIShowCollectionView.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CDWebViewController.h">
@@ -240,6 +240,12 @@
       <Filter>Classes\Controls</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Control\WebViewTest.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CDUIShowAutoCollectionView.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\UiShow.h">
       <Filter>Classes\Controls</Filter>
     </ClInclude>
   </ItemGroup>

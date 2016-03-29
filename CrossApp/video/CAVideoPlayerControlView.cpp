@@ -99,7 +99,7 @@ void CAVideoPlayerControlView::setFullPath(const std::string& szPath)
 	}
 }
 
-void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerControlView::setUrl(const std::string& szUrl)
 {
 	if (m_glView)
 	{
