@@ -78,6 +78,7 @@ void CAScrollView::onExitTransitionDidStart()
     
     m_tPointOffset.clear();
     m_tInertia = DPointZero;
+    this->setScrollRunning(false);
 }
 
 CAScrollView* CAScrollView::createWithFrame(const DRect& rect)

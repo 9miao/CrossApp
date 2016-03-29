@@ -181,13 +181,18 @@ void CAVideoPlayerView::update(float fDelta)
 			m_pRenderer = new VPFrameRenderRGB();
 		}
 
+        m_viewRect = m_pRenderer->updateVertices(m_pDecoder->getFrameWidth(),
+                                                 m_pDecoder->getFrameHeight(),
+                                                 m_obContentSize.width,
+                                                 m_obContentSize.height);
+        setImageRect(m_viewRect);
+        
 		if (!m_pRenderer->loadShaders())
 		{
 			CC_SAFE_DELETE(m_pRenderer);
 			CC_SAFE_DELETE(m_pDecoder);
 			m_isDecoderInited = false;
 		}
-		setFrame(getFrame());
 
 		if (m_isShowFirstFrame)
 		{
@@ -203,8 +208,10 @@ void CAVideoPlayerView::setContentSize(const DSize& size)
     
 	if (m_pRenderer)
 	{
-		m_viewRect = m_pRenderer->updateVertices(
-			m_pDecoder->getFrameWidth(), m_pDecoder->getFrameHeight(), m_obContentSize.width, m_obContentSize.height);
+		m_viewRect = m_pRenderer->updateVertices(m_pDecoder->getFrameWidth(),
+                                                 m_pDecoder->getFrameHeight(),
+                                                 m_obContentSize.width,
+                                                 m_obContentSize.height);
 	}
 	setImageRect(m_viewRect);
 }

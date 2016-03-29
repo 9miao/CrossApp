@@ -799,8 +799,8 @@ void CAListViewCell::resetListViewCell()
     this->setVisible(true);
     this->normalListViewCell();
     this->recoveryListViewCell();
+    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
     m_pContentView->setScale(1.0f);
-    m_pContentView->setFrame(this->getBounds());
     m_pContentView->setRotation(0);
 }
 
