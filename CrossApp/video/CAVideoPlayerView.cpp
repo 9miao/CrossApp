@@ -71,7 +71,7 @@ CAVideoPlayerView* CAVideoPlayerView::create()
 
 CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const DRect &rect)
 {
-    CAVideoPlayerView* view = new CAVideoPlayerView;
+    CAVideoPlayerView* view = new CAVideoPlayerView();
     if (view && view->initWithCenter(rect))
 	{
 		view->m_viewRect = rect;
@@ -85,7 +85,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithCenter(const DRect &rect)
 
 CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const DRect &rect)
 {
-    CAVideoPlayerView* view = new CAVideoPlayerView;
+    CAVideoPlayerView* view = new CAVideoPlayerView();
     if (view && view->initWithFrame(rect)) 
 	{
 		view->m_viewRect = rect;
@@ -99,7 +99,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const DRect &rect)
 
 CAVideoPlayerView* CAVideoPlayerView::createWithLayout(const DRectLayout& layout)
 {
-    CAVideoPlayerView* view = new CAVideoPlayerView;
+    CAVideoPlayerView* view = new CAVideoPlayerView();
     if (view && view->initWithLayout(layout))
     {
         view->autorelease();
@@ -112,12 +112,6 @@ CAVideoPlayerView* CAVideoPlayerView::createWithLayout(const DRectLayout& layout
 
 bool CAVideoPlayerView::init()	
 {
-    if (!CAView::init()) {
-        return false;
-    }
-    
-	this->setColor(ccc4(0, 0, 0, 255));
-
 	CAThread::setMaxMsgCount(8);
 	CAThread::startAndWait(decodeProcessThread);
 
@@ -210,7 +204,7 @@ void CAVideoPlayerView::setContentSize(const DSize& size)
 	if (m_pRenderer)
 	{
 		m_viewRect = m_pRenderer->updateVertices(
-			m_pDecoder->getFrameWidth(), m_pDecoder->getFrameHeight(), getFrame().size.width, getFrame().size.height);
+			m_pDecoder->getFrameWidth(), m_pDecoder->getFrameHeight(), m_obContentSize.width, m_obContentSize.height);
 	}
 	setImageRect(m_viewRect);
 }
@@ -306,28 +300,28 @@ void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 
 void CAVideoPlayerView::play()
 {
-	if (!m_isDecoderInited || isPlaying())
-		return;
-
-	showLoadingView(true);
-
-	m_tickCorrectionTime.tv_sec = 0;
-	m_tickCorrectionTime.tv_usec = 0;
-
-	this->enableAudio(true);
-	asyncDecodeFrames();
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
-	m_isPlaying = true;
+	if (m_isDecoderInited && !isPlaying())
+    {
+        showLoadingView(true);
+        
+        m_tickCorrectionTime.tv_sec = 0;
+        m_tickCorrectionTime.tv_usec = 0;
+        
+        this->enableAudio(true);
+        asyncDecodeFrames();
+        CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
+        m_isPlaying = true;
+    }
 }
 
 void CAVideoPlayerView::pause()
 {
-	if (!this->isPlaying())
-		return;
-	
-	showLoadingView(false);
-	m_isPlaying = false;
-	this->enableAudio(false);
+    if (this->isPlaying())
+    {
+        showLoadingView(false);
+        m_isPlaying = false;
+        this->enableAudio(false);
+    }
 }
 
 bool CAVideoPlayerView::isPlaying()
@@ -363,13 +357,13 @@ float CAVideoPlayerView::getPosition()
 
 void CAVideoPlayerView::setPosition(float position)
 {
-	if (m_pDecoder == NULL)
-		return;
-	
-	m_isBuffered = true;
-	pause();
-	CAThread::clear(true);
-	setDecodePosition(position);
+	if (m_pDecoder)
+    {
+        m_isBuffered = true;
+        pause();
+        CAThread::clear(true);
+        setDecodePosition(position);
+    }
 }
 
 void CAVideoPlayerView::showLoadingView(bool on)
@@ -380,6 +374,7 @@ void CAVideoPlayerView::showLoadingView(bool on)
 		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
 		this->addSubview(m_pLoadingView);
 	}
+    
 	if (m_pLoadingView)
 	{
 		m_pLoadingView->setVisible(on);

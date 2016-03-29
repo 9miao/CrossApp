@@ -23,9 +23,9 @@ public:
     void viewDidUnload();
     
     void initWebView(string url);
-    //CREATE_FUNC(CDWebViewController);
+
 public:
-    DSize winSize;
+
     CAWebView* p_webView;
     std::string m_url;
 };

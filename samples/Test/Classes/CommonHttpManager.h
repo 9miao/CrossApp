@@ -267,6 +267,8 @@ public:
     
     static CommonUrlImageView* createWithCenter(const DRect& rect);
     
+    static CommonUrlImageView* createWithLayout(const DRectLayout &layout);
+    
     void setUrl(const std::string& url);
 
     void setImageAndUrl(CAImage* image, const std::string& url);

@@ -734,7 +734,7 @@ CommonUrlImageView* CommonUrlImageView::createWithImage(CAImage* image)
 CommonUrlImageView* CommonUrlImageView::createWithFrame(const DRect& rect)
 {
     CommonUrlImageView* imageView = new CommonUrlImageView();
-    if (imageView && imageView->CAView::initWithFrame(rect))
+    if (imageView && imageView->initWithFrame(rect))
     {
         imageView->autorelease();
         return imageView;
@@ -746,7 +746,19 @@ CommonUrlImageView* CommonUrlImageView::createWithFrame(const DRect& rect)
 CommonUrlImageView* CommonUrlImageView::createWithCenter(const DRect& rect)
 {
     CommonUrlImageView* imageView = new CommonUrlImageView();
-    if (imageView && imageView->CAView::initWithCenter(rect))
+    if (imageView && imageView->initWithCenter(rect))
+    {
+        imageView->autorelease();
+        return imageView;
+    }
+    CC_SAFE_DELETE(imageView);
+    return NULL;
+}
+
+CommonUrlImageView* CommonUrlImageView::createWithLayout(const CrossApp::DRectLayout &layout)
+{
+    CommonUrlImageView* imageView = new CommonUrlImageView();
+    if (imageView && imageView->initWithLayout(layout))
     {
         imageView->autorelease();
         return imageView;
@@ -757,6 +769,7 @@ CommonUrlImageView* CommonUrlImageView::createWithCenter(const DRect& rect)
 
 void CommonUrlImageView::setUrl(const std::string& url)
 {
+    CC_RETURN_IF(url.empty());
     m_sUrl = DecodeURL(url);
     CommonHttpManager::getInstance()->get_image(m_sUrl, this, CommonHttpImage_selector(CommonUrlImageView::onRequestFinished), m_eType);
 }

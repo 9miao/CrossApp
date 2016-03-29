@@ -455,7 +455,9 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     navLayout.right = 0;
     navLayout.height = m_iNavigationBarHeight;
     
-    if (m_bNavigationBarHidden || viewController->getNavigationBarItem()->isNagigationBarHidden())
+    if (m_bNavigationBarHidden
+        ||
+        (viewController->getNavigationBarItem() && viewController->getNavigationBarItem()->isNagigationBarHidden()))
     {
         navLayout.top = -m_iNavigationBarHeight;
     }
@@ -1313,8 +1315,6 @@ void CATabBarController::viewDidLoad()
         view->m_pTabBarController = this;
     }
     
-    DSize size = this->getView()->getBounds().size;
-    
     bool clearance = false;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -1323,58 +1323,48 @@ void CATabBarController::viewDidLoad()
         clearance = true;
     }
 #endif
+
+    DRectLayout tabBarLayout;
+    tabBarLayout.left = 0;
+    tabBarLayout.right = 0;
     
-    DRect tab_rect = DRectZero;
-    tab_rect.size.width = size.width;
-    tab_rect.origin.x = 0;
-    
-    if (clearance && m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+    if (m_iTabBarHeight == 0)
     {
-        tab_rect.origin.y = 0;
-        tab_rect.size.height = m_iTabBarHeight > 0 ? m_iTabBarHeight : 138;
-    }
-    else
-    {
-        clearance = false;
-        tab_rect.size.height = m_iTabBarHeight > 0 ? m_iTabBarHeight : 98;
         if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
         {
-            tab_rect.origin.y = 0;
+            m_iTabBarHeight = clearance ? 138 : 98;
+            tabBarLayout.top = m_bTabBarHidden ? -m_iTabBarHeight : 0;
+            tabBarLayout.height = m_iTabBarHeight;
         }
         else
         {
-            tab_rect.origin.y = size.height - tab_rect.size.height;
+            m_iTabBarHeight = 98;
+            tabBarLayout.bottom = m_bTabBarHidden ? -m_iTabBarHeight : 0;
+            tabBarLayout.height = m_iTabBarHeight;
         }
     }
-
-    m_pTabBar = CATabBar::createWithFrame(tab_rect, clearance);
+    
+    m_pTabBar = CATabBar::createWithLayout(tabBarLayout, clearance);
     m_pTabBar->setItems(items);
-    this->getView()->addSubview(m_pTabBar);
     m_pTabBar->setDelegate(this);
+    this->getView()->addSubview(m_pTabBar);
     
+    DRectLayout containerLayout;
+    containerLayout.left = 0;
+    containerLayout.right = 0;
     
-    DRect container_rect = this->getView()->getBounds();
-    
-    DPoint tab_bar_rectOrgin = DPointZero;
-    if (m_bTabBarHidden)
+    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
     {
-        tab_bar_rectOrgin = this->getTabBarTakeBackPoint();
+        containerLayout.top = tabBarLayout.top + tabBarLayout.height;
+        containerLayout.bottom = 0;
     }
     else
     {
-        tab_bar_rectOrgin = this->getTabBarOpenPoint();
-        
-        container_rect.size.height -= m_pTabBar->getFrame().size.height;
-        if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
-        {
-            container_rect.origin.y = m_pTabBar->getFrame().size.height;
-        }
+        containerLayout.top = 0;
+        containerLayout.bottom = tabBarLayout.bottom + tabBarLayout.height;
     }
     
-    DSize container_view_size = container_rect.size;
-    container_view_size.width *= m_pViewControllers.size();
-    
-    m_pContainer = CAPageView::createWithFrame(container_rect, CAPageViewDirectionHorizontal);
+    m_pContainer = CAPageView::createWithLayout(containerLayout, CAPageViewDirectionHorizontal);
     m_pContainer->setBackgroundColor(CAColor_clear);
     m_pContainer->setPageViewDelegate(this);
     m_pContainer->setScrollViewDelegate(this);
@@ -1428,10 +1418,7 @@ void CATabBarController::viewDidLoad()
     {
         m_pTabBar->showSelectedIndicator();
     }
-    
-    m_pTabBar->setFrameOrigin(tab_bar_rectOrgin);
-    
-    
+
     m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
     this->renderingSelectedViewController();
 }
@@ -1568,52 +1555,20 @@ void CATabBarController::renderingSelectedViewController()
     m_pViewControllers.at(m_nSelectedIndex)->viewDidAppear();
 }
 
-DPoint CATabBarController::getTabBarOpenPoint()
-{
-    DPoint p = DPointZero;
-    float height = this->getView()->getBounds().size.height;
-    
-    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
-    {
-        p.y = 0;
-    }
-    else
-    {
-        p.y = height - m_pTabBar->getFrame().size.height;
-    }
-    return p;
-}
 
-DPoint CATabBarController::getTabBarTakeBackPoint()
+int CATabBarController::getTabBarNowY()
 {
-    DPoint p = DPointZero;
-    float height = this->getView()->getBounds().size.height;
-    
-    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
-    {
-        p.y = -m_pTabBar->getFrame().size.height;
-    }
-    else
-    {
-        p.y = height;
-    }
-    return p;
-}
+    int y = 0;
 
-DPoint CATabBarController::getTabBarNowPoint()
-{
-    float offsetY = this->getTabBarTakeBackPoint().y - this->getTabBarOpenPoint().y;
-    DPoint p = DPointZero;
-    
     if (m_bTabBarHidden)
     {
-        p.y = this->getTabBarOpenPoint().y + offsetY * m_fProgress;
+        y = m_iTabBarHeight * m_fProgress;
     }
     else
     {
-        p.y = this->getTabBarTakeBackPoint().y - offsetY * m_fProgress;
+        y = m_iTabBarHeight * (1 -m_fProgress);
     }
-    return p;
+    return y;
 }
 
 void CATabBarController::setTabBarHidden(bool hidden, bool animated)
@@ -1635,8 +1590,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     else
     {
         m_fProgress = 1.0f;
-        DPoint point = this->getTabBarNowPoint();
-        m_pTabBar->setFrameOrigin(point);
+
         if (this->getView()->getSuperview())
         {
             this->update(0);
@@ -1657,36 +1611,27 @@ void CATabBarController::tabBarHiddenAnimation(float delay, float now, float tot
 
 void CATabBarController::update(float dt)
 {
-    DRect rect = this->getView()->getFrame();
+    int y = this->getTabBarNowY();
     
-    DPoint point = this->getTabBarNowPoint();
+    DRectLayout tabBarLayout = m_pTabBar->getLayout();
     
     switch (m_eTabBarVerticalAlignment)
     {
         case CABarVerticalAlignmentTop:
         {
-            rect.origin.y = point.y + m_pTabBar->getFrame().size.height;
-            rect.size.height = rect.size.height - rect.origin.y;
+            tabBarLayout.top = y;
         }
             break;
         case CABarVerticalAlignmentBottom:
         {
-            rect.size.height = point.y;
+            tabBarLayout.bottom = y;
         }
             break;
         default:
             break;
     }
     
-    m_pTabBar->setFrameOrigin(point);
-    m_pContainer->setFrame(rect);
-    
-    for (size_t i=0; i<m_pViewControllers.size(); i++)
-    {
-        DRect r = m_pContainer->getSubViewAtIndex((int)i)->getFrame();
-        r.size = rect.size;
-        m_pContainer->getSubViewAtIndex((int)i)->setFrame(r);
-    }
+    m_pTabBar->setLayout(tabBarLayout);
 }
 
 NS_CC_END;

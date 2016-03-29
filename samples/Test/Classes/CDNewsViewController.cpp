@@ -25,13 +25,12 @@ CDNewsTableCell::~CDNewsTableCell()
     
 }
 
-CDNewsTableCell* CDNewsTableCell::create(const std::string& identifier, const DRect& _rect)
+CDNewsTableCell* CDNewsTableCell::create(const std::string& identifier)
 {
     CCLog("CDNewsTableCell");
     CDNewsTableCell* tableViewCell = new CDNewsTableCell();
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
     {
-        tableViewCell->setFrame(_rect);
         tableViewCell->autorelease();
         return tableViewCell;
     }
@@ -49,10 +48,20 @@ void CDNewsTableCell::selectedTableViewCell()
     this->setBackgroundView(CAView::createWithColor(ccc4(0, 0, 0, 64)));
 }
 
-void CDNewsTableCell::initWithCell()
+bool CDNewsTableCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
-    DSize _size = this->getFrame().size;
-    theTitle = CALabel::createWithFrame(DRect(240, 20, _size.width/2+50, 40));
+    if (!CATableViewCell::initWithReuseIdentifier(reuseIdentifier))
+    {
+        return false;
+    }
+    
+    theImage = CommonUrlImageView::createWithLayout(DRectLayout(20, 200, 20, 20, DRectLayout::L_W_T_B));
+    theImage->setTag(101);
+    theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    theImage->setImage(CAImage::create("image/HelloWorld.png"));
+    this->getContentView()->addSubview(theImage);
+    
+    theTitle = CALabel::createWithLayout(DRectLayout(240, 150, 20, 40, DRectLayout::L_R_T_H));
 	theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
     theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -60,7 +69,7 @@ void CDNewsTableCell::initWithCell()
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
-    theDesc = CALabel::createWithFrame(DRect(240, 65, _size.width/2, 40));
+    theDesc = CALabel::createWithLayout(DRectLayout(240, 150, 65, 40, DRectLayout::L_R_T_H));
 	theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -70,19 +79,15 @@ void CDNewsTableCell::initWithCell()
     theDesc->setLineSpacing(10);
     this->getContentView()->addSubview(theDesc);
     
-    theImage = CommonUrlImageView::createWithCenter(DRect(120, _size.height/2, 200, _size.height-40));
-    theImage->setTag(101);
-    theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
-    theImage->setImage(CAImage::create("image/HelloWorld.png"));
-    this->getContentView()->addSubview(theImage);
+    return true;
 }
 
 void CDNewsTableCell::setModel(const newsMsg &cellmodel)
 {
-    theTitle->setText(cellmodel.m_title);
-    theDesc->setText(cellmodel.m_desc);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));
     theImage->setUrl(cellmodel.m_imageUrl);
+    theTitle->setText(cellmodel.m_title);
+    theDesc->setText(cellmodel.m_desc);
 }
 
 CDNewsViewController::CDNewsViewController(int index)
@@ -123,7 +128,6 @@ string CDNewsViewController::getSign(std::map<std::string,std::string> key_value
 
 void CDNewsViewController::viewDidLoad()
 {
-    winSize = this->getView()->getBounds().size;
     if (m_msg.empty())
     {
         std::map<std::string,
@@ -142,7 +146,7 @@ void CDNewsViewController::viewDidLoad()
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
         
-        p_pLoading = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2,winSize.height/2,50,50));
+        p_pLoading = CAActivityIndicatorView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
@@ -163,23 +167,20 @@ void CDNewsViewController::showAlert()
     p_alertView = CAView::createWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(p_alertView);
     
-    CAImageView* bg = CAImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
+    CAImageView* bg = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
     bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setTag(100);
-    btn5->setCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height));
+    btn5->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
     btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn5->setBackgroundViewForState(CAControlStateNormal, bg);
     btn5->setBackgroundViewForState(CAControlStateHighlighted, bg);
     btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
     p_alertView->addSubview(btn5);
     
-    CALabel* test = CALabel::createWithCenter(DRect(winSize.width/2,
-                                                        winSize.height-100,
-                                                        winSize.width,
-                                                        40));
+    CALabel* test = CALabel::createWithLayout(DRectLayout(0, 0, 100, 40, DRectLayout::L_W_B_H));
 	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -207,7 +208,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,DPoint point)
     CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
-        p_pLoading = CAActivityIndicatorView::createWithCenter(DRect(winSize.width/2,winSize.height/2,50,50));
+        p_pLoading = CAActivityIndicatorView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
@@ -304,7 +305,7 @@ void CDNewsViewController::initNewsTableView()
         p_TableView = NULL;
     }
     
-    p_TableView= CATableView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
+    p_TableView= CATableView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setScrollViewDelegate(this);
@@ -324,57 +325,59 @@ void CDNewsViewController::initNewsPageView()
 {
     //初始化pageView
     CAView* tempview = CAView::create();
+    p_TableView->setTableHeaderView(tempview);
+    p_TableView->setTableHeaderHeight(this->getView()->getBounds().size.width/2);
     
-    p_PageView = CAPageView::createWithFrame(DRect(0,0,winSize.width,winSize.width/2), CAPageViewDirectionHorizontal);
-    p_PageView->setPageViewDelegate(this);
-    p_PageView->setTouchEnabled(true);
+    
     CAVector<CAView* > viewList;
-    CommonUrlImageView* temImage0 = CommonUrlImageView::createWithFrame(DRect(winSize.width/2,100,winSize.width,winSize.width/2));
+    CommonUrlImageView* temImage0 = CommonUrlImageView::createWithImage(CAImage::create("image/HelloWorld.png"));
     temImage0->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
-    temImage0->setImage(CAImage::create("image/HelloWorld.png"));
     temImage0->setUrl(m_page[m_page.size()-1].m_pic);
-    
     viewList.pushBack(temImage0);
-    for (int i=0; i<m_page.size(); i++) {
+    
+    for (int i=0; i<m_page.size(); i++)
+    {
         //初始化viewList
-        CommonUrlImageView* temImage = CommonUrlImageView::createWithFrame(DRect(winSize.width/2,100,winSize.width,winSize.width/2));
+        CommonUrlImageView* temImage = CommonUrlImageView::createWithImage(CAImage::create("image/HelloWorld.png"));
         temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
-        temImage->setImage(CAImage::create("image/HelloWorld.png"));
         temImage->setUrl(m_page[i].m_pic);
         viewList.pushBack(temImage);
     }
-    CommonUrlImageView* temImage1 = CommonUrlImageView::createWithFrame(DRect(winSize.width/2,100,winSize.width,winSize.width/2));
+    
+    CommonUrlImageView* temImage1 = CommonUrlImageView::createWithImage(CAImage::create("image/HelloWorld.png"));
     temImage1->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
-    temImage1->setImage(CAImage::create("image/HelloWorld.png"));
     temImage1->setUrl(m_page[0].m_pic);
     viewList.pushBack(temImage1);
     
+    p_PageView = CAPageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);
     p_PageView->setViews(viewList);
+    p_PageView->setPageViewDelegate(this);
+    p_PageView->setTouchEnabled(true);
     tempview->addSubview(p_PageView);
     p_PageView->setCurrPage(1, false);
-    pageControl = CAPageControl::createWithCenter(DRect(winSize.width-80, winSize.width/2-25, 100, 50));
+    
+    CAView* bg = CAView::createWithColor(ccc4(0, 0, 0, 128));
+    bg->setLayout(DRectLayout(0, 0, 0, 50, DRectLayout::L_R_B_H));
+    tempview->addSubview(bg);
+    
+    pageControl = CAPageControl::createWithLayout(DRectLayout(40, 100, 0, 0, DRectLayout::R_W_T_B));
     pageControl->setNumberOfPages((int)m_page.size());
     pageControl->setPageIndicatorImage(CAImage::create("image/pagecontrol_selected.png"));
     pageControl->setCurrIndicatorImage(CAImage::create("image/pagecontrol_bg.png"));
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     //pageControl->setCurrentPageIndicatorTintColor(CAColor_clear);
     pageControl->addTarget(this, CAControl_selector(CDNewsViewController::pageControlCallBack));
-    tempview->addSubview(pageControl);
+    bg->addSubview(pageControl);
     
-    CAView* bg = CAView::createWithColor(ccc4(0, 0, 0, 128));
-    bg->setFrame(DRect(0,winSize.width/2-50,winSize.width,50));
-    tempview->addSubview(bg);
     
-    if (m_page.size()>0) {
-        pageViewTitle = CALabel::createWithFrame(DRect(10, winSize.width/2-40, winSize.width-50, 50));
+    if (m_page.size()>0)
+    {
+        pageViewTitle = CALabel::createWithLayout(DRectLayout(10, 140, 0, 0, DRectLayout::L_R_T_B));
         pageViewTitle->setText(m_page[0].m_title);
 		pageViewTitle->setColor(CAColor_white);
         pageViewTitle->setFontSize(28);
         tempview->addSubview(pageViewTitle);
     }
-    
-    p_TableView->setTableHeaderView(tempview);
-    p_TableView->setTableHeaderHeight(winSize.width/2);
 }
 
 void CDNewsViewController::viewDidUnload()
@@ -401,12 +404,11 @@ void CDNewsViewController::tableViewDidDeselectRowAtIndexPath(CATableView* table
 
 CATableViewCell* CDNewsViewController::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
-    DSize _size = cellSize;
+
     CDNewsTableCell* cell = dynamic_cast<CDNewsTableCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
-        cell = CDNewsTableCell::create("CrossApp", DRect(0, 0, _size.width, _size.height));
-        cell->initWithCell();
+        cell = CDNewsTableCell::create("CrossApp");
     }
     cell->setModel(m_msg[row]);
 
@@ -451,7 +453,7 @@ unsigned int CDNewsViewController::numberOfSections(CATableView *table)
 
 unsigned int CDNewsViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return m_msg.size();
+    return (unsigned int)m_msg.size();
 }
 
 unsigned int CDNewsViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
@@ -519,9 +521,12 @@ void CDNewsViewController::pageViewDidBeginTurning(CAPageView* pageView)
 
 void CDNewsViewController::pageViewDidEndTurning(CAPageView* pageView)
 {
-    if (pageView->getCurrPage()==0) {
-        pageView->setCurrPage(m_page.size(), false);
-    }else if(pageView->getCurrPage()==m_page.size()+1){
+    if (pageView->getCurrPage()==0)
+    {
+        pageView->setCurrPage((int)m_page.size(), false);
+    }
+    else if(pageView->getCurrPage()==m_page.size()+1)
+    {
         pageView->setCurrPage(1, false);
     }
     pageControl->setCurrentPage(pageView->getCurrPage()-1);

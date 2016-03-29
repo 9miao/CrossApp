@@ -315,11 +315,7 @@ protected:
     
     void tabBarHiddenAnimation(float delay, float now, float total);
     
-    DPoint getTabBarOpenPoint();
-    
-    DPoint getTabBarTakeBackPoint();
-    
-    DPoint getTabBarNowPoint();
+    int getTabBarNowY();
     
 protected:
     

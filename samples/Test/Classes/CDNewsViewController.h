@@ -17,11 +17,11 @@ class CDNewsTableCell : public CATableViewCell
 public:
     CDNewsTableCell();
     virtual ~CDNewsTableCell();
-    static CDNewsTableCell* create(const std::string& identifier, const DRect& _rect = DRectZero);
+    static CDNewsTableCell* create(const std::string& identifier);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:
-    void initWithCell();
+    virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
     void setModel(const newsMsg& cellmodel);
 private:
     CALabel* theTitle;
@@ -66,7 +66,6 @@ public:
     void tempCallBack();
 public:
     string getSign(std::map<std::string,std::string> key_value);
-    DSize winSize;
     std::vector<std::string> tempList;
     std::vector<newsMsg > m_msg;
     //std::vector<std::vector<newsMsg > > m_MSG;

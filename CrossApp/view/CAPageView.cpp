@@ -15,7 +15,7 @@ CAPageView::CAPageView(const CAPageViewDirection& type)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
 ,m_bListener(false)
-,m_fSpacing(40)
+,m_fSpacing(0)
 {
 
 }
