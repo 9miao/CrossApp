@@ -134,7 +134,7 @@
     <ClCompile Include="..\Classes\CDNewsImageController.cpp" />
     <ClCompile Include="..\Classes\CDNewsViewController.cpp" />
     <ClCompile Include="..\Classes\CDShowNewsImage.cpp" />
-    <ClCompile Include="..\Classes\CDUIShowCollectionView.cpp" />
+    <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp" />
     <ClCompile Include="..\Classes\CDWebViewController.cpp" />
     <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
     <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest1111.cpp" />
@@ -160,6 +160,7 @@
     <ClCompile Include="..\Classes\Control\TableViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\TextFieldTest.cpp" />
     <ClCompile Include="..\Classes\Control\TextViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\UiShow.cpp" />
     <ClCompile Include="..\Classes\Control\VideoPlayerControlViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ViewAnimationTest.cpp" />
     <ClCompile Include="..\Classes\Control\WebViewTest.cpp" />
@@ -175,7 +176,7 @@
     <ClInclude Include="..\Classes\CDNewsImageController.h" />
     <ClInclude Include="..\Classes\CDNewsViewController.h" />
     <ClInclude Include="..\Classes\CDShowNewsImage.h" />
-    <ClInclude Include="..\Classes\CDUIShowCollectionView.h" />
+    <ClInclude Include="..\Classes\CDUIShowAutoCollectionView.h" />
     <ClInclude Include="..\Classes\CDWebViewController.h" />
     <ClInclude Include="..\Classes\CommonHttpManager.h" />
     <ClInclude Include="..\Classes\Control\ActivityIndicatorViewTest.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="..\Classes\Control\TableViewTest.h" />
     <ClInclude Include="..\Classes\Control\TextFieldTest.h" />
     <ClInclude Include="..\Classes\Control\TextViewTest.h" />
+    <ClInclude Include="..\Classes\Control\UiShow.h" />
     <ClInclude Include="..\Classes\Control\VideoPlayerControlViewTest.h" />
     <ClInclude Include="..\Classes\Control\ViewAnimationTest.h" />
     <ClInclude Include="..\Classes\Control\WebViewTest.h" />

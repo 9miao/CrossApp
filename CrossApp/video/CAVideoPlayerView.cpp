@@ -26,7 +26,7 @@ CAVideoPlayerView::CAVideoPlayerView()
 : m_pPlayerViewDelegate(NULL)
 , m_pRenderer(NULL)
 , m_pDecoder(NULL)
-, m_isDecoderInited(false)
+, m_iDecoderInited(-1)
 , m_isShowFirstFrame(false)
 , m_isPlaying(false)
 , m_isBuffered(false)
@@ -122,7 +122,7 @@ bool CAVideoPlayerView::init()
 
 void CAVideoPlayerView::setFirstVideoFrame()
 {
-	if (!m_isDecoderInited)
+	if (!isDecoderInited())
 		return;
 
 	VPVideoFrame* frame = NULL;
@@ -164,7 +164,7 @@ void CAVideoPlayerView::setUrl(const std::string& szUrl, bool showFirstFrame)
 
 void CAVideoPlayerView::update(float fDelta)
 {
-	if (m_isDecoderInited)
+	if (isDecoderInited())
 	{
 		if (!m_pDecoder->isValidVideo())
 		{
@@ -191,7 +191,7 @@ void CAVideoPlayerView::update(float fDelta)
 		{
 			CC_SAFE_DELETE(m_pRenderer);
 			CC_SAFE_DELETE(m_pDecoder);
-			m_isDecoderInited = false;
+			m_iDecoderInited = -1;
 		}
 
 		if (m_isShowFirstFrame)
@@ -307,18 +307,19 @@ void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 
 void CAVideoPlayerView::play()
 {
-	if (m_isDecoderInited && !isPlaying())
-    {
-        showLoadingView(true);
-        
-        m_tickCorrectionTime.tv_sec = 0;
-        m_tickCorrectionTime.tv_usec = 0;
-        
-        this->enableAudio(true);
-        asyncDecodeFrames();
-        CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
-        m_isPlaying = true;
-    }
+	CC_RETURN_IF(!isDecoderInited());
+
+	CC_RETURN_IF(isPlaying());
+
+	showLoadingView(true);
+
+	m_tickCorrectionTime.tv_sec = 0;
+	m_tickCorrectionTime.tv_usec = 0;
+
+	this->enableAudio(true);
+	asyncDecodeFrames();
+	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
+	m_isPlaying = true;
 }
 
 void CAVideoPlayerView::pause()
@@ -390,6 +391,9 @@ void CAVideoPlayerView::showLoadingView(bool on)
 
 void CAVideoPlayerView::createDecoderSync()
 {
+	if (m_iDecoderInited != -1)
+		return;
+
 	DecodeFramesMsg* pMsg = (DecodeFramesMsg*)malloc(sizeof(DecodeFramesMsg));
 	if (pMsg)
 	{
@@ -397,11 +401,13 @@ void CAVideoPlayerView::createDecoderSync()
 		pMsg->param1 = ThreadMsgType_InitDecoder;
 	}
 	CAThread::notifyRun(pMsg);
+
+	m_iDecoderInited = 0;
 }
 
 bool CAVideoPlayerView::createDecoder()
 {
-	if (m_isDecoderInited)
+	if (isDecoderInited())
 		return true;
 	
 	m_pDecoder = new VPDecoder();
@@ -416,7 +422,7 @@ bool CAVideoPlayerView::createDecoder()
 		return false;
 	}
 
-	m_isDecoderInited = true;
+	m_iDecoderInited = 1;
 	return true;
 }
 
@@ -591,7 +597,7 @@ float CAVideoPlayerView::presentFrame()
 
 void CAVideoPlayerView::tick(float dt)
 {
-	if (!m_isDecoderInited)
+	if (!isDecoderInited())
 		return;
 
 	if (m_pDecoder == NULL || m_pRenderer == NULL)

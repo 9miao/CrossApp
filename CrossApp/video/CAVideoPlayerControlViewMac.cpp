@@ -85,14 +85,14 @@ bool CAVideoPlayerControlView::getShowBackButton()
     return m_bShowBackButton;
 }
 
-void CAVideoPlayerControlView::initWithPath(const std::string& szPath)
+void CAVideoPlayerControlView::setFullPath(const std::string& szPath)
 {
-	return m_glView->initWithPath(szPath);
+	return m_glView->setFullPath(szPath);
 }
 
-void CAVideoPlayerControlView::initWithUrl(const std::string& szUrl)
+void CAVideoPlayerControlView::setUrl(const std::string& szUrl)
 {
-	return m_glView->initWithUrl(szUrl);
+	return m_glView->setUrl(szUrl);
 }
 
 void CAVideoPlayerControlView::buildCtrlViews()
