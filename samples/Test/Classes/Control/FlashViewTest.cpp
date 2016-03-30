@@ -1,7 +1,8 @@
 
 #include "FlashViewTest.h"
-//#include "CAFlashView.h"
-//#include "CAFlash.h"
+#include "CrossAppExt.h"
+
+USING_NS_CC_EXT;
 
 FlashViewTest::FlashViewTest()
 {
@@ -19,7 +20,7 @@ void FlashViewTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-    CrossApp::extension::CAFlashView* swfBg = CrossApp::extension::CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
+    CAFlashView* swfBg = CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
     swfBg->setLayout(DRectLayout(150, 150, 200, 200, DRectLayout::L_R_T_B));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);

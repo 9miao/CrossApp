@@ -109,33 +109,45 @@ static const CHAR* adressTag[34] =
     _T("澳门特别行政区"),
 };
 
-static const char* iconTag[27] =
+static const char* iconTag[29] =
 {
-	"image/AlertView.png",
+    "image/AlertView.png",
     "image/button.png",
+    "image/SegmentedControl.png",
+    
     "image/ImageView.png",
     "image/Scale9ImageView.png",
     "image/indicatorView.png",
-    "image/Label.png",
+    
     "image/Progress.png",
     "image/slider.png",
     "image/Switch.png",
+    
+    "image/Stepper.png",
+    "image/Label.png",
     "image/TextField.png",
+    
     "image/TextView.png",
-    "image/SegmentedControl.png",
     "image/TabBar.png",
     "image/PageView.png",
-    "image/TableView.png",
-    "image/ListView.png",
-    "image/CollectionView.png",
+    
     "image/ScrollView.png",
-    "image/WebView.png",
-    "image/FlashView.png",
-    "image/GifView.png",
+    "image/CollectionView.png",
+    "image/CollectionView.png",
+    
+    "image/CollectionView.png",
+    "image/ListView.png",
+    "image/TableView.png",
+    
     "image/PickerView.png",
-    "image/Stepper.png",
+    "image/WebView.png",
+    "image/GifView.png",
+    
+    "image/FlashView.png",
+    "image/Video.png",
     "image/RenderImage.png",
+    
     "image/Video.png",
-    "image/Video.png",
-    "image/Video.png"
+    "image/CollectionView.png"
 };
+

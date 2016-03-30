@@ -88,9 +88,60 @@ bool CAPullToRefreshView::isLayoutFinish()
     return m_pPullToImageView != NULL;
 }
 
+void CAPullToRefreshView::setContentSize(const DSize& contentSize)
+{
+    CAView::setContentSize(contentSize);
+    
+    this->updateLayout();
+}
+
 void CAPullToRefreshView::startLayout()
 {
-    DSize viewSize = this->getBounds().size;
+    if (m_pPullToImageView == NULL)
+    {
+        m_pPullToImageView = CAImageView::createWithImage(m_pPullToImage);
+        m_pPullToImageView->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+        
+        this->addSubview(m_pPullToImageView);
+    }
+    if (m_pPullToRefreshLabel == NULL)
+    {
+        m_pPullToRefreshLabel = CALabel::create();
+        m_pPullToRefreshLabel->setFontSize(24);
+		m_pPullToRefreshLabel->setColor(m_cLabelColor);
+        m_pPullToRefreshLabel->setTextAlignment(CATextAlignmentCenter);
+        m_pPullToRefreshLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        m_pPullToRefreshLabel->setText(m_sPullToRefreshText);
+        this->addSubview(m_pPullToRefreshLabel);
+    }
+    if (m_pReleaseToRefreshLabel == NULL)
+    {
+        m_pReleaseToRefreshLabel = CALabel::create();
+        m_pReleaseToRefreshLabel->setFontSize(24);
+        m_pReleaseToRefreshLabel->setColor(m_cLabelColor);
+        m_pReleaseToRefreshLabel->setTextAlignment(CATextAlignmentCenter);
+        m_pReleaseToRefreshLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        m_pReleaseToRefreshLabel->setText(m_sReleaseToRefreshText);
+        this->addSubview(m_pReleaseToRefreshLabel);
+    }
+    if (m_pRefreshingLabel == NULL)
+    {
+        m_pRefreshingLabel = CALabel::create();
+        m_pRefreshingLabel->setFontSize(24);
+		m_pRefreshingLabel->setColor(m_cLabelColor);
+        m_pRefreshingLabel->setTextAlignment(CATextAlignmentCenter);
+        m_pRefreshingLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        m_pRefreshingLabel->setText(m_sRefreshingText);
+        this->addSubview(m_pRefreshingLabel);
+    }
+    
+    this->setPullToRefreshStateType(CAPullToRefreshStateNormal);
+    this->updateLayout();
+}
+
+void CAPullToRefreshView::updateLayout()
+{
+    DSize viewSize = m_obContentSize;
     DRect imageViewAndLoadingCenter;
     DRect labelCenter;
     if (m_eLayoutLinearType == CALayoutLinearHorizontal)
@@ -108,57 +159,26 @@ void CAPullToRefreshView::startLayout()
         labelCenter.origin = viewSize/2;
     }
     
-    if (m_pPullToImageView == NULL)
+    if (m_pPullToImageView)
     {
-        m_pPullToImageView = CAImageView::createWithCenter(imageViewAndLoadingCenter);
-        m_pPullToImageView->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
-        m_pPullToImageView->setImage(m_pPullToImage);
-        this->addSubview(m_pPullToImageView);
+        m_pPullToImageView->setCenter(imageViewAndLoadingCenter);
     }
-    m_pPullToImageView->setCenter(imageViewAndLoadingCenter);
-    
     if (m_pLoadingView)
     {
         m_pLoadingView->setCenterOrigin(imageViewAndLoadingCenter.origin);
     }
-    
-    if (m_pPullToRefreshLabel == NULL)
+    if (m_pPullToRefreshLabel)
     {
-        m_pPullToRefreshLabel = CALabel::createWithCenter(labelCenter);
-        m_pPullToRefreshLabel->setFontSize(24);
-		m_pPullToRefreshLabel->setColor(m_cLabelColor);
-        m_pPullToRefreshLabel->setTextAlignment(CATextAlignmentCenter);
-        m_pPullToRefreshLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        m_pPullToRefreshLabel->setText(m_sPullToRefreshText);
-        this->addSubview(m_pPullToRefreshLabel);
+        m_pPullToRefreshLabel->setCenter(labelCenter);
     }
-    m_pPullToRefreshLabel->setCenter(labelCenter);
-    
-    if (m_pReleaseToRefreshLabel == NULL)
+    if (m_pReleaseToRefreshLabel)
     {
-        m_pReleaseToRefreshLabel = CALabel::createWithCenter(labelCenter);
-        m_pReleaseToRefreshLabel->setFontSize(24);
-        m_pReleaseToRefreshLabel->setColor(m_cLabelColor);
-        m_pReleaseToRefreshLabel->setTextAlignment(CATextAlignmentCenter);
-        m_pReleaseToRefreshLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        m_pReleaseToRefreshLabel->setText(m_sReleaseToRefreshText);
-        this->addSubview(m_pReleaseToRefreshLabel);
+        m_pReleaseToRefreshLabel->setCenter(labelCenter);
     }
-    m_pReleaseToRefreshLabel->setCenter(labelCenter);
-    
-    if (m_pRefreshingLabel == NULL)
+    if (m_pRefreshingLabel)
     {
-        m_pRefreshingLabel = CALabel::createWithCenter(labelCenter);
-        m_pRefreshingLabel->setFontSize(24);
-		m_pRefreshingLabel->setColor(m_cLabelColor);
-        m_pRefreshingLabel->setTextAlignment(CATextAlignmentCenter);
-        m_pRefreshingLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        m_pRefreshingLabel->setText(m_sRefreshingText);
-        this->addSubview(m_pRefreshingLabel);
+        m_pRefreshingLabel->setCenter(labelCenter);
     }
-    m_pRefreshingLabel->setCenter(labelCenter);
-    
-    this->setPullToRefreshStateType(CAPullToRefreshStateNormal);
 }
 
 void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateType& stateType)
@@ -212,7 +232,7 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
         {
             if (m_pLoadingView)
             {
-                if (m_pLoadingView->isRunning() == false)
+                if (m_pLoadingView->getSuperview() == NULL)
                 {
                     this->addSubview(m_pLoadingView);
                 }

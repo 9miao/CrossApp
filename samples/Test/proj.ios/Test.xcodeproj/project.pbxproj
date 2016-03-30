@@ -128,6 +128,8 @@
 		B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF971BC7C52D002C1FDB /* CoreAudio.framework */; };
 		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
 		B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */; };
+		B082115A1CABC472003E5EF5 /* AutoCollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08211561CABC472003E5EF5 /* AutoCollectionViewTest.cpp */; };
+		B082115B1CABC472003E5EF5 /* WaterfallViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08211581CABC472003E5EF5 /* WaterfallViewTest.cpp */; };
 		B08BBA231BC8A6A50044340B /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08BBA211BC8A6A50044340B /* CDNewsImageController.cpp */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
 		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
@@ -444,6 +446,10 @@
 		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
 		B0621E201AC3ECB0005EBCA7 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
+		B08211561CABC472003E5EF5 /* AutoCollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewTest.cpp; path = ../Classes/Control/AutoCollectionViewTest.cpp; sourceTree = "<group>"; };
+		B08211571CABC472003E5EF5 /* AutoCollectionViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewTest.h; path = ../Classes/Control/AutoCollectionViewTest.h; sourceTree = "<group>"; };
+		B08211581CABC472003E5EF5 /* WaterfallViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaterfallViewTest.cpp; path = ../Classes/Control/WaterfallViewTest.cpp; sourceTree = "<group>"; };
+		B08211591CABC472003E5EF5 /* WaterfallViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaterfallViewTest.h; path = ../Classes/Control/WaterfallViewTest.h; sourceTree = "<group>"; };
 		B08BBA211BC8A6A50044340B /* CDNewsImageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsImageController.cpp; path = ../Classes/CDNewsImageController.cpp; sourceTree = "<group>"; };
 		B08BBA221BC8A6A50044340B /* CDNewsImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsImageController.h; path = ../Classes/CDNewsImageController.h; sourceTree = "<group>"; };
 		B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -721,6 +727,10 @@
 		3EA1531A1C9F8B3800984D91 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				B08211561CABC472003E5EF5 /* AutoCollectionViewTest.cpp */,
+				B08211571CABC472003E5EF5 /* AutoCollectionViewTest.h */,
+				B08211581CABC472003E5EF5 /* WaterfallViewTest.cpp */,
+				B08211591CABC472003E5EF5 /* WaterfallViewTest.h */,
 				B0FFB61E1CA54B0D00A5CDBE /* UiShow.cpp */,
 				B0FFB61F1CA54B0D00A5CDBE /* UiShow.h */,
 				B0CF188C1CA236A1007AA1B0 /* ActivityIndicatorViewTest.h */,
@@ -1224,6 +1234,7 @@
 				3EF48A241B7C7E0B00179E69 /* utility.cpp in Sources */,
 				3EF48A401B7C7E0B00179E69 /* as_selection.cpp in Sources */,
 				B0CF18D61CA236A1007AA1B0 /* TextViewTest.cpp in Sources */,
+				B082115A1CABC472003E5EF5 /* AutoCollectionViewTest.cpp in Sources */,
 				B0CF18D51CA236A1007AA1B0 /* TextFieldTest.cpp in Sources */,
 				3EF48A2E1B7C7E0B00179E69 /* as_color.cpp in Sources */,
 				3EF48A3A1B7C7E0B00179E69 /* as_mouse.cpp in Sources */,
@@ -1259,6 +1270,7 @@
 				3EF48A6A1B7C7E0B00179E69 /* gameswf_types.cpp in Sources */,
 				3EF48A471B7C7E0B00179E69 /* gameswf_as_sprite.cpp in Sources */,
 				3EF48A421B7C7E0B00179E69 /* as_sound.cpp in Sources */,
+				B082115B1CABC472003E5EF5 /* WaterfallViewTest.cpp in Sources */,
 				3EF48A581B7C7E0B00179E69 /* gameswf_listener.cpp in Sources */,
 				3EF48A651B7C7E0B00179E69 /* gameswf_sprite_def.cpp in Sources */,
 				B0CF18CB1CA236A1007AA1B0 /* ProgressTest.cpp in Sources */,

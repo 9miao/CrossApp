@@ -61,6 +61,8 @@ protected:
     
     void startLayout();
     
+    void updateLayout();
+    
     typedef enum
     {
         CAPullToRefreshStateNormal = 1,
@@ -75,6 +77,8 @@ protected:
     bool isCanRefresh();
     
     bool isRefreshing();
+    
+    virtual void setContentSize(const DSize& contentSize);
     
     friend class CAScrollView;
     

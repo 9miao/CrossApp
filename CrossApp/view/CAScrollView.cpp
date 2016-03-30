@@ -1118,44 +1118,33 @@ void CAScrollView::endFooterRefresh()
 
 void CAScrollView::layoutPullToRefreshView()
 {
-    DSize viewSize = this->getViewSize();
     if (m_pHeaderRefreshView)
     {
-        m_pHeaderRefreshView->setFrame(DRect(0, -128.0f, viewSize.width, 128.0f));
-        if (m_pHeaderRefreshView->getSuperview() == NULL)
-        {
-            m_pContainer->addSubview(m_pHeaderRefreshView);
-        }
-        if (m_pHeaderRefreshView->isLayoutFinish() == false)
-        {
-            m_pHeaderRefreshView->startLayout();
-        }
+        m_pHeaderRefreshView->startLayout();
         this->endHeaderRefresh();
     }
 
     if (m_pFooterRefreshView)
     {
-        m_pFooterRefreshView->setFrame(DRect(0, viewSize.height, viewSize.width, 128.0f));
-        if (m_pFooterRefreshView->getSuperview() == NULL)
-        {
-            m_pContainer->addSubview(m_pFooterRefreshView);
-        }
-        if (m_pFooterRefreshView->isLayoutFinish() == false)
-        {
-            m_pFooterRefreshView->startLayout();
-        }
+        m_pFooterRefreshView->startLayout();
         this->endFooterRefresh();
     }
 }
 
 void CAScrollView::changedFromPullToRefreshView()
 {
-    DRect rect = this->getBounds();
-	rect.origin = this->getContentOffset();
+    DSize size = this->getViewSize();
+	DPoint point = this->getContentOffset();
     
-    if (m_pHeaderRefreshView)
+    if (m_pHeaderRefreshView && m_pHeaderRefreshView->getSuperview() == NULL)
     {
-        if (m_pHeaderRefreshView->getFrame().origin.y < rect.origin.y)
+        const DRectLayout& layout = DRectLayout(0, 0, -128, 128, DRectLayout::L_R_T_H);
+        if (m_pHeaderRefreshView)
+        {
+            m_pHeaderRefreshView->setLayout(layout);
+            this->addSubview(m_pHeaderRefreshView);
+        }
+        if (layout.height < point.y)
         {
             m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
         }
@@ -1166,7 +1155,13 @@ void CAScrollView::changedFromPullToRefreshView()
     }
     if (m_pFooterRefreshView)
     {
-        if (m_pFooterRefreshView->getFrame().origin.y + m_pFooterRefreshView->getFrame().size.height > rect.origin.y + rect.size.height)
+        const DRectLayout& layout = DRectLayout(0, 0, -128, 128, DRectLayout::L_R_B_H);
+        if (m_pFooterRefreshView && m_pFooterRefreshView->getSuperview() == NULL)
+        {
+            m_pFooterRefreshView->setLayout(layout);
+            this->addSubview(m_pFooterRefreshView);
+        }
+        if (layout.height + size.height - m_obContentSize.height > point.y)
         {
             m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
         }
