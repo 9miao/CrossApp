@@ -937,11 +937,11 @@ int CANavigationController::getNavigationBarNowY(CAViewController* viewControlle
     {
         if (m_bNavigationBarHidden)
         {
-            y = m_iNavigationBarHeight * m_fProgress;
+            y = -m_iNavigationBarHeight * m_fProgress;
         }
         else
         {
-            y = m_iNavigationBarHeight * (1.0f - m_fProgress);
+            y = -m_iNavigationBarHeight * (1.0f - m_fProgress);
         }
     }
     return y;
