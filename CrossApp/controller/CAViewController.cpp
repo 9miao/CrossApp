@@ -1318,7 +1318,9 @@ void CATabBarController::viewDidLoad()
     bool clearance = false;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f && m_iTabBarHeight == 0)
+    if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f
+        && m_iTabBarHeight == 0
+        && m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
     {
         clearance = true;
     }
