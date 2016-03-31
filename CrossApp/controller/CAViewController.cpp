@@ -409,7 +409,7 @@ void CANavigationController::viewDidLoad()
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();
-    this->createWithContainer(viewController);
+    this->createWithContainer(viewController, DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
 }
 
 void CANavigationController::viewDidUnload()
@@ -442,10 +442,10 @@ void CANavigationController::viewDidDisappear()
     m_pViewControllers.back()->viewDidDisappear();
 }
 
-void CANavigationController::createWithContainer(CAViewController* viewController)
+void CANavigationController::createWithContainer(CAViewController* viewController, const DRectLayout& layout)
 {
     CAView* container = new CAView();
-    container->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    container->setLayout(layout);
     this->getView()->addSubview(container);
     m_pContainers.pushBack(container);
     container->release();
@@ -534,15 +534,13 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     float x = this->getView()->getBounds().size.width;
 
     CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController);
+    this->createWithContainer(viewController, DRectLayout(x, -x, 0, 0, DRectLayout::L_R_T_B));
     CAView* newContainer = m_pContainers.back();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
-        newContainer->setFrameOrigin(DPoint(x, 0));
-        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);
@@ -593,15 +591,13 @@ void CANavigationController::pushViewController(CAViewController* viewController
     float x = this->getView()->getBounds().size.width;
     
     CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController);
+    this->createWithContainer(viewController, DRectLayout(x, -x, 0, 0, DRectLayout::L_R_T_B));
     CAView* newContainer = m_pContainers.back();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
-        newContainer->setFrameOrigin(DPoint(x, 0));
-        
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(1/30.0f);

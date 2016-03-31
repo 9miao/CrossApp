@@ -198,7 +198,7 @@ protected:
     
 protected:
     
-    void createWithContainer(CAViewController* viewController);
+    void createWithContainer(CAViewController* viewController, const DRectLayout& layout);
     
     void popBack();
     

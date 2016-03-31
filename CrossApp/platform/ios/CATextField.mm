@@ -194,6 +194,7 @@ CATextField::CATextField()
 {
     this->setHaveNextResponder(false);
     
+    this->setPoint(DPoint(-5000, -5000));
     CGPoint point = CGPointMake(-5000, -5000);
     m_pTextField = [[IOSTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
     EAGLView * eaglview = [EAGLView sharedEGLView];
