@@ -191,9 +191,9 @@ void CAAutoCollectionView::setShowsScrollIndicators(bool var)
     m_bShowsScrollIndicators = var;
 }
 
-CACollectionViewCell* CAAutoCollectionView::cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
+CACollectionViewCell* CAAutoCollectionView::cellForRowAtIndexPath(unsigned int section, unsigned int item)
 {
-    return m_mpUsedCollectionCells[CAIndexPath3E(section, row, item)];
+    return m_mpUsedCollectionCells[CAIndexPath3E(section, 0, item)];
 }
 
 const CAVector<CACollectionViewCell*>& CAAutoCollectionView::displayingCollectionCell()
@@ -373,7 +373,7 @@ void CAAutoCollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
                 if (m_pHighlightedCollectionCells)
                 {
                     CAIndexPath3E index = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(),
-                                                        m_pHighlightedCollectionCells->getRow(),
+                                                        0,
                                                         m_pHighlightedCollectionCells->getItem());
                     if (m_pSelectedCollectionCells.count(index))
                     {
@@ -400,7 +400,7 @@ void CAAutoCollectionView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
     if (m_pHighlightedCollectionCells)
     {
         CAIndexPath3E index = CAIndexPath3E(m_pHighlightedCollectionCells->getSection(),
-                                            m_pHighlightedCollectionCells->getRow(),
+                                            0,
                                             m_pHighlightedCollectionCells->getItem());
         if (m_pSelectedCollectionCells.count(index))
         {
@@ -588,7 +588,7 @@ int CAAutoCollectionView::calculateAllCells(CollectionViewSection& cvs, int inde
 		}
 		for (int k = 0; k < r.rItemRects.size(); k++, l++)
 		{
-			CAIndexPath3E indexPath = CAIndexPath3E(index, j, l);
+			CAIndexPath3E indexPath = CAIndexPath3E(index, 0, l);
 
 			DRect& cellRect = r.rItemRects[k];
 
@@ -837,7 +837,7 @@ void CAAutoCollectionView::loadCollectionCell()
 		if (cell)
 		{
 			cell->m_nSection = r.section;
-			cell->m_nRow = r.row;
+			cell->m_nRow = 0;
 			cell->m_nItem = r.item;
 			cell->updateDisplayedAlpha(this->getAlpha());
 			this->addSubview(cell);

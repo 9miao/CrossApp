@@ -29,7 +29,7 @@ void CollectionViewTest::viewDidLoad()
     
     p_Conllection = CACollectionView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     p_Conllection->setAllowsSelection(true);
-    //p_Conllection->setAllowsMultipleSelection(true);
+//    p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
@@ -87,12 +87,18 @@ void CollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
 {
-    
+    CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, row, item);
+    cell->getContentView()->setRotation(-360);
+    cell->getContentView()->setScale(0.7f);
+    CAViewAnimation::beginAnimations("", NULL);
+    cell->getContentView()->setRotation(0);
+    cell->getContentView()->setScale(1.0f);
+    CAViewAnimation::commitAnimations();
 }
 
 void CollectionViewTest::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
 {
-    
+
 }
 
 CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
@@ -108,9 +114,11 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         
-        p_Cell->setBackgroundView(CAView::create());
+        //生成Item背景
+        CAView* itemImage = CAView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+        itemImage->setTag(99);
+        p_Cell->getContentView()->addSubview(itemImage);
         
-//        CALabel* itemText = CALabel::createWithCenter(DRect(cellSize.width/2, cellSize.height/2, 150, 40));
         CALabel* itemText = CALabel::createWithLayout(DRectLayout(0,0,50,50,DRectLayout::L_R_T_B));
         itemText->setTag(100);
         itemText->setFontSize(29);
@@ -118,8 +126,11 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->getContentView()->addSubview(itemText);
     }
-    p_Cell->getBackgroundView()->setColor(colorArr.at(row * 3 + item));
-    CCLog("%d", row * 3 + item);
+    
+    //设置Item背景颜色
+    CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
+    itemImageView->setColor(colorArr.at(row * 3 + item));
+    CCLog("row = %d", item);
     
     char pos[20] = "";
     sprintf(pos, "(%d,%d,%d)", section, row, item);

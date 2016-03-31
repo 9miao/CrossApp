@@ -33,6 +33,7 @@ void AutoCollectionViewTest::viewDidLoad()
     
     p_AutoCollection = CAAutoCollectionView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
     p_AutoCollection->setAllowsSelection(true);
+    p_AutoCollection->setAllowsMultipleSelection(true);
     p_AutoCollection->setCollectionViewDelegate(this);
     p_AutoCollection->setCollectionViewDataSource(this);
     p_AutoCollection->setHeaderRefreshView(headerRefreshView);
@@ -92,6 +93,13 @@ void AutoCollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 void AutoCollectionViewTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     //选中
+    CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
+    cell->getContentView()->setRotation(-360);
+    cell->getContentView()->setScale(0.7f);
+    CAViewAnimation::beginAnimations("", NULL);
+    cell->getContentView()->setRotation(0);
+    cell->getContentView()->setScale(1.0f);
+    CAViewAnimation::commitAnimations();
     CCLog("选中");
 }
 
@@ -116,7 +124,7 @@ CACollectionViewCell* AutoCollectionViewTest::collectionCellAtIndex(CAAutoCollec
         //生成Item背景
         CAView* itemImage = CAView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
         itemImage->setTag(99);
-        p_Cell->addSubview(itemImage);
+        p_Cell->getContentView()->addSubview(itemImage);
         
         //生成itemCALabel
         CALabel* itemText = CALabel::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
@@ -124,18 +132,18 @@ CACollectionViewCell* AutoCollectionViewTest::collectionCellAtIndex(CAAutoCollec
         itemText->setFontSize(29);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        itemImage->addSubview(itemText);
+        p_Cell->getContentView()->addSubview(itemText);
     }
 
     //设置Item背景颜色
-    CAView* itemImageView = p_Cell->getSubviewByTag(99);
+    CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
     itemImageView->setColor(colorArr.at(item));
     CCLog("row = %d", item);
     
     //设置itme文本显示
     char pos[20] = "";
     sprintf(pos, "(%d,%d)", section, item);
-    CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(99)->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
     itemText->setText(pos);
     return  p_Cell;
     

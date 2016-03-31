@@ -1134,17 +1134,17 @@ void CAScrollView::layoutPullToRefreshView()
 void CAScrollView::changedFromPullToRefreshView()
 {
     DSize size = this->getViewSize();
-	DPoint point = this->getContentOffset();
+	float y = this->getContentOffset().y;
     
-    if (m_pHeaderRefreshView && m_pHeaderRefreshView->getSuperview() == NULL)
+    if (m_pHeaderRefreshView)
     {
         const DRectLayout& layout = DRectLayout(0, 0, -128, 128, DRectLayout::L_R_T_H);
-        if (m_pHeaderRefreshView)
+        if (m_pHeaderRefreshView && m_pHeaderRefreshView->getSuperview() == NULL)
         {
             m_pHeaderRefreshView->setLayout(layout);
             this->addSubview(m_pHeaderRefreshView);
         }
-        if (layout.height < point.y)
+        if (layout.top < y)
         {
             m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
         }
@@ -1161,7 +1161,7 @@ void CAScrollView::changedFromPullToRefreshView()
             m_pFooterRefreshView->setLayout(layout);
             this->addSubview(m_pFooterRefreshView);
         }
-        if (layout.height + size.height - m_obContentSize.height > point.y)
+        if (size.height - m_obContentSize.height - layout.bottom > y)
         {
             m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
         }

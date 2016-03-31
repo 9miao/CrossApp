@@ -172,7 +172,7 @@ public:
     
     virtual void setShowsScrollIndicators(bool var);
     
-	CACollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+	CACollectionViewCell* cellForRowAtIndexPath(unsigned int section, unsigned int item);
     
 	const CAVector<CACollectionViewCell*>& displayingCollectionCell();
     
