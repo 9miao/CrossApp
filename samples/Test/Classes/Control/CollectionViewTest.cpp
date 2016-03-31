@@ -38,6 +38,7 @@ void CollectionViewTest::viewDidLoad()
     p_Conllection->setHoriInterval(40);
     p_Conllection->setVertInterval(40);
     this->getView()->addSubview(p_Conllection);
+    
     p_Conllection->reloadData();
     p_Conllection->startPullToHeaderRefreshView();
     
@@ -89,7 +90,7 @@ void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(CACollectionView
 {
     CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, row, item);
     cell->getContentView()->setRotation(-360);
-    cell->getContentView()->setScale(0.7f);
+    cell->getContentView()->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
     cell->getContentView()->setRotation(0);
     cell->getContentView()->setScale(1.0f);

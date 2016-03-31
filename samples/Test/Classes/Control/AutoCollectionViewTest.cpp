@@ -43,9 +43,6 @@ void AutoCollectionViewTest::viewDidLoad()
     p_AutoCollection->setVertCellInterval(30);
     
     this->getView()->addSubview(p_AutoCollection);
-    
-    p_AutoCollection->reloadData();
-    p_AutoCollection->startPullToHeaderRefreshView();
 }
 
 void AutoCollectionViewTest::viewDidUnload()
@@ -95,7 +92,7 @@ void AutoCollectionViewTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollec
     //选中
     CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
     cell->getContentView()->setRotation(-360);
-    cell->getContentView()->setScale(0.7f);
+    cell->getContentView()->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
     cell->getContentView()->setRotation(0);
     cell->getContentView()->setScale(1.0f);

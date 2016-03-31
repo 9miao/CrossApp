@@ -144,7 +144,7 @@
 		B0CF18C71CA236A1007AA1B0 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF189A1CA236A1007AA1B0 /* LabelTest.cpp */; };
 		B0CF18C81CA236A1007AA1B0 /* ListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF189C1CA236A1007AA1B0 /* ListViewTest.cpp */; };
 		B0CF18C91CA236A1007AA1B0 /* PageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF189E1CA236A1007AA1B0 /* PageViewTest.cpp */; };
-		B0CF18CA1CA236A1007AA1B0 /* PickerViewTest1111.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18A11CA236A1007AA1B0 /* PickerViewTest1111.cpp */; };
+		B0CF18CA1CA236A1007AA1B0 /* PickerViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18A11CA236A1007AA1B0 /* PickerViewTest.cpp */; };
 		B0CF18CB1CA236A1007AA1B0 /* ProgressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18A21CA236A1007AA1B0 /* ProgressTest.cpp */; };
 		B0CF18CC1CA236A1007AA1B0 /* RenderImageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18A41CA236A1007AA1B0 /* RenderImageTest.cpp */; };
 		B0CF18CD1CA236A1007AA1B0 /* Scale9ImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18A61CA236A1007AA1B0 /* Scale9ImageViewTest.cpp */; };
@@ -478,7 +478,7 @@
 		B0CF189E1CA236A1007AA1B0 /* PageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PageViewTest.cpp; path = ../Classes/Control/PageViewTest.cpp; sourceTree = "<group>"; };
 		B0CF189F1CA236A1007AA1B0 /* PageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageViewTest.h; path = ../Classes/Control/PageViewTest.h; sourceTree = "<group>"; };
 		B0CF18A01CA236A1007AA1B0 /* PickerViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PickerViewTest.h; path = ../Classes/Control/PickerViewTest.h; sourceTree = "<group>"; };
-		B0CF18A11CA236A1007AA1B0 /* PickerViewTest1111.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PickerViewTest1111.cpp; path = ../Classes/Control/PickerViewTest1111.cpp; sourceTree = "<group>"; };
+		B0CF18A11CA236A1007AA1B0 /* PickerViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PickerViewTest.cpp; path = ../Classes/Control/PickerViewTest.cpp; sourceTree = "<group>"; };
 		B0CF18A21CA236A1007AA1B0 /* ProgressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressTest.cpp; path = ../Classes/Control/ProgressTest.cpp; sourceTree = "<group>"; };
 		B0CF18A31CA236A1007AA1B0 /* ProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressTest.h; path = ../Classes/Control/ProgressTest.h; sourceTree = "<group>"; };
 		B0CF18A41CA236A1007AA1B0 /* RenderImageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderImageTest.cpp; path = ../Classes/Control/RenderImageTest.cpp; sourceTree = "<group>"; };
@@ -754,7 +754,7 @@
 				B0CF189E1CA236A1007AA1B0 /* PageViewTest.cpp */,
 				B0CF189F1CA236A1007AA1B0 /* PageViewTest.h */,
 				B0CF18A01CA236A1007AA1B0 /* PickerViewTest.h */,
-				B0CF18A11CA236A1007AA1B0 /* PickerViewTest1111.cpp */,
+				B0CF18A11CA236A1007AA1B0 /* PickerViewTest.cpp */,
 				B0CF18A21CA236A1007AA1B0 /* ProgressTest.cpp */,
 				B0CF18A31CA236A1007AA1B0 /* ProgressTest.h */,
 				B0CF18A41CA236A1007AA1B0 /* RenderImageTest.cpp */,
@@ -1154,7 +1154,7 @@
 				3EF48A4D1B7C7E0B00179E69 /* gameswf_disasm.cpp in Sources */,
 				3EF48A1F1B7C7E0B00179E69 /* tu_loadlib.cpp in Sources */,
 				3EF48A0E1B7C7E0B00179E69 /* configvars.cpp in Sources */,
-				B0CF18CA1CA236A1007AA1B0 /* PickerViewTest1111.cpp in Sources */,
+				B0CF18CA1CA236A1007AA1B0 /* PickerViewTest.cpp in Sources */,
 				3EF48A3D1B7C7E0B00179E69 /* as_netstream.cpp in Sources */,
 				B0CF18C01CA236A1007AA1B0 /* ActivityIndicatorViewTest1111.cpp in Sources */,
 				3EF48A211B7C7E0B00179E69 /* tu_timer.cpp in Sources */,
