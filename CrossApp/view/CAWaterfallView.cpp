@@ -402,20 +402,21 @@ void CAWaterfallView::reloadViewSizeData()
 	int nItemCount = m_pWaterfallViewDataSource->numberOfItems(this);
 	for (int i = 0; i < nItemCount; i++)
 	{
-		unsigned int index = getCurColumnIndex();
-
-		int x = index*(nColumnWidth + m_nColumnMargin) + m_nColumnMargin;
-		int y = m_nColumnHeightVect[index];
-
 		unsigned int nColumnHeight = m_pWaterfallViewDataSource->waterfallViewHeightForItemAtIndex(this, i);
 
-		m_rUsedWaterfallCellRects[i] = DRect(x, y + viewHeight, nColumnWidth, nColumnHeight);
-		m_mpUsedWaterfallCells[i] = NULL;
+		unsigned int index = getCurColumnIndex();
 
 		if (m_nColumnHeightVect[index] != 0)
 		{
 			m_nColumnHeightVect[index] += m_nItemMargin;
 		}
+
+		int x = index*(nColumnWidth + m_nColumnMargin) + m_nColumnMargin;
+		int y = m_nColumnHeightVect[index];
+
+		m_rUsedWaterfallCellRects[i] = DRect(x, y + viewHeight, nColumnWidth, nColumnHeight);
+		m_mpUsedWaterfallCells[i] = NULL;
+
 		m_nColumnHeightVect[index] += nColumnHeight;
 	}
 	viewHeight += getMaxColumnValue();
