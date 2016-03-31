@@ -33,7 +33,9 @@ public:
     
 public:
     
-    void refreshData(float interval);
+    void refreshData1(float interval);
+    
+    void refreshData2(float interval);
     
     void scrollViewHeaderBeginRefreshing(CAScrollView* view);
     

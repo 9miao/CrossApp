@@ -49,7 +49,20 @@ void CollectionViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void CollectionViewTest::refreshData(float interval)
+void CollectionViewTest::refreshData1(float interval)
+{
+    colorArr.clear();
+    for (int i = 0; i < 40; i++)
+    {
+        char r = CCRANDOM_0_1() * 255;
+        char g = CCRANDOM_0_1() * 255;
+        char b = CCRANDOM_0_1() * 255;
+        colorArr.push_back(ccc4(r, g, b, 255));
+    }
+    p_Conllection->reloadData();
+}
+
+void CollectionViewTest::refreshData2(float interval)
 {
     for (int i = 0; i < 40; i++)
     {
@@ -63,13 +76,12 @@ void CollectionViewTest::refreshData(float interval)
 
 void CollectionViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    colorArr.clear();
-    CAScheduler::schedule(schedule_selector(CollectionViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(CollectionViewTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 void CollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(CollectionViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(CollectionViewTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 

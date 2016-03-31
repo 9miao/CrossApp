@@ -53,9 +53,22 @@ void AutoCollectionViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void AutoCollectionViewTest::refreshData(float interval)
+void AutoCollectionViewTest::refreshData1(float interval)
 {
-    for (int i = 0; i < 24; i++)
+    colorArr.clear();
+    for (int i = 0; i < 40; i++)
+    {
+        char r = CCRANDOM_0_1() * 255;
+        char g = CCRANDOM_0_1() * 255;
+        char b = CCRANDOM_0_1() * 255;
+        colorArr.push_back(ccc4(r, g, b, 255));
+    }
+    p_AutoCollection->reloadData();
+}
+
+void AutoCollectionViewTest::refreshData2(float interval)
+{
+    for (int i = 0; i < 40; i++)
     {
         char r = CCRANDOM_0_1() * 255;
         char g = CCRANDOM_0_1() * 255;
@@ -67,13 +80,12 @@ void AutoCollectionViewTest::refreshData(float interval)
 
 void AutoCollectionViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    colorArr.clear();
-    CAScheduler::schedule(schedule_selector(AutoCollectionViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(AutoCollectionViewTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 void AutoCollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(AutoCollectionViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(AutoCollectionViewTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 //选中
