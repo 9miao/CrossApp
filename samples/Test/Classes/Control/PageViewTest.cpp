@@ -24,15 +24,13 @@ void PageViewTest::viewDidLoad()
     _view.pushBack(view2);
     _view.pushBack(view3);
     
-//    p_pageView = CAPageView::createWithCenter(DRect(winSize.width/2, winSize.height/2, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
     p_pageView = CAPageView::createWithLayout(DRectLayout(0,0,0,0, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);//设置完图像不显示
     p_pageView->setViews(_view);
     p_pageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_pageView);
     
-//    pageControl = CAPageControl::createWithCenter(DRect(winSize.width/2, 50, 100, 50));
     pageControl = CAPageControl::createWithLayout(DRectLayout(200,200,50,50,DRectLayout::L_R_T_H));
-    pageControl->setNumberOfPages(_view.size());
+    pageControl->setNumberOfPages((int)_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
     pageControl->addTarget(this, CAControl_selector(PageViewTest::pageControlCallBack));
@@ -52,10 +50,13 @@ void PageViewTest::pageViewDidBeginTurning(CAPageView* pageView)
 
 void PageViewTest::pageViewDidEndTurning(CAPageView* pageView)
 {
-    if (pageViewIndex==0) {
+    if (pageViewIndex==0)
+    {
         pageControl->setCurrentPage(pageView->getCurrPage());
         pageControl->updateCurrentPageDisplay();
-    }else{
+    }
+    else
+    {
         
     }
 }

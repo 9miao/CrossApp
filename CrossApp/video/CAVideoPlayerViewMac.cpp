@@ -125,6 +125,11 @@ void CAVideoPlayerView::draw()
 
 }
 
+void CAVideoPlayerView::update(float fDelta)
+{
+
+}
+
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
 {
 

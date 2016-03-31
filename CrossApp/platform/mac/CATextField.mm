@@ -400,7 +400,7 @@ CATextField::CATextField()
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
-    
+    this->setPoint(DPoint(-5000, -5000));
     CGPoint point = CGPointMake(-50000, -50000);
     m_pTextField = [[MACTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
     EAGLView * eaglview = [EAGLView sharedEGLView];

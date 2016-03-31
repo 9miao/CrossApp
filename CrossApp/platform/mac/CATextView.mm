@@ -199,12 +199,13 @@ CATextView::CATextView()
 ,m_iFontSize(40)
 {
     this->setHaveNextResponder(false);
-    
+    this->setPoint(DPoint(-5000, -5000));
     CGPoint point = CGPointMake(-50000, -50000);
     m_pTextView = [[MacTextView alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textView_Mac];
     textView_Mac.textView = this;
+    [textView_Mac setBackgroundColor:[NSColor clearColor]];
     [textView_Mac setText:@""];
     [textView_Mac release];
     
@@ -259,7 +260,7 @@ bool CATextView::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
+    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
@@ -362,7 +363,7 @@ void CATextView::showImage()
 {
     NSImage* image_MAC = [[[NSImage alloc]initWithData:[textView_Mac dataWithPDFInsideRect:[textView_Mac bounds]]]autorelease];
     
-    NSData* data_MAC = [image_MAC TIFFRepresentation];
+    NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
     unsigned char* data = (unsigned char*)malloc([data_MAC length]);
     [data_MAC getBytes:data];
@@ -409,6 +410,8 @@ void CATextView::setContentSize(const DSize& contentSize)
     NSRect rect = [textView_Mac frame];
     rect.size = size;
     textView_Mac.frame = rect;
+    
+    m_pShowImageView->setFrame(this->getBounds());
     
     this->showImage();
 }
