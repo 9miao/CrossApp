@@ -35,8 +35,8 @@ void CollectionViewTest::viewDidLoad()
     p_Conllection->setScrollViewDelegate(this);
     p_Conllection->setHeaderRefreshView(headerRefreshView);
     p_Conllection->setFooterRefreshView(footerRefreshView);
-    p_Conllection->setHoriInterval(40);
-    p_Conllection->setVertInterval(40);
+    p_Conllection->setHoriInterval(20);
+    p_Conllection->setVertInterval(20);
     this->getView()->addSubview(p_Conllection);
     
     p_Conllection->reloadData();
@@ -158,5 +158,5 @@ unsigned int CollectionViewTest::numberOfItemsInRowsInSection(CACollectionView *
 
 unsigned int CollectionViewTest::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
 {
-    return (this->getView()->getBounds().size.width - 40 * 4) / 3;
+    return (this->getView()->getBounds().size.width - 20 * 4) / 3;
 }

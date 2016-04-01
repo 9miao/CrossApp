@@ -39,8 +39,8 @@ void AutoCollectionViewTest::viewDidLoad()
     p_AutoCollection->setHeaderRefreshView(headerRefreshView);
     p_AutoCollection->setFooterRefreshView(footerRefreshView);
     p_AutoCollection->setScrollViewDelegate(this);
-    p_AutoCollection->setHoriCellInterval(30);
-    p_AutoCollection->setVertCellInterval(30);
+    p_AutoCollection->setHoriCellInterval(20);
+    p_AutoCollection->setVertCellInterval(20);
     
     this->getView()->addSubview(p_AutoCollection);
 }
@@ -149,7 +149,7 @@ CACollectionViewCell* AutoCollectionViewTest::collectionCellAtIndex(CAAutoCollec
 //项目大小
 DSize AutoCollectionViewTest::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
-    return DSize(240, 240);
+    return DSize(230, 230);
 }
 
 //每个Section中Item的个数

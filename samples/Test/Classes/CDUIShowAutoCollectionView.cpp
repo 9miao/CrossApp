@@ -418,7 +418,7 @@ CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCo
 //项目大小
 DSize CDUIShowAutoCollectionView::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
-    return DSize(240, 240);
+    return DSize(230, 230);
 }
 
 //每个Section中Item的个数

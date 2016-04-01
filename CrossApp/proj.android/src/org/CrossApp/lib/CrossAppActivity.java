@@ -18,6 +18,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.wifi.ScanResult;
@@ -178,6 +179,17 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			AndroidGPS.locationManager.removeUpdates(AndroidGPS.locationListener);
 		}
 	}
+//	private static native void reshare(final int pWidth, final int pHeight);
+//	public void onConfigurationChanged(Configuration newConfiguration)
+//	{
+//		super.onConfigurationChanged(newConfiguration);
+//		
+//		final DisplayMetrics displayMetrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//        final int width = displayMetrics.widthPixels;
+//        final int height = displayMetrics.heightPixels;
+//        reshare(width, height);
+//	}
 	
 //	@Override
 //	protected void onDestroy() 

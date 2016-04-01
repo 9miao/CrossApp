@@ -149,13 +149,13 @@ static EAGLView *view;
 	[self lockOpenGLContext];
 	//NO_FINISH
 	NSRect rect = [self bounds];
-	CrossApp::CAApplication *director = CrossApp::CAApplication::getApplication();
+	CrossApp::CAApplication *application = CrossApp::CAApplication::getApplication();
 	CGSize size = NSSizeToCGSize(rect.size);
 	CrossApp::DSize DSize = CrossApp::DSize(size.width, size.height) * CrossApp::s_px_to_dip(1);
-	director->reshapeProjection(DSize);
+	application->reshapeProjection(DSize);
 	
 	// avoid flicker
-	director->drawScene();
+	application->drawScene();
 //	[self setNeedsDisplay:YES];
 	
 	[self unlockOpenGLContext];
