@@ -73,7 +73,7 @@ protected:
 
 	float getMaxFontHeight();
 
-	void splitUrlStrings(const std::string& text, std::vector<std::pair<int, int>>& vIntVect);
+	void splitUrlStrings(const std::string& text, std::vector<std::pair<int, int> >& vIntVect);
 
 	void appendTextEx(const std::string& text, const CAFont& font);
 
@@ -87,7 +87,7 @@ private:
 	CAColor4B m_linkColor;
 	CAColor4B m_linkVisitedColor;
 	std::vector<std::pair<std::string, CAFont> > m_vLabelFontVect;
-	std::vector<std::vector<DRect>> m_vHyperlinkRects;
+	std::vector<std::vector<DRect> > m_vHyperlinkRects;
 	std::vector<std::string> m_vLabelUrls;
 };
 

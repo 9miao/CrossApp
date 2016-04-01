@@ -25,12 +25,15 @@ void FirstViewController::viewDidLoad()
     labelLayout.top = 200;
     labelLayout.height = 100;
     
+    CAFont font;
+    font.color = CAColor_white;
+    font.fontSize = 72;
+    
     CALabel* label = CALabel::createWithLayout(labelLayout);
     label->setTextAlignment(CATextAlignmentCenter);
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label->setFontSize(72);
+    label->setFont(font);
     label->setText("Hello World!");
-    label->setColor(CAColor_white);
     this->getView()->addSubview(label);
 }
 

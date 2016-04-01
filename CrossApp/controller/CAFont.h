@@ -11,7 +11,6 @@ NS_CC_BEGIN
 class CC_DLL CAFont
 {
 public:
-	char hyperlink;
 
     bool bold;
     
@@ -26,6 +25,8 @@ public:
     CAColor4B color;
     
     std::string fontName;
+    
+    char hyperlink;
     
 public:
     

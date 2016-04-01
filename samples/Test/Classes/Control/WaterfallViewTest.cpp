@@ -38,9 +38,6 @@ void WaterfallViewTest::viewDidLoad()
     Waterfall->setHeaderRefreshView(headerRefreshView);
     Waterfall->setFooterRefreshView(footerRefreshView);
     this->getView()->addSubview(Waterfall);
-    
-    Waterfall->reloadData();
-    Waterfall->startPullToHeaderRefreshView();
 }
 
 void WaterfallViewTest::viewDidUnload()
@@ -49,7 +46,19 @@ void WaterfallViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void WaterfallViewTest::refreshData(float interval)
+void WaterfallViewTest::refreshData1(float interval)
+{
+    for (int i = 0; i < 12; i++)
+    {
+        char r = CCRANDOM_0_1() * 255;
+        char g = CCRANDOM_0_1() * 255;
+        char b = CCRANDOM_0_1() * 255;
+        colorArr.push_back(ccc4(r, g, b, 255));
+    }
+    Waterfall->reloadData();
+}
+
+void WaterfallViewTest::refreshData2(float interval)
 {
     for (int i = 0; i < 12; i++)
     {
@@ -63,13 +72,12 @@ void WaterfallViewTest::refreshData(float interval)
 
 void WaterfallViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    colorArr.clear();
-    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
 }
 
 void WaterfallViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
 }
 
 void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)
@@ -114,12 +122,12 @@ CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(CAWaterfallView *wa
 //Necessary
 unsigned int WaterfallViewTest::waterfallViewHeightForItemAtIndex(CAWaterfallView *waterfallView, unsigned int itemIndex)
 {
-    return CCRANDOM_0_1() * 150 + 150;
+    return CCRANDOM_0_1() * 300 + 300;
 }
 //Necessary
 unsigned int WaterfallViewTest::numberOfItems(CAWaterfallView *waterfallView)
 {
-    return colorArr.size();
+    return (unsigned int)colorArr.size();
 }
 
 CAView* WaterfallViewTest::waterfallViewSectionViewForHeader(CAWaterfallView *waterfallView, const DSize& viewSize)
