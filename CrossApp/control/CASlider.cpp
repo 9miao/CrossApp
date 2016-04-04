@@ -287,6 +287,8 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (!this->isTouchClick())
         return;
     
+	m_bTouchClick = false;
+
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     DRect bounds = getBounds();

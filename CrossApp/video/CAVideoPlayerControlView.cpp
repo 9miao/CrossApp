@@ -217,6 +217,7 @@ void CAVideoPlayerControlView::onSlideTouched(CAControl* control, DPoint point)
 void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 {
 	CCLog("CAVideoPlayerControlView::onSlideChanged");
+	m_bWaitingSlide = true;
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this, 0, 0, 0.8f);
@@ -252,7 +253,14 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 	if (m_glView == NULL || m_playSlider == NULL || m_playTimeLabel == NULL)
 		return;
 
-	if (!m_bWaitingSlide)
+	if (m_playSlider->isTouchClick())
+		return;
+	
+	if (m_bWaitingSlide)
+	{
+		return;
+	}
+	else
 	{
 		updatePlayButton();
 	}

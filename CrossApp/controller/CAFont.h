@@ -26,8 +26,6 @@ public:
     
     std::string fontName;
     
-    char hyperlink;
-    
 public:
     
     CAFont();
