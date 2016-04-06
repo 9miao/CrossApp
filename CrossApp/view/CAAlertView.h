@@ -87,6 +87,8 @@ protected:
 
 	void setLabel(CALabel*& pLabel, const char* szTitle, const char* fontName, const CAColor4B& col);
 
+    virtual void setContentSize(const DSize& var);
+    
 private:
 
 	void showAlertView();
