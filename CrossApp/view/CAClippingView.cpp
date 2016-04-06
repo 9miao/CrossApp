@@ -93,24 +93,36 @@ bool CAClippingView::init(CAView *pStencil)
 void CAClippingView::onEnter()
 {
     CAView::onEnter();
-    m_pStencil->onEnter();
+    if (m_pStencil)
+    {
+        m_pStencil->onEnter();
+    }
 }
 
 void CAClippingView::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    m_pStencil->onEnterTransitionDidFinish();
+    if (m_pStencil)
+    {
+        m_pStencil->onEnterTransitionDidFinish();
+    }
 }
 
 void CAClippingView::onExitTransitionDidStart()
 {
-    m_pStencil->onExitTransitionDidStart();
+    if (m_pStencil)
+    {
+        m_pStencil->onExitTransitionDidStart();
+    }
     CAView::onExitTransitionDidStart();
 }
 
 void CAClippingView::onExit()
 {
-    m_pStencil->onExit();
+    if (m_pStencil)
+    {
+        m_pStencil->onExit();
+    }
     CAView::onExit();
 }
 
@@ -342,11 +354,29 @@ CAView* CAClippingView::getStencil() const
 
 void CAClippingView::setStencil(CAView *pStencil)
 {
-    if (m_pStencil) m_pStencil->setSuperview(NULL);
+    if (m_pStencil)
+    {
+        m_pStencil->setSuperview(NULL);
+        if (this->isRunning())
+        {
+            m_pStencil->onExitTransitionDidStart();
+            m_pStencil->onExit();
+        }
+    }
     CC_SAFE_RELEASE(m_pStencil);
     m_pStencil = pStencil;
     CC_SAFE_RETAIN(m_pStencil);
-    if (m_pStencil) m_pStencil->setSuperview(this);
+    
+    if (m_pStencil)
+    {
+        m_pStencil->setSuperview(this);
+        if (this->isRunning())
+        {
+            m_pStencil->onEnter();
+            m_pStencil->onEnterTransitionDidFinish();
+        }
+    }
+    
 }
 
 GLfloat CAClippingView::getAlphaThreshold() const
