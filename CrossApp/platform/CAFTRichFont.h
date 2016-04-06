@@ -10,7 +10,7 @@
 #define __CC_PLATFORM_CAFTRICHFONT_H
 
 #include "CAFreeTypeFont.h"
-#include "view/CAView.h"
+#include "view/CARichLabel.h"
 
 NS_CC_BEGIN
 
@@ -53,38 +53,39 @@ public:
 	CAFTRichFont();
 	virtual ~CAFTRichFont();
 
-	CAImage* initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<DRect>>& rects, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol);
+	CAImage* initWithString(std::vector<LabelElement>& labels, const DSize& sz, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol);
 
 protected:
 	void newLine();
 	void endLine();
 	void destroyAllLines();
-	void initGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels);
-	void initGlyphsLine(const std::vector<std::pair<std::string, CAFont>>& labels);
-	void initGlyphsLineEx(const std::vector<std::pair<std::string, CAFont>>& labels);
-	FT_Error initWordGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
-	FT_Error initWordGlyph(const std::pair<std::string, CAFont>& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
+	void initGlyphs(const std::vector<LabelElement>& labels);
+	void initGlyphsLine(const std::vector<LabelElement>& labels);
+	void initGlyphsLineEx(const std::vector<LabelElement>& labels);
+	FT_Error initWordGlyphs(const std::vector<LabelElement>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
+	FT_Error initWordGlyph(const LabelElement& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
 	FT_Face convertToSPFont(const CAFont& ft);
 	void compute_bbox(std::vector<TGlyphEx>& glyphs, FT_BBox *abbox);
 	void calcuMultiLines(std::vector<TGlyphEx>& glyphs);
 	void getLineYBBox(std::vector<TGlyphEx>& glyphs, FT_Pos& yPosMin, FT_Pos& yPosMax);
-	unsigned char* getBitmap(int* outWidth, int* outHeight, std::vector<std::vector<DRect>>& rects);
+	unsigned char* getBitmap(int* outWidth, int* outHeight);
 	void drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vector *pen);
 	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize);
 	void draw_bitmap(unsigned char* pBuffer, FT_Bitmap* bitmap, const CAColor4B& col, FT_Int x, FT_Int y);
 	void draw_line(unsigned char* pBuffer, const CAColor4B& col, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 	void getTextSize(int& width, int& height);
-	void calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std::vector<std::vector<DRect>>& rects, std::vector<DRect>& cc);
+	void calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std::vector<DRect>& cc);
 
 private:
 	DSize m_inSize;
 	DSize m_textSize;
-	DRect m_hyperlinkRect;
 	CAColor4B m_linkColor;
 	CAColor4B m_linkVisitedColor;
 	FTLineInfoEx* m_pCurrentLine;
 	std::vector<FTLineInfoEx*> m_lines;
 	FT_Matrix m_ItalicMatrix;
+	DRect m_HyperlinkRect;
+	std::vector<std::vector<DRect>> m_vHyperlinkRects;
 };
 
 extern CAFTRichFont g_AFTRichFont;

@@ -15,6 +15,33 @@
 
 NS_CC_BEGIN
 
+typedef struct LabelElement
+{
+	LabelElement()
+		: nHyperlink(0)
+	{
+
+	}
+	LabelElement(const std::string& text, const CAFont& ft)
+		: cszText(text)
+		, font(ft)
+		, nHyperlink(0)
+	{
+
+	}
+	LabelElement(const std::string& text, const CAFont& ft, short link)
+		: cszText(text)
+		, font(ft)
+		, nHyperlink(link)
+	{
+
+	}
+	std::string cszText;
+	CAFont font;
+	short nHyperlink;
+	std::vector<DRect> vHyperlinkRects;
+
+} LabelElement;
 
 class CC_DLL CARichLabel : public CAView
 {
@@ -57,7 +84,7 @@ public:
 	const CAColor4B& getLinkVisitedTextColor();
 	void setLinkVisitedTextColor(const CAColor4B& col);
 
-	const std::vector<std::string>& getUrls();
+	std::vector<std::string> getUrls();
     
 protected:
 	virtual void setContentSize(const DSize& var);
@@ -77,8 +104,6 @@ protected:
 
 	void appendTextEx(const std::string& text, const CAFont& font);
 
-	void setUrlVisited(const std::string& cszUrl);
-
 private:
 	bool m_bUpdateImage;
 	float m_fTextHeight;
@@ -86,9 +111,7 @@ private:
 	bool m_bLinksClickable;
 	CAColor4B m_linkColor;
 	CAColor4B m_linkVisitedColor;
-	std::vector<std::pair<std::string, CAFont> > m_vLabelFontVect;
-	std::vector<std::vector<DRect> > m_vHyperlinkRects;
-	std::vector<std::string> m_vLabelUrls;
+	std::vector<LabelElement> m_vLabelFontVect;
 };
 
 

@@ -27,7 +27,7 @@ CAFTRichFont::~CAFTRichFont()
 }
 
 
-CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, CAFont>>& labels, const DSize& sz, std::vector<std::vector<CCRect>>& rects, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol)
+CAImage* CAFTRichFont::initWithString(std::vector<LabelElement>& labels, const DSize& sz, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol)
 {
 	destroyAllLines();
 
@@ -35,13 +35,22 @@ CAImage* CAFTRichFont::initWithString(const std::vector<std::pair<std::string, C
 	m_textSize = DSizeZero;
 	m_linkColor = linkCol;
 	m_linkVisitedColor = linkVisitedCol;
+	m_HyperlinkRect = DRectZero;
+	m_vHyperlinkRects.clear();
 	initGlyphs(labels);
 
 	int width = 0, height = 0;
-	unsigned char* pData = getBitmap(&width, &height, rects);
+	unsigned char* pData = getBitmap(&width, &height);
 	if (pData == NULL)
 	{
 		return NULL;
+	}
+
+	for (int i = 0, j = 0; i < labels.size(); i++)
+	{
+		if (labels[i].nHyperlink == 0)
+			continue;
+		labels[i].vHyperlinkRects = m_vHyperlinkRects[j++];
 	}
 
 	CAImage* image = new CAImage();
@@ -97,32 +106,32 @@ void CAFTRichFont::destroyAllLines()
 	m_pCurrentLine = NULL;
 }
 
-void CAFTRichFont::initGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels)
+void CAFTRichFont::initGlyphs(const std::vector<LabelElement>& labels)
 {
-	std::vector<std::pair<std::string, CAFont>> labeltexts;
+	std::vector<LabelElement> labeltexts;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		const std::pair<std::string, CAFont>& label = labels[i];
+		const LabelElement& label = labels[i];
 
-		const std::string& line = label.first;
+		const std::string& line = label.cszText;
 
 		size_t pos = 0;
 		size_t first = line.find('\n');
 		while (first != std::string::npos)
 		{
-			labeltexts.push_back(std::make_pair(line.substr(pos, first - pos), label.second));
+			labeltexts.push_back(LabelElement(line.substr(pos, first - pos), label.font, label.nHyperlink));
 			initGlyphsLine(labeltexts);
 			labeltexts.clear();
 
 			pos = first + 1;
 			first = line.find('\n', pos);
 		}
-		labeltexts.push_back(std::make_pair(line.substr(pos, line.size()), label.second));
+		labeltexts.push_back(LabelElement(line.substr(pos, line.size()), label.font, label.nHyperlink));
 	}
 	initGlyphsLine(labeltexts);
 }
 
-void CAFTRichFont::initGlyphsLine(const std::vector<std::pair<std::string, CAFont>>& labels)
+void CAFTRichFont::initGlyphsLine(const std::vector<LabelElement>& labels)
 {
 	if (!labels.empty())
 	{
@@ -135,7 +144,7 @@ void CAFTRichFont::initGlyphsLine(const std::vector<std::pair<std::string, CAFon
 }
 
 
-void CAFTRichFont::initGlyphsLineEx(const std::vector<std::pair<std::string, CAFont>>& labels)
+void CAFTRichFont::initGlyphsLineEx(const std::vector<LabelElement>& labels)
 {
 	FT_BBox bbox;   // bounding box containing all of the glyphs in the word
 	std::vector<TGlyphEx> glyphs; // glyphs for the word
@@ -178,12 +187,12 @@ void CAFTRichFont::initGlyphsLineEx(const std::vector<std::pair<std::string, CAF
 	}
 }
 
-FT_Error CAFTRichFont::initWordGlyphs(const std::vector<std::pair<std::string, CAFont>>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
+FT_Error CAFTRichFont::initWordGlyphs(const std::vector<LabelElement>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
 {
 	glyphs.clear();
 	for (int i = 0; i < labels.size(); i++)
 	{
-		const std::pair<std::string, CAFont>& label = labels[i];
+		const LabelElement& label = labels[i];
 
 		if (-1 == initWordGlyph(label, glyphs, pen))
 			return -1;
@@ -191,17 +200,17 @@ FT_Error CAFTRichFont::initWordGlyphs(const std::vector<std::pair<std::string, C
 	return 0;
 }
 
-FT_Error CAFTRichFont::initWordGlyph(const std::pair<std::string, CAFont>& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
+FT_Error CAFTRichFont::initWordGlyph(const LabelElement& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
 {
-	const CAFont& ft = label.second;
-	const std::string& szText = label.first;
+	const CAFont& ft = label.font;
+	const std::string& szText = label.cszText;
 	FT_Face face = convertToSPFont(ft);
 	CAColor4B col = ft.color;
 	bool bBold = ft.bold;
 	bool bItalics = ft.italics;
 	bool bDeleteLine = ft.deleteLine;
 	bool bUnderLine = ft.underLine;
-	int iHyperlink = ft.hyperlink;
+	int iHyperlink = label.nHyperlink;
 	int iFontSize = ft.fontSize;
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
@@ -488,7 +497,7 @@ void CAFTRichFont::calcuMultiLines(std::vector<TGlyphEx>& glyphs)
 	}
 }
 
-unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight, std::vector<std::vector<DRect>>& rects)
+unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight)
 {
 	int width, height;
 	getTextSize(width, height);
@@ -501,7 +510,7 @@ unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight, std::vecto
 	}
 	memset(pBuffer, 0, size);
 
-	m_hyperlinkRect = DRectZero;
+	m_HyperlinkRect = DRectZero;
 	std::vector<CCRect> cc;
 
 	FT_Vector pen;
@@ -515,23 +524,23 @@ unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight, std::vecto
 
 		drawText(line, pBuffer, &pen);
 
-		calcuHyperlinkRects(line, &pen, rects, cc);
-		if (!m_hyperlinkRect.equals(DRectZero))
+		calcuHyperlinkRects(line, &pen, cc);
+		if (!m_HyperlinkRect.equals(DRectZero))
 		{
-			cc.push_back(m_hyperlinkRect);
+			cc.push_back(m_HyperlinkRect);
 		}
-		m_hyperlinkRect = DRectZero;
+		m_HyperlinkRect = DRectZero;
 	}
 	*outWidth = width;
 	*outHeight = height;
 
-	if (!m_hyperlinkRect.equals(DRectZero))
+	if (!m_HyperlinkRect.equals(DRectZero))
 	{
-		cc.push_back(m_hyperlinkRect);
+		cc.push_back(m_HyperlinkRect);
 	}
 	if (!cc.empty())
 	{
-		rects.push_back(cc);
+		m_vHyperlinkRects.push_back(cc);
 	}
 	return pBuffer;
 }
@@ -646,6 +655,9 @@ void CAFTRichFont::draw_line(unsigned char* pBuffer, const CAColor4B& col, FT_In
 	{
 		for (FT_Int j = y1; j <= y2; j++)
 		{
+			if (i < 0 || j < 0 || i >= width || j >= height)
+				continue;
+
 			FT_Int index = (j * width * 4) + (i * 4);
 			for (int k = 0; k < 4; k++)
 			{
@@ -667,7 +679,7 @@ void CAFTRichFont::getTextSize(int& width, int& height)
 	height = MIN(1.5f*h, m_inSize.height);
 }
 
-void CAFTRichFont::calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std::vector<std::vector<DRect>>& rects, std::vector<DRect>& cc)
+void CAFTRichFont::calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std::vector<DRect>& cc)
 {
 	std::vector<TGlyphEx>& glyphs = pInfo->glyphs;
 	for (std::vector<TGlyphEx>::iterator glyph = glyphs.begin(); glyph != glyphs.end(); ++glyph)
@@ -676,28 +688,28 @@ void CAFTRichFont::calcuHyperlinkRects(FTLineInfoEx* pInfo, FT_Vector *pen, std:
 
 		if (glyph->hyperlink && image != NULL)
 		{
-			if (m_hyperlinkRect.equals(DRectZero))
+			if (m_HyperlinkRect.equals(DRectZero))
 			{
 				int dt = 2;
-				m_hyperlinkRect.origin.x = glyph->x;
-				m_hyperlinkRect.origin.y = glyph->y - dt;
-				m_hyperlinkRect.size.width = glyph->width;
-				m_hyperlinkRect.size.height = glyph->fontSize + 2*dt;
+				m_HyperlinkRect.origin.x = glyph->x;
+				m_HyperlinkRect.origin.y = glyph->y - dt;
+				m_HyperlinkRect.size.width = glyph->width;
+				m_HyperlinkRect.size.height = glyph->fontSize + 2 * dt;
 			}
 			else
 			{
-				m_hyperlinkRect.size.width = glyph->x + glyph->width - m_hyperlinkRect.origin.x;
+				m_HyperlinkRect.size.width = glyph->x + glyph->width - m_HyperlinkRect.origin.x;
 			}
 		}
 		else
 		{
-			if (!m_hyperlinkRect.equals(DRectZero))
+			if (!m_HyperlinkRect.equals(DRectZero))
 			{
-				cc.push_back(m_hyperlinkRect);
-				rects.push_back(cc);
+				cc.push_back(m_HyperlinkRect);
+				m_vHyperlinkRects.push_back(cc);
 				cc.clear();
 			}
-			m_hyperlinkRect = DRectZero;
+			m_HyperlinkRect = DRectZero;
 		}
 	}
 }

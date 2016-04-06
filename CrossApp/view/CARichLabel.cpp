@@ -124,14 +124,15 @@ void CARichLabel::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
 	DPoint point = this->convertTouchToNodeSpace(pTouch);
 
-	for (int i = 0; i < m_vHyperlinkRects.size(); i++)
+	for (int i = 0; i < m_vLabelFontVect.size(); i++)
 	{
-		for (int j = 0; j < m_vHyperlinkRects[i].size(); j++)
+		std::vector<DRect>& v = m_vLabelFontVect[i].vHyperlinkRects;
+		for (int j = 0; j < v.size(); j++)
 		{
-			if (m_vHyperlinkRects[i][j].containsPoint(point))
+			if (v[j].containsPoint(point))
 			{
-				CADevice::OpenURL(m_vLabelUrls[i]);
-				setUrlVisited(m_vLabelUrls[i]);
+				CADevice::OpenURL(m_vLabelFontVect[i].cszText);
+				m_vLabelFontVect[i].nHyperlink = 2;
 				return;
 			}
 		}
@@ -151,7 +152,7 @@ float CARichLabel::getMaxFontHeight()
 
 	for (int i = 0; i < m_vLabelFontVect.size(); i++)
 	{
-		const CAFont& ft = m_vLabelFontVect[i].second;
+		const CAFont& ft = m_vLabelFontVect[i].font;
 		int tFSize = ft.fontSize;
 		if (tFSize > iFontSize)
 		{
@@ -188,7 +189,7 @@ void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 
 	if (vIntVect.empty())
 	{
-		m_vLabelFontVect.push_back(std::make_pair(text, font));
+		m_vLabelFontVect.push_back(LabelElement(text, font));
 	}
 	else
 	{
@@ -200,16 +201,13 @@ void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 			std::string cszStrTemp = text.substr(ipos, pa.first - ipos);
 			if (!cszStrTemp.empty())
 			{
-				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, font));
+				m_vLabelFontVect.push_back(LabelElement(cszStrTemp, font));
 			}
 
 			cszStrTemp = text.substr(pa.first, pa.second - pa.first);
 			if (!cszStrTemp.empty())
 			{
-				CAFont t(font);
-				t.hyperlink = m_bAutoLinkMask?1:0;
-				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, t));
-				m_vLabelUrls.push_back(cszStrTemp);
+				m_vLabelFontVect.push_back(LabelElement(cszStrTemp, font, m_bAutoLinkMask ? 1 : 0));
 			}
 
 			ipos = pa.second;
@@ -220,20 +218,8 @@ void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 			std::string cszStrTemp = text.substr(ipos, text.size() - ipos);
 			if (!cszStrTemp.empty())
 			{
-				m_vLabelFontVect.push_back(std::make_pair(cszStrTemp, font));
+				m_vLabelFontVect.push_back(LabelElement(cszStrTemp, font));
 			}
-		}
-	}
-	updateImageDraw();
-}
-
-void CARichLabel::setUrlVisited(const std::string& cszUrl)
-{
-	for (int i = 0; i < m_vLabelFontVect.size(); i++)
-	{
-		if (m_vLabelFontVect[i].first == cszUrl)
-		{
-			m_vLabelFontVect[i].second.hyperlink = 2;
 		}
 	}
 	updateImageDraw();
@@ -255,11 +241,9 @@ void CARichLabel::updateImage()
 		size = DSize(m_obContentSize.width, (defaultLineSpace + fontHeight) * (linenumber+1));
 	}
 
-	m_vHyperlinkRects.clear();
-	CAImage* image = g_AFTRichFont.initWithString(m_vLabelFontVect, size, m_vHyperlinkRects, m_linkColor, m_linkVisitedColor);
+	CAImage* image = g_AFTRichFont.initWithString(m_vLabelFontVect, size, m_linkColor, m_linkVisitedColor);
 	this->setImage(image);
 	CC_RETURN_IF(image == NULL);
-	CC_RETURN_IF(m_vLabelUrls.size() != m_vHyperlinkRects.size());
 
 	DRect rect = DRectZero;
 	rect.size.width = MIN(m_obContentSize.width, image->getContentSize().width);
@@ -346,9 +330,17 @@ void CARichLabel::setLinkVisitedTextColor(const CAColor4B& col)
 	updateImageDraw();
 }
 
-const std::vector<std::string>& CARichLabel::getUrls()
+std::vector<std::string> CARichLabel::getUrls()
 {
-	return m_vLabelUrls;
+	std::vector<std::string> szUrls;
+	for (int i = 0; i < m_vLabelFontVect.size(); i++)
+	{
+		if (m_vLabelFontVect[i].nHyperlink)
+		{
+			szUrls.push_back(m_vLabelFontVect[i].cszText);
+		}
+	}
+	return szUrls;
 }
 
 NS_CC_END

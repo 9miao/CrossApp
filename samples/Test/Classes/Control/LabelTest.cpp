@@ -1,4 +1,4 @@
-
+﻿
 #include "LabelTest.h"
 
 LabelTest::LabelTest()
@@ -87,7 +87,7 @@ void LabelTest::viewDidLoad()
     label4->setTextAlignment(CATextAlignmentCenter);
     label4->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     label4->setLayout(DRectLayout(100, 100, 750, 40, DRectLayout::L_R_T_H));
-    
+
     CAView* view = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
     view->addSubview(label);
     view->addSubview(label1);
@@ -112,28 +112,31 @@ void LabelTest::viewDidLoad()
     label5->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     label5->setLayout(DRectLayout(50, 50, 300, 300, DRectLayout::L_R_T_H));
     
-    CAView* view1 = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
+	CAView* view1 = CAView::createWithLayout(DRectLayout(50, 50, 300, 300, DRectLayout::L_R_T_H));
     view1->addSubview(label5);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
-    CARichLabel* RichLabel = CARichLabel::createWithLayout(DRectLayout(100,100,200,200,DRectLayout::L_R_T_B));
-    CAFont RichLabelFont;
-    RichLabelFont.bold = true;
-    RichLabelFont.fontSize = 42;
-    RichLabelFont.color = CAColor_red;
-    RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont);
-    CAFont RichLabelFont1;
-    RichLabelFont1.italics = true;
-    RichLabelFont1.fontSize = 42;
-    RichLabelFont1.color = CAColor_red;
-    RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont1);
-    CAFont RichLabelFont2;
-    RichLabelFont2.underLine = true;
-    RichLabelFont2.fontSize = 42;
-    RichLabelFont2.color = CAColor_red;
-    RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
-    
+	CARichLabel* RichLabel = CARichLabel::create();
+	RichLabel->setLayout(DRectLayout(50, 50, 50, 500, DRectLayout::L_R_T_H));
+	RichLabel->appendText("Hello World");
+
+	CAFont ft;
+	ft.fontSize = 48;
+	ft.color = ccc4(255, 0, 255, 100);
+	RichLabel->appendText(UTF8("阿斯蒂芬"), ft);
+
+	RichLabel->appendText(UTF8("欢迎访问我的网站 http://www.baidu.com、以及我的微博：http://www.xxx.com"));
+	ft.fontSize = 64;
+	ft.color = ccc4(255, 0, 0, 100);
+	RichLabel->appendText(UTF8("阿斯顿的双方各大发光火发过火各环节饭锅夫人"), ft);
+
+	CAFont RichLabelFont2;
+	RichLabelFont2.underLine = true;
+	RichLabelFont2.fontSize = 42;
+	RichLabelFont2.color = CAColor_yellow;
+	RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
+
     CAView* view2 = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
     view2->addSubview(RichLabel);
     view2->setColor(CAColor_gray);

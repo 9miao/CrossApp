@@ -72,9 +72,6 @@
     <ClCompile Include="..\Classes\Control\PageViewTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Control\PickerViewTest1111.cpp">
-      <Filter>Classes\Controls</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Control\ProgressTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
@@ -124,6 +121,15 @@
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Control\UiShow.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\PickerViewTest.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewTest.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\WaterfallViewTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
   </ItemGroup>
@@ -246,6 +252,12 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Control\UiShow.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewTest.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\WaterfallViewTest.h">
       <Filter>Classes\Controls</Filter>
     </ClInclude>
   </ItemGroup>
