@@ -126,7 +126,7 @@ bool CAScrollView::init()
     this->setDisplayRange(false);
     
     m_pContainer = new CAView();
-    this->setContainerFrame(DPointZero, this->getBounds().size);
+    this->setContainerPoint(m_obContentSize/2, m_obContentSize);
     m_vChildInThis.pushBack(m_pContainer);
     this->addSubview(m_pContainer);
     m_pContainer->release();
@@ -198,8 +198,10 @@ void CAScrollView::setViewSize(const DSize& var)
     
     CC_RETURN_IF(m_pContainer == NULL);
     
-    DPoint point = m_pContainer->getFrameOrigin();
-    this->setContainerFrame(point, m_obViewSize);
+    DPoint point = m_pContainer->m_obPoint;
+    point = ccpSub(point, m_pContainer->getAnchorPointInPoints());
+    point = ccpAdd(point, ccpCompMult(m_obViewSize, m_pContainer->getAnchorPoint()));
+    this->setContainerPoint(point, m_obViewSize);
     
     if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::deaccelerateScrolling), this))
     {
@@ -335,17 +337,22 @@ bool CAScrollView::isShowsVerticalScrollIndicator()
 
 void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
 {
+    DPoint point = ccpMult(offset, -1);
+    point = ccpAdd(point, m_pContainer->getAnchorPointInPoints());
+    
     if (animated)
     {
         m_tInertia = DPointZero;
-        m_tCloseToPoint = ccpMult(offset, -1);
-        m_tInitialPoint = m_pContainer->getFrameOrigin();
+        m_tCloseToPoint = point;
+        m_tInitialPoint = m_pContainer->m_obPoint;
         CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
         this->setTouchEnabledAtSubviews(false);
     }
     else
     {
-        this->setContainerFrame(ccpMult(offset, -1));
+        this->setContainerPoint(point);
+        
+        this->setContainerPoint(ccpMult(offset, -1));
         this->update(1/60.0f);
         if (m_pScrollViewDelegate)
         {
@@ -361,7 +368,7 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
     {
         DPoint offSet = ccpSub(m_tCloseToPoint, m_tInitialPoint);
         offSet = ccpMult(offSet, now / total);
-        this->setContainerFrame(ccpAdd(m_tInitialPoint, offSet));
+        this->setContainerPoint(ccpAdd(m_tInitialPoint, offSet));
         
         if (m_pScrollViewDelegate)
         {
@@ -371,7 +378,7 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
     }
     else
     {
-        this->setContainerFrame(m_tCloseToPoint);
+        this->setContainerPoint(m_tCloseToPoint);
         this->update(1/60.0f);
         if (m_pScrollViewDelegate)
         {
@@ -426,29 +433,17 @@ void CAScrollView::setContentSize(const CrossApp::DSize &var)
     this->setViewSize(viewSize);
     
     m_fPreviewScale = MIN(m_obContentSize.width / m_obViewSize.width, m_obContentSize.height / m_obViewSize.height);
-    
-    CC_RETURN_IF(m_pContainer == NULL);
-    
-    DPoint point = m_pContainer->getFrameOrigin();
-    this->getScrollWindowNotOutPoint(point);
-    this->setContainerFrame(point);
 
     this->update(0);
 }
 
-void CAScrollView::setContainerFrame(const DPoint& point, const DSize& size)
+void CAScrollView::setContainerPoint(const DPoint& point, const DSize& size)
 {
     if (!size.equals(DSizeZero))
     {
-        DRect rect;
-        rect.origin = point;
-        rect.size = size;
-        m_pContainer->setFrame(rect);
+        m_pContainer->setContentSize(size);
     }
-    else
-    {
-        m_pContainer->setFrameOrigin(point);
-    }
+    m_pContainer->setPoint(point);
 }
 
 bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -484,7 +479,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             this->stopDeaccelerateScroll();
             m_tCloseToPoint = this->getViewSize();
             m_tInitialPoint = m_tCloseToPoint;
-            m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
+            
             CAScheduler::schedule(schedule_selector(CAScrollView::updatePointOffset), this, 0);
         }
         else if (m_vTouches.size() == 2)
@@ -504,9 +499,8 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 DPoint mid_point = ccpMidpoint(m_pContainer->convertToNodeSpace(touch0->getLocation()),
                                                m_pContainer->convertToNodeSpace(touch1->getLocation()));
                 
-                
-                m_pContainer->setAnchorPointInPoints(mid_point / m_fZoomScale);
-                
+                m_pContainer->setAnchorPointInPoints(mid_point);
+
                 if (m_pScrollViewDelegate)
                 {
                     m_pScrollViewDelegate->scrollViewDidZoom(this);
@@ -538,7 +532,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(m_bPCMode);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
-    DPoint p_container = m_pContainer->getFrameOrigin();
+    DPoint p_container = m_pContainer->m_obPoint;
     DPoint p_off = DPointZero;
     
     if (m_vTouches.size() == 1)
@@ -570,7 +564,6 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
             m_fZoomScale = MAX(m_fZoomScale, m_fMinimumZoomScale);
             
             m_pContainer->setScale(m_fZoomScale);
-            p_container = m_pContainer->getFrameOrigin();
         }
         
         if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
@@ -584,16 +577,15 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == None)
         {
-            DPoint mid_point = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
-                                           this->convertToNodeSpace(touch1->getLocation()));
-            p_off = ccpSub(mid_point, ccpAdd(p_container, m_pContainer->getAnchorPointInPoints() * m_fZoomScale));
+           p_container = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
+                                    this->convertToNodeSpace(touch1->getLocation()));
         }
     }
     
     if (m_bBounces)
     {
-        DSize size = this->getBounds().size;
-        DPoint curr_point = m_pContainer->getFrameOrigin();
+        DSize size = m_obContentSize;
+        DPoint curr_point = m_pContainer->m_obPoint;
         DPoint relust_point = curr_point;
         this->getScrollWindowNotOutPoint(relust_point);
         
@@ -634,13 +626,13 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         }
     }
     
-    if (p_container.equals(m_pContainer->getFrameOrigin()) == false)
+    if (p_container.equals(m_pContainer->m_obPoint) == false)
     {
         if (m_bTouchEnabledAtSubviews)
         {
             m_pContainer->setTouchEnabled(false);
         }
-        this->setContainerFrame(p_container);
+        this->setContainerPoint(p_container);
         this->showIndicator();
         
         if (m_bTracking == false)
@@ -706,6 +698,8 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_fBeganZoomScale = 1.0f;
         m_fBeganTouchLength = 0.0f;
         m_bZooming = false;
+        
+        m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
     }
 }
 
@@ -737,10 +731,10 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CAScrollView::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent)
 {
-    DPoint p_container = m_pContainer->getFrameOrigin();
+    DPoint p_container = m_pContainer->m_obPoint;
     p_container = ccpAdd(p_container, DPoint(off_x, off_y) * 10);
     this->getScrollWindowNotOutPoint(p_container);
-    this->setContainerFrame(p_container);
+    this->setContainerPoint(p_container);
     this->showIndicator();
     
     if (m_pScrollViewDelegate)
@@ -832,13 +826,13 @@ void CAScrollView::deaccelerateScrolling(float dt)
         speed = m_tInertia;
     }
     
-    DPoint point = m_pContainer->getFrameOrigin();
+    DPoint point = m_pContainer->m_obPoint;
 
     if (m_bBounces)
     {
         DPoint resilience = DPointZero;
-        DSize size = this->getBounds().size;
-        DPoint curr_point = m_pContainer->getFrameOrigin();
+        DSize size = m_obContentSize;
+        DPoint curr_point = m_pContainer->m_obPoint;
         DPoint relust_point = curr_point;
         this->getScrollWindowNotOutPoint(relust_point);
         float off_x = relust_point.x - curr_point.x;
@@ -867,7 +861,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
     {
         m_tInertia = DPointZero;
         this->getScrollWindowNotOutPoint(point);
-        this->setContainerFrame(point);
+        this->setContainerPoint(point);
         this->update(0);
         this->hideIndicator();
         this->stopDeaccelerateScroll();
@@ -904,14 +898,14 @@ void CAScrollView::deaccelerateScrolling(float dt)
             }
         }
 
-        if (point.equals(m_pContainer->getFrameOrigin()))
+        if (point.equals(m_pContainer->m_obPoint))
         {
             m_tInertia = DPointZero;
         }
         else
         {
             this->showIndicator();
-            this->setContainerFrame(point);
+            this->setContainerPoint(point);
         }
         
         if (fabsf(m_tInertia.x) > 16)
@@ -1000,13 +994,22 @@ void CAScrollView::hideIndicator()
 
 void CAScrollView::update(float dt)
 {
-    if (m_pIndicatorHorizontal)
+    if ((m_pIndicatorHorizontal && m_pIndicatorHorizontal->isVisible())
+        || (m_pIndicatorVertical && m_pIndicatorVertical->isVisible()))
     {
-        m_pIndicatorHorizontal->setIndicator(m_obContentSize, m_pContainer->getFrame());
-    }
-    if (m_pIndicatorVertical)
-    {
-        m_pIndicatorVertical->setIndicator(m_obContentSize, m_pContainer->getFrame());
+        DRect rect;
+        rect.size = ccpMult(m_pContainer->m_obContentSize, m_pContainer->getScale());
+        rect.origin = ccpSub(m_pContainer->m_obPoint,
+                             ccpMult(m_pContainer->getAnchorPointInPoints(), m_pContainer->getScale()));
+        
+        if (m_pIndicatorHorizontal)
+        {
+            m_pIndicatorHorizontal->setIndicator(m_obContentSize, rect);
+        }
+        if (m_pIndicatorVertical)
+        {
+            m_pIndicatorVertical->setIndicator(m_obContentSize, rect);
+        }
     }
 }
 
@@ -1018,17 +1021,17 @@ void CAScrollView::getScrollWindowNotOutPoint(DPoint& point)
 
 float CAScrollView::getScrollWindowNotOutHorizontal(float x)
 {
-    DSize size = this->getBounds().size;
-    DSize cSize = m_pContainer->getFrame().size;
-    
+    DSize size = m_obContentSize;
+    DSize cSize = DSize(ccpMult(m_pContainer->m_obContentSize, m_pContainer->getScale()));
+    float anchorPointInPointsX = m_pContainer->getAnchorPointInPoints().x * m_pContainer->getScale();
     if (cSize.width >= size.width)
     {
-        x = MIN(x, 0) ;
-        x = MAX(x, size.width - cSize.width);
+        x = MIN(x, anchorPointInPointsX) ;
+        x = MAX(x, size.width - cSize.width + anchorPointInPointsX);
     }
     else
     {
-        x = size.width/2 - cSize.width/2;
+        x = size.width/2 - cSize.width/2 + anchorPointInPointsX;
     }
     
     return x;
@@ -1036,20 +1039,20 @@ float CAScrollView::getScrollWindowNotOutHorizontal(float x)
 
 float CAScrollView::getScrollWindowNotOutVertical(float y)
 {
-    DSize size = this->getBounds().size;
-    DSize cSize = m_pContainer->getFrame().size;
-    
+    DSize size = m_obContentSize;
+    DSize cSize = DSize(ccpMult(m_pContainer->m_obContentSize, m_pContainer->getScale()));
+    float anchorPointInPointsY = m_pContainer->getAnchorPointInPoints().y * m_pContainer->getScale();
     if (cSize.height >= size.height)
     {
         float y_max = this->isHeaderRefreshing() ? 128 : 0.0f;
-        float y_min = this->isFooterRefreshing() ? size.height - cSize.height - 128 : size.height - cSize.height;
+        float y_min = this->isFooterRefreshing() ? size.height - 128 : size.height;
         
-        y = MIN(y, y_max);
-        y = MAX(y, y_min);
+        y = MIN(y, y_max + anchorPointInPointsY);
+        y = MAX(y, y_min + anchorPointInPointsY - cSize.height);
     }
     else
     {
-        y = size.height/2 - cSize.height/2;
+        y = size.height/2 - cSize.height/2 + anchorPointInPointsY;
     }
 
     return y;
@@ -1057,10 +1060,10 @@ float CAScrollView::getScrollWindowNotOutVertical(float y)
 
 bool CAScrollView::isScrollWindowNotOutSide()
 {
-    DPoint point = m_pContainer->getFrameOrigin();
+    DPoint point = m_pContainer->m_obPoint;
     this->getScrollWindowNotOutPoint(point);
     
-    return !point.equals(m_pContainer->getFrameOrigin());
+    return !point.equals(m_pContainer->m_obPoint);
 }
 
 
