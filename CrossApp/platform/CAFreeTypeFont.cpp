@@ -338,7 +338,7 @@ int CAFreeTypeFont::cutStringByDSize(std::string& text, const DSize& lableSize, 
 	std::string cszNewText = text;
 
 	CATempTypeFont::getInstance().initTempTypeFont(nFontSize);
-_AgaginInitGlyphs:
+
 	m_inWidth = lableSize.width;
 	m_inHeight = lableSize.height;
 	m_lineSpacing = iLineSpacing;

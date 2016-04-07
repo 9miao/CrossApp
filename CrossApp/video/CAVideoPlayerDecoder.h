@@ -170,6 +170,7 @@ protected:
 	VPError openAudioStream();
 	VPError openAudioStream(int audioStream);
 
+	void destroyAllFrames(std::vector<VPFrame*>& frames);
 	void closeVideoStream();
 	void closeAudioStream();
 
