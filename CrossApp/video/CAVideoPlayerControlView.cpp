@@ -200,7 +200,7 @@ void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 	CCLog("CAVideoPlayerControlView::onSlideChanged");
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
-
+	
 	if (m_glView)
 	{
 		m_glView->play();
@@ -238,6 +238,9 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 		return;
 
 	if (m_playSlider->isTouchClick())
+		return;
+
+	if (m_glView->isWaitSetPos())
 		return;
 	
 	updatePlayButton();
