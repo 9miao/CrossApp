@@ -30,6 +30,7 @@ CAVideoPlayerView::CAVideoPlayerView()
 , m_isShowFirstFrame(false)
 , m_isPlaying(false)
 , m_isBuffered(false)
+, m_isSetPosWaiting(false)
 , m_fMinBufferedDuration(0)
 , m_fMaxBufferedDuration(0)
 , m_fBufferedDuration(0)
@@ -370,6 +371,7 @@ void CAVideoPlayerView::setPosition(float position)
         pause();
         CAThread::clear(true);
         setDecodePosition(position);
+		m_isSetPosWaiting = true;
     }
 }
 
@@ -468,6 +470,7 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 		if (pMsg->param1 == ThreadMsgType_SetPosition)
 		{
 			pMsg->pAVGLView->setVPPosition(pMsg->param2);
+			pMsg->pAVGLView->m_isSetPosWaiting = false;
 		}
 		if (pMsg->param1 == ThreadMsgType_DecodeFrame)
 		{

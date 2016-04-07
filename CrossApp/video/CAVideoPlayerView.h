@@ -45,6 +45,7 @@ public:
 	void setFullPath(const std::string& szPath, bool showFirstFrame = true);
 	void setUrl(const std::string& szUrl, bool showFirstFrame = true);
 	bool isDecoderInited() { return (m_iDecoderInited==1); }
+	bool isWaitSetPos() { return m_isSetPosWaiting; }
 	void play();
 	void pause();
 	bool isPlaying();
@@ -96,6 +97,7 @@ private:
 	bool m_isShowFirstFrame;
 	bool m_isPlaying;
 	bool m_isBuffered;
+	bool m_isSetPosWaiting;
 
 	float m_fMinBufferedDuration;
 	float m_fMaxBufferedDuration;
