@@ -35,6 +35,7 @@ class CCComponent;
 class CAImage;
 class CAContentContainer;
 class CABatchView;
+class CAScrollView;
 class CAViewAnimation;
 struct transformValues_;
 
@@ -452,6 +453,8 @@ protected:
     ccBlendFunc        m_sBlendFunc;            /// It's required for CAImageProtocol inheritance
     
     CAImage*       m_pobImage;            /// CAImage object that is used to render the sprite
+    
+    friend class CAScrollView;
     
     friend class CAViewAnimation;
 };

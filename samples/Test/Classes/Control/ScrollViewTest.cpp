@@ -22,7 +22,6 @@ void ScrollViewTest::viewDidLoad()
     this->getView()->addSubview(p_ScrollView);
     p_ScrollView->setViewSize(DSize(2160, 3840));
     
-    DSize _size = p_ScrollView->getBounds().size;
     p_imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     p_imageView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     p_ScrollView->addSubview(p_imageView);

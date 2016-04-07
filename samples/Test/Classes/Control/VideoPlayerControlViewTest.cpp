@@ -17,8 +17,8 @@ void VideoPlayerControlViewTest::viewDidLoad()
 {
     // Do any additional setup after loading the view from its nib.
     CAVideoPlayerControlView* VideoPlayerControlView = CAVideoPlayerControlView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
-	VideoPlayerControlView->setUrl("http://42.62.6.159/big_buck_bunny.mp4");
-    //VideoPlayerControlView->setFullPath(CCFileUtils::sharedFileUtils()->fullPathForFilename("image/abc.mp4"));
+	//VideoPlayerControlView->setUrl("http://42.62.6.159/big_buck_bunny.mp4");
+    VideoPlayerControlView->setFullPath(CCFileUtils::sharedFileUtils()->fullPathForFilename("image/abc.mp4"));
 	//VideoPlayerControlView->setFullPath(CCFileUtils::sharedFileUtils()->fullPathForFilename("c:/video2.mp4"));
     VideoPlayerControlView->setTitle("视屏");
     //VideoPlayerControlView->setShowBackButton(false);

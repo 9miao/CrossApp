@@ -563,63 +563,27 @@ const DPoint& CAView::getAnchorPoint()
 
 void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
 {
-    if( ! anchorPointInPoints.equals(m_obAnchorPointInPoints))
+    if (!m_obContentSize.equals(DPointZero))
     {
-        DPoint p;
-        if (m_eLayoutType == 0)
-        {
-            p = this->getFrameOrigin();
-        }
-        else
-        {
-            p = this->getCenterOrigin();
-        }
-        
-        m_obAnchorPointInPoints = anchorPointInPoints;
-        m_obAnchorPoint = DPoint(m_obAnchorPointInPoints.x / m_obContentSize.width,
-                              m_obAnchorPointInPoints.y / m_obContentSize.height);
-        
-        if (m_eLayoutType == 0)
-        {
-            this->setFrameOrigin(p);
-        }
-        else
-        {
-            this->setCenterOrigin(p);
-        }
-        
-        this->updateDraw();
+        DPoint anchorPoint = DPoint(m_obAnchorPointInPoints.x / m_obContentSize.width,
+                                    m_obAnchorPointInPoints.y / m_obContentSize.height);
+        this->setAnchorPoint(anchorPoint);
     }
 }
 
-void CAView::setAnchorPoint(const DPoint& point)
+void CAView::setAnchorPoint(const DPoint& anchorPoint)
 {
-    if( ! point.equals(m_obAnchorPoint))
+    if( ! anchorPoint.equals(m_obAnchorPoint))
     {
-        DPoint p;
-        if (m_eLayoutType == 0)
-        {
-            p = this->getFrameOrigin();
-        }
-        else
-        {
-            p = this->getCenterOrigin();
-        }
+        DPoint anchorPointInPoints = ccpCompMult(m_obContentSize, anchorPoint);
+        DPoint point = m_obPoint;
+        point = ccpSub(point, ccpCompMult(m_obAnchorPointInPoints, DPoint(m_fScaleX, m_fScaleY)));
+        point = ccpAdd(point, ccpCompMult(anchorPointInPoints, DPoint(m_fScaleX, m_fScaleY)));
         
+        m_obAnchorPoint = anchorPoint;
+        m_obAnchorPointInPoints = ccpCompMult(m_obContentSize, m_obAnchorPoint);
         
-        m_obAnchorPoint = point;
-        m_obAnchorPointInPoints = DPoint(m_obContentSize.width * m_obAnchorPoint.x,
-                                         m_obContentSize.height * m_obAnchorPoint.y );
-      
-        if (m_eLayoutType == 0)
-        {
-            this->setFrameOrigin(p);
-        }
-        else
-        {
-            this->setCenterOrigin(p);
-        }
-        
+        this->setPoint(point);
         this->updateDraw();
     }
 }
