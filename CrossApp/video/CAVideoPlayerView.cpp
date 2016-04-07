@@ -317,7 +317,6 @@ void CAVideoPlayerView::play()
 	m_tickCorrectionTime.tv_usec = 0;
 
 	this->enableAudio(true);
-	asyncDecodeFrames();
 	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
 	m_isPlaying = true;
 }
@@ -521,30 +520,30 @@ bool CAVideoPlayerView::addFrames(const std::vector<VPFrame*>& frames)
 		{
 			if (isValidVideo)
 			{
-				m_vVideoFrames.AddElement(frame);
-
 				m_aLock.Lock();
 				m_fBufferedDuration += frame->getDuration();
 				m_aLock.UnLock();
+
+				m_vVideoFrames.AddElement(frame);
 			}
 			else
 			{
 				CC_SAFE_DELETE(frame);
 			}
+			continue;
 		}
 
 		if (frame->getType() == kFrameTypeAudio)
 		{
 			if (isValidAudio)
 			{
-				m_vAudioFrames.AddElement(frame);
-
 				if (!isValidVideo)
 				{
 					m_aLock.Lock();
 					m_fBufferedDuration += frame->getDuration();
 					m_aLock.UnLock();
 				}
+				m_vAudioFrames.AddElement(frame);
 			}
 			else
 			{

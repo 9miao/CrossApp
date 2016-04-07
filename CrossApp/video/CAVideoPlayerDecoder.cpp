@@ -840,6 +840,15 @@ bool VPDecoder::setupVideoFrameFormat(VPVideoFrameFormat format)
     return false;
 }
 
+void VPDecoder::destroyAllFrames(std::vector<VPFrame*>& frames)
+{
+	for (int i = 0; i < frames.size(); i++)
+	{
+		CC_SAFE_DELETE(frames[i]);
+	}
+	frames.clear();
+}
+
 std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 {
     std::vector<VPFrame*> result;
@@ -862,6 +871,7 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 		if (av_read_frame(m_pFormatCtx, &packet) < 0) 
 		{
 			CCLog("decode av_read_frame < 0");
+			destroyAllFrames(result);
 			_isEOF = true;
 			break;
         }
@@ -877,6 +887,7 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 
 				int len = avcodec_decode_video2(m_pVideoCodecCtx, m_pVideoFrame, &gotframe, &packet);
 				if (len < 0) {
+					destroyAllFrames(result);
 					CCLog("decode video error, skip packet");
                     break;
                 }
@@ -914,6 +925,7 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 				int len = avcodec_decode_audio4(m_pAudioCodecCtx, m_pAudioFrame, &gotframe, &packet);
                 
                 if (len < 0) {
+					destroyAllFrames(result);
 					CCLog("decode audio error, skip packet");
                     break;
                 }

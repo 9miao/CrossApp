@@ -14,7 +14,6 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
 , m_bShowBackButton(false)
-, m_bWaitingSlide(false)
 , m_pPlayerControlViewDelegate(NULL)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
@@ -131,7 +130,6 @@ void CAVideoPlayerControlView::buildCtrlViews()
     m_playSlider = CASlider::createWithLayout(DRectLayout(32, 32, 25, 56, DRectLayout::L_R_T_H));
     m_playSlider->setThumbTintImage(barImage);
     m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
-    m_playSlider->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onSlideTouched));
     bottomPanel->addSubview(m_playSlider);
     
     // Play Pause Button
@@ -197,30 +195,16 @@ std::string CAVideoPlayerControlView::formatTimeInterval(float seconds, bool isL
 	return std::string(output);
 }
 
-void CAVideoPlayerControlView::delayContinuePlay(float t)
+void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 {
+	CCLog("CAVideoPlayerControlView::onSlideChanged");
+	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
+	m_glView->setPosition(moviePosition);
+
 	if (m_glView)
 	{
 		m_glView->play();
 	}
-	m_bWaitingSlide = false;
-	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this);
-}
-
-void CAVideoPlayerControlView::onSlideTouched(CAControl* control, DPoint point)
-{
-	m_bWaitingSlide = true;
-	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this);
-	CCLog("CAVideoPlayerControlView::onSlideTouched");
-}
-
-void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
-{
-	CCLog("CAVideoPlayerControlView::onSlideChanged");
-	m_bWaitingSlide = true;
-	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
-	m_glView->setPosition(moviePosition);
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::delayContinuePlay), this, 0, 0, 0.8f);
 }
 
 void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
@@ -256,14 +240,7 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 	if (m_playSlider->isTouchClick())
 		return;
 	
-	if (m_bWaitingSlide)
-	{
-		return;
-	}
-	else
-	{
-		updatePlayButton();
-	}
+	updatePlayButton();
 
 	const float duration = m_glView->getDuration();
 	const float position = m_glView->getPosition();
