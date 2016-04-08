@@ -8,6 +8,7 @@
 
 #include "CAPageView.h"
 #include "basics/CAScheduler.h"
+#include "animation/CAAnimation.h"
 
 CAPageView::CAPageView(const CAPageViewDirection& type)
 :m_ePageViewDirection(type)
@@ -255,6 +256,11 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
+    if (CAAnimation::isSchedule(CAAnimation_selector(CAPageView::closeToPoint), this))
+    {
+        return false;
+    }
+    
     return CAScrollView::ccTouchBegan(pTouch, pEvent);
 }
 

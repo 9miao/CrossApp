@@ -111,7 +111,7 @@ void CATouchController::passingTouchesViews(float dt)
 {
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);
-    if (!isContainsFirstPoint && view)
+    if (!isContainsFirstPoint && view && view->isTouchEnabled() && view->isVisible())
     {
         this->touchBeganWithResponder(view);
     }

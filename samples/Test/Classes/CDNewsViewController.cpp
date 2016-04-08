@@ -326,7 +326,7 @@ void CDNewsViewController::initNewsPageView()
     //初始化pageView
     CAView* tempview = CAView::create();
     p_TableView->setTableHeaderView(tempview);
-    p_TableView->setTableHeaderHeight(this->getView()->getBounds().size.width/2);
+    p_TableView->setTableHeaderHeight(360);
     
     
     CAVector<CAView* > viewList;
@@ -372,11 +372,12 @@ void CDNewsViewController::initNewsPageView()
     
     if (m_page.size()>0)
     {
-        pageViewTitle = CALabel::createWithLayout(DRectLayout(10, 140, 0, 0, DRectLayout::L_R_T_B));
+        pageViewTitle = CALabel::createWithLayout(DRectLayout(10, 160, 0, 0, DRectLayout::L_R_T_B));
+        pageViewTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         pageViewTitle->setText(m_page[0].m_title);
 		pageViewTitle->setColor(CAColor_white);
         pageViewTitle->setFontSize(28);
-        tempview->addSubview(pageViewTitle);
+        bg->addSubview(pageViewTitle);
     }
 }
 
