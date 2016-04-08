@@ -67,7 +67,7 @@ void ImageViewTest::viewDidLoad()
     view5->setColor(CAColor_gray);
     VIEWLIST.pushBack(view5);
     
-    CAImageView* image6 = CAImageView::createWithLayout(DRectLayout(200,200,100,400,DRectLayout::L_R_T_H));
+    CAImageView* image6 = CAImageView::createWithLayout(DRectLayout(100,400,100,400,DRectLayout::L_W_T_H));
     image6->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
     image6->setImage(CAImage::create("image/h1.png"));
     
