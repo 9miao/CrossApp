@@ -34,12 +34,13 @@ public:
     void setTimes(float times);
     void setRepeatForever(bool repeatForever);
     bool isRepeatForever() { return m_bIsRepeatForever; }
+    
 protected:
     virtual void updateImageRect();
     virtual void updateGif(float delta);
     virtual void setContentSize(const DSize& contentSize);
-    void setGifBounds(DSize size);
-    DSize compareSize(DSize setSize, DSize gifSize);
+    void updateGifSize();
+    
 private:
     
     CAGif* m_pGif;

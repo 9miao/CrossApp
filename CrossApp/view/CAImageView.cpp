@@ -116,7 +116,7 @@ void CAImageView::updateByImageViewScaleType()
     CC_RETURN_IF(m_bUpdateByImageViewScaleType);
     m_bUpdateByImageViewScaleType = true;
     
-    DSize viewSize = DSize(m_obContentSize);
+    DSize viewSize = m_obContentSize;
     DRect rect = DRect(m_obRect);
     DSize imageSize = m_pobImage->getContentSize();
     float viewRatio = viewSize.width / viewSize.height;
