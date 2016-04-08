@@ -565,9 +565,17 @@ void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
 {
     if (!m_obContentSize.equals(DPointZero))
     {
-        DPoint anchorPoint = DPoint(m_obAnchorPointInPoints.x / m_obContentSize.width,
-                                    m_obAnchorPointInPoints.y / m_obContentSize.height);
-        this->setAnchorPoint(anchorPoint);
+        DPoint anchorPoint = DPoint(anchorPointInPoints.x / m_obContentSize.width,
+                                    anchorPointInPoints.y / m_obContentSize.height);
+        
+        DPoint point = ccpSub(m_obPoint, ccpCompMult(ccpSub(m_obAnchorPointInPoints, anchorPointInPoints),
+                                                     DPoint(m_fScaleX, m_fScaleY)));
+        
+        m_obAnchorPoint = anchorPoint;
+        m_obAnchorPointInPoints = anchorPointInPoints;
+        
+        this->setPoint(point);
+        this->updateDraw();
     }
 }
 
@@ -576,12 +584,12 @@ void CAView::setAnchorPoint(const DPoint& anchorPoint)
     if( ! anchorPoint.equals(m_obAnchorPoint))
     {
         DPoint anchorPointInPoints = ccpCompMult(m_obContentSize, anchorPoint);
-        DPoint point = m_obPoint;
-        point = ccpSub(point, ccpCompMult(m_obAnchorPointInPoints, DPoint(m_fScaleX, m_fScaleY)));
-        point = ccpAdd(point, ccpCompMult(anchorPointInPoints, DPoint(m_fScaleX, m_fScaleY)));
+        
+        DPoint point = ccpSub(m_obPoint, ccpCompMult(ccpSub(m_obAnchorPointInPoints, anchorPointInPoints),
+                                                     DPoint(m_fScaleX, m_fScaleY)));
         
         m_obAnchorPoint = anchorPoint;
-        m_obAnchorPointInPoints = ccpCompMult(m_obContentSize, m_obAnchorPoint);
+        m_obAnchorPointInPoints = anchorPointInPoints;
         
         this->setPoint(point);
         this->updateDraw();

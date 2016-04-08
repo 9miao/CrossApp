@@ -29,7 +29,7 @@ void PageViewTest::viewDidLoad()
     p_pageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_pageView);
     
-    pageControl = CAPageControl::createWithLayout(DRectLayout(200,200,50,50,DRectLayout::L_R_T_H));
+    pageControl = CAPageControl::createWithLayout(DRectLayout(50,200,50,50,DRectLayout::R_W_B_H));
     pageControl->setNumberOfPages((int)_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
@@ -50,15 +50,8 @@ void PageViewTest::pageViewDidBeginTurning(CAPageView* pageView)
 
 void PageViewTest::pageViewDidEndTurning(CAPageView* pageView)
 {
-    if (pageViewIndex==0)
-    {
-        pageControl->setCurrentPage(pageView->getCurrPage());
-        pageControl->updateCurrentPageDisplay();
-    }
-    else
-    {
-        
-    }
+    pageControl->setCurrentPage(pageView->getCurrPage());
+    pageControl->updateCurrentPageDisplay();
 }
 
 void PageViewTest::pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point)

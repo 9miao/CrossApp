@@ -7,9 +7,11 @@
 // implementation of DPoint
 NS_CC_BEGIN
 
+#define F_ACCURACY 0.001f
+
 float fround(float x)//double round
 {
-    float y = 100;
+    float y = 1000;
     int xx = x > FLT_EPSILON ? (x * y + 0.5) : (x * y - 0.5);
     return xx/y;
 }
@@ -79,8 +81,8 @@ void DPoint::setPoint(float x, float y)
 
 bool DPoint::equals(const DPoint& target) const
 {
-    return (fabs(this->x - target.x) < 0.001f)
-        && (fabs(this->y - target.y) < 0.001f);
+    return (fabs(this->x - target.x) < F_ACCURACY)
+        && (fabs(this->y - target.y) < F_ACCURACY);
 }
 
 bool DPoint::fuzzyEquals(const DPoint& b, float var) const
@@ -96,7 +98,7 @@ float DPoint::getAngle(const DPoint& other) const
     DPoint a2 = normalize();
     DPoint b2 = other.normalize();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
-    if( fabs(angle) < 0.001f ) return 0.f;
+    if( fabs(angle) < F_ACCURACY ) return 0.f;
     return angle;
 }
 
@@ -167,8 +169,8 @@ void DSize::setSize(float width, float height)
 
 bool DSize::equals(const DSize& target) const
 {
-    return (fabs(this->width  - target.width)  < 0.001f)
-        && (fabs(this->height - target.height) < 0.001f);
+    return (fabs(this->width  - target.width)  < F_ACCURACY)
+        && (fabs(this->height - target.height) < F_ACCURACY);
 }
 
 // implementation of DRect
@@ -222,22 +224,22 @@ DRect DRect::operator/(float a) const
 
 bool DRect::equals(const DRect& rect) const
 {
-    if (fabsf(this->getMinX() - rect.getMinX()) >= 0.001f)
+    if (fabsf(this->getMinX() - rect.getMinX()) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabsf(this->getMaxX() - rect.getMaxX()) >= 0.001f)
+    if (fabsf(this->getMaxX() - rect.getMaxX()) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabsf(this->getMinY() - rect.getMinY()) >= 0.001f)
+    if (fabsf(this->getMinY() - rect.getMinY()) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabsf(this->getMaxY() - rect.getMaxY()) >= 0.001f)
+    if (fabsf(this->getMaxY() - rect.getMaxY()) >= F_ACCURACY)
     {
         return false;
     }
@@ -457,32 +459,32 @@ DRectLayout& DRectLayout:: operator= (const DRectLayout& other)
 
 bool DRectLayout::equals(const DRectLayout& other) const
 {
-    if (fabs(left - other.left) >= 0.001f)
+    if (fabs(left - other.left) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabs(right - other.right) >= 0.001f)
+    if (fabs(right - other.right) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabs(top - other.top) >= 0.001f)
+    if (fabs(top - other.top) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabs(bottom - other.bottom) >= 0.001f)
+    if (fabs(bottom - other.bottom) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabs(width - other.width) >= 0.001f)
+    if (fabs(width - other.width) >= F_ACCURACY)
     {
         return false;
     }
     
-    if (fabs(height - other.height) >= 0.001f)
+    if (fabs(height - other.height) >= F_ACCURACY)
     {
         return false;
     }

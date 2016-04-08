@@ -25,9 +25,6 @@ protected:
 public:
     
     CAPageView* p_PageViewVec;
-
-    int pageViewIndex;
-    
     CAPageView* p_pageView;
     CAPageControl* pageControl;
     
