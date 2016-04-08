@@ -127,7 +127,7 @@ bool CAScrollView::init()
     
     m_pContainer = new CAView();
     m_pContainer->setAnchorPoint(DPointZero);
-    m_pContainer->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_pContainer->setPoint(DPointZero);
     m_vChildInThis.pushBack(m_pContainer);
     this->addSubview(m_pContainer);
     m_pContainer->release();
@@ -206,10 +206,16 @@ void CAScrollView::setViewSize(const DSize& var)
     this->setContainerPoint(point, m_obViewSize);
     
     m_pContainer->setAnchorPoint(anchorPoint);
+
+//    if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::deaccelerateScrolling), this))
+//    {
+//        CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
+//    }
     
-    if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::deaccelerateScrolling), this))
+    if (this->isScrollWindowNotOutSide())
     {
-        CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
+        this->getScrollWindowNotOutPoint(point);
+        this->setContainerPoint(point);
     }
 }
 
@@ -435,11 +441,6 @@ void CAScrollView::setZoomScale(float zoom)
 
 void CAScrollView::setContentSize(const CrossApp::DSize &var)
 {
-    if (m_pContainer->getLayoutType() == 2)
-    {
-        this->setContainerPoint(m_obContentSize/2);
-    }
-    
     CAView::setContentSize(var);
     DSize viewSize = this->getViewSize();
     viewSize.width = MAX(m_obContentSize.width, viewSize.width);
