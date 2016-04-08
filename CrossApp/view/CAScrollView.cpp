@@ -591,8 +591,13 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == None)
         {
-           p_container = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
+            DPoint midPoint = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
                                     this->convertToNodeSpace(touch1->getLocation()));
+            
+            DPoint midPointPrevious = ccpMidpoint(this->convertToNodeSpace(touch0->getPreviousLocation()),
+                                          this->convertToNodeSpace(touch1->getPreviousLocation()));
+            p_off = ccpSub(midPoint, midPointPrevious);
+            p_off = ccpMult(p_off, 0.5f);
         }
     }
     
