@@ -126,6 +126,7 @@ bool CAScrollView::init()
     this->setDisplayRange(false);
     
     m_pContainer = new CAView();
+    m_pContainer->setAnchorPoint(DPointZero);
     m_pContainer->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
     m_vChildInThis.pushBack(m_pContainer);
     this->addSubview(m_pContainer);
@@ -198,10 +199,13 @@ void CAScrollView::setViewSize(const DSize& var)
     
     CC_RETURN_IF(m_pContainer == NULL);
     
+    DPoint anchorPoint = m_pContainer->getAnchorPoint();
+    m_pContainer->setAnchorPoint(DPointZero);
+    
     DPoint point = m_pContainer->m_obPoint;
-    point = ccpSub(point, m_pContainer->getAnchorPointInPoints());
-    point = ccpAdd(point, ccpCompMult(m_obViewSize, m_pContainer->getAnchorPoint()));
     this->setContainerPoint(point, m_obViewSize);
+    
+    m_pContainer->setAnchorPoint(anchorPoint);
     
     if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::deaccelerateScrolling), this))
     {
@@ -523,6 +527,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 
                 m_fBeganGestureAngle = CC_RADIANS_TO_DEGREES(ccpAngleSigned(beganRotationVector, DPoint(1, 0)));
                 m_fBeganAngle = m_pContainer->getRotation();
+                m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
             }
 
             m_tPointOffset.clear();
@@ -707,7 +712,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_fBeganTouchLength = 0.0f;
         m_bZooming = false;
         
-        m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
+        m_pContainer->setAnchorPoint(DPointZero);
     }
 }
 
