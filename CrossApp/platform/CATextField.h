@@ -105,7 +105,7 @@ public:
     
     static CATextField* createWithCenter(const DRect& rect);
     
-    static CATextField* createWithLayout(const DRectLayout& layout);
+    static CATextField* createWithLayout(const DLayout& layout);
     
     bool init();
     

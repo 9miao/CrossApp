@@ -33,7 +33,7 @@ CAViewController::CAViewController()
     m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
     m_pView->setContentContainer(this);
-    m_pView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pView->setLayout(DLayoutFill);
 }
 
 CAViewController::~CAViewController()
@@ -409,7 +409,7 @@ void CANavigationController::viewDidLoad()
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();
-    this->createWithContainer(viewController, DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    this->createWithContainer(viewController, DLayoutFill);
 }
 
 void CANavigationController::viewDidUnload()
@@ -442,7 +442,7 @@ void CANavigationController::viewDidDisappear()
     m_pViewControllers.back()->viewDidDisappear();
 }
 
-void CANavigationController::createWithContainer(CAViewController* viewController, const DRectLayout& layout)
+void CANavigationController::createWithContainer(CAViewController* viewController, const DLayout& layout)
 {
     CAView* container = new CAView();
     container->setLayout(layout);
@@ -450,20 +450,19 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     m_pContainers.pushBack(container);
     container->release();
     
-    DRectLayout navLayout;
-    navLayout.left = 0;
-    navLayout.right = 0;
-    navLayout.height = m_iNavigationBarHeight;
+    DLayout navLayout;
+    navLayout.horizontal = DHorizontalLayoutFill;
+    navLayout.vertical.height = m_iNavigationBarHeight;
     
     if (m_bNavigationBarHidden
         ||
         (viewController->getNavigationBarItem() && viewController->getNavigationBarItem()->isNagigationBarHidden()))
     {
-        navLayout.top = -m_iNavigationBarHeight;
+        navLayout.vertical.top = -m_iNavigationBarHeight;
     }
     else
     {
-        navLayout.top = 0;
+        navLayout.vertical.top = 0;
     }
     
     CANavigationBar* navigationBar = CANavigationBar::createWithLayout(navLayout, m_bClearance);
@@ -492,11 +491,9 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     navigationBar->setDelegate(this);
     m_pNavigationBars.pushBack(navigationBar);
     
-    DRectLayout secondLayout;
-    secondLayout.left = 0;
-    secondLayout.right = 0;
-    secondLayout.top = navLayout.top + navLayout.height;
-    secondLayout.bottom = 0;
+    DLayout secondLayout;
+    secondLayout.horizontal = DHorizontalLayoutFill;
+    secondLayout.vertical = DVerticalLayout_T_B(navLayout.vertical.top + navLayout.vertical.height, 0);
     
     CAView* secondContainer = new CAView();
     secondContainer->setLayout(secondLayout);
@@ -534,7 +531,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     float x = this->getView()->getBounds().size.width;
 
     CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController, DRectLayout(x, -x, 0, 0, DRectLayout::L_R_T_B));
+    this->createWithContainer(viewController, DLayout(DHorizontalLayout_L_R(x, -x), DVerticalLayoutFill));
     CAView* newContainer = m_pContainers.back();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
@@ -565,7 +562,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
 void CANavigationController::replaceViewControllerFinish()
 {
     CAView* newContainer = m_pContainers.back();
-    newContainer->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    newContainer->setLayout(DLayoutFill);
     size_t index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
     lastViewController->viewDidDisappear();
@@ -591,7 +588,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
     float x = this->getView()->getBounds().size.width;
     
     CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController, DRectLayout(x, -x, 0, 0, DRectLayout::L_R_T_B));
+    this->createWithContainer(viewController, DLayout(DHorizontalLayout_L_R(x, -x), DVerticalLayoutFill));
     CAView* newContainer = m_pContainers.back();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
@@ -626,7 +623,7 @@ void CANavigationController::pushViewControllerFinish()
     lastContainer->setVisible(false);
     
     CAView* newContainer = m_pContainers.back();
-    newContainer->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    newContainer->setLayout(DLayoutFill);
     
     CAViewController* lastViewController = m_pViewControllers.at(m_pViewControllers.size() - 2);
     lastViewController->viewDidDisappear();
@@ -661,13 +658,13 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
         int y = this->getNavigationBarNowY(showViewController);
         
         CANavigationBar* navBar = m_pNavigationBars.at(index);
-        DRectLayout navLayout = navBar->getLayout();
-        navLayout.top = y;
+        DLayout navLayout = navBar->getLayout();
+        navLayout.vertical.top = y;
         navBar->setLayout(navLayout);
         
         CAView* secondContainer = m_pSecondContainers.at(index);
-        DRectLayout secondLayout = secondContainer->getLayout();
-        secondLayout.top = navLayout.top + navLayout.height;
+        DLayout secondLayout = secondContainer->getLayout();
+        secondLayout.vertical.top = navLayout.vertical.top + navLayout.vertical.height;
         secondContainer->setLayout(secondLayout);
     }
     
@@ -717,7 +714,7 @@ void CANavigationController::popViewControllerFinish()
     
     m_pNavigationBars.popBack();
     
-    m_pContainers.back()->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_pContainers.back()->setLayout(DLayoutFill);
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
@@ -747,13 +744,13 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
         int y = this->getNavigationBarNowY(showViewController);
         
         CANavigationBar* navBar = m_pNavigationBars.at(index);
-        DRectLayout navLayout = navBar->getLayout();
-        navLayout.top = y;
+        DLayout navLayout = navBar->getLayout();
+        navLayout.vertical.top = y;
         navBar->setLayout(navLayout);
         
         CAView* secondContainer = m_pSecondContainers.at(index);
-        DRectLayout secondLayout = secondContainer->getLayout();
-        secondLayout.top = navLayout.top + navLayout.height;
+        DLayout secondLayout = secondContainer->getLayout();
+        secondLayout.vertical.top = navLayout.vertical.top + navLayout.vertical.height;
         secondContainer->setLayout(secondLayout);
     }
     
@@ -801,7 +798,7 @@ void CANavigationController::popToRootViewControllerFinish()
         m_pNavigationBars.popBack();
     }
     
-    m_pContainers.back()->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_pContainers.back()->setLayout(DLayoutFill);
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
@@ -813,7 +810,7 @@ void CANavigationController::homingViewControllerFinish()
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(false);
     
-    m_pContainers.back()->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_pContainers.back()->setLayout(DLayoutFill);
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
@@ -960,13 +957,13 @@ void CANavigationController::update(float dt)
     int y = this->getNavigationBarNowY(viewController);
     
     CANavigationBar* navBar = m_pNavigationBars.back();
-    DRectLayout navLayout = navBar->getLayout();
-    navLayout.top = y;
+    DLayout navLayout = navBar->getLayout();
+    navLayout.vertical.top = y;
     navBar->setLayout(navLayout);
     
     CAView* secondContainer = m_pSecondContainers.back();
-    DRectLayout secondLayout = secondContainer->getLayout();
-    secondLayout.top = navLayout.top + navLayout.height;
+    DLayout secondLayout = secondContainer->getLayout();
+    secondLayout.vertical.top = navLayout.vertical.top + navLayout.vertical.height;
     secondContainer->setLayout(secondLayout);
 }
 
@@ -1322,23 +1319,22 @@ void CATabBarController::viewDidLoad()
     }
 #endif
 
-    DRectLayout tabBarLayout;
-    tabBarLayout.left = 0;
-    tabBarLayout.right = 0;
+    DLayout tabBarLayout;
+    tabBarLayout.horizontal = DHorizontalLayoutFill;
+    tabBarLayout.vertical.height = m_iTabBarHeight;
     
     if (m_iTabBarHeight == 0)
     {
         if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
         {
             m_iTabBarHeight = clearance ? 138 : 98;
-            tabBarLayout.top = m_bTabBarHidden ? -m_iTabBarHeight : 0;
-            tabBarLayout.height = m_iTabBarHeight;
+            tabBarLayout.vertical.top = m_bTabBarHidden ? -m_iTabBarHeight : 0;
+            
         }
         else
         {
             m_iTabBarHeight = 98;
-            tabBarLayout.bottom = m_bTabBarHidden ? -m_iTabBarHeight : 0;
-            tabBarLayout.height = m_iTabBarHeight;
+            tabBarLayout.vertical.bottom = m_bTabBarHidden ? -m_iTabBarHeight : 0;
         }
     }
     
@@ -1347,19 +1343,16 @@ void CATabBarController::viewDidLoad()
     m_pTabBar->setDelegate(this);
     this->getView()->addSubview(m_pTabBar);
     
-    DRectLayout containerLayout;
-    containerLayout.left = 0;
-    containerLayout.right = 0;
+    DLayout containerLayout;
+    containerLayout.horizontal = DHorizontalLayoutFill;
     
     if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
     {
-        containerLayout.top = tabBarLayout.top + tabBarLayout.height;
-        containerLayout.bottom = 0;
+        containerLayout.vertical = DVerticalLayout_T_B(tabBarLayout.vertical.top + tabBarLayout.vertical.height, 0);
     }
     else
     {
-        containerLayout.top = 0;
-        containerLayout.bottom = tabBarLayout.bottom + tabBarLayout.height;
+        containerLayout.vertical = DVerticalLayout_T_B(0, tabBarLayout.vertical.bottom + tabBarLayout.vertical.height);
     }
     
     m_pContainer = CAPageView::createWithLayout(containerLayout, CAPageViewDirectionHorizontal);
@@ -1615,18 +1608,18 @@ void CATabBarController::update(float dt)
 {
     int y = this->getTabBarNowY();
     
-    DRectLayout tabBarLayout = m_pTabBar->getLayout();
+    DLayout tabBarLayout = m_pTabBar->getLayout();
     
     switch (m_eTabBarVerticalAlignment)
     {
         case CABarVerticalAlignmentTop:
         {
-            tabBarLayout.top = y;
+            tabBarLayout.vertical.top = y;
         }
             break;
         case CABarVerticalAlignmentBottom:
         {
-            tabBarLayout.bottom = y;
+            tabBarLayout.vertical.bottom = y;
         }
             break;
         default:

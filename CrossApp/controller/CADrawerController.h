@@ -100,8 +100,8 @@ protected:
     
     bool m_bAnimation;
     
-    DRectLayout m_rShowLayout[2];
-    DRectLayout m_rHideLayout[2];
+    DLayout m_rShowLayout[2];
+    DLayout m_rHideLayout[2];
 };
 
 NS_CC_END

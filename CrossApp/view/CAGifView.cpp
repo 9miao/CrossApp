@@ -54,7 +54,7 @@ CAGifView* CAGifView::createWithCenter(const CrossApp::DRect &rect)
     return NULL;
 }
 
-CAGifView* CAGifView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAGifView* CAGifView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAGifView * pRet = new CAGifView();
     if (pRet && pRet->initWithLayout(layout))

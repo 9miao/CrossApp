@@ -81,7 +81,7 @@ CAAutoCollectionView* CAAutoCollectionView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CAAutoCollectionView* CAAutoCollectionView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAAutoCollectionView* CAAutoCollectionView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAAutoCollectionView* collectionView = new CAAutoCollectionView();
     if (collectionView && collectionView->initWithLayout(layout))

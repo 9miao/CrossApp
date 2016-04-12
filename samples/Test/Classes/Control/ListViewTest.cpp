@@ -33,7 +33,7 @@ CDListViewTest::~CDListViewTest()
 
 bool CDListViewTest::init()
 {
-    CAListView* listView = CAListView::createWithLayout(DRectLayout(0,0,0,120,DRectLayout::L_R_T_H));
+    CAListView* listView = CAListView::createWithLayout(DLayout(0,0,0,120,DLayout::L_R_T_H));
     listView->setListViewDelegate(this);
     listView->setListViewDataSource(this);
     listView->setAllowsSelection(true);
@@ -47,7 +47,7 @@ bool CDListViewTest::init()
     return true;
 }
 
-CDListViewTest* CDListViewTest::createWithLayout(const CrossApp::DRectLayout &layout)
+CDListViewTest* CDListViewTest::createWithLayout(const CrossApp::DLayout &layout)
 {
     CDListViewTest* pRet = new CDListViewTest();
     if (pRet && pRet->initWithLayout(layout))
@@ -85,7 +85,7 @@ CAListViewCell* CDListViewTest::listViewCellAtIndex(CAListView *listView, const 
     if (!cell)
     {
         cell = CAListViewCell::create("ListViewCell");
-        CALabel* test = CALabel::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+        CALabel* test = CALabel::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
         test->setColor(ccc4(51, 204, 255, 255));
         test->setTextAlignment(CATextAlignmentCenter);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -115,12 +115,12 @@ ListViewTest::~ListViewTest()
 
 void ListViewTest::viewDidLoad()
 {
-    CDListViewTest* listview1 = CDListViewTest::createWithLayout(DRectLayout(0,0,0,120,DRectLayout::L_R_T_H));
+    CDListViewTest* listview1 = CDListViewTest::createWithLayout(DLayout(0,0,0,120,DLayout::L_R_T_H));
     this->getView()->addSubview(listview1);
     
-    this->getView()->addSubview(CAView::createWithLayout(DRectLayout(0,0,120,5,DRectLayout::L_R_T_H), CAColor_green));
+    this->getView()->addSubview(CAView::createWithLayout(DLayout(0,0,120,5,DLayout::L_R_T_H), CAColor_green));
     
-    p_ListView = CAListView::createWithLayout(DRectLayout(0,0,150,0,DRectLayout::L_R_T_B));
+    p_ListView = CAListView::createWithLayout(DLayout(0,0,150,0,DLayout::L_R_T_B));
     p_ListView->setListViewDelegate(this);
     p_ListView->setListViewDataSource(this);
     p_ListView->setAllowsSelection(true);
@@ -166,7 +166,7 @@ CAListViewCell* ListViewTest::listViewCellAtIndex(CAListView *listView, const DS
     {
         cell = CAListViewCell::create("ListViewCell");
         
-        CALabel* test = CALabel::createWithLayout(DRectLayout(0,200,0,0,DRectLayout::L_W_T_B));
+        CALabel* test = CALabel::createWithLayout(DLayout(0,200,0,0,DLayout::L_W_T_B));
         test->setColor(ccc4(51, 204, 255, 255));
         test->setTextAlignment(CATextAlignmentCenter);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
@@ -174,7 +174,7 @@ CAListViewCell* ListViewTest::listViewCellAtIndex(CAListView *listView, const DS
         test->setTag(100);
         cell->addSubview(test);
         
-        CAButton* btn = CAButton::createWithLayout(DRectLayout(50,120,20,20,DRectLayout::R_W_T_B), CAButtonTypeSquareRect);
+        CAButton* btn = CAButton::createWithLayout(DLayout(50,120,20,20,DLayout::R_W_T_B), CAButtonTypeSquareRect);
         btn->setTitleForState(CAControlStateNormal, "btn");
         btn->setTag(200);
         cell->addSubview(btn);

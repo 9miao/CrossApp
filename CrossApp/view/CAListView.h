@@ -71,7 +71,7 @@ public:
 
 	static CAListView* createWithCenter(const DRect& rect);
 
-    static CAListView* createWithLayout(const DRectLayout& layout);
+    static CAListView* createWithLayout(const DLayout& layout);
     
 	virtual bool init();
 

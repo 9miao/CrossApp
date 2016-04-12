@@ -17,7 +17,7 @@ void TextViewTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-    CATextView* textView = CATextView::createWithLayout(DRectLayout(100,100,100,100, DRectLayout::L_R_T_B));
+    CATextView* textView = CATextView::createWithLayout(DLayout(100,100,100,100, DLayout::L_R_T_B));
     this->getView()->addSubview(textView);
 }
 

@@ -81,7 +81,7 @@ CDUIShowAutoCollectionView::~CDUIShowAutoCollectionView()
 
 void CDUIShowAutoCollectionView::viewDidLoad()
 {
-    p_AutoCollection = CAAutoCollectionView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+    p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
     p_AutoCollection->setAllowsSelection(true);
     p_AutoCollection->setCollectionViewDelegate(this);
     p_AutoCollection->setCollectionViewDataSource(this);
@@ -384,18 +384,18 @@ CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCo
         p_Cell = CACollectionViewCell::create("CrossApp");
         p_Cell->setAllowsSelected(false);
         
-        CAView* itemImage = CAView::createWithLayout(DRectLayout(0, 0, 0, 0,DRectLayout::L_R_T_B));
+        CAView* itemImage = CAView::createWithLayout(DLayout(0, 0, 0, 0,DLayout::L_R_T_B));
         itemImage->setTag(99);
         p_Cell->addSubview(itemImage);
         
-        CALabel* itemText = CALabel::createWithLayout(DRectLayout(0, 0, 0, 40,DRectLayout::L_R_B_H));
+        CALabel* itemText = CALabel::createWithLayout(DLayout(0, 0, 0, 40,DLayout::L_R_B_H));
         itemText->setTag(100);
         itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->addSubview(itemText);
         
-        CAImageView* icon = CAImageView::createWithLayout(DRectLayout(30, 30, 20, 123,DRectLayout::L_R_T_H));
+        CAImageView* icon = CAImageView::createWithLayout(DLayout(30, 30, 20, 123,DLayout::L_R_T_H));
         icon->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         icon->setTag(101);
         icon->setScale(0.6f);

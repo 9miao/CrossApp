@@ -755,7 +755,7 @@ CommonUrlImageView* CommonUrlImageView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CommonUrlImageView* CommonUrlImageView::createWithLayout(const CrossApp::DRectLayout &layout)
+CommonUrlImageView* CommonUrlImageView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CommonUrlImageView* imageView = new CommonUrlImageView();
     if (imageView && imageView->initWithLayout(layout))

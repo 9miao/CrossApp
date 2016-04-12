@@ -23,7 +23,7 @@ void RenderImageTest::viewDidLoad()
     
     CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
 //    btn->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
-    btn->setLayout(DRectLayout(240, 240, 100, 50, DRectLayout::L_R_B_H));
+    btn->setLayout(DLayout(240, 240, 100, 50, DLayout::L_R_B_H));
     btn->setTitleForState(CAControlStateNormal, "Click");
     btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     btn->setTag(1);
@@ -49,7 +49,7 @@ void RenderImageTest::renderCallBack(CAControl* control, DPoint point)
         rm->printscreenWithView(m_clvImage);
         
 //        renderImage = CAView::createWithFrame(DRect(50,winSize.height/4,winSize.width-100,winSize.width-100));
-        renderImage = CAView::createWithLayout(DRectLayout(100,100,100,200,DRectLayout::L_R_T_B));
+        renderImage = CAView::createWithLayout(DLayout(100,100,100,200,DLayout::L_R_T_B));
         this->getView()->addSubview(renderImage);
         
         m_clvImage->setClippingEnabled(false);
@@ -65,7 +65,7 @@ void RenderImageTest::renderCallBack(CAControl* control, DPoint point)
         }
         
 //        CAImageView* imageView = CAImageView::createWithFrame(DRect(0,0,winSize.width-100,winSize.width-100));
-        CAImageView* imageView = CAImageView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+        CAImageView* imageView = CAImageView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
         imageView->setImage(rm->getImageView()->getImage());
         renderImage->addSubview(imageView);
         
@@ -169,7 +169,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     
     render_btn = CAButton::create(CAButtonTypeSquareRect);
 //    render_btn->setCenter(DRect(winSize.width/2, winSize.height-100, 100, 50));
-    render_btn->setLayout(DRectLayout(240,240,100,50,DRectLayout::L_R_B_H));
+    render_btn->setLayout(DLayout(240,240,100,50,DLayout::L_R_B_H));
     render_btn->setTitleForState(CAControlStateNormal, "Click");
     render_btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     render_btn->addTarget(this, CAControl_selector(RenderImageTest::renderCallBack), CAControlEventTouchUpInSide);

@@ -88,7 +88,7 @@ public:
 
 	static CAWaterfallView* createWithCenter(const DRect& rect);
 
-    static CAWaterfallView* createWithLayout(const DRectLayout& layout);
+    static CAWaterfallView* createWithLayout(const DLayout& layout);
     
 	virtual bool init();
 

@@ -35,7 +35,7 @@ public:
     
     static CAImageView* createWithCenter(const DRect& rect);
     
-    static CAImageView* createWithLayout(const DRectLayout& layout);
+    static CAImageView* createWithLayout(const DLayout& layout);
     
     CAImageView(void);
 

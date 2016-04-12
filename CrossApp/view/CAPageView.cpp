@@ -50,7 +50,7 @@ CAPageView* CAPageView::createWithCenter(const DRect& rect, const CAPageViewDire
     return NULL;
 }
 
-CAPageView* CAPageView::createWithLayout(const CrossApp::DRectLayout &layout, const CAPageViewDirection &type)
+CAPageView* CAPageView::createWithLayout(const CrossApp::DLayout &layout, const CAPageViewDirection &type)
 {
     CAPageView* view = new CAPageView(type);
     if (view && view->initWithLayout(layout))

@@ -78,7 +78,7 @@ CAScale9ImageView* CAScale9ImageView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CAScale9ImageView* CAScale9ImageView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAScale9ImageView* CAScale9ImageView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAScale9ImageView* pReturn = new CAScale9ImageView();
     if (pReturn && pReturn->initWithLayout(layout))
@@ -113,9 +113,13 @@ CAView* CAScale9ImageView::copy()
     {
         pReturn->setFrame(this->getFrame());
     }
-    else
+    else if (m_eLayoutType == 1)
     {
         pReturn->setCenter(this->getCenter());
+    }
+    else
+    {
+        pReturn->setLayout(this->getLayout());
     }
     return pReturn;
 }
@@ -137,7 +141,7 @@ void CAScale9ImageView::updateWithImage()
     CC_RETURN_IF(!m_pobImage);
 
     m_pScale9ImageView = CABatchView::createWithImage(m_pobImage);
-    m_pScale9ImageView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pScale9ImageView->setLayout(DLayoutFill);
     this->addSubview(m_pScale9ImageView);
     
     m_obOriginalSize = m_pScale9ImageView->getImageAtlas()->getImage()->getContentSize();

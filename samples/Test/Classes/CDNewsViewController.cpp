@@ -55,13 +55,13 @@ bool CDNewsTableCell::initWithReuseIdentifier(const std::string& reuseIdentifier
         return false;
     }
     
-    theImage = CommonUrlImageView::createWithLayout(DRectLayout(20, 200, 20, 20, DRectLayout::L_W_T_B));
+    theImage = CommonUrlImageView::createWithLayout(DLayout(20, 200, 20, 20, DLayout::L_W_T_B));
     theImage->setTag(101);
     theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));
     this->getContentView()->addSubview(theImage);
     
-    theTitle = CALabel::createWithLayout(DRectLayout(240, 150, 20, 40, DRectLayout::L_R_T_H));
+    theTitle = CALabel::createWithLayout(DLayout(240, 150, 20, 40, DLayout::L_R_T_H));
 	theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
     theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -69,7 +69,7 @@ bool CDNewsTableCell::initWithReuseIdentifier(const std::string& reuseIdentifier
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
-    theDesc = CALabel::createWithLayout(DRectLayout(240, 150, 65, 40, DRectLayout::L_R_T_H));
+    theDesc = CALabel::createWithLayout(DLayout(240, 150, 65, 40, DLayout::L_R_T_H));
 	theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -146,7 +146,7 @@ void CDNewsViewController::viewDidLoad()
                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
         
         
-        p_pLoading = CAActivityIndicatorView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+        p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
@@ -167,20 +167,20 @@ void CDNewsViewController::showAlert()
     p_alertView = CAView::createWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(p_alertView);
     
-    CAImageView* bg = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
+    CAImageView* bg = CAImageView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_W_T_B));
     bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setTag(100);
-    btn5->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_W_T_B));
+    btn5->setLayout(DLayout(0, 0, 0, 0, DLayout::L_W_T_B));
     btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
     btn5->setBackgroundViewForState(CAControlStateNormal, bg);
     btn5->setBackgroundViewForState(CAControlStateHighlighted, bg);
     btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
     p_alertView->addSubview(btn5);
     
-    CALabel* test = CALabel::createWithLayout(DRectLayout(0, 0, 100, 40, DRectLayout::L_W_B_H));
+    CALabel* test = CALabel::createWithLayout(DLayout(0, 0, 100, 40, DLayout::L_W_B_H));
 	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);
     test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -208,7 +208,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,DPoint point)
     CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
-        p_pLoading = CAActivityIndicatorView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+        p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
@@ -305,7 +305,7 @@ void CDNewsViewController::initNewsTableView()
         p_TableView = NULL;
     }
     
-    p_TableView= CATableView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    p_TableView= CATableView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setScrollViewDelegate(this);
@@ -349,7 +349,7 @@ void CDNewsViewController::initNewsPageView()
     temImage1->setUrl(m_page[0].m_pic);
     viewList.pushBack(temImage1);
     
-    p_PageView = CAPageView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);
+    p_PageView = CAPageView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B), CAPageViewDirectionHorizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
     p_PageView->setTouchEnabled(true);
@@ -357,10 +357,10 @@ void CDNewsViewController::initNewsPageView()
     p_PageView->setCurrPage(1, false);
     
     CAView* bg = CAView::createWithColor(ccc4(0, 0, 0, 128));
-    bg->setLayout(DRectLayout(0, 0, 0, 50, DRectLayout::L_R_B_H));
+    bg->setLayout(DLayout(0, 0, 0, 50, DLayout::L_R_B_H));
     tempview->addSubview(bg);
     
-    pageControl = CAPageControl::createWithLayout(DRectLayout(40, 100, 0, 0, DRectLayout::R_W_T_B));
+    pageControl = CAPageControl::createWithLayout(DLayout(40, 100, 0, 0, DLayout::R_W_T_B));
     pageControl->setNumberOfPages((int)m_page.size());
     pageControl->setPageIndicatorImage(CAImage::create("image/pagecontrol_selected.png"));
     pageControl->setCurrIndicatorImage(CAImage::create("image/pagecontrol_bg.png"));
@@ -372,7 +372,7 @@ void CDNewsViewController::initNewsPageView()
     
     if (m_page.size()>0)
     {
-        pageViewTitle = CALabel::createWithLayout(DRectLayout(10, 160, 0, 0, DRectLayout::L_R_T_B));
+        pageViewTitle = CALabel::createWithLayout(DLayout(10, 160, 0, 0, DLayout::L_R_T_B));
         pageViewTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         pageViewTitle->setText(m_page[0].m_title);
 		pageViewTitle->setColor(CAColor_white);

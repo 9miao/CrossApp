@@ -81,7 +81,7 @@ CASwitch* CASwitch::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CASwitch* CASwitch::createWithLayout(const CrossApp::DRectLayout &layout)
+CASwitch* CASwitch::createWithLayout(const CrossApp::DLayout &layout)
 {
     CASwitch* switchControl = new CASwitch();
     

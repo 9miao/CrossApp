@@ -49,7 +49,7 @@ public:
 
 	static CAWebView *createWithCenter(const DRect& rect);
 
-    static CAWebView* createWithLayout(const DRectLayout& layout);
+    static CAWebView* createWithLayout(const DLayout& layout);
     
     /**
     * Set javascript interface scheme.

@@ -27,7 +27,7 @@ void WaterfallViewTest::viewDidLoad()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    Waterfall = CAWaterfallView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+    Waterfall = CAWaterfallView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
     Waterfall->setItemMargin(10);
     Waterfall->setColumnMargin(10);
     Waterfall->setColumnCount(2);
@@ -100,7 +100,7 @@ CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(CAWaterfallView *wa
         p_Cell->setAllowsSelected(false);
         p_Cell->setBackgroundView(CAView::create());
         
-        CALabel* itemText = CALabel::createWithLayout(DRectLayout(0, 0, 0, 0,DRectLayout::L_R_T_B));
+        CALabel* itemText = CALabel::createWithLayout(DLayout(0, 0, 0, 0,DLayout::L_R_T_B));
         itemText->setTag(100);
         itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignmentCenter);

@@ -120,7 +120,7 @@ CASegmentedControl* CASegmentedControl::createWithCenter(const DRect& rect, unsi
     return NULL;
 }
 
-CASegmentedControl* CASegmentedControl::createWithLayout(const CrossApp::DRectLayout &layout, unsigned int itemsCount)
+CASegmentedControl* CASegmentedControl::createWithLayout(const CrossApp::DLayout &layout, unsigned int itemsCount)
 {
     CASegmentedControl* segmentedControl = new CASegmentedControl(itemsCount);
     if (segmentedControl && segmentedControl->initWithLayout(layout))

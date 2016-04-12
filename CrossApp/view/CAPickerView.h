@@ -51,7 +51,7 @@ public:
     static CAPickerView* create();
     static CAPickerView* createWithFrame(const DRect& rect);
     static CAPickerView* createWithCenter(const DRect& rect);
-    static CAPickerView* createWithLayout(const DRectLayout& layout);
+    static CAPickerView* createWithLayout(const DLayout& layout);
     
     virtual bool init();
 

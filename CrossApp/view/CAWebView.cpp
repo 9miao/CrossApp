@@ -60,7 +60,7 @@ CAWebView *CAWebView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CAWebView *CAWebView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAWebView *CAWebView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAWebView* webView = new CAWebView();
     if (webView && webView->initWithLayout(layout))
@@ -78,7 +78,7 @@ bool CAWebView::init()
     
     m_pLoadingView = CAActivityIndicatorView::create();
     m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
-    m_pLoadingView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pLoadingView->setLayout(DLayoutFill);
 	m_pLoadingView->setVisible(false);
 	this->addSubview(m_pLoadingView);
     

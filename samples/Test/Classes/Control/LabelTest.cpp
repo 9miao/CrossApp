@@ -40,7 +40,7 @@ void LabelTest::viewDidLoad()
     label->setFont(Font);
     label->setTextAlignment(CATextAlignmentCenter);
     label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label->setLayout(DRectLayout(100, 100, 150, 40, DRectLayout::L_R_T_H));
+    label->setLayout(DLayout(100, 100, 150, 40, DLayout::L_R_T_H));
     
     CALabel* label1 = CALabel::create();
     CAFont Font1;
@@ -52,7 +52,7 @@ void LabelTest::viewDidLoad()
     label1->setFont(Font1);
     label1->setTextAlignment(CATextAlignmentCenter);
     label1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label1->setLayout(DRectLayout(100, 100, 300, 40, DRectLayout::L_R_T_H));
+    label1->setLayout(DLayout(100, 100, 300, 40, DLayout::L_R_T_H));
     
     CALabel* label2 = CALabel::create();
     CAFont Font2;
@@ -64,7 +64,7 @@ void LabelTest::viewDidLoad()
     label2->setFont(Font2);
     label2->setTextAlignment(CATextAlignmentCenter);
     label2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label2->setLayout(DRectLayout(100, 100, 450, 40, DRectLayout::L_R_T_H));
+    label2->setLayout(DLayout(100, 100, 450, 40, DLayout::L_R_T_H));
     
     CALabel* label3 = CALabel::create();
     CAFont Font3;
@@ -76,7 +76,7 @@ void LabelTest::viewDidLoad()
     label3->setFont(Font3);
     label3->setTextAlignment(CATextAlignmentCenter);
     label3->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label3->setLayout(DRectLayout(100, 100, 600, 40, DRectLayout::L_R_T_H));
+    label3->setLayout(DLayout(100, 100, 600, 40, DLayout::L_R_T_H));
     
     CALabel* label4 = CALabel::create();
     CAFont Font4;
@@ -86,9 +86,9 @@ void LabelTest::viewDidLoad()
     label4->setFont(Font4);
     label4->setTextAlignment(CATextAlignmentCenter);
     label4->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label4->setLayout(DRectLayout(100, 100, 750, 40, DRectLayout::L_R_T_H));
+    label4->setLayout(DLayout(100, 100, 750, 40, DLayout::L_R_T_H));
 
-    CAView* view = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
+    CAView* view = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
     view->addSubview(label);
     view->addSubview(label1);
     view->addSubview(label2);
@@ -110,15 +110,15 @@ void LabelTest::viewDidLoad()
     label5->setLineSpacing(20);
     label5->setTextAlignment(CATextAlignmentCenter);
     label5->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label5->setLayout(DRectLayout(50, 50, 300, 300, DRectLayout::L_R_T_H));
+    label5->setLayout(DLayout(50, 50, 300, 300, DLayout::L_R_T_H));
     
-	CAView* view1 = CAView::createWithLayout(DRectLayout(50, 50, 300, 300, DRectLayout::L_R_T_H));
+	CAView* view1 = CAView::createWithLayout(DLayout(50, 50, 300, 300, DLayout::L_R_T_H));
     view1->addSubview(label5);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
     
 	CARichLabel* RichLabel = CARichLabel::create();
-	RichLabel->setLayout(DRectLayout(50, 50, 50, 500, DRectLayout::L_R_T_H));
+	RichLabel->setLayout(DLayout(50, 50, 50, 500, DLayout::L_R_T_H));
 	RichLabel->appendText("Hello World");
 
 	CAFont ft;
@@ -137,7 +137,7 @@ void LabelTest::viewDidLoad()
 	RichLabelFont2.color = CAColor_yellow;
 	RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
 
-    CAView* view2 = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
+    CAView* view2 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
     view2->addSubview(RichLabel);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);

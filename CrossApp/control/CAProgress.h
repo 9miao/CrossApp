@@ -36,7 +36,7 @@ public:
     
     static CAProgress* createWithCenter(const DRect& rect);
     
-    static CAProgress* createWithLayout(const DRectLayout& layout);
+    static CAProgress* createWithLayout(const DLayout& layout);
     
     virtual void onEnterTransitionDidFinish();
     

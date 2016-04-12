@@ -64,7 +64,7 @@ CADatePickerView* CADatePickerView::createWithCenter(const DRect& rect,const CAD
     return view;
 }
 
-CADatePickerView* CADatePickerView::createWithLayout(const CrossApp::DRectLayout &layout, const CADatePickerMode &m_mode)
+CADatePickerView* CADatePickerView::createWithLayout(const CrossApp::DLayout &layout, const CADatePickerMode &m_mode)
 {
     CADatePickerView* view = new CADatePickerView(m_mode);
     if (view && view->initWithLayout(layout)) {
@@ -81,7 +81,7 @@ bool CADatePickerView::init()
         return false;
     }
     m_pPickerView = new CAPickerView();
-    m_pPickerView->initWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_pPickerView->initWithLayout(DLayoutFill);
     m_pPickerView->setFontSizeNormal(40);
     m_pPickerView->setFontSizeSelected(40);
     this->addSubview(m_pPickerView);

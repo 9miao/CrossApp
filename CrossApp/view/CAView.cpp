@@ -96,7 +96,7 @@ CAView::CAView(void)
 , m_bIsAnimation(false)
 , m_pobBatchView(NULL)
 , m_pobImageAtlas(NULL)
-, m_obLayout(DRectLayout(0, 0, 0, 0))
+, m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
@@ -213,7 +213,7 @@ CAView* CAView::createWithCenter(const DRect& rect, const CAColor4B& color4B)
 	return pRet;
 }
 
-CAView* CAView::createWithLayout(const DRectLayout& layout)
+CAView* CAView::createWithLayout(const DLayout& layout)
 {
     CAView * pRet = new CAView();
     if (pRet && pRet->initWithLayout(layout))
@@ -227,7 +227,7 @@ CAView* CAView::createWithLayout(const DRectLayout& layout)
     return pRet;
 }
 
-CAView* CAView::createWithLayout(const DRectLayout& layout, const CAColor4B& color4B)
+CAView* CAView::createWithLayout(const DLayout& layout, const CAColor4B& color4B)
 {
     CAView * pRet = new CAView();
     if (pRet && pRet->initWithLayout(layout))
@@ -289,7 +289,7 @@ bool CAView::initWithCenter(const DRect& rect)
     return true;
 }
 
-bool CAView::initWithLayout(const CrossApp::DRectLayout &layout)
+bool CAView::initWithLayout(const CrossApp::DLayout &layout)
 {
     if (!this->init())
     {
@@ -631,7 +631,7 @@ DRect CAView::getFrame() const
 
 void CAView::setFrame(const DRect &rect)
 {
-    m_obLayout = DRectLayoutZero;
+    m_obLayout = DLayoutZero;
     DSize originalSize = m_obContentSize;
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -662,7 +662,7 @@ void CAView::setFrame(const DRect &rect)
 
 void CAView::setFrameOrigin(const DPoint& point)
 {
-    m_obLayout = DRectLayoutZero;
+    m_obLayout = DLayoutZero;
     DPoint p = ccpAdd(point, m_obAnchorPointInPoints);
     
     if (CAViewAnimation::areAnimationsEnabled()
@@ -694,7 +694,7 @@ DRect CAView::getCenter()
 
 void CAView::setCenter(const DRect& rect)
 {
-    m_obLayout = DRectLayoutZero;
+    m_obLayout = DLayoutZero;
     DSize originalSize = m_obContentSize;
     if (CAViewAnimation::areAnimationsEnabled()
         && CAViewAnimation::areBeginAnimations())
@@ -731,7 +731,7 @@ DPoint CAView::getCenterOrigin()
 
 void CAView::setCenterOrigin(const DPoint& point)
 {
-    m_obLayout = DRectLayoutZero;
+    m_obLayout = DLayoutZero;
     DPoint p = ccpSub(point, ccpMult(m_obContentSize, 0.5f));
     p = ccpAdd(p, m_obAnchorPointInPoints);
 
@@ -762,7 +762,7 @@ void CAView::setBounds(const DRect& rect)
     }
 }
 
-void CAView::setLayout(const CrossApp::DRectLayout &layout)
+void CAView::setLayout(const CrossApp::DLayout &layout)
 {
     m_obLayout = layout;
     m_eLayoutType = 2;
@@ -773,7 +773,7 @@ void CAView::setLayout(const CrossApp::DRectLayout &layout)
     }
 }
 
-const DRectLayout& CAView::getLayout()
+const DLayout& CAView::getLayout()
 {
     return m_obLayout;
 }
@@ -839,36 +839,51 @@ void CAView::reViewlayout(const DSize& contentSize)
         DPoint point;
         DSize size;
         
-        if (m_obLayout.left < FLOAT_NONE && m_obLayout.right < FLOAT_NONE)
+        const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
+        
+        if (horizontalLayout.center < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
         {
-            size.width = contentSize.width - m_obLayout.left - m_obLayout.right;
-            point.x = m_obLayout.left;
+            size.width = horizontalLayout.width;
+            point.x = contentSize.width * horizontalLayout.center - horizontalLayout.width / 2;
         }
-        else if (m_obLayout.left < FLOAT_NONE && m_obLayout.width < FLOAT_NONE)
+        else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
         {
-            size.width = m_obLayout.width;
-            point.x = m_obLayout.left;
+            size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
+            point.x = horizontalLayout.left;
         }
-        else if (m_obLayout.right < FLOAT_NONE && m_obLayout.width < FLOAT_NONE)
+        else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
         {
-            size.width = m_obLayout.width;
-            point.x = contentSize.width - m_obLayout.right - m_obLayout.width;
+            size.width = horizontalLayout.width;
+            point.x = horizontalLayout.left;
+        }
+        else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
+        {
+            size.width = horizontalLayout.width;
+            point.x = contentSize.width - horizontalLayout.right - horizontalLayout.width;
         }
         
-        if (m_obLayout.top < FLOAT_NONE && m_obLayout.bottom < FLOAT_NONE)
+        
+        const DVerticalLayout& verticalLayout = m_obLayout.vertical;
+        
+        if (verticalLayout.center < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
         {
-            size.height = contentSize.height - m_obLayout.top - m_obLayout.bottom;
-            point.y = m_obLayout.top;
+            size.height = verticalLayout.height;
+            point.y = contentSize.height * verticalLayout.center - verticalLayout.height / 2;
         }
-        else if (m_obLayout.top < FLOAT_NONE && m_obLayout.height < FLOAT_NONE)
+        else if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
         {
-            size.height = m_obLayout.height;
-            point.y = m_obLayout.top;
+            size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
+            point.y = verticalLayout.top;
         }
-        else if (m_obLayout.bottom < FLOAT_NONE && m_obLayout.height < FLOAT_NONE)
+        else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
         {
-            size.height = m_obLayout.height;
-            point.y = contentSize.height - m_obLayout.bottom - m_obLayout.height;
+            size.height = verticalLayout.height;
+            point.y = verticalLayout.top;
+        }
+        else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
+        {
+            size.height = verticalLayout.height;
+            point.y = contentSize.height - verticalLayout.bottom - verticalLayout.height;
         }
         
         this->setContentSize(size);

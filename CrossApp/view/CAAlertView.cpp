@@ -43,7 +43,7 @@ bool CAAlertView::init()
 	}
 
 	this->setColor(ccc4(127,127,127,127));
-    this->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    this->setLayout(DLayoutFill);
 
 	return true;
 }

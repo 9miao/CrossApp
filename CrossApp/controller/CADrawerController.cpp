@@ -89,10 +89,20 @@ CAViewController* CADrawerController::getRightViewController()
 
 void CADrawerController::viewDidLoad()
 {
-    m_rHideLayout[0] = DRectLayout(-m_fDivision,   FLOAT_NONE, 0, 0, m_fDivision, FLOAT_NONE);
-    m_rHideLayout[1] = DRectLayout(           0,            0, 0, 0,  FLOAT_NONE, FLOAT_NONE);
-    m_rShowLayout[0] = DRectLayout(           0,   FLOAT_NONE, 0, 0, m_fDivision, FLOAT_NONE);
-    m_rShowLayout[1] = DRectLayout( m_fDivision, -m_fDivision, 0, 0,  FLOAT_NONE, FLOAT_NONE);
+    m_rHideLayout[0].horizontal.left = -m_fDivision;
+    m_rHideLayout[0].horizontal.width = m_fDivision;
+    m_rHideLayout[0].vertical = DVerticalLayoutFill;
+    
+    m_rShowLayout[0].horizontal.left = 0;
+    m_rShowLayout[0].horizontal.width = m_fDivision;
+    m_rShowLayout[0].vertical = DVerticalLayoutFill;
+    
+    
+    m_rHideLayout[1].horizontal = DHorizontalLayoutFill;
+    m_rHideLayout[1].vertical = DVerticalLayoutFill;
+    
+    m_rShowLayout[1].horizontal = DHorizontalLayout_L_R(m_fDivision, -m_fDivision);
+    m_rShowLayout[1].vertical = DVerticalLayoutFill;
     
     for (int i=0; i<2; i++)
     {
@@ -232,13 +242,13 @@ void CADrawerController::updateViewFrame()
         point[0].x = (m_fCurrDivision - m_fDivision) / 3;
     }
     
-    DRectLayout layout[2];
+    DLayout layout[2];
     layout[0] = m_rHideLayout[0];
-    layout[0].left = point[0].x;
+    layout[0].horizontal.left = point[0].x;
     
     layout[1] = m_rHideLayout[1];
-    layout[1].left = point[1].x;
-    layout[1].right = -point[1].x;
+    layout[1].horizontal.left = point[1].x;
+    layout[1].horizontal.right = -point[1].x;
     
     for (int i=0; i<2; i++)
     {
@@ -350,7 +360,7 @@ void CADrawerController::setBackgroundView(CrossApp::CAView *var)
     m_pBackgroundView = var;
     if (m_pBackgroundView)
     {
-        m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+        m_pBackgroundView->setLayout(DLayoutFill);
         this->getView()->insertSubview(m_pBackgroundView, -1);
     }
 }

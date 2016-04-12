@@ -73,7 +73,7 @@ CAProgress* CAProgress::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CAProgress* CAProgress::createWithLayout(const DRectLayout& layout)
+CAProgress* CAProgress::createWithLayout(const DLayout& layout)
 {
     CAProgress *progress = new CAProgress();
     if (progress && progress->initWithLayout(layout))

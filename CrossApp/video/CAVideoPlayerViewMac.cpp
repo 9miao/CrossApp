@@ -64,7 +64,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const DRect &rect)
     return NULL;
 }
 
-CAVideoPlayerView* CAVideoPlayerView::createWithLayout(const DRectLayout& layout)
+CAVideoPlayerView* CAVideoPlayerView::createWithLayout(const DLayout& layout)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView;
     if (view && view->initWithLayout(layout))

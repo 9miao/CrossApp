@@ -37,7 +37,7 @@ public:
     virtual ~ETableView();
     
     virtual bool init(const CrossApp::DRect &rect);
-    static ETableView* createWithLayout(const DRectLayout& layout);
+    static ETableView* createWithLayout(const DLayout& layout);
     
 public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);

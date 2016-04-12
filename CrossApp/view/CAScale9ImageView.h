@@ -29,7 +29,7 @@ public:
     
     static CAScale9ImageView* createWithCenter(const DRect& rect);
     
-    static CAScale9ImageView* createWithLayout(const DRectLayout& layout);
+    static CAScale9ImageView* createWithLayout(const DLayout& layout);
     
     virtual bool init();
     

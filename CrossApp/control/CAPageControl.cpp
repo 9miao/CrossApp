@@ -75,7 +75,7 @@ CAPageControl* CAPageControl::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CAPageControl* CAPageControl::createWithLayout(const CrossApp::DRectLayout &layout)
+CAPageControl* CAPageControl::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAPageControl* page = new CAPageControl();
     

@@ -58,7 +58,7 @@ CARichLabel* CARichLabel::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CARichLabel* CARichLabel::createWithLayout(const DRectLayout& layout)
+CARichLabel* CARichLabel::createWithLayout(const DLayout& layout)
 {
     CARichLabel *label = new CARichLabel();
     if (label && label->initWithLayout(layout))

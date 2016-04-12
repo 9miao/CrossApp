@@ -316,68 +316,9 @@ public:
     CC_SYNTHESIZE_IS(Type, m_eType, Type);
 };
 
-/**
- * @js NA
- */
-class CC_DLL DRectLayout
-{
-public:
-    
-    typedef enum
-    {
-        L_R_T_B = 0,
-        L_R_T_H,
-        L_R_B_H,
-        L_W_T_B,
-        L_W_T_H,
-        L_W_B_H,
-        R_W_T_B,
-        R_W_T_H,
-        R_W_B_H
-    }
-    Type;
-    /**
-     ** L: left
-     ** R: right
-     ** W: width
-     ** T: top
-     ** B: bottom
-     ** H: height
-     */
-    
-public:
-    
-    float left;
-    
-    float right;
-    
-    float top;
-    
-    float bottom;
-    
-    float width;
-    
-    float height;
-    
-public:
-    
-    DRectLayout();
-    
-    DRectLayout(const DRectLayout& other);
-    
-    DRectLayout(float left, float right, float top, float bottom, float width = FLOAT_NONE, float height = FLOAT_NONE);
-    
-    DRectLayout(float var1, float var2, float var3, float var4, const Type& type);
-    
-    DRectLayout& operator= (const DRectLayout& other);
-    
-    bool equals(const DRectLayout& other) const;
-};
-
 const DPoint DPointZero = DPoint();
 const DSize DSizeZero = DSize();
 const DRect DRectZero = DRect();
-const DRectLayout DRectLayoutZero = DRectLayout();
 
 CC_DEPRECATED_ATTRIBUTE typedef DPoint CCPoint;
 CC_DEPRECATED_ATTRIBUTE typedef DPoint CADipPoint;

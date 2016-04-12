@@ -30,7 +30,7 @@ public:
     
     static CASlider* createWithCenter(const DRect& rect);
     
-    static CASlider* createWithLayout(const DRectLayout& layout);
+    static CASlider* createWithLayout(const DLayout& layout);
     
 public:
     

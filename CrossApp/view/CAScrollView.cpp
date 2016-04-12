@@ -105,7 +105,7 @@ CAScrollView* CAScrollView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CAScrollView* CAScrollView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAScrollView* CAScrollView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAScrollView* scrollView = new CAScrollView();
     if (scrollView && scrollView->initWithLayout(layout))
@@ -959,12 +959,8 @@ void CAScrollView::initIndicator()
     if (m_pIndicatorHorizontal == NULL)
     {
         m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::CAIndicatorTypeHorizontal, this);
-        m_pIndicatorHorizontal->setLayout(DRectLayout(indicatorSize * 2,
-                                                      indicatorSize * 2,
-                                                      FLOAT_NONE,
-                                                      indicatorSize,
-                                                      FLOAT_NONE,
-                                                      indicatorSize));
+        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(indicatorSize * 2, indicatorSize * 2),
+                                                  DVerticalLayout_B_H(indicatorSize, indicatorSize)));
         m_vChildInThis.pushBack(m_pIndicatorHorizontal);
         this->insertSubview(m_pIndicatorHorizontal, 1);
     }
@@ -972,12 +968,8 @@ void CAScrollView::initIndicator()
     if (m_pIndicatorVertical == NULL)
     {
         m_pIndicatorVertical = CAIndicator::create(CAIndicator::CAIndicatorTypeVertical, this);
-        m_pIndicatorVertical->setLayout(DRectLayout(FLOAT_NONE,
-                                                    indicatorSize,
-                                                    indicatorSize * 2,
-                                                    indicatorSize * 2,
-                                                    indicatorSize,
-                                                    FLOAT_NONE));
+        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(indicatorSize, indicatorSize),
+                                                DVerticalLayout_T_B(indicatorSize * 2, indicatorSize * 2)));
         m_vChildInThis.pushBack(m_pIndicatorVertical);
         this->insertSubview(m_pIndicatorVertical, 1);
     }
@@ -1160,13 +1152,13 @@ void CAScrollView::changedFromPullToRefreshView()
     
     if (m_pHeaderRefreshView)
     {
-        const DRectLayout& layout = DRectLayout(0, 0, -128, 128, DRectLayout::L_R_T_H);
+        const DLayout& layout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(-128, 128));
         if (m_pHeaderRefreshView && m_pHeaderRefreshView->getSuperview() == NULL)
         {
             m_pHeaderRefreshView->setLayout(layout);
             this->addSubview(m_pHeaderRefreshView);
         }
-        if (layout.top < y)
+        if (layout.vertical.top < y)
         {
             m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
         }
@@ -1177,13 +1169,13 @@ void CAScrollView::changedFromPullToRefreshView()
     }
     if (m_pFooterRefreshView)
     {
-        const DRectLayout& layout = DRectLayout(0, 0, -128, 128, DRectLayout::L_R_B_H);
+        const DLayout& layout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(-128, 128));
         if (m_pFooterRefreshView && m_pFooterRefreshView->getSuperview() == NULL)
         {
             m_pFooterRefreshView->setLayout(layout);
             this->addSubview(m_pFooterRefreshView);
         }
-        if (size.height - m_obContentSize.height - layout.bottom > y)
+        if (size.height - m_obContentSize.height - layout.vertical.bottom > y)
         {
             m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
         }

@@ -257,6 +257,8 @@
 		B09205BB19D554A800CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B619D554A800CB99C1 /* CASyncQueue.h */; };
 		B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205B719D554A800CB99C1 /* CAThread.cpp */; };
 		B09205BD19D554A800CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B819D554A800CB99C1 /* CAThread.h */; };
+		B093DB411CBC8ADE00E98AD6 /* CALayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB3F1CBC8ADE00E98AD6 /* CALayout.cpp */; };
+		B093DB421CBC8ADE00E98AD6 /* CALayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B093DB401CBC8ADE00E98AD6 /* CALayout.h */; };
 		B09B73C71BD1FD47001D82BC /* CAVideoPlayerControlView.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73BF1BD1FD47001D82BC /* CAVideoPlayerControlView.h */; };
 		B09B73C81BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C01BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp */; };
 		B09B73C91BD1FD47001D82BC /* CAVideoPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73C11BD1FD47001D82BC /* CAVideoPlayerDecoder.h */; };
@@ -629,6 +631,8 @@
 		B09205B619D554A800CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205B719D554A800CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
 		B09205B819D554A800CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
+		B093DB3F1CBC8ADE00E98AD6 /* CALayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALayout.cpp; sourceTree = "<group>"; };
+		B093DB401CBC8ADE00E98AD6 /* CALayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALayout.h; sourceTree = "<group>"; };
 		B09B73BD1BD1FACE001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
 		B09B73BF1BD1FD47001D82BC /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
 		B09B73C01BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlViewMac.cpp; sourceTree = "<group>"; };
@@ -791,6 +795,8 @@
 				04EAA0651956D74D00198A8E /* CAFPSImages.h */,
 				04EAA0661956D74D00198A8E /* CAGeometry.cpp */,
 				04EAA0671956D74D00198A8E /* CAGeometry.h */,
+				B093DB3F1CBC8ADE00E98AD6 /* CALayout.cpp */,
+				B093DB401CBC8ADE00E98AD6 /* CALayout.h */,
 				04EAA0681956D74D00198A8E /* CAObject.cpp */,
 				04EAA0691956D74D00198A8E /* CAObject.h */,
 				04EAA06A1956D74D00198A8E /* CAResponder.cpp */,
@@ -1522,6 +1528,7 @@
 				B0B05FCC1BB1483200B891CE /* CAView.h in Headers */,
 				3E21540C1B817AB80075448E /* HttpResponse.h in Headers */,
 				04EAB0AC1956D75600198A8E /* CAKeypadDispatcher.h in Headers */,
+				B093DB421CBC8ADE00E98AD6 /* CALayout.h in Headers */,
 				04EAB0AD1956D75600198A8E /* CAProtocols.h in Headers */,
 				04EAB0AF1956D75600198A8E /* CATouch.h in Headers */,
 				04EAB0B11956D75600198A8E /* CATouchDispatcher.h in Headers */,
@@ -1805,6 +1812,7 @@
 				04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */,
 				04EAB14E1956D75600198A8E /* CCEventDispatcher.mm in Sources */,
 				B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */,
+				B093DB411CBC8ADE00E98AD6 /* CALayout.cpp in Sources */,
 				04EAB1501956D75600198A8E /* CCFileUtilsMac.mm in Sources */,
 				04EAB1571956D75600198A8E /* CCWindow.m in Sources */,
 				B074CCEE1C31546F00493A8A /* CATextEditHelper.cpp in Sources */,

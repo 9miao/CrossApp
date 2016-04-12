@@ -543,7 +543,7 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CATextField* CATextField::createWithLayout(const DRectLayout& layout)
+CATextField* CATextField::createWithLayout(const DLayout& layout)
 {
     CATextField* textField = new CATextField();
     
@@ -562,7 +562,7 @@ bool CATextField::init()
     CAImage* image = CAImage::create("source_material/textField_bg.png");
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_pBackgroundView->setLayout(DLayoutFill);
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
@@ -802,10 +802,14 @@ void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& fil
     {
         leftMarginView = CAImageView::create();
         leftMarginView->setTag(1010);
-        leftMarginView->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         this->addSubview(leftMarginView);
     }
-    leftMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::L_W_T_B));
+    DLayout layout;
+    layout.horizontal.left = 0;
+    layout.horizontal.width = imgSize.width;
+    layout.vertical.height = imgSize.height;
+    layout.vertical.center = 0.5f;
+    leftMarginView->setLayout(layout);
     leftMarginView->setImage(CAImage::create(filePath));
 }
 
@@ -823,7 +827,12 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
         rightMarginView->setTag(1011);
         this->addSubview(rightMarginView);
     }
-    rightMarginView->setLayout(DRectLayout(0, imgSize.width, 0, 0, DRectLayout::R_W_T_B));
+    DLayout layout;
+    layout.horizontal.right = 0;
+    layout.horizontal.width = imgSize.width;
+    layout.vertical.height = imgSize.height;
+    layout.vertical.center = 0.5f;
+    rightMarginView->setLayout(layout);
     rightMarginView->setImageSize(imgSize);
     rightMarginView->setImageForState(CAControlStateAll, CAImage::create(filePath));
 }

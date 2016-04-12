@@ -154,7 +154,7 @@ public:
 
 	static CAAutoCollectionView* createWithCenter(const DRect& rect);
 
-    static CAAutoCollectionView* createWithLayout(const DRectLayout& layout);
+    static CAAutoCollectionView* createWithLayout(const DLayout& layout);
     
 	virtual bool init();
 

@@ -50,7 +50,7 @@ public:
     
     static CAPageView* createWithCenter(const DRect& rect, const CAPageViewDirection& type);
     
-    static CAPageView* createWithLayout(const DRectLayout& layout, const CAPageViewDirection& type);
+    static CAPageView* createWithLayout(const DLayout& layout, const CAPageViewDirection& type);
     
     bool init();
     

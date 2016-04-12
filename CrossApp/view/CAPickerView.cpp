@@ -65,7 +65,7 @@ CAPickerView* CAPickerView::createWithCenter(const DRect& rect)
     return view;
 }
 
-CAPickerView* CAPickerView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAPickerView* CAPickerView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAPickerView* view = new CAPickerView();
     if (view && view->initWithLayout(layout))

@@ -32,7 +32,7 @@ public:
     
     static CALabel* createWithCenter(const DRect& rect);
     
-    static CALabel* createWithLayout(const DRectLayout& layout);
+    static CALabel* createWithLayout(const DLayout& layout);
     
     CC_PROPERTY_PASS_BY_REF(string, m_nText, Text);
 

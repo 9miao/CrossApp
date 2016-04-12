@@ -31,6 +31,7 @@
 #include "basics/CACamera.h"
 #include "basics/CAFPSImages.h"
 #include "basics/CAGeometry.h"
+#include "basics/CALayout.h"
 #include "basics/CAObject.h"
 #include "basics/CAResponder.h"
 #include "basics/CAScheduler.h"

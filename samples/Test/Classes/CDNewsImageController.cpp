@@ -171,7 +171,7 @@ void CDNewsImageController::initImageTableView()
         p_TableView = NULL;
     }
 //    p_TableView= CATableView::createWithFrame(DRect(0, 0, winSize.width, winSize.height));
-    p_TableView= CATableView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
+    p_TableView= CATableView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);

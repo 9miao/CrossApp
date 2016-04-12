@@ -14,7 +14,7 @@ public:
     virtual ~CDListViewTest();
     
     virtual bool init();
-    static CDListViewTest* createWithLayout(const DRectLayout& layout);
+    static CDListViewTest* createWithLayout(const DLayout& layout);
     
 public:
     virtual void listViewDidSelectCellAtIndex(CAListView *listView, unsigned int index);

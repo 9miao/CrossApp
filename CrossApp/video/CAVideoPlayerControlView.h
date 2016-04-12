@@ -35,7 +35,7 @@ public:
 
 	static CAVideoPlayerControlView* createWithFrame(const DRect& rect);
 	static CAVideoPlayerControlView* createWithCenter(const DRect& rect);
-    static CAVideoPlayerControlView* createWithLayout(const DRectLayout& layout);
+    static CAVideoPlayerControlView* createWithLayout(const DLayout& layout);
     
 	CC_SYNTHESIZE(std::string, m_szTitle, Title);
 	CC_PROPERTY(bool, m_bShowBackButton, ShowBackButton);

@@ -96,7 +96,7 @@ CATableView* CATableView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CATableView* CATableView::createWithLayout(const CrossApp::DRectLayout &layout)
+CATableView* CATableView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CATableView* tableView = new CATableView();
     if (tableView && tableView->initWithLayout(layout))
@@ -862,7 +862,7 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
 bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
     m_pContentView = new CAView();
-    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pContentView->setLayout(DLayoutFill);
     this->addSubview(m_pContentView);
     
     this->setBackgroundView(CAView::create());
@@ -880,7 +880,7 @@ void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
     CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pBackgroundView->setLayout(DLayoutFill);
     m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
@@ -951,7 +951,7 @@ void CATableViewCell::resetTableViewCell()
     this->setVisible(true);
     this->normalTableViewCell();
     this->recoveryTableViewCell();
-    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pContentView->setLayout(DLayoutFill);
     m_pContentView->setScale(1.0f);
     m_pContentView->setRotation(0);
 }

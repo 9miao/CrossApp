@@ -52,7 +52,7 @@ CAImageView* CAImageView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CAImageView* CAImageView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAImageView* CAImageView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAImageView * pRet = new CAImageView();
     if (pRet && pRet->initWithLayout(layout))
@@ -315,7 +315,7 @@ CAView* CAImageView::copy()
     {
         pReturn->setFrame(this->getFrame());
     }
-    else
+    else if (m_eLayoutType == 1)
     {
         pReturn->setCenter(this->getCenter());
     }

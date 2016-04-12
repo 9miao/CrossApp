@@ -32,14 +32,14 @@ void TabBarControllerTest::viewDidLoad()
     item.push_back(item3);
     
 //    CATabBar* tabBar = CATabBar::createWithFrame(DRect(0, winSize.height-200, winSize.width, 98));
-    CATabBar* tabBar = CATabBar::createWithLayout(DRectLayout(0,0,0,98,DRectLayout::L_R_B_H));
+    CATabBar* tabBar = CATabBar::createWithLayout(DLayout(0,0,0,98,DLayout::L_R_B_H));
     tabBar->setItems(item);
     tabBar->showSelectedIndicator();
     tabBar->setSelectedAtIndex(0);
 //    tabBar->setBackgroundImage(CAImage::create("image/tab_news_bg.png"));
     tabBar->setTag(100);
     
-    CAView* view1 = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
+    CAView* view1 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
     view1->addSubview(tabBar);
     view1->setColor(CAColor_gray);
     VIEWLIST.pushBack(view1);
@@ -53,14 +53,14 @@ void TabBarControllerTest::viewDidLoad()
     it1.push_back(item5);
     it1.push_back(item6);
     
-    CATabBar* tabBar1 = CATabBar::createWithLayout(DRectLayout(0,0,0,98,DRectLayout::L_R_B_H));
+    CATabBar* tabBar1 = CATabBar::createWithLayout(DLayout(0,0,0,98,DLayout::L_R_B_H));
     tabBar1->setItems(it1);
     tabBar1->setBackgroundImage(CAImage::create("image/tab_news_bg.png"));
     tabBar1->setSelectedBackgroundColor(CAColor_clear);
     tabBar1->setTag(100);
     tabBar1->setSelectedAtIndex(0);
     
-    CAView* view2 = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
+    CAView* view2 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
     view2->addSubview(tabBar1);
     view2->setColor(CAColor_gray);
     VIEWLIST.pushBack(view2);
@@ -79,7 +79,7 @@ void TabBarControllerTest::showUI()
 {
     CAButton* btn_Left = CAButton::create(CAButtonTypeSquareRect);
     btn_Left->setTag(1);
-    btn_Left->setLayout(DRectLayout(200, 64, 20, 64, DRectLayout::L_W_B_H));
+    btn_Left->setLayout(DLayout(200, 64, 20, 64, DLayout::L_W_B_H));
     btn_Left->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
     btn_Left->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
     btn_Left->addTarget(this, CAControl_selector(TabBarControllerTest::buttonControlCallBack), CAControlEventTouchDown);
@@ -87,13 +87,13 @@ void TabBarControllerTest::showUI()
     
     CAButton* btn_Right = CAButton::create(CAButtonTypeSquareRect);
     btn_Right->setTag(2);
-    btn_Right->setLayout(DRectLayout(200, 64, 20, 64, DRectLayout::R_W_B_H));
+    btn_Right->setLayout(DLayout(200, 64, 20, 64, DLayout::R_W_B_H));
     btn_Right->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
     btn_Right->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
     btn_Right->addTarget(this, CAControl_selector(TabBarControllerTest::buttonControlCallBack), CAControlEventTouchDown);
     this->getView()->insertSubview(btn_Right, 10);
     
-    p_PageViewVec = CAPageView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);
+    p_PageViewVec = CAPageView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B), CAPageViewDirectionHorizontal);
     p_PageViewVec->setPageViewDelegate(this);
     p_PageViewVec->setBackgroundColor(CAColor_gray);
     p_PageViewVec->setPageViewDelegate(this);

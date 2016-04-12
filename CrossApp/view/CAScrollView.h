@@ -71,7 +71,7 @@ public:
     
     static CAScrollView* createWithCenter(const DRect& rect);
     
-    static CAScrollView* createWithLayout(const DRectLayout& layout);
+    static CAScrollView* createWithLayout(const DLayout& layout);
     
     virtual bool init();
 

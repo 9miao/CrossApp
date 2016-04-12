@@ -57,7 +57,7 @@ public:
 
 	static CARichLabel* createWithCenter(const DRect& rect);
 
-    static CARichLabel* createWithLayout(const DRectLayout& layout);
+    static CARichLabel* createWithLayout(const DLayout& layout);
     
 	virtual bool initWithFrame(const DRect& rect);
 

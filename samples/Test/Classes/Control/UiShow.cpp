@@ -35,7 +35,7 @@ void UiShow::showUI()
 {
     CAButton* btn_Left = CAButton::create(CAButtonTypeSquareRect);
     btn_Left->setTag(1);
-    btn_Left->setLayout(DRectLayout(200, 64, 20, 64, DRectLayout::L_W_B_H));
+    btn_Left->setLayout(DLayout(200, 64, 20, 64, DLayout::L_W_B_H));
     btn_Left->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
     btn_Left->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
     btn_Left->addTarget(this, CAControl_selector(UiShow::buttonControlCallBack), CAControlEventTouchDown);
@@ -43,13 +43,13 @@ void UiShow::showUI()
     
     CAButton* btn_Right = CAButton::create(CAButtonTypeSquareRect);
     btn_Right->setTag(2);
-    btn_Right->setLayout(DRectLayout(200, 64, 20, 64, DRectLayout::R_W_B_H));
+    btn_Right->setLayout(DLayout(200, 64, 20, 64, DLayout::R_W_B_H));
     btn_Right->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
     btn_Right->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
     btn_Right->addTarget(this, CAControl_selector(UiShow::buttonControlCallBack), CAControlEventTouchDown);
     this->getView()->insertSubview(btn_Right, 10);
     
-    p_PageViewVec = CAPageView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);
+    p_PageViewVec = CAPageView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B), CAPageViewDirectionHorizontal);
     p_PageViewVec->setPageViewDelegate(this);
     p_PageViewVec->setBackgroundColor(CAColor_gray);
     p_PageViewVec->setPageViewDelegate(this);

@@ -76,7 +76,7 @@ CALabel* CALabel::createWithCenter(const DRect &rect)
     return NULL;
 }
 
-CALabel* CALabel::createWithLayout(const CrossApp::DRectLayout &layout)
+CALabel* CALabel::createWithLayout(const CrossApp::DLayout &layout)
 {
     CALabel *label = new CALabel();
     if (label && label->initWithLayout(layout))
@@ -203,7 +203,7 @@ void CALabel::updateImage()
                 rect.size = size;
                 this->setFrame(rect);
             }
-            else
+            else if (m_eLayoutType == 1)
             {
                 DRect rect = this->getCenter();
                 rect.size = size;

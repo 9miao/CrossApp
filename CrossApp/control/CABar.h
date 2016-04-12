@@ -47,7 +47,7 @@ public:
     
     static CANavigationBar* createWithCenter(const DRect& rect, bool clearance = false);
     
-    static CANavigationBar* createWithLayout(const DRectLayout& layout, bool clearance = false);
+    static CANavigationBar* createWithLayout(const DLayout& layout, bool clearance = false);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -149,7 +149,7 @@ public:
     
     static CATabBar* createWithCenter(const DRect& rect, bool clearance = false);
     
-    static CATabBar* createWithLayout(const DRectLayout& layout, bool clearance = false);
+    static CATabBar* createWithLayout(const DLayout& layout, bool clearance = false);
     
     virtual void onEnterTransitionDidFinish();
     

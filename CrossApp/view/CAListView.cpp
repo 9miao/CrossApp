@@ -80,7 +80,7 @@ CAListView* CAListView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CAListView* CAListView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAListView* CAListView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAListView* listView = new CAListView();
     if (listView && listView->initWithLayout(layout))
@@ -710,7 +710,7 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 bool CAListViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
     m_pContentView = new CAView();
-    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pContentView->setLayout(DLayoutFill);
     this->addSubview(m_pContentView);
     
     this->setBackgroundView(CAView::create());
@@ -728,7 +728,7 @@ void CAListViewCell::setBackgroundView(CrossApp::CAView *var)
     CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pBackgroundView->setLayout(DLayoutFill);
     m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
@@ -799,7 +799,7 @@ void CAListViewCell::resetListViewCell()
     this->setVisible(true);
     this->normalListViewCell();
     this->recoveryListViewCell();
-    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pContentView->setLayout(DLayoutFill);
     m_pContentView->setScale(1.0f);
     m_pContentView->setRotation(0);
 }

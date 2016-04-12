@@ -75,7 +75,7 @@ CACollectionView* CACollectionView::createWithCenter(const DRect& rect)
 	return NULL;
 }
 
-CACollectionView* CACollectionView::createWithLayout(const CrossApp::DRectLayout &layout)
+CACollectionView* CACollectionView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CACollectionView* collectionView = new CACollectionView();
     if (collectionView && collectionView->initWithLayout(layout))
@@ -795,7 +795,7 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 bool CACollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 {
     m_pContentView = new CAView();
-    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pContentView->setLayout(DLayoutFill);
     this->addSubview(m_pContentView);
     
 	this->setBackgroundView(CAView::create());
@@ -813,7 +813,7 @@ void CACollectionViewCell::setBackgroundView(CrossApp::CAView *var)
 	CC_SAFE_RELEASE(m_pBackgroundView);
 	m_pBackgroundView = var;
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pBackgroundView->setLayout(DLayoutFill);
 	m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
 
@@ -884,7 +884,7 @@ void CACollectionViewCell::resetCollectionViewCell()
 	this->setVisible(true);
 	this->normalCollectionViewCell();
 	this->recoveryCollectionViewCell();
-    m_pContentView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pContentView->setLayout(DLayoutFill);
     m_pContentView->setScale(1.0f);
     m_pContentView->setRotation(0);
 }

@@ -71,7 +71,7 @@ CAActivityIndicatorView* CAActivityIndicatorView::createWithCenter(const DRect& 
     return view;
 }
 
-CAActivityIndicatorView* CAActivityIndicatorView::createWithLayout(const CrossApp::DRectLayout &layout)
+CAActivityIndicatorView* CAActivityIndicatorView::createWithLayout(const CrossApp::DLayout &layout)
 {
     CAActivityIndicatorView* view = new CAActivityIndicatorView();
     if (view && view->initWithLayout(layout)){

@@ -130,7 +130,7 @@ CAButton* CAButton::createWithCenter(const DRect& rect, const CAButtonType& butt
     return NULL;
 }
 
-CAButton* CAButton::createWithLayout(const CrossApp::DRectLayout &layout, const CAButtonType &buttonType)
+CAButton* CAButton::createWithLayout(const CrossApp::DLayout &layout, const CAButtonType &buttonType)
 {
     
     CAButton* btn = new CAButton(buttonType);
@@ -243,7 +243,7 @@ void CAButton::setBackgroundViewForState(const CAControlState& controlState, CAV
         CC_SAFE_RELEASE(m_pBackgroundView[controlState]);
         if (var)
         {
-            var->setLayout(DRectLayout(0, 0, 0, 0));
+            var->setLayout(DLayoutFill);
         }
         m_pBackgroundView[controlState] = var;
         this->setControlState(m_eControlState);

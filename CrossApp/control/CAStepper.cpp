@@ -109,7 +109,7 @@ CAStepper* CAStepper::createWithCenter(const DRect& rect, const CAStepperOrienta
     return NULL;
 }
 
-CAStepper* CAStepper::createWithLayout(const CrossApp::DRectLayout &layout, const CAStepperOrientation& type)
+CAStepper* CAStepper::createWithLayout(const CrossApp::DLayout &layout, const CAStepperOrientation& type)
 {
     CAStepper* page = new CAStepper(type);
     

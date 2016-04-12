@@ -62,7 +62,7 @@ CANavigationBar* CANavigationBar::createWithCenter(const DRect& rect, bool clear
     return NULL;
 }
 
-CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DRectLayout &layout, bool clearance)
+CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DLayout &layout, bool clearance)
 {
     CANavigationBar* navigationBar = new CANavigationBar(clearance);
     if (navigationBar && navigationBar->initWithLayout(layout))
@@ -77,7 +77,7 @@ CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DRectLayout &
 bool CANavigationBar::init()
 {
     m_pContentView = new CAView();
-    m_pContentView->setLayout(DRectLayout(0, 0, m_bClearance ? 40 : 0, 0));
+    m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(m_bClearance ? 40 : 0, 0)));
     this->addSubview(m_pContentView);
     m_pContentView->release();
     return true;
@@ -157,7 +157,7 @@ void CANavigationBar::showBackground()
         m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create("source_material/navigation_bg.png"));
         CC_SAFE_RETAIN(m_pBackgroundView);
     }
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pBackgroundView->setLayout(DLayoutFill);
     this->insertSubview(m_pBackgroundView, -1);
 }
 
@@ -191,13 +191,13 @@ void CANavigationBar::showTitle()
     else if (CAImage* image = m_pItem->getTitleViewImage())
     {
         m_pTitle = CAImageView::createWithImage(image);
-        m_pTitle->setLayout(DRectLayout(180, 180, 12, 12, DRectLayout::L_R_T_B));
+        m_pTitle->setLayout(DLayout(DHorizontalLayout_L_R(180, 180), DVerticalLayout_T_B(12, 12)));
         ((CAImageView*)m_pTitle)->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         m_pContentView->addSubview(m_pTitle);
     }
     else
     {
-        CALabel* title = CALabel::createWithLayout(DRectLayout(180, 180, 0, 0, DRectLayout::L_R_T_B));
+        CALabel* title = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(180, 180), DVerticalLayoutFill));
         title->setTextAlignment(CATextAlignmentCenter);
         title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         title->setNumberOfLine(1);
@@ -483,7 +483,7 @@ CATabBar* CATabBar::createWithCenter(const DRect& rect, bool clearance)
     return NULL;
 }
 
-CATabBar* CATabBar::createWithLayout(const CrossApp::DRectLayout &layout, bool clearance)
+CATabBar* CATabBar::createWithLayout(const CrossApp::DLayout &layout, bool clearance)
 {
     CATabBar* tabBar = new CATabBar(clearance);
     if (tabBar && tabBar->initWithLayout(layout))
@@ -783,7 +783,7 @@ void CATabBar::showBackground()
     {
         m_pBackgroundView = CAView::createWithColor(m_sBackgroundColor);
     }
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0));
+    m_pBackgroundView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(0, 0)));
     this->insertSubview(m_pBackgroundView, -1);
 }
 

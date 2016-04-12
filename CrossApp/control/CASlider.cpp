@@ -93,7 +93,7 @@ CASlider* CASlider::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CASlider* CASlider::createWithLayout(const CrossApp::DRectLayout &layout)
+CASlider* CASlider::createWithLayout(const CrossApp::DLayout &layout)
 {
     CASlider* slider = new CASlider();
     

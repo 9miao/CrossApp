@@ -36,7 +36,7 @@ public:
     static CAActivityIndicatorView* create();
     static CAActivityIndicatorView* createWithFrame(const DRect& rect);
     static CAActivityIndicatorView* createWithCenter(const DRect& rect);
-    static CAActivityIndicatorView* createWithLayout(const DRectLayout& layout);
+    static CAActivityIndicatorView* createWithLayout(const DLayout& layout);
     
     virtual bool init();
 
