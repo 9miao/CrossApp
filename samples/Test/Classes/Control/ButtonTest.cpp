@@ -72,7 +72,7 @@ void ButtonTest::viewDidLoad()
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setTag(5);
     btn5->setAllowsSelected(true);
-    btn4->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(700, 60)));
+    btn5->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(700, 60)));
     btn5->setTitleForState(CAControlStateNormal, "Normal");
     btn5->setTitleColorForState(CAControlStateNormal, CAColor_white);
     btn5->setTitleForState(CAControlStateSelected, "Selected");

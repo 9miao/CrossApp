@@ -840,13 +840,8 @@ void CAView::reViewlayout(const DSize& contentSize)
         DSize size;
         
         const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
-        
-        if (horizontalLayout.center < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-        {
-            size.width = horizontalLayout.width;
-            point.x = contentSize.width * horizontalLayout.center - horizontalLayout.width / 2;
-        }
-        else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
+
+        if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
         {
             size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
             point.x = horizontalLayout.left;
@@ -856,21 +851,30 @@ void CAView::reViewlayout(const DSize& contentSize)
             size.width = horizontalLayout.width;
             point.x = horizontalLayout.left;
         }
+        else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+        {
+            size.width = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
+            point.x = horizontalLayout.left;
+        }
         else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
         {
             size.width = horizontalLayout.width;
-            point.x = contentSize.width - horizontalLayout.right - horizontalLayout.width;
+            point.x = contentSize.width - horizontalLayout.right - size.width;
         }
-        
+        else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+        {
+            size.width = (horizontalLayout.right - contentSize.width * horizontalLayout.center) * 2;;
+            point.x = contentSize.width - horizontalLayout.right - size.width;
+        }
+        else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+        {
+            size.width = horizontalLayout.width;
+            point.x = contentSize.width * horizontalLayout.center - size.width / 2;
+        }
         
         const DVerticalLayout& verticalLayout = m_obLayout.vertical;
         
-        if (verticalLayout.center < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-        {
-            size.height = verticalLayout.height;
-            point.y = contentSize.height * verticalLayout.center - verticalLayout.height / 2;
-        }
-        else if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
+        if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
         {
             size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
             point.y = verticalLayout.top;
@@ -880,10 +884,25 @@ void CAView::reViewlayout(const DSize& contentSize)
             size.height = verticalLayout.height;
             point.y = verticalLayout.top;
         }
-        else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
+        else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
+        {
+            size.height = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
+            point.y = verticalLayout.top;
+        }
+        else if (verticalLayout.bottom < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
         {
             size.height = verticalLayout.height;
-            point.y = contentSize.height - verticalLayout.bottom - verticalLayout.height;
+            point.y = contentSize.height - verticalLayout.bottom - size.height;
+        }
+        else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
+        {
+            size.height = (verticalLayout.height - contentSize.height * verticalLayout.center) * 2;;
+            point.y = contentSize.height - verticalLayout.bottom - size.height;
+        }
+        else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
+        {
+            size.height = verticalLayout.height;
+            point.y = contentSize.height * verticalLayout.center - size.height / 2;
         }
         
         this->setContentSize(size);

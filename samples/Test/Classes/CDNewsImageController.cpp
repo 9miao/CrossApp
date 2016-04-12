@@ -20,12 +20,11 @@ CDNewsImageTableCell::~CDNewsImageTableCell()
     
 }
 
-CDNewsImageTableCell* CDNewsImageTableCell::create(const std::string& identifier, const DRect& _rect)
+CDNewsImageTableCell* CDNewsImageTableCell::create(const std::string& identifier)
 {
     CDNewsImageTableCell* tableViewCell = new CDNewsImageTableCell();
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
     {
-        tableViewCell->setFrame(_rect);
         tableViewCell->autorelease();
         return tableViewCell;
     }
@@ -193,7 +192,8 @@ void CDNewsImageController::showAlert()
     p_alertView = CAView::createWithFrame(this->getView()->getBounds());
     this->getView()->addSubview(p_alertView);
     
-    CAImageView* bg = CAImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
+//    CAImageView* bg = CAImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
+    CAImageView* bg = CAImageView::createWithLayout(DLayoutFill);
     bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
@@ -408,7 +408,7 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
     CDNewsImageTableCell* cell = dynamic_cast<CDNewsImageTableCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
-        cell = CDNewsImageTableCell::create("CrossApp", DRect(0, 0, _size.width, _size.height));
+        cell = CDNewsImageTableCell::create("CrossApp");
         cell->initWithCell(1);
     }
     CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);

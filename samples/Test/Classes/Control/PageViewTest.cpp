@@ -1,7 +1,7 @@
 
 #include "PageViewTest.h"
 
-PageViewTest::PageViewTest()
+PageViewTest::PageViewTest():pageViewIndex(0)
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(false);
@@ -15,7 +15,6 @@ PageViewTest::~PageViewTest()
 
 void PageViewTest::viewDidLoad()
 {
-    DSize winSize = this->getView()->getBounds().size;
     CAImageView* view1 = CAImageView::createWithImage(CAImage::create("image/1.jpg"));
     CAImageView* view2 = CAImageView::createWithImage(CAImage::create("image/2.jpg"));
     CAImageView* view3 = CAImageView::createWithImage(CAImage::create("image/3.jpg"));

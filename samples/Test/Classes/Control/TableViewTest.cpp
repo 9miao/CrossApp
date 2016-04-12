@@ -200,7 +200,7 @@ void TableViewTest::viewDidLoad()
     p_TableView->setSelectRowAtIndexPath(2, 1);
     this->getView()->addSubview(p_TableView);
     
-    ETableView* p_TableView1 = ETableView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 50), DVerticalLayoutFill));
+    ETableView* p_TableView1 = ETableView::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 50), DVerticalLayoutFill));
     p_TableView1->init(this->getView()->getBounds());
     p_TableView1->setETableViewDelegate(this);
     this->getView()->addSubview(p_TableView1);
