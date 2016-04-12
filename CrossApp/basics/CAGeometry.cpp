@@ -8,13 +8,7 @@
 NS_CC_BEGIN
 
 #define F_ACCURACY 0.001f
-
-float fround(float x)//double round
-{
-    float y = 1000;
-    int xx = x > FLT_EPSILON ? (x * y + 0.5) : (x * y - 0.5);
-    return xx/y;
-}
+#define fround(_x_) (((int)(_x_ > FLT_EPSILON ? (_x_ * 1000 + 0.5) : (_x_ * 1000 - 0.5))) / 1000.0f)
 
 DPoint::DPoint(void) : x(0), y(0)
 {

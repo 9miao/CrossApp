@@ -21,7 +21,8 @@ void FlashViewTest::viewDidLoad()
     this->getView()->setColor(CAColor_gray);
     
     CAFlashView* swfBg = CAFlashView::createWithFlash(CrossApp::extension::CAFlash::createWithFilePath("image/swfWK.swf"));
-    swfBg->setLayout(DLayout(150, 150, 200, 200, DLayout::L_R_T_B));
+//    swfBg->setLayout(DRectLayout(150, 150, 200, 200, DRectLayout::L_R_T_B));
+    swfBg->setLayout(DLayout(DHorizontalLayout_L_R(150, 150), DVerticalLayout_T_B(200, 200)));
     swfBg->runAnimation();
     swfBg->setRepeatForever(true);
     this->getView()->addSubview(swfBg);

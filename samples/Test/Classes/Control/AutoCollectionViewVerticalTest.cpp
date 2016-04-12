@@ -1,7 +1,7 @@
 
-#include "AutoCollectionViewTest.h"
+#include "AutoCollectionViewVerticalTest.h"
 
-AutoCollectionViewTest::AutoCollectionViewTest()
+AutoCollectionViewVerticalTest::AutoCollectionViewVerticalTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(false);
@@ -9,13 +9,13 @@ AutoCollectionViewTest::AutoCollectionViewTest()
     colorArr.clear();
 }
 
-AutoCollectionViewTest::~AutoCollectionViewTest()
+AutoCollectionViewVerticalTest::~AutoCollectionViewVerticalTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
 }
 
-void AutoCollectionViewTest::viewDidLoad()
+void AutoCollectionViewVerticalTest::viewDidLoad()
 {
     //随机出颜色
     for (int i = 0; i < 40; i++)
@@ -31,11 +31,12 @@ void AutoCollectionViewTest::viewDidLoad()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
+    p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
     p_AutoCollection->setAllowsSelection(true);
     p_AutoCollection->setAllowsMultipleSelection(true);
     p_AutoCollection->setCollectionViewDelegate(this);
     p_AutoCollection->setCollectionViewDataSource(this);
+    p_AutoCollection->setOrientation(CAAutoCollectionView::Vertical);
     p_AutoCollection->setHeaderRefreshView(headerRefreshView);
     p_AutoCollection->setFooterRefreshView(footerRefreshView);
     p_AutoCollection->setScrollViewDelegate(this);
@@ -45,13 +46,13 @@ void AutoCollectionViewTest::viewDidLoad()
     this->getView()->addSubview(p_AutoCollection);
 }
 
-void AutoCollectionViewTest::viewDidUnload()
+void AutoCollectionViewVerticalTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-void AutoCollectionViewTest::refreshData1(float interval)
+void AutoCollectionViewVerticalTest::refreshData1(float interval)
 {
     colorArr.clear();
     for (int i = 0; i < 40; i++)
@@ -64,7 +65,7 @@ void AutoCollectionViewTest::refreshData1(float interval)
     p_AutoCollection->reloadData();
 }
 
-void AutoCollectionViewTest::refreshData2(float interval)
+void AutoCollectionViewVerticalTest::refreshData2(float interval)
 {
     for (int i = 0; i < 40; i++)
     {
@@ -76,18 +77,18 @@ void AutoCollectionViewTest::refreshData2(float interval)
     p_AutoCollection->reloadData();
 }
 
-void AutoCollectionViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
+void AutoCollectionViewVerticalTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(AutoCollectionViewTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
+    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
-void AutoCollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
+void AutoCollectionViewVerticalTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(AutoCollectionViewTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
+    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 //选中
-void AutoCollectionViewTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void AutoCollectionViewVerticalTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     //选中
     CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
@@ -101,37 +102,37 @@ void AutoCollectionViewTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollec
 }
 
 //取消选中
-void AutoCollectionViewTest::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void AutoCollectionViewVerticalTest::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     //取消选中
     CCLog("取消选中");
 }
 
 //获取指定cell
-CACollectionViewCell* AutoCollectionViewTest::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
+CACollectionViewCell* AutoCollectionViewVerticalTest::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
     //根据标识获得CACollectionViewCell
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
-
+    
     //如果没有找到相应的CACollectionViewCell则新建一个
     if (p_Cell == NULL)
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         
         //生成Item背景
-        CAView* itemImage = CAView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
+        CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
         p_Cell->getContentView()->addSubview(itemImage);
         
         //生成itemCALabel
-        CALabel* itemText = CALabel::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
+        CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         p_Cell->getContentView()->addSubview(itemText);
     }
-
+    
     //设置Item背景颜色
     CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
     itemImageView->setColor(colorArr.at(item));
@@ -147,19 +148,19 @@ CACollectionViewCell* AutoCollectionViewTest::collectionCellAtIndex(CAAutoCollec
 }
 
 //项目大小
-DSize AutoCollectionViewTest::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize AutoCollectionViewVerticalTest::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
 
 //每个Section中Item的个数
-unsigned int AutoCollectionViewTest::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+unsigned int AutoCollectionViewVerticalTest::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return (unsigned int)colorArr.size();
 }
 
 //section的个数
-unsigned int AutoCollectionViewTest::numberOfSections(CAAutoCollectionView *collectionView)
+unsigned int AutoCollectionViewVerticalTest::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;
 }

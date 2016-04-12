@@ -178,7 +178,7 @@ public:
  colorArr.push_back(ccc4(r, g, b, 255));
  }
  
- Waterfall = CAWaterfallView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
+ Waterfall = CAWaterfallView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
  Waterfall->setItemMargin(10);
  Waterfall->setColumnMargin(10);
  Waterfall->setAllowsSelection(true);
@@ -215,11 +215,11 @@ public:
  p_Cell->setAllowsSelected(false);
  p_Cell->setBackgroundView(CAView::create());
  
- //        CAView* itemImage = CAView::createWithLayout(DLayout(0, 0, 0, Height,DLayout::L_R_T_H));
+ //        CAView* itemImage = CAView::createWithLayout(DRectLayout(0, 0, 0, Height,DRectLayout::L_R_T_H));
  //        itemImage->setTag(99);
  //        p_Cell->addSubview(itemImage);
  
- CALabel* itemText = CALabel::createWithLayout(DLayout(0, 0, 0, 0,DLayout::L_R_T_B));
+ CALabel* itemText = CALabel::createWithLayout(DRectLayout(0, 0, 0, 0,DRectLayout::L_R_T_B));
  itemText->setTag(100);
  itemText->setFontSize(24);
  itemText->setTextAlignment(CATextAlignmentCenter);

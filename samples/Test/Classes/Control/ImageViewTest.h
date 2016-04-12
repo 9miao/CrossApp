@@ -4,13 +4,12 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "UiShow.h"
 
 USING_NS_CC;
 
 #define MAX_COUNT 5  
 
-class ImageViewTest: public UiShow
+class ImageViewTest: public CAViewController
 {
     
 public:

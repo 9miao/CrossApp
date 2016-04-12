@@ -1,9 +1,10 @@
 ﻿
 #include "PickerViewTest.h"
 //#include "support/device/CADevice.h"
+#include "CDUIShowAutoCollectionView.h"
 
 
-PickerViewTest::PickerViewTest():pageViewIndex(0)
+PickerViewTest::PickerViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(false);
@@ -53,72 +54,102 @@ static const CHAR* adressTag[34] =
     _T("澳门特别行政区"),
 };
 
+int PickerViewNum = 0;
+
+void CDUIShowAutoCollectionView::PickerViewRightBtnRightcallback(CAControl* control, DPoint point)
+{
+    if (showPickerViewNavigationBar >= 4)
+    {
+        showPickerViewNavigationBar = 0;
+        PickerViewNum = showPickerViewNavigationBar;
+    }
+    else
+    {
+        PickerViewNum = ++showPickerViewNavigationBar;
+    }
+    PickerViewTest* ViewContrllerPickerViewTest = new PickerViewTest();
+    ViewContrllerPickerViewTest->init();
+    ViewContrllerPickerViewTest->setNavigationBarItem(PickerViewNavigationBar);
+    ViewContrllerPickerViewTest->autorelease();
+    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerPickerViewTest, false);
+}
+
+
 void PickerViewTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    if (PickerViewNum == 0)
+    {
+        p_pickerView = CAPickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)));
+        p_pickerView->setPickerViewDelegate(this);
+        p_pickerView->setPickerViewDataSource(this);
+        p_pickerView->setFontSizeNormal(40);
+        p_pickerView->setFontSizeSelected(40);
     
-    pageViewIndex = 1;
-    showIndex = 0;
-    VIEWLIST.clear();
+        city_value = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(100, 40)));
+        city_value->setText(UTF8("天津市"));
+        city_value->setColor(CAColor_black);
+        city_value->setFontSize(28);
+        city_value->setTextAlignment(CATextAlignmentCenter);
+        city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     
-    p_pickerView = CAPickerView::createWithLayout(DLayout(10, 10, 100, 400, DLayout::L_R_T_H));
-    p_pickerView->setPickerViewDelegate(this);
-    p_pickerView->setPickerViewDataSource(this);
-    p_pickerView->setFontSizeNormal(40);
-    p_pickerView->setFontSizeSelected(40);
+        CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 100)));
+        view1->addSubview(p_pickerView);
+        view1->addSubview(city_value);
+        view1->setColor(CAColor_white);
+        this->getView()->addSubview(view1);
+    }
     
-    city_value = CALabel::createWithLayout(DLayout(0, winSize.width, 100, 40, DLayout::L_W_T_H));
-    city_value->setText(UTF8("天津市"));
-    city_value->setColor(CAColor_black);
-    city_value->setFontSize(28);
-    city_value->setTextAlignment(CATextAlignmentCenter);
-    city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    
-    CAView* view1 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view1->addSubview(p_pickerView);
-    view1->addSubview(city_value);
-    view1->setColor(CAColor_white);
-    VIEWLIST.pushBack(view1);
-
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    else if(PickerViewNum == 1)
+    {
+//        CADatePickerView* dpv = CADatePickerView::createWithLayout(DRectLayout(10, 10, 200, 400, DRectLayout::L_R_T_H),CADatePickerModeDate);
+        CADatePickerView* dpv = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeDate);
+        //dpv->setDate(2004, 2, 16, false);
+        dpv->setDelegate(this);
+        
+        CAView* view2 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 100)));
+        view2->addSubview(dpv);
+        view2->setColor(CAColor_white);
+        this->getView()->addSubview(view2);
+    }
+    else if(PickerViewNum == 2)
+    {
+        CADatePickerView* dpv3 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeDateAndTime);
+        dpv3->setDelegate(this);
     
-    CADatePickerView* dpv = CADatePickerView::createWithLayout(DLayout(10, 10, 100, 400, DLayout::L_R_T_H),CADatePickerModeDate);
-    //dpv->setDate(2004, 2, 16, false);
-    dpv->setDelegate(this);
+        CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 100)));
+        view3->addSubview(dpv3);
+        view3->setColor(CAColor_white);
+        this->getView()->addSubview(view3);
+    }
+    else if(PickerViewNum == 3)
+    {
+        CADatePickerView* dpv4 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeTime);
+        dpv4->setDelegate(this);
     
-    CAView* view2 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view2->addSubview(dpv);
-    view2->setColor(CAColor_white);
-    VIEWLIST.pushBack(view2);
+        CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 100)));
+        view4->addSubview(dpv4);
+        view4->setColor(CAColor_white);
+        this->getView()->addSubview(view4);
+    }
+    else
+    {
+        CADatePickerView* dpv5 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeCountDownTimer);
+        dpv5->setDelegate(this);
     
-    CADatePickerView* dpv3 = CADatePickerView::createWithLayout(DLayout(10, 10, 100, 400, DLayout::L_R_T_H),CADatePickerModeDateAndTime);
-    dpv3->setDelegate(this);
-    
-    CAView* view3 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view3->addSubview(dpv3);
-    view3->setColor(CAColor_white);
-    VIEWLIST.pushBack(view3);
-    
-    CADatePickerView* dpv4 = CADatePickerView::createWithLayout(DLayout(10, 10, 100, 400, DLayout::L_R_T_H),CADatePickerModeTime);
-    dpv4->setDelegate(this);
-    
-    CAView* view4 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view4->addSubview(dpv4);
-    view4->setColor(CAColor_white);
-    VIEWLIST.pushBack(view4);
-    
-    CADatePickerView* dpv5 = CADatePickerView::createWithLayout(DLayout(10, 10, 100, 400, DLayout::L_R_T_H),CADatePickerModeCountDownTimer);
-    dpv5->setDelegate(this);
-    
-    CAView* view5 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view5->addSubview(dpv5);
-    view5->setColor(CAColor_white);
-    VIEWLIST.pushBack(view5);
+        CAView* view5 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 100)));
+        view5->addSubview(dpv5);
+        view5->setColor(CAColor_white);
+        this->getView()->addSubview(view5);
+    }
 #endif
     
-    showNum = VIEWLIST.size();
-    showUI();
-    p_PageViewVec->setViews(VIEWLIST);
+}
+
+void PickerViewTest::viewDidUnload()
+{
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 void PickerViewTest::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
@@ -148,9 +179,7 @@ unsigned int PickerViewTest::numberOfRowsInComponent(CAPickerView* pickerView, u
 
 float PickerViewTest::widthForComponent(CAPickerView* pickerView, unsigned int component)
 {
-    CCLog("return = %f", p_pickerView->getLayout().width);
     return p_pickerView->getFrame().size.width/numberOfComponentsInPickerView(pickerView);
-    //return p_pickerView->getLayout().width/numberOfComponentsInPickerView(pickerView);
 }
 
 float PickerViewTest::rowHeightForComponent(CAPickerView* pickerView, unsigned int component)
@@ -166,77 +195,5 @@ const char* PickerViewTest::titleForRow(CAPickerView* pickerView, unsigned int r
     return s.c_str();
 }
 
-void PickerViewTest::viewDidUnload()
-{
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
-void PickerViewTest::showUI()
-{
-    CAButton* btn_Left = CAButton::create(CAButtonTypeSquareRect);
-    btn_Left->setTag(1);
-    btn_Left->setLayout(DLayout(200, 64, 20, 64, DLayout::L_W_B_H));
-    btn_Left->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_white.png")));
-    btn_Left->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_left_blue.png")));
-    btn_Left->addTarget(this, CAControl_selector(PickerViewTest::buttonControlCallBack), CAControlEventTouchDown);
-    this->getView()->insertSubview(btn_Left, 10);
-    
-    CAButton* btn_Right = CAButton::create(CAButtonTypeSquareRect);
-    btn_Right->setTag(2);
-    btn_Right->setLayout(DLayout(200, 64, 20, 64, DLayout::R_W_B_H));
-    btn_Right->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_white.png")));
-    btn_Right->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_right_blue.png")));
-    btn_Right->addTarget(this, CAControl_selector(PickerViewTest::buttonControlCallBack), CAControlEventTouchDown);
-    this->getView()->insertSubview(btn_Right, 10);
-    
-    p_PageViewVec = CAPageView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B), CAPageViewDirectionHorizontal);
-    p_PageViewVec->setPageViewDelegate(this);
-    p_PageViewVec->setBackgroundColor(CAColor_gray);
-    p_PageViewVec->setPageViewDelegate(this);
-    p_PageViewVec->setScrollEnabled(false);
-    
-    this->getView()->addSubview(p_PageViewVec);
-}
 
-void PickerViewTest::buttonControlCallBack(CAControl* btn, DPoint point)
-{
-    point = btn->convertToWorldSpace(point);
-    CAButton* button = (CAButton*)btn;
-    CCLog("btn_tag===%d",button->getTag());
-    int temIndex = button->getTag();
-    if (temIndex==1) {
-        if (showIndex>0) {
-            showIndex--;
-            p_PageViewVec->setCurrPage(showIndex, true); //123456
-        }else if(showIndex==0){
-            showIndex=showNum-1;
-            p_PageViewVec->setCurrPage(showIndex, false);
-        }
-    }else if(temIndex==2){
-        if (showIndex<showNum) {
-            showIndex++;
-            if (showIndex==showNum) {
-                showIndex=0;
-                p_PageViewVec->setCurrPage(showIndex, false);
-            }else{
-                p_PageViewVec->setCurrPage(showIndex, true);
-            }
-        }
-    }
-}
-
-void PickerViewTest::pageViewDidBeginTurning(CAPageView* pageView)
-{
-
-}
-
-void PickerViewTest::pageViewDidEndTurning(CAPageView* pageView)
-{
-
-}
-
-void PickerViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point)
-{
-
-}

@@ -1,20 +1,20 @@
 
-#ifndef __Test__SliderTest__
-#define __Test__SliderTest__
+#ifndef __Test__SliderTestFirst__
+#define __Test__SliderTestFirst__
 
 #include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
 
-class SliderTest: public CAViewController 
+class SliderTestFirst: public CAViewController
 {
     
 public:
-
-	SliderTest();
     
-	virtual ~SliderTest();
+    SliderTestFirst();
+    
+    virtual ~SliderTestFirst();
     
 protected:
     
@@ -24,8 +24,7 @@ protected:
     
 public:
     
-    CALabel* sliderValue1;
-    CALabel* sliderValue2;
+    CALabel* sliderValue;
     CASlider* slider;
     
 public:
@@ -33,6 +32,5 @@ public:
     void sliderValueChange(CAControl* btn, DPoint point);
     
 };
-
 
 #endif /* defined(__HelloCpp__ViewController__) */

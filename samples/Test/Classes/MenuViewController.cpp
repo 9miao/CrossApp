@@ -25,7 +25,8 @@ void MenuViewController::viewDidLoad()
     this->getView()->removeAllSubviews();
     this->getView()->setColor(CAColor_clear);
     
-    tableView = CATableView::createWithLayout(DLayout(0,0,450,0,DLayout::L_R_T_B));
+//    tableView = CATableView::createWithLayout(DRectLayout(0,0,450,0,DRectLayout::L_R_T_B));
+    tableView = CATableView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0)));
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
@@ -86,7 +87,8 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         cell = CATableViewCell::create("CrossApp");
         cell->setBackgroundView(NULL);
 //        CALabel* test = CALabel::createWithCenter(DRect(_size.width/2+30,_size.height/2,_size.width,_size.height));
-        CALabel* test = CALabel::createWithLayout(DLayout(50,0,0,0,DLayout::L_R_T_B));
+//        CALabel* test = CALabel::createWithLayout(DRectLayout(50,0,0,0,DRectLayout::L_R_T_B));
+        CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 0), DVerticalLayoutFill));
         test->setTextAlignment(CATextAlignmentLeft);
         test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         test->setFontSize(32);
@@ -95,7 +97,8 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         cell->addSubview(test);
         
 //        CAImageView* arrow = CAImageView::createWithCenter(DRect(_size.width-64,_size.height/2,64,64));
-        CAImageView* arrow = CAImageView::createWithLayout(DLayout(0,64,20,64,DLayout::R_W_T_H));
+//        CAImageView* arrow = CAImageView::createWithLayout(DRectLayout(0,64,20,64,DRectLayout::R_W_T_H));
+        CAImageView* arrow = CAImageView::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 64), DVerticalLayout_T_H(20, 64)));
         arrow->setTag(101);
         cell->addSubview(arrow);
     }

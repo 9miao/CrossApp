@@ -21,21 +21,21 @@ void AlertViewTest::viewDidLoad()
     
     //初始化viewList
     CAButton* btn1 = CAButton::create(CAButtonTypeRoundedRect);
-    btn1->setLayout(DLayout(240,240,200,60,DLayout::L_R_T_H));
+    btn1->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(200, 60)));
     btn1->setTag(100);
     btn1->setTitleForState(CAControlStateAll, "Click-1");
     btn1->addTarget(this, CAControl_selector(AlertViewTest::alertButtonCallBack), CAControlEventTouchUpInSide);
     this->getView()->addSubview(btn1);
     
     CAButton* btn2 = CAButton::create(CAButtonTypeRoundedRect);
-    btn2->setLayout(DLayout(240,240,400,60,DLayout::L_R_T_H));
+    btn2->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(400, 60)));
     btn2->setTag(200);
     btn2->setTitleForState(CAControlStateAll, "Click-2");
     btn2->addTarget(this, CAControl_selector(AlertViewTest::alertButtonCallBack), CAControlEventTouchUpInSide);
     this->getView()->addSubview(btn2);
     
     CAButton* btn3 = CAButton::create(CAButtonTypeRoundedRect);
-    btn3->setLayout(DLayout(240,240,600,60,DLayout::L_R_T_H));
+    btn3->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(600, 60)));
     btn3->setTag(300);
     btn3->setTitleForState(CAControlStateAll, "Click-3");
     btn3->addTarget(this, CAControl_selector(AlertViewTest::alertButtonCallBack), CAControlEventTouchUpInSide);

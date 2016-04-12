@@ -4,11 +4,10 @@
 
 #include <iostream>
 #include "CrossApp.h"
-#include "UiShow.h"
 
 USING_NS_CC;
 
-class LabelTest: public UiShow
+class LabelTest: public CAViewController
 {
     
 public:

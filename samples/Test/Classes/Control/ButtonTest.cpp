@@ -22,7 +22,8 @@ void ButtonTest::viewDidLoad()
     btn1->setTag(1);
     //设置Layout
 //    btn1->setCenter(DRect(winSize.width/2, winSize.height/2, 100, 50));
-    btn1->setLayout(DLayout(240,240,100,60,DLayout::L_R_T_H));
+    btn1->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(100, 60)));
+                    
     //设置Button标题的显示文本
     btn1->setTitleForState(CAControlStateNormal, "Noborder");
     //设置Button的标题颜色和状态
@@ -35,7 +36,7 @@ void ButtonTest::viewDidLoad()
     //设置tag
     btn2->setTag(2);
     //设置Layout
-    btn2->setLayout(DLayout(240,240,250,60,DLayout::L_R_T_H));
+    btn2->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(250, 60)));
     //设置Button标题的显示文本
     btn2->setTitleForState(CAControlStateAll,"SquareRect");
     //添加回调事件
@@ -46,7 +47,7 @@ void ButtonTest::viewDidLoad()
     //设置tag
     btn3->setTag(3);
     //设置Layout
-    btn3->setLayout(DLayout(240,240,400,60,DLayout::L_R_T_H));
+    btn3->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(400, 60)));
     //设置Button标题的显示文本
     btn3->setTitleForState(CAControlStateAll, "RoundedRect");
     //添加回调事件
@@ -57,7 +58,7 @@ void ButtonTest::viewDidLoad()
     //设置tag
     btn4->setTag(4);
     //设置Layout
-    btn4->setLayout(DLayout(240,240,550,60,DLayout::L_R_T_H));
+    btn4->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(550, 60)));
     //设置Button的标题颜色和状态
     btn4->setTitleColorForState(CAControlStateNormal,CAColor_white);
     //设置Button的背景View
@@ -71,7 +72,7 @@ void ButtonTest::viewDidLoad()
     CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
     btn5->setTag(5);
     btn5->setAllowsSelected(true);
-    btn5->setLayout(DLayout(240,240,700,60,DLayout::L_R_T_H));
+    btn4->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(700, 60)));
     btn5->setTitleForState(CAControlStateNormal, "Normal");
     btn5->setTitleColorForState(CAControlStateNormal, CAColor_white);
     btn5->setTitleForState(CAControlStateSelected, "Selected");

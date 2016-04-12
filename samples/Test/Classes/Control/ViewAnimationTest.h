@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class ViewAnimationTest: public CAViewController, public CAPageViewDelegate
+class ViewAnimationTest: public CAViewController
 {
     
 public:
@@ -24,18 +24,10 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
+    int heart_index;
     
     DSize winSize;
     DRect winRect;
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAVector<CAView* > VIEWLIST;
-    
-    
-    int heart_index;
     
     //Animation
     CAImageView* animation_1_view;
@@ -49,16 +41,7 @@ public:
     void endAction();
     
     void doAction(CAControl* btn,DPoint point);
-    
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
+
 };
 
 

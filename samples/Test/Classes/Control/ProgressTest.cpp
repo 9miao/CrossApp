@@ -17,7 +17,8 @@ void ProgressTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-    progress_value = CALabel::createWithLayout(DLayout(100,100,300,50,DLayout::L_R_T_H));
+//    progress_value = CALabel::createWithLayout(DRectLayout(100,100,300,50,DRectLayout::L_R_T_H));
+    progress_value = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
     progress_value->setTag(100);
     progress_value->setText("");
     progress_value->setFontSize(30);
@@ -27,7 +28,8 @@ void ProgressTest::viewDidLoad()
     this->getView()->addSubview(progress_value);
     
     progress = CAProgress::create();
-    progress->setLayout(DLayout(100,100,550,0,DLayout::L_R_T_H));
+//    progress->setLayout(DRectLayout(100,100,550,0,DRectLayout::L_R_T_H));
+    progress->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(550, 0)));
     CAScheduler::schedule(schedule_selector(ProgressTest::progressValueChange), this, 0.01, false);
     this->getView()->addSubview(progress);
 }

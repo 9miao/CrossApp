@@ -18,13 +18,14 @@ void SwitchTest::viewDidLoad()
     this->getView()->setColor(CAColor_gray);
     
 //    CASwitch* customSwitch1 = CASwitch::createWithCenter(DRect(winSize.width/2, winSize.height/2, 100, 20));
-    CASwitch* customSwitch1 = CASwitch::createWithLayout(DLayout(150,100,350,20,DLayout::L_W_T_H));
+//    CASwitch* customSwitch1 = CASwitch::createWithLayout(DRectLayout(150,100,350,20,DRectLayout::L_W_T_H));
+    CASwitch* customSwitch1 = CASwitch::createWithLayout(DLayout(DHorizontalLayout_L_W(150, 100), DVerticalLayout_T_H(350, 20)));
     customSwitch1->setTag(100);
     customSwitch1->setIsOn(true, false);
     customSwitch1->addTarget(this, CAControl_selector(SwitchTest::switchStateChange));
     this->getView()->addSubview(customSwitch1);
     
-    CASwitch* customSwitch2 = CASwitch::createWithLayout(DLayout(150,100,350,20,DLayout::R_W_T_H));
+    CASwitch* customSwitch2 = CASwitch::createWithLayout(DLayout(DHorizontalLayout_R_W(150, 100), DVerticalLayout_T_H(350, 20)));
     customSwitch2->setTag(101);
     customSwitch2->setIsOn(true, false);
     customSwitch2->setOnImage(CAImage::create("image/Switch_on.png"));

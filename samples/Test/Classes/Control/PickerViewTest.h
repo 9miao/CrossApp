@@ -10,7 +10,7 @@ USING_NS_CC;
 #define _T(x) L##x
 #define CHAR    wchar_t
 
-class PickerViewTest: public CAViewController, public CAPageViewDelegate, public CAPickerViewDelegate, public CAPickerViewDataSource, public CADatePickerViewDelegate, public CAScrollViewDelegate
+class PickerViewTest: public CAViewController, public CAPickerViewDelegate, public CAPickerViewDataSource, public CADatePickerViewDelegate, public CAScrollViewDelegate, public CAPageViewDelegate
 {
     
 public:
@@ -27,34 +27,12 @@ protected:
     
 public:
     
-    CAPageView* p_PageViewVec;
-    
-    DSize winSize;
-    DRect winRect;
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
-    
-    CAVector<CAView* > VIEWLIST;
-    
     CAPickerView* p_pickerView;
     CALabel* city_value;
     CAClippingView* m_clvImage;
     CAClippingView* m_clv;
     
     int dle_ren_index;
-    
-public:
-    
-    void showUI();
-    
-    void buttonControlCallBack(CAControl* btn, DPoint point);
-    
-    void pageViewDidBeginTurning(CAPageView* pageView);
-    
-    void pageViewDidEndTurning(CAPageView* pageView);
-    
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
     
 public:
     

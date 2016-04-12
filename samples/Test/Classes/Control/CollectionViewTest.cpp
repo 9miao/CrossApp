@@ -14,8 +14,7 @@ CollectionViewTest::~CollectionViewTest()
 }
 
 void CollectionViewTest::viewDidLoad()
-{
-        
+{        
     for (int i = 0; i < 40; i++)
     {
         char r = CCRANDOM_0_1() * 255;
@@ -27,7 +26,7 @@ void CollectionViewTest::viewDidLoad()
     headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     
-    p_Conllection = CACollectionView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
+    p_Conllection = CACollectionView::createWithLayout(DLayoutFill);
     p_Conllection->setAllowsSelection(true);
 //    p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
@@ -116,11 +115,12 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
         p_Cell = CACollectionViewCell::create("CrossApp");
         
         //生成Item背景
-        CAView* itemImage = CAView::createWithLayout(DLayout(0,0,0,0,DLayout::L_R_T_B));
+        CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
         p_Cell->getContentView()->addSubview(itemImage);
         
-        CALabel* itemText = CALabel::createWithLayout(DLayout(0,0,50,50,DLayout::L_R_T_B));
+//        CALabel* itemText = CALabel::createWithLayout(DRectLayout(0,0,50,50,DRectLayout::L_R_T_B));
+        CALabel* itemText = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(50, 50)));
         itemText->setTag(100);
         itemText->setFontSize(29);
         itemText->setTextAlignment(CATextAlignmentCenter);

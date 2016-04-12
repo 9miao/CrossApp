@@ -163,7 +163,7 @@ void CDNewsAboutController::viewDidLoad()
         this->getView()->removeSubview(p_TableView);
         p_TableView = NULL;
     }
-    p_TableView= CATableView::createWithLayout(DLayout(0, 0, -150, 0, DLayout::L_R_T_B));
+    p_TableView= CATableView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(-150, 0)));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
     p_TableView->setAllowsSelection(true);
@@ -172,13 +172,13 @@ void CDNewsAboutController::viewDidLoad()
     this->getView()->addSubview(p_TableView);
     p_TableView->setTableHeaderHeight(602);
     CAView* view = CAView::createWithColor(CAColor_clear);
-    view->setLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
+    view->setLayout(DLayoutFill);
     
-    CAImageView* head_bg = CAImageView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
+    CAImageView* head_bg = CAImageView::createWithLayout(DLayoutFill);
     head_bg->setImage(CAImage::create("image/about_head_bg.png"));
     view->addSubview(head_bg);
     
-    CAImageView* head = CAImageView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
+    CAImageView* head = CAImageView::createWithLayout(DLayoutFill);
     head->setImage(CAImage::create("image/avatar_bg_70.png"));
     view->addSubview(head);
     
@@ -228,10 +228,10 @@ void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table,
     if (section==1 && row == 5)
     {
         _waitview = CAView::createWithColor(ccc4(0,0,0,128));
-        _waitview->setLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
+        _waitview->setLayout(DLayoutFill);
         this->getView()->insertSubview(_waitview, CAWindowZOderTop);
         
-        CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(0, 0, 0, 0, DLayout::L_R_T_B));
+        CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
         p_pLoading->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
         p_pLoading->startAnimating();
         _waitview->addSubview(p_pLoading);

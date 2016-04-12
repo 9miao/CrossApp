@@ -1,5 +1,6 @@
-﻿
+
 #include "LabelTest.h"
+#include "CDUIShowAutoCollectionView.h"
 
 LabelTest::LabelTest()
 {
@@ -13,15 +14,30 @@ LabelTest::~LabelTest()
     drawer->setTouchMoved(true);
 }
 
+int LabelNum = 0;
+
+void CDUIShowAutoCollectionView::LabelRightBtnRightcallback(CAControl* control, DPoint point)
+{
+    if (showLabelNavigationBar >= 2)
+    {
+        showLabelNavigationBar = 0;
+        
+        LabelNum = showLabelNavigationBar;
+    }
+    else
+    {
+        LabelNum = ++showLabelNavigationBar;
+    }
+    
+    LabelTest* ViewContrllerLabelTest = new LabelTest();
+    ViewContrllerLabelTest->init();
+    ViewContrllerLabelTest->setNavigationBarItem(LabelNavigationBar);
+    ViewContrllerLabelTest->autorelease();
+    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerLabelTest, false);
+}
+
 void LabelTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
-    
-    showNum = 3;
-    pageViewIndex = 1;
-    showIndex = 0;
-    VIEWLIST.clear();
-    
     std::string s = "Hello World";
     
     std::u32string c;
@@ -31,120 +47,128 @@ void LabelTest::viewDidLoad()
     std::string cc;
     StringUtils::UTF32ToUTF8(c, cc);
     
-    CALabel* label = CALabel::create();
-    CAFont Font;
-    Font.fontSize = 36;
-    Font.color = CAColor_red;
-    Font.fontName = "c:/x.ttf";
-    label->setText(cc);
-    label->setFont(Font);
-    label->setTextAlignment(CATextAlignmentCenter);
-    label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label->setLayout(DLayout(100, 100, 150, 40, DLayout::L_R_T_H));
+    if (LabelNum == 0)
+    {
+        CAFont Font;
+        Font.fontSize = 36;
+        Font.color = CAColor_red;
+        Font.fontName = "c:/x.ttf";
+        
+        CALabel* label = CALabel::create();
+        label->setText(cc);
+        label->setFont(Font);
+        label->setTextAlignment(CATextAlignmentCenter);
+        label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(150, 40)));
     
-    CALabel* label1 = CALabel::create();
-    CAFont Font1;
-    Font1.fontSize = 36;
-    Font1.color = CAColor_red;
-    Font1.fontName = "c:/x.ttf";
-    Font1.underLine = true;
-    label1->setText(cc);
-    label1->setFont(Font1);
-    label1->setTextAlignment(CATextAlignmentCenter);
-    label1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label1->setLayout(DLayout(100, 100, 300, 40, DLayout::L_R_T_H));
+        CAFont Font1;
+        Font1.fontSize = 36;
+        Font1.color = CAColor_red;
+        Font1.fontName = "c:/x.ttf";
+        Font1.underLine = true;
+        
+        CALabel* label1 = CALabel::create();
+        label1->setText(cc);
+        label1->setFont(Font1);
+        label1->setTextAlignment(CATextAlignmentCenter);
+        label1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 40)));
+        
+        CALabel* label2 = CALabel::create();
+        CAFont Font2;
+        Font2.fontSize = 36;
+        Font2.color = CAColor_red;
+        Font2.fontName = "c:/x.ttf";
+        Font2.bold = true;
+        label2->setText(cc);
+        label2->setFont(Font2);
+        label2->setTextAlignment(CATextAlignmentCenter);
+        label2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(450, 40)));
     
-    CALabel* label2 = CALabel::create();
-    CAFont Font2;
-    Font2.fontSize = 36;
-    Font2.color = CAColor_red;
-    Font2.fontName = "c:/x.ttf";
-    Font2.bold = true;
-    label2->setText(cc);
-    label2->setFont(Font2);
-    label2->setTextAlignment(CATextAlignmentCenter);
-    label2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label2->setLayout(DLayout(100, 100, 450, 40, DLayout::L_R_T_H));
+        CALabel* label3 = CALabel::create();
+        CAFont Font3;
+        Font3.fontSize = 36;
+        Font3.color = CAColor_red;
+        Font3.fontName = "c:/x.ttf";
+        Font3.italics = true;
+        label3->setText(cc);
+        label3->setFont(Font3);
+        label3->setTextAlignment(CATextAlignmentCenter);
+        label3->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(600, 40)));
     
-    CALabel* label3 = CALabel::create();
-    CAFont Font3;
-    Font3.fontSize = 36;
-    Font3.color = CAColor_red;
-    Font3.fontName = "c:/x.ttf";
-    Font3.italics = true;
-    label3->setText(cc);
-    label3->setFont(Font3);
-    label3->setTextAlignment(CATextAlignmentCenter);
-    label3->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label3->setLayout(DLayout(100, 100, 600, 40, DLayout::L_R_T_H));
+        CALabel* label4 = CALabel::create();
+        CAFont Font4;
+        Font4.fontSize = 36;
+        Font4.color = CAColor_red;
+        label4->setText("Enable Copy");
+        label4->setFont(Font4);
+        label4->setTextAlignment(CATextAlignmentCenter);
+        label4->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(750, 40)));
     
-    CALabel* label4 = CALabel::create();
-    CAFont Font4;
-    Font4.fontSize = 36;
-    Font4.color = CAColor_red;
-    label4->setText("Enable Copy");
-    label4->setFont(Font4);
-    label4->setTextAlignment(CATextAlignmentCenter);
-    label4->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label4->setLayout(DLayout(100, 100, 750, 40, DLayout::L_R_T_H));
-
-    CAView* view = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view->addSubview(label);
-    view->addSubview(label1);
-    view->addSubview(label2);
-    view->addSubview(label3);
-    view->addSubview(label4);
-    view->setColor(CAColor_gray);
-    VIEWLIST.pushBack(view);
+        CAView* view = CAView::createWithLayout(DLayoutFill);
+        view->addSubview(label);
+        view->addSubview(label1);
+        view->addSubview(label2);
+        view->addSubview(label3);
+        view->addSubview(label4);
+        view->setColor(CAColor_gray);
+        
+        this->getView()->addSubview(view);
+    }
+    else if (LabelNum == 1)
+    {
+        CALabel* label5 = CALabel::create();
+        CAFont Font5;
+        Font5.fontSize = 36;
+        Font5.color = CAColor_red;
+        Font5.fontName = "c:/x.ttf";
+        Font5.bold = true;
+        Font5.italics = true;
+        Font5.underLine = true;
+        label5->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
+        label5->setFont(Font5);
+        label5->setLineSpacing(20);
+        label5->setTextAlignment(CATextAlignmentCenter);
+        label5->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label5->setLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(300, 300)));
     
-    CALabel* label5 = CALabel::create();
-    CAFont Font5;
-    Font5.fontSize = 36;
-    Font5.color = CAColor_red;
-    Font5.fontName = "c:/x.ttf";
-    Font5.bold = true;
-    Font5.italics = true;
-    Font5.underLine = true;
-    label5->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
-    label5->setFont(Font5);
-    label5->setLineSpacing(20);
-    label5->setTextAlignment(CATextAlignmentCenter);
-    label5->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-    label5->setLayout(DLayout(50, 50, 300, 300, DLayout::L_R_T_H));
+        CAView* view1 = CAView::createWithLayout(DLayoutFill);
+        view1->addSubview(label5);
+        view1->setColor(CAColor_gray);
+        
+        this->getView()->addSubview(view1);
+    }
+    else
+    {
     
-	CAView* view1 = CAView::createWithLayout(DLayout(50, 50, 300, 300, DLayout::L_R_T_H));
-    view1->addSubview(label5);
-    view1->setColor(CAColor_gray);
-    VIEWLIST.pushBack(view1);
+        CARichLabel* RichLabel = CARichLabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(200, 200)));
+        CAFont RichLabelFont;
+        RichLabelFont.bold = true;
+        RichLabelFont.fontSize = 42;
+        RichLabelFont.color = CAColor_red;
+        RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont);
+        
+        CAFont RichLabelFont1;
+        RichLabelFont1.italics = true;
+        RichLabelFont1.fontSize = 42;
+        RichLabelFont1.color = CAColor_red;
+        RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont1);
+        
+        CAFont RichLabelFont2;
+        RichLabelFont2.underLine = true;
+        RichLabelFont2.fontSize = 42;
+        RichLabelFont2.color = CAColor_red;
+        RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
     
-	CARichLabel* RichLabel = CARichLabel::create();
-	RichLabel->setLayout(DLayout(50, 50, 50, 500, DLayout::L_R_T_H));
-	RichLabel->appendText("Hello World");
-
-	CAFont ft;
-	ft.fontSize = 48;
-	ft.color = ccc4(255, 0, 255, 100);
-	RichLabel->appendText(UTF8("阿斯蒂芬"), ft);
-
-	RichLabel->appendText(UTF8("欢迎访问我的网站 http://www.baidu.com、以及我的微博：http://www.xxx.com"));
-	ft.fontSize = 64;
-	ft.color = ccc4(255, 0, 0, 100);
-	RichLabel->appendText(UTF8("阿斯顿的双方各大发光火发过火各环节饭锅夫人"), ft);
-
-	CAFont RichLabelFont2;
-	RichLabelFont2.underLine = true;
-	RichLabelFont2.fontSize = 42;
-	RichLabelFont2.color = CAColor_yellow;
-	RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
-
-    CAView* view2 = CAView::createWithLayout(DLayout(0, 0, 0, 100, DLayout::L_R_T_B));
-    view2->addSubview(RichLabel);
-    view2->setColor(CAColor_gray);
-    VIEWLIST.pushBack(view2);
-    
-    showUI();
-    
-    p_PageViewVec->setViews(VIEWLIST);
+        CAView* view2 = CAView::createWithLayout(DLayoutFill);
+        view2->addSubview(RichLabel);
+        view2->setColor(CAColor_gray);
+        
+        this->getView()->addSubview(view2);
+    }
 }
 
 void LabelTest::viewDidUnload()

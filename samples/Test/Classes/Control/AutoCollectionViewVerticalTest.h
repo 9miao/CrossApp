@@ -1,20 +1,20 @@
 
-#ifndef __Test__AutoCollectionViewTest__
-#define __Test__AutoCollectionViewTest__
+#ifndef __Test__AutoCollectionViewVerticalTest__
+#define __Test__AutoCollectionViewVerticalTest__
 
 #include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
 
-class AutoCollectionViewTest: public CAViewController, public CAScrollViewDelegate, CAAutoCollectionViewDataSource,CAAutoCollectionViewDelegate
+class AutoCollectionViewVerticalTest: public CAViewController, public CAScrollViewDelegate, CAAutoCollectionViewDataSource,CAAutoCollectionViewDelegate
 {
     
 public:
     
-    AutoCollectionViewTest();
+    AutoCollectionViewVerticalTest();
     
-    virtual ~AutoCollectionViewTest();
+    virtual ~AutoCollectionViewVerticalTest();
     
 protected:
     
@@ -46,13 +46,13 @@ public:
     virtual void collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
     
     virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item);
-
+    
     virtual DSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item);
-
+    
     virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section);
-
+    
     virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView);
-
+    
 };
 
 

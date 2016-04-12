@@ -22,7 +22,42 @@ public:
     
     CAAutoCollectionView* p_AutoCollection;
     
+    int showImageViewNavigationBar;
+    CANavigationBarItem* ImageViewNavigationBar;
+    
+    int showActivityIndicatorNavigationBar;
+    CANavigationBarItem* ActivityIndicatorNavigationBar;
+    
+    int showSliderNavigationBar;
+    CANavigationBarItem* SliderNavigationBar;
+    
+    int showLabelNavigationBar;
+    CANavigationBarItem* LabelNavigationBar;
+    
+    int showTabBarNavigationBar;
+    CANavigationBarItem* TabBarNavigationBar;
+    
+    int showPickerViewNavigationBar;
+    CANavigationBarItem* PickerViewNavigationBar;
+    
+    int showViewAnimationNavigationBar;
+    CANavigationBarItem* ViewAnimationNavigationBar;
+    
 public:
+    
+    void SliderRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void LabelRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void ImageViewRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void ActivityIndicatorRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void TabBarRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void PickerViewRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void ViewAnimationRightBtnRightcallback(CAControl* control, DPoint point);
     
     void refreshData(float interval);
     

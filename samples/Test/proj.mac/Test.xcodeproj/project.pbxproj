@@ -148,9 +148,8 @@
 		B0621C351AC3DCCA005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621C321AC3DCCA005EBCA7 /* fonts */; };
 		B0621C371AC3DCCA005EBCA7 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B0621C341AC3DCCA005EBCA7 /* source_material */; };
 		B063D46D1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D46B1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp */; };
-		B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest1111.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest1111.cpp */; };
+		B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp */; };
 		B063D4A91CAD24F300B1FF13 /* AlertViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4701CAD24F300B1FF13 /* AlertViewTest.cpp */; };
-		B063D4AA1CAD24F300B1FF13 /* AutoCollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4721CAD24F300B1FF13 /* AutoCollectionViewTest.cpp */; };
 		B063D4AB1CAD24F300B1FF13 /* ButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4741CAD24F300B1FF13 /* ButtonTest.cpp */; };
 		B063D4AC1CAD24F300B1FF13 /* CollectionViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4761CAD24F300B1FF13 /* CollectionViewTest.cpp */; };
 		B063D4AD1CAD24F300B1FF13 /* FlashViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4781CAD24F300B1FF13 /* FlashViewTest.cpp */; };
@@ -178,6 +177,8 @@
 		B063D4C31CAD24F300B1FF13 /* WaterfallViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A41CAD24F300B1FF13 /* WaterfallViewTest.cpp */; };
 		B063D4C41CAD24F300B1FF13 /* WebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A61CAD24F300B1FF13 /* WebViewTest.cpp */; };
 		B08BBA271BC8ACCE0044340B /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08BBA251BC8ACCE0044340B /* CDNewsImageController.cpp */; };
+		B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */; };
+		B093DB491CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -487,11 +488,9 @@
 		B063D46B1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDUIShowAutoCollectionView.cpp; path = ../Classes/CDUIShowAutoCollectionView.cpp; sourceTree = "<group>"; };
 		B063D46C1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDUIShowAutoCollectionView.h; path = ../Classes/CDUIShowAutoCollectionView.h; sourceTree = "<group>"; };
 		B063D46E1CAD24F300B1FF13 /* ActivityIndicatorViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityIndicatorViewTest.h; path = ../Classes/Control/ActivityIndicatorViewTest.h; sourceTree = "<group>"; };
-		B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest1111.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActivityIndicatorViewTest1111.cpp; path = ../Classes/Control/ActivityIndicatorViewTest1111.cpp; sourceTree = "<group>"; };
+		B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActivityIndicatorViewTest.cpp; path = ../Classes/Control/ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
 		B063D4701CAD24F300B1FF13 /* AlertViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AlertViewTest.cpp; path = ../Classes/Control/AlertViewTest.cpp; sourceTree = "<group>"; };
 		B063D4711CAD24F300B1FF13 /* AlertViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlertViewTest.h; path = ../Classes/Control/AlertViewTest.h; sourceTree = "<group>"; };
-		B063D4721CAD24F300B1FF13 /* AutoCollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewTest.cpp; path = ../Classes/Control/AutoCollectionViewTest.cpp; sourceTree = "<group>"; };
-		B063D4731CAD24F300B1FF13 /* AutoCollectionViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewTest.h; path = ../Classes/Control/AutoCollectionViewTest.h; sourceTree = "<group>"; };
 		B063D4741CAD24F300B1FF13 /* ButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ButtonTest.cpp; path = ../Classes/Control/ButtonTest.cpp; sourceTree = "<group>"; };
 		B063D4751CAD24F300B1FF13 /* ButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonTest.h; path = ../Classes/Control/ButtonTest.h; sourceTree = "<group>"; };
 		B063D4761CAD24F300B1FF13 /* CollectionViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CollectionViewTest.cpp; path = ../Classes/Control/CollectionViewTest.cpp; sourceTree = "<group>"; };
@@ -546,6 +545,10 @@
 		B063D4A71CAD24F300B1FF13 /* WebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewTest.h; path = ../Classes/Control/WebViewTest.h; sourceTree = "<group>"; };
 		B08BBA251BC8ACCE0044340B /* CDNewsImageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsImageController.cpp; path = ../Classes/CDNewsImageController.cpp; sourceTree = "<group>"; };
 		B08BBA261BC8ACCE0044340B /* CDNewsImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsImageController.h; path = ../Classes/CDNewsImageController.h; sourceTree = "<group>"; };
+		B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewHorizontalTest.cpp; path = ../Classes/Control/AutoCollectionViewHorizontalTest.cpp; sourceTree = "<group>"; };
+		B093DB451CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewHorizontalTest.h; path = ../Classes/Control/AutoCollectionViewHorizontalTest.h; sourceTree = "<group>"; };
+		B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewVerticalTest.cpp; path = ../Classes/Control/AutoCollectionViewVerticalTest.cpp; sourceTree = "<group>"; };
+		B093DB471CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewVerticalTest.h; path = ../Classes/Control/AutoCollectionViewVerticalTest.h; sourceTree = "<group>"; };
 		B09B73BB1BD1FA82001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -733,12 +736,14 @@
 		3E91E5131C9BFE030027C466 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */,
+				B093DB451CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.h */,
+				B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */,
+				B093DB471CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.h */,
 				B063D46E1CAD24F300B1FF13 /* ActivityIndicatorViewTest.h */,
-				B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest1111.cpp */,
+				B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp */,
 				B063D4701CAD24F300B1FF13 /* AlertViewTest.cpp */,
 				B063D4711CAD24F300B1FF13 /* AlertViewTest.h */,
-				B063D4721CAD24F300B1FF13 /* AutoCollectionViewTest.cpp */,
-				B063D4731CAD24F300B1FF13 /* AutoCollectionViewTest.h */,
 				B063D4741CAD24F300B1FF13 /* ButtonTest.cpp */,
 				B063D4751CAD24F300B1FF13 /* ButtonTest.h */,
 				B063D4761CAD24F300B1FF13 /* CollectionViewTest.cpp */,
@@ -1170,7 +1175,7 @@
 				3EF48B521B7C915A00179E69 /* triangulate_float.cpp in Sources */,
 				3EF48BA01B7C915A00179E69 /* gameswf_styles.cpp in Sources */,
 				3EF48B881B7C915A00179E69 /* gameswf_environment.cpp in Sources */,
-				B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest1111.cpp in Sources */,
+				B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp in Sources */,
 				3EF48B5B1B7C915A00179E69 /* tu_types.cpp in Sources */,
 				B063D4C01CAD24F300B1FF13 /* UiShow.cpp in Sources */,
 				3EF48B4A1B7C915A00179E69 /* ear_clip_triangulate_float.cpp in Sources */,
@@ -1204,7 +1209,9 @@
 				3EF48B681B7C915A00179E69 /* as_color_transform.cpp in Sources */,
 				3EF48B8A1B7C915A00179E69 /* gameswf_font.cpp in Sources */,
 				3EF48B861B7C915A00179E69 /* gameswf_disasm.cpp in Sources */,
+				B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */,
 				3EF48B771B7C915A00179E69 /* as_number.cpp in Sources */,
+				B093DB491CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */,
 				3EF48B7F1B7C915A00179E69 /* as_xmlsocket.cpp in Sources */,
 				B063D4B01CAD24F300B1FF13 /* LabelTest.cpp in Sources */,
 				B063D4BC1CAD24F300B1FF13 /* TabBarControllerTest.cpp in Sources */,
@@ -1222,7 +1229,6 @@
 				3EF48B4C1B7C915A00179E69 /* file_util.cpp in Sources */,
 				B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */,
 				3EF48B631B7C915A00179E69 /* as_array.cpp in Sources */,
-				B063D4AA1CAD24F300B1FF13 /* AutoCollectionViewTest.cpp in Sources */,
 				B063D4BB1CAD24F300B1FF13 /* SwitchTest.cpp in Sources */,
 				3EF48B741B7C915A00179E69 /* as_mouse_event.cpp in Sources */,
 				3EF48B531B7C915A00179E69 /* triangulate_sint32.cpp in Sources */,
