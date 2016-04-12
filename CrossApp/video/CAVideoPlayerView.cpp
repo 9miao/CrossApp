@@ -98,7 +98,7 @@ CAVideoPlayerView* CAVideoPlayerView::createWithFrame(const DRect &rect)
     return NULL;
 }
 
-CAVideoPlayerView* CAVideoPlayerView::createWithLayout(const DRectLayout& layout)
+CAVideoPlayerView* CAVideoPlayerView::createWithLayout(const DLayout& layout)
 {
     CAVideoPlayerView* view = new CAVideoPlayerView();
     if (view && view->initWithLayout(layout))
@@ -379,7 +379,7 @@ void CAVideoPlayerView::showLoadingView(bool on)
 {
 	if (m_pLoadingView == NULL && on)
 	{
-		m_pLoadingView = CAActivityIndicatorView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+		m_pLoadingView = CAActivityIndicatorView::createWithLayout(DLayoutFill);
 		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
 		this->addSubview(m_pLoadingView);
 	}

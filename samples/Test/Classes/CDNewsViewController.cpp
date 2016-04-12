@@ -55,14 +55,12 @@ bool CDNewsTableCell::initWithReuseIdentifier(const std::string& reuseIdentifier
         return false;
     }
     
-//    theImage = CommonUrlImageView::createWithLayout(DRectLayout(20, 200, 20, 20, DRectLayout::L_W_T_B));
     theImage = CommonUrlImageView::createWithLayout(DLayout(DHorizontalLayout_L_W(20, 200), DVerticalLayout_T_B(20, 20)));
     theImage->setTag(101);
     theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));
     this->getContentView()->addSubview(theImage);
     
-//    theTitle = CALabel::createWithLayout(DRectLayout(240, 150, 20, 40, DRectLayout::L_R_T_H));
     theTitle = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(240, 150), DVerticalLayout_T_H(20, 40)));
 	theTitle->setColor(CAColor_black);
     theTitle->setTextAlignment(CATextAlignmentLeft);
@@ -71,8 +69,7 @@ bool CDNewsTableCell::initWithReuseIdentifier(const std::string& reuseIdentifier
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
-//    theDesc = CALabel::createWithLayout(DRectLayout(240, 150, 65, 40, DRectLayout::L_R_T_H));
-    theDesc = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(240, 150), DVerticalLayout_T_H(20, 40)));
+    theDesc = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(240, 150), DVerticalLayout_T_H(65, 40)));
 	theDesc->setColor(CAColor_black);
     theDesc->setTextAlignment(CATextAlignmentLeft);
     theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
@@ -330,7 +327,7 @@ void CDNewsViewController::initNewsPageView()
     //初始化pageView
     CAView* tempview = CAView::create();
     p_TableView->setTableHeaderView(tempview);
-    p_TableView->setTableHeaderHeight(this->getView()->getBounds().size.width/2);
+    p_TableView->setTableHeaderHeight(360);
     
     
     CAVector<CAView* > viewList;
@@ -361,11 +358,9 @@ void CDNewsViewController::initNewsPageView()
     p_PageView->setCurrPage(1, false);
     
     CAView* bg = CAView::createWithColor(ccc4(0, 0, 0, 128));
-//    bg->setLayout(DRectLayout(0, 0, 0, 50, DRectLayout::L_R_B_H));
     bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 50)));
     tempview->addSubview(bg);
     
-//    pageControl = CAPageControl::createWithLayout(DRectLayout(40, 100, 0, 0, DRectLayout::R_W_T_B));
     pageControl = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_R_W(40, 100), DVerticalLayoutFill));
     pageControl->setNumberOfPages((int)m_page.size());
     pageControl->setPageIndicatorImage(CAImage::create("image/pagecontrol_selected.png"));
@@ -378,11 +373,12 @@ void CDNewsViewController::initNewsPageView()
     
     if (m_page.size()>0)
     {
-        pageViewTitle = CALabel::createWithLayout(DLayout(DHorizontalLayout_R_W(40, 100), DVerticalLayoutFill));
+        pageViewTitle = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(20, 160), DVerticalLayoutFill));
+        pageViewTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
         pageViewTitle->setText(m_page[0].m_title);
 		pageViewTitle->setColor(CAColor_white);
         pageViewTitle->setFontSize(28);
-        tempview->addSubview(pageViewTitle);
+        bg->addSubview(pageViewTitle);
     }
 }
 

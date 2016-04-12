@@ -1321,7 +1321,7 @@ void CATabBarController::viewDidLoad()
 
     DLayout tabBarLayout;
     tabBarLayout.horizontal = DHorizontalLayoutFill;
-    tabBarLayout.vertical.height = m_iTabBarHeight;
+    
     
     if (m_iTabBarHeight == 0)
     {
@@ -1329,12 +1329,13 @@ void CATabBarController::viewDidLoad()
         {
             m_iTabBarHeight = clearance ? 138 : 98;
             tabBarLayout.vertical.top = m_bTabBarHidden ? -m_iTabBarHeight : 0;
-            
+            tabBarLayout.vertical.height = m_iTabBarHeight;
         }
         else
         {
             m_iTabBarHeight = 98;
             tabBarLayout.vertical.bottom = m_bTabBarHidden ? -m_iTabBarHeight : 0;
+            tabBarLayout.vertical.height = m_iTabBarHeight;
         }
     }
     

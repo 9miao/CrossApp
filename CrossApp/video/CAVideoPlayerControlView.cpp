@@ -51,7 +51,7 @@ CAVideoPlayerControlView* CAVideoPlayerControlView::createWithCenter(const DRect
 	return pCtrlView;
 }
 
-CAVideoPlayerControlView* CAVideoPlayerControlView::createWithLayout(const DRectLayout& layout)
+CAVideoPlayerControlView* CAVideoPlayerControlView::createWithLayout(const DLayout& layout)
 {
     CAVideoPlayerControlView* pCtrlView = new CAVideoPlayerControlView();
     if (pCtrlView && pCtrlView->initWithLayout(layout))
@@ -117,17 +117,17 @@ void CAVideoPlayerControlView::setPlayerViewDelegate(CAVideoPlayerViewDelegate* 
 
 void CAVideoPlayerControlView::buildCtrlViews()
 {
-    m_glView = CAVideoPlayerView::createWithLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+    m_glView = CAVideoPlayerView::createWithLayout(DLayoutFill);
     this->addSubview(m_glView);
-
+    
     // Bottom Panel Back
-    CAImageView* bottomPanel = CAImageView::createWithLayout(DRectLayout(0, 0, 0, 188, DRectLayout::L_R_B_H));
+    CAImageView* bottomPanel = CAImageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 188)));
     bottomPanel->setImage(CAImage::create("source_material/vdo_panel_bottom_bg.png"));
-    this->insertSubview(bottomPanel, 1);
+    m_glView->addSubview(bottomPanel);
     
     // Slider
     CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");
-    m_playSlider = CASlider::createWithLayout(DRectLayout(32, 32, 25, 56, DRectLayout::L_R_T_H));
+    m_playSlider = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(32, 32), DVerticalLayout_T_H(25, 56)));
     m_playSlider->setThumbTintImage(barImage);
     m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
     bottomPanel->addSubview(m_playSlider);
@@ -135,14 +135,14 @@ void CAVideoPlayerControlView::buildCtrlViews()
     // Play Pause Button
     CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
     CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
-    m_playButton = CAButton::createWithLayout(DRectLayout(32, 56, 96, 56, DRectLayout::L_W_T_H), CAButtonTypeCustom);
+    m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButtonTypeCustom);
     m_playButton->setImageForState(CAControlStateAll, backImage);
     m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
     m_playButton->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonPause), CAControlEventTouchUpInSide);
     bottomPanel->addSubview(m_playButton);
     
     // play time
-    m_playTimeLabel = CALabel::createWithLayout(DRectLayout(120, 200, 96, 56, DRectLayout::L_W_T_H));
+    m_playTimeLabel = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_W(120, 200), DVerticalLayout_T_H(96, 56)));
     m_playTimeLabel->setFontSize(32);
     m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     m_playTimeLabel->setColor(ccc4(255, 255, 255, 255));

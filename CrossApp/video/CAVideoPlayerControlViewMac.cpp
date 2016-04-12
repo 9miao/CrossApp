@@ -97,7 +97,6 @@ void CAVideoPlayerControlView::setUrl(const std::string& szUrl)
 void CAVideoPlayerControlView::buildCtrlViews()
 {
     m_glView = CAVideoPlayerView::createWithLayout(DLayoutFill);
-	m_glView->setColor(CAColor_black);
 	this->addSubview(m_glView);
 
 	// Bottom Panel Back

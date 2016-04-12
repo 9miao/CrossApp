@@ -33,9 +33,6 @@
 #include "AutoCollectionViewVerticalTest.h"
 #include "WaterfallViewTest.h"
 
-
-#include "Slider.h"
-
 CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showImageViewNavigationBar(0),showActivityIndicatorNavigationBar(0),showSliderNavigationBar(0),showLabelNavigationBar(0),showTabBarNavigationBar(0),showPickerViewNavigationBar(0),showViewAnimationNavigationBar(0)
 {
     m_vTitle.push_back("AlertView");

@@ -34,6 +34,7 @@ void TextFieldTest::viewDidLoad()
     textField2->setPlaceHolderText("Input");
     textField2->setKeyboardType(CATextField::Default);
     textField2->setMarginImageLeft(DSize(60,60),"source_material/search.png");
+    textField2->setClearButtonMode(CATextField::WhileEditing);
     textField2->setTextFieldAlign(CATextField::Left);
     textField2->setSecureTextEntry(true);
     this->getView()->addSubview(textField2);
