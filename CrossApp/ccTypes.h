@@ -355,7 +355,7 @@ typedef enum
     CAInterfaceOrientationLandscapeRight     = 4
 }CAInterfaceOrientation;
 
-const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
+static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 
 /**
  * This header is used for defining event types using in CANotificationCenter
