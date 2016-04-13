@@ -839,70 +839,74 @@ void CAView::reViewlayout(const DSize& contentSize)
         DPoint point;
         DSize size;
         
-        const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
-
-        if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
         {
-            size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
-            point.x = horizontalLayout.left;
-        }
-        else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-        {
-            size.width = horizontalLayout.width;
-            point.x = horizontalLayout.left;
-        }
-        else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-        {
-            size.width = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
-            point.x = horizontalLayout.left;
-        }
-        else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-        {
-            size.width = horizontalLayout.width;
-            point.x = contentSize.width - horizontalLayout.right - size.width;
-        }
-        else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-        {
-            size.width = (contentSize.width * (1.0f - horizontalLayout.center) - horizontalLayout.right) * 2;;
-            point.x = contentSize.width - horizontalLayout.right - size.width;
-        }
-        else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-        {
-            size.width = horizontalLayout.width;
-            point.x = contentSize.width * horizontalLayout.center - size.width / 2;
+            const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
+            
+            if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
+            {
+                size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
+                point.x = horizontalLayout.left;
+            }
+            else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
+            {
+                size.width = horizontalLayout.width;
+                point.x = horizontalLayout.left;
+            }
+            else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+            {
+                size.width = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
+                point.x = horizontalLayout.left;
+            }
+            else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
+            {
+                size.width = horizontalLayout.width;
+                point.x = contentSize.width - horizontalLayout.right - size.width;
+            }
+            else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+            {
+                size.width = (contentSize.width * (1.0f - horizontalLayout.center) - horizontalLayout.right) * 2;;
+                point.x = contentSize.width - horizontalLayout.right - size.width;
+            }
+            else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+            {
+                size.width = horizontalLayout.width;
+                point.x = contentSize.width * horizontalLayout.center - size.width / 2;
+            }
         }
         
-        const DVerticalLayout& verticalLayout = m_obLayout.vertical;
-        
-        if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
         {
-            size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
-            point.y = verticalLayout.top;
-        }
-        else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-        {
-            size.height = verticalLayout.height;
-            point.y = verticalLayout.top;
-        }
-        else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-        {
-            size.height = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
-            point.y = verticalLayout.top;
-        }
-        else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-        {
-            size.height = verticalLayout.height;
-            point.y = contentSize.height - verticalLayout.bottom - size.height;
-        }
-        else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-        {
-            size.height = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom);
-            point.y = contentSize.height - verticalLayout.bottom - size.height;
-        }
-        else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-        {
-            size.height = verticalLayout.height;
-            point.y = contentSize.height * verticalLayout.center - size.height / 2;
+            const DVerticalLayout& verticalLayout = m_obLayout.vertical;
+            
+            if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
+            {
+                size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
+                point.y = verticalLayout.top;
+            }
+            else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
+            {
+                size.height = verticalLayout.height;
+                point.y = verticalLayout.top;
+            }
+            else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
+            {
+                size.height = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
+                point.y = verticalLayout.top;
+            }
+            else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
+            {
+                size.height = verticalLayout.height;
+                point.y = contentSize.height - verticalLayout.bottom - size.height;
+            }
+            else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
+            {
+                size.height = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom);
+                point.y = contentSize.height - verticalLayout.bottom - size.height;
+            }
+            else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
+            {
+                size.height = verticalLayout.height;
+                point.y = contentSize.height * verticalLayout.center - size.height / 2;
+            }
         }
         
         this->setContentSize(size);
@@ -994,7 +998,6 @@ void CAView::insertSubview(CAView* subview, int z)
     
     if(m_bRunning)
     {
-        subview->reViewlayout(m_obContentSize);
         subview->onEnter();
         subview->onEnterTransitionDidFinish();
     }
@@ -1402,11 +1405,15 @@ CAResponder* CAView::nextResponder()
 
 void CAView::onEnter()
 {
+    this->reViewlayout(m_pSuperview->m_obContentSize);
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
         for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        {
             (*itr)->onEnter();
+        }
+        
     }
     
     m_bRunning = true;

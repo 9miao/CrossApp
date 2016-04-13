@@ -152,6 +152,8 @@ public:
      */
     float getScale() const;
 
+    CC_SYNTHESIZE_IS_PASS_BY_REF(CAInterfaceOrientation, m_eOrientation, StatusBarOrientation);
+    
 private:
     void getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[], CAEvent* event);
 
