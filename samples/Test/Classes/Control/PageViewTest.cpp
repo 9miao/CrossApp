@@ -24,13 +24,11 @@ void PageViewTest::viewDidLoad()
     _view.pushBack(view3);
     
     p_pageView = CAPageView::createWithLayout(DLayoutFill, CAPageViewDirectionHorizontal);
-        //DRectLayout(0,0,0,0, DRectLayout::L_R_T_B), CAPageViewDirectionHorizontal);//设置完图像不显示
     p_pageView->setViews(_view);
     p_pageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_pageView);
     
-    pageControl = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_L_R(200, 200), DVerticalLayout_T_H(50, 50)));
-                                                    //DRectLayout(200,200,50,50,DRectLayout::L_R_T_H));
+    pageControl = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.5), DVerticalLayout_T_H(30, 50)));
     pageControl->setNumberOfPages((int)_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);

@@ -17,7 +17,6 @@ void TextFieldTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-//    CATextField* textField1 = CATextField::createWithLayout(DRectLayout(100,100,200,100,DRectLayout::L_R_T_H));
     CATextField* textField1 = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(200, 100)));
     textField1->setTag(100);
     //PlaceHolder文本内容
@@ -28,7 +27,6 @@ void TextFieldTest::viewDidLoad()
     textField1->setTextFieldAlign(CATextField::Left);
     this->getView()->addSubview(textField1);
     
-//    CATextField* textField2 = CATextField::createWithLayout(DRectLayout(100,100,450,100,DRectLayout::L_R_T_H));
     CATextField* textField2 = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(450, 100)));
     textField2->setTag(101);
     textField2->setPlaceHolderText("Input");

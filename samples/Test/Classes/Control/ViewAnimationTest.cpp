@@ -44,13 +44,11 @@ void ViewAnimationTest::viewDidLoad()
         //Animation 1
         heart_index = 0;
         CAButton* btn1 = CAButton::create(CAButtonTypeRoundedRect);
-//        btn1->setLayout(DRectLayout(240,240,240,50,DRectLayout::L_R_T_H));
         btn1->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(240, 50)));
         btn1->setTitleForState(CAControlStateNormal, "Play Animation");
         btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
         btn1->setTag(100);
         btn1->addTarget(this, CAControl_selector(ViewAnimationTest::doAction), CAControlEventTouchUpInSide);
-//        animation_1_view = CAImageView::createWithLayout(DRectLayout(400,400,400,96,DRectLayout::L_R_T_H));
         animation_1_view = CAImageView::createWithCenter(DRect(winSize.width/2, winSize.height/2, 28, 24));
         animation_1_view->setImage(CAImage::create("image/heart1.png"));
     
@@ -63,7 +61,6 @@ void ViewAnimationTest::viewDidLoad()
     else if (AnimationNum == 1)
     {
         //Animation 2
-//        CAImageView* bg = CAImageView::createWithLayout(DRectLayout(0, 0, 550, 80, DRectLayout::L_R_T_H));
         CAImageView* bg = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,80));
         bg->setImage(CAImage::create("image/navbg.jpg"));
     

@@ -17,9 +17,7 @@ void SegmentedControlTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-//    CASegmentedControl* segment1 = CASegmentedControl::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width/2,50), 3);
-//    CASegmentedControl* segment1 = CASegmentedControl::createWithLayout(DRectLayout(100,100,200,80,DRectLayout::L_R_T_H), 3);
-    CASegmentedControl* segment1 = CASegmentedControl::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(200, 80)), 3);
+    CASegmentedControl* segment1 = CASegmentedControl::createWithLayout(DLayout(DHorizontalLayout_W_C(300, 0.5), DVerticalLayout_H_C(54, 0.25)), 3);
     
     char temstr[20];
     for (int i = 0; i < 3; i++)
@@ -33,8 +31,7 @@ void SegmentedControlTest::viewDidLoad()
     segment1->setSelectedAtIndex(0);
     this->getView()->addSubview(segment1);
     
-//    CASegmentedControl* segment2 = CASegmentedControl::createWithLayout(DRectLayout(100,100,500,80,DRectLayout::L_R_T_H), 3);
-    CASegmentedControl* segment2 = CASegmentedControl::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(500, 80)), 3);
+    CASegmentedControl* segment2 = CASegmentedControl::createWithLayout(DLayout(DHorizontalLayout_W_C(300, 0.5), DVerticalLayout_H_C(54, 0.55)), 3);
     char temstr2[20];
     for (int i = 0; i < 3; i++)
     {

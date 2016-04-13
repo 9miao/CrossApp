@@ -87,6 +87,8 @@ static EAGLView *view = 0;
 		{
 			view.contentScaleFactor = [[UIScreen mainScreen] scale];
 		}
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
         
     return self;
@@ -116,6 +118,37 @@ static EAGLView *view = 0;
     return bound.height * self.contentScaleFactor;
 }
 
+- (void)statusBarOrientationChange:(NSNotification *)notification
+{
+    [self setFrame:[self.superview bounds]];
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortrait:
+        {
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationPortrait);
+        }
+            break;
+        case UIInterfaceOrientationPortraitUpsideDown:
+        {
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationPortraitUpsideDown);
+        }
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+        {
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationLandscapeRight);
+        }
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+        {
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationLandscapeLeft);
+        }
+            break;
+        default:
+            break;
+    }
+}
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {

@@ -411,6 +411,11 @@ bool CAApplication::isStatusBarHidden()
 #endif
 }
 
+const CAInterfaceOrientation& CAApplication::getStatusBarOrientation()
+{
+    return CCEGLView::sharedOpenGLView()->getStatusBarOrientation();
+}
+
 void CAApplication::setDepthTest(bool bOn)
 {
     if (bOn)

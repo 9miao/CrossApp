@@ -19,6 +19,12 @@ public:
     static CDNewsImageTableCell* create(const std::string& identifier);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
+    
+    CC_SYNTHESIZE_READONLY(CommonUrlImageView*, m_pImage1, Image1);
+    CC_SYNTHESIZE_READONLY(CommonUrlImageView*, m_pImage2, Image2);
+    CC_SYNTHESIZE_READONLY(CommonUrlImageView*, m_pImage3, Image3);
+    CC_SYNTHESIZE_READONLY(CommonUrlImageView*, m_pImage4, Image4);
+    
 public:
     void initWithCell(int num);
     int cell_tag;

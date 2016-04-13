@@ -112,6 +112,8 @@ public:
     
     bool isStatusBarHidden();
     
+    const CAInterfaceOrientation& getStatusBarOrientation();
+    
     /** Sets the glViewport*/
     void setViewport();
 

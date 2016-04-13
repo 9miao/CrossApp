@@ -171,7 +171,6 @@
 		B063D4BD1CAD24F300B1FF13 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4981CAD24F300B1FF13 /* TableViewTest.cpp */; };
 		B063D4BE1CAD24F300B1FF13 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D49A1CAD24F300B1FF13 /* TextFieldTest.cpp */; };
 		B063D4BF1CAD24F300B1FF13 /* TextViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D49C1CAD24F300B1FF13 /* TextViewTest.cpp */; };
-		B063D4C01CAD24F300B1FF13 /* UiShow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D49E1CAD24F300B1FF13 /* UiShow.cpp */; };
 		B063D4C11CAD24F300B1FF13 /* VideoPlayerControlViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A01CAD24F300B1FF13 /* VideoPlayerControlViewTest.cpp */; };
 		B063D4C21CAD24F300B1FF13 /* ViewAnimationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A21CAD24F300B1FF13 /* ViewAnimationTest.cpp */; };
 		B063D4C31CAD24F300B1FF13 /* WaterfallViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A41CAD24F300B1FF13 /* WaterfallViewTest.cpp */; };
@@ -533,8 +532,6 @@
 		B063D49B1CAD24F300B1FF13 /* TextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldTest.h; path = ../Classes/Control/TextFieldTest.h; sourceTree = "<group>"; };
 		B063D49C1CAD24F300B1FF13 /* TextViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextViewTest.cpp; path = ../Classes/Control/TextViewTest.cpp; sourceTree = "<group>"; };
 		B063D49D1CAD24F300B1FF13 /* TextViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewTest.h; path = ../Classes/Control/TextViewTest.h; sourceTree = "<group>"; };
-		B063D49E1CAD24F300B1FF13 /* UiShow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiShow.cpp; path = ../Classes/Control/UiShow.cpp; sourceTree = "<group>"; };
-		B063D49F1CAD24F300B1FF13 /* UiShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UiShow.h; path = ../Classes/Control/UiShow.h; sourceTree = "<group>"; };
 		B063D4A01CAD24F300B1FF13 /* VideoPlayerControlViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoPlayerControlViewTest.cpp; path = ../Classes/Control/VideoPlayerControlViewTest.cpp; sourceTree = "<group>"; };
 		B063D4A11CAD24F300B1FF13 /* VideoPlayerControlViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoPlayerControlViewTest.h; path = ../Classes/Control/VideoPlayerControlViewTest.h; sourceTree = "<group>"; };
 		B063D4A21CAD24F300B1FF13 /* ViewAnimationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewAnimationTest.cpp; path = ../Classes/Control/ViewAnimationTest.cpp; sourceTree = "<group>"; };
@@ -786,8 +783,6 @@
 				B063D49B1CAD24F300B1FF13 /* TextFieldTest.h */,
 				B063D49C1CAD24F300B1FF13 /* TextViewTest.cpp */,
 				B063D49D1CAD24F300B1FF13 /* TextViewTest.h */,
-				B063D49E1CAD24F300B1FF13 /* UiShow.cpp */,
-				B063D49F1CAD24F300B1FF13 /* UiShow.h */,
 				B063D4A01CAD24F300B1FF13 /* VideoPlayerControlViewTest.cpp */,
 				B063D4A11CAD24F300B1FF13 /* VideoPlayerControlViewTest.h */,
 				B063D4A21CAD24F300B1FF13 /* ViewAnimationTest.cpp */,
@@ -1177,7 +1172,6 @@
 				3EF48B881B7C915A00179E69 /* gameswf_environment.cpp in Sources */,
 				B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp in Sources */,
 				3EF48B5B1B7C915A00179E69 /* tu_types.cpp in Sources */,
-				B063D4C01CAD24F300B1FF13 /* UiShow.cpp in Sources */,
 				3EF48B4A1B7C915A00179E69 /* ear_clip_triangulate_float.cpp in Sources */,
 				3EF48B671B7C915A00179E69 /* as_color.cpp in Sources */,
 				3EF48B971B7C915A00179E69 /* gameswf_player.cpp in Sources */,

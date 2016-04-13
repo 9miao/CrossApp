@@ -43,7 +43,6 @@ void ImageViewTest::viewDidLoad()
         CAImageView* image1 = CAImageView::createWithImage(CAImage::create("image/h1.png"));
         image1->setFrame(this->getView()->getBounds());
     
-//        CAView* view1 = CAView::createWithLayout(DRectLayout(0, 0, 0, 100, DRectLayout::L_R_T_B));
         CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(0, 100)));
         view1->addSubview(image1);
         view1->setColor(CAColor_gray);
@@ -51,7 +50,6 @@ void ImageViewTest::viewDidLoad()
     }
     else if (ImageViewNum == 1)
     {
-//        CAImageView* image2 = CAImageView::createWithLayout(DRectLayout(200,200,100,400,DRectLayout::L_R_T_H));
         CAImageView* image2 = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(200, 200), DVerticalLayout_T_H(100, 400)));
         image2->setImageViewScaleType(CAImageViewScaleTypeFitImageXY);
         image2->setImage(CAImage::create("image/h1.png"));
@@ -63,7 +61,6 @@ void ImageViewTest::viewDidLoad()
     }
     else if (ImageViewNum == 2)
     {
-//        CAImageView* image3 = CAImageView::createWithLayout(DRectLayout(100,400,100,400,DRectLayout::L_W_T_H));
         CAImageView* image3 = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_W(100, 400), DVerticalLayout_T_H(100, 400)));
         image3->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
         image3->setImage(CAImage::create("image/h1.png"));
@@ -75,8 +72,6 @@ void ImageViewTest::viewDidLoad()
     }
     else if (ImageViewNum == 3)
     {
-//    CAImageView* image4 = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,400,400));
-//        CAImageView* image4 = CAImageView::createWithLayout(DRectLayout(200,200,100,400,DRectLayout::L_R_T_H));
         CAImageView* image4 = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(200, 200), DVerticalLayout_T_H(100, 400)));
         image4->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         image4->setImage(CAImage::create("image/h1.png"));
@@ -119,7 +114,6 @@ void ImageViewTest::viewDidLoad()
             img.pushBack(im);
         }
         CAImageView* image7 = CAImageView::createWithImage(CAImage::create("animation/npc_382-1.png"));
-//        image7->setLayout(DRectLayout(200,80,100,196,DRectLayout::L_W_T_H));
         image7->setLayout(DLayout(DHorizontalLayout_L_W(200, 80), DVerticalLayout_T_H(100, 196)));
         image7->setAnimationImages(img);
         image7->setAnimationDuration(0.2);

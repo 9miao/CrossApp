@@ -16,7 +16,7 @@ class CDNewsAboutTableCell : public CATableViewCell
 public:
     CDNewsAboutTableCell();
     virtual ~CDNewsAboutTableCell();
-    static CDNewsAboutTableCell* create(const std::string& identifier, const DRect& _rect = DRectZero);
+    static CDNewsAboutTableCell* create(const std::string& identifier);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
 public:

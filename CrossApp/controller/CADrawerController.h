@@ -44,8 +44,6 @@ public:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
-    
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
     
     CC_SYNTHESIZE(bool, m_bEffect3D, Effect3D);
@@ -55,6 +53,12 @@ public:
     virtual bool isReachBoundaryLeft();
     
     virtual bool isReachBoundaryRight();
+    
+    void setBackgroundView(CAView* var);
+    
+    CAView* getBackgroundView();
+    
+    void setBackgroundImage(CAImage* var);
     
 protected:
     
@@ -69,6 +73,8 @@ protected:
     void scheduleShowAction(float dt);
     
     void scheduleHideAction(float dt);
+    
+    void changeStatusBarOrientation(CAObject* obj);
     
 protected:
     
@@ -89,6 +95,8 @@ protected:
     CAViewController* m_pRightViewController;
     
     CAView* m_pContainer[2];
+    
+    CAView* m_pBackgroundView;
     
     float m_fDivision;
     

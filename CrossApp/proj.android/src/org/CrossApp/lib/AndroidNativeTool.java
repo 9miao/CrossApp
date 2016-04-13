@@ -216,14 +216,11 @@ public class AndroidNativeTool
             switch (requestCode) 
             {  
             case 4:  // Photo
-            	Log.i("qiaoxin","requestCode:"+ requestCode);
 
             	final String uriStr = getPath(s_pContext, intent.getData());
-            	Log.i("qiaoxin", "String uriStr:"+uriStr);
             	
             	String fileStr = getRealFilePath(s_pContext, intent.getData());
             	
-            	Log.i("qiaoxin", "String fileStr:"+fileStr);
             	
                 CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
 					@Override
@@ -233,7 +230,6 @@ public class AndroidNativeTool
 				});
                 break;  
             case 1:
-            	Log.i("qiaoxin","requestCode:"+ requestCode);
 
             	Uri originalUri1;
             	if (intent != null && intent.getData() != null) 
@@ -255,7 +251,6 @@ public class AndroidNativeTool
                 cursor1.moveToFirst();
 
                 final String path1 = cursor1.getString(column_index1);
-                Log.i("qiaoxin","qiaoxin2"+ path1);
 
                 CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
 					@Override
@@ -308,10 +303,8 @@ public class AndroidNativeTool
             	{
             		takePhoto= intent.getData();  
             		cropImageUri(takePhoto, 640, 640, 1);   
-            		Log.i("qiaoxin","qiaoxin3");
             	}else {
             		cropImageUri(photoUri, 640, 640, 1);   
-            		Log.i("qiaoxin","qiaoxin4");
 				}
 
             	 
@@ -327,7 +320,6 @@ public class AndroidNativeTool
     }
     
     public static String getPath(final Context context, final Uri uri) {  
-        Log.i("qiaoxin", "uri---:" + uri);
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;  
       
         // DocumentProvider  
@@ -505,7 +497,7 @@ public class AndroidNativeTool
         return path;
     }
     
-    //¸üÐÂÍ¼¿â
+    //ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
     public static void UpdateCamera(final String url){ 
     	s_pContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + url)));
     } 

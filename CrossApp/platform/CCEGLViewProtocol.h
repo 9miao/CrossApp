@@ -152,14 +152,20 @@ public:
      */
     float getScale() const;
 
-    CC_SYNTHESIZE_IS_PASS_BY_REF(CAInterfaceOrientation, m_eOrientation, StatusBarOrientation);
+    virtual void setStatusBarOrientation(const CAInterfaceOrientation& var);
+    
+    virtual const CAInterfaceOrientation& getStatusBarOrientation();
     
 private:
+    
     void getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[], CAEvent* event);
 
 protected:
+    
     CCEGLTouchDelegate* m_pDelegate;
 
+    CAInterfaceOrientation m_eOrientation;
+    
     // real screen size
     DSize m_obScreenSize;
     // resolution size, it is the size appropriate for the app resources.

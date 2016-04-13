@@ -29,9 +29,6 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     CGRect rect = [[UIScreen mainScreen] bounds];
-    //CGFloat scale = [[UIScreen mainScreen] scale];
-    
-    NSLog(@"%f", rect.size.width);
 
     __glView = [EAGLView viewWithFrame: rect
                                      pixelFormat: kEAGLColorFormatRGB565
@@ -42,8 +39,6 @@
                                  numberOfSamples: 0];
     [__glView setMultipleTouchEnabled:YES];
     [self.view addSubview:__glView];
-
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     
 
 //    NSString *path=@"System/Library/Fonts"; // 要列出来的目录
@@ -67,33 +62,6 @@
 //        NSUInteger length= [fileHandle availableData].length;
 //        NSLog(@"%@ --- %lu",ss, (unsigned long)length);
 //    }
-}
-
-- (void)statusBarOrientationChange:(NSNotification *)notification
-{
-    EAGLView* glView = (EAGLView*)__glView;
-    [glView setFrame:[self.view bounds]];
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if (orientation == UIInterfaceOrientationLandscapeRight) // home键靠右
-    {
-        //
-    }
-    
-    if (
-        orientation ==UIInterfaceOrientationLandscapeLeft) // home键靠左
-    {
-        //
-    }
-    
-    if (orientation == UIInterfaceOrientationPortrait)
-    {
-        //
-    }
-    
-    if (orientation == UIInterfaceOrientationPortraitUpsideDown)
-    {
-        //
-    }
 }
 
 // Override to allow orientations other than the default portrait orientation.

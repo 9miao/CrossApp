@@ -196,12 +196,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
 
 
 
-void CommonHttpManager::send_post(const std::string& url,
-                                  std::map<std::string,
-                                  std::string> key_value,
-                                  CAObject* pTarget,
-                                  SEL_CommonHttpJson pSelector,
-                                  bool isLoading)
+void CommonHttpManager::send_post(const std::string& url,std::map<std::string,std::string> key_value,CAObject* pTarget,SEL_CommonHttpJson pSelector,bool isLoading)
 {
     std::string postData;
     if (!key_value.empty())
@@ -236,12 +231,7 @@ void CommonHttpManager::send_post(const std::string& url,
     }
 }
 
-void CommonHttpManager::send_postFile(const std::string& url,
-                                                             std::map<std::string, std::string> key_value,
-                                                             const std::string& file,
-                                                             CAObject* pTarget,
-                                                             SEL_CommonHttpJson pSelector,
-                                                             bool isLoading)
+void CommonHttpManager::send_postFile(const std::string& url,std::map<std::string, std::string> key_value,const std::string& file,CAObject* pTarget,SEL_CommonHttpJson pSelector,bool isLoading)
 {
     std::string postData;
     if (!key_value.empty())
@@ -277,10 +267,7 @@ void CommonHttpManager::send_postFile(const std::string& url,
     
 }
 
-void CommonHttpManager::get_image(const std::string& url,
-                                                         CAObject* pTarget,
-                                                         SEL_CommonHttpImage pSelector,
-                                                         const HttpGetImageType& type)
+void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_CommonHttpImage pSelector,const HttpGetImageType& type)
 {
     std::string key = MD5(url).md5();
     
@@ -340,7 +327,7 @@ void CommonHttpManager::starActivityIndicatorView()
         DRect rect = window->getBounds();
         
         m_pActivityIndicatorView = CAActivityIndicatorView::createWithFrame(rect);
-        CAImageView* indicator = CAImageView::createWithFrame(DRect(0, 0, 50, 50));
+        CAImageView* indicator = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_W(0, 50), DVerticalLayout_T_H(0, 50)));
         indicator->setImage(CAImage::create(common_loadingIcon));
         m_pActivityIndicatorView->setActivityIndicatorView(indicator);
         CAView* bg = CAView::createWithFrame(DRect(0, 0, 275, 300), CAColor_clear);
@@ -413,19 +400,14 @@ CommonHttpResponseCallBack::CommonHttpResponseCallBack(CAObject* pTarget, SEL_Co
     }
 }
 
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::create(CAObject* pTarget,
-                                                               SEL_CommonHttpImage pSelector,
-                                                               const std::string& url,
-                                                               const HttpGetImageType& type)
+CommonHttpResponseCallBack* CommonHttpResponseCallBack::create(CAObject* pTarget,SEL_CommonHttpImage pSelector,const std::string& url,const HttpGetImageType& type)
 {
     CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url, type);
     callBack->autorelease();
     return callBack;
 }
 
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::scheduleCallBack(CAObject* pTarget,
-                                                                         SEL_CommonHttpImage pSelector,
-                                                                         const std::string& url)
+CommonHttpResponseCallBack* CommonHttpResponseCallBack::scheduleCallBack(CAObject* pTarget,SEL_CommonHttpImage pSelector,const std::string& url)
 {
     if (pTarget == NULL) return NULL;
     CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url);
@@ -460,11 +442,7 @@ void CommonHttpResponseCallBack::update(float dt)
     }
 }
 
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::imagePathAsync(CrossApp::CAObject *pTarget,
-                                                                       SEL_CommonHttpImage pSelector,
-                                                                       const std::string &path,
-                                                                       const std::string& url,
-                                                                       const HttpGetImageType& type)
+CommonHttpResponseCallBack* CommonHttpResponseCallBack::imagePathAsync(CrossApp::CAObject *pTarget,SEL_CommonHttpImage pSelector,const std::string &path,const std::string& url,const HttpGetImageType& type)
 {
     if (pTarget == NULL) return NULL;
     CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url, type);

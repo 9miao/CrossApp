@@ -88,7 +88,6 @@ void ActivityIndicatorViewTest::viewDidLoad()
     if (ActivityIndicatorNum == 4)
     {
         CAImage* image = CAImage::create("image/indicator2.png");
-//        CAImageView* imageView = CAImageView::createWithCenter(DRect(0, 0, 100, 100));
         CAImageView* imageView = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));
         imageView->setFrame(DRect(0, 0, 100, 100));
         imageView->setImage(image);

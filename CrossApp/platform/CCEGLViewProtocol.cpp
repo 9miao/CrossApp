@@ -4,6 +4,7 @@
 #include "basics/CAApplication.h"
 #include "cocoa/CCSet.h"
 #include "platform/CADensityDpi.h"
+#include "support/CANotificationCenter.h"
 
 NS_CC_BEGIN
 
@@ -342,5 +343,15 @@ float CCEGLViewProtocol::getScale() const
     return m_fScale;
 }
 
+void CCEGLViewProtocol::setStatusBarOrientation(const CAInterfaceOrientation& var)
+{
+    m_eOrientation = var;
+    CANotificationCenter::sharedNotificationCenter()->postNotification(CAApplicationDidChangeStatusBarOrientationNotification, NULL);
+}
+
+const CAInterfaceOrientation& CCEGLViewProtocol::getStatusBarOrientation()
+{
+    return m_eOrientation;
+}
 
 NS_CC_END

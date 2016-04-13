@@ -899,7 +899,7 @@ void CAView::reViewlayout(const DSize& contentSize)
             }
             else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
             {
-                size.height = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom);
+                size.height = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom) * 2;
                 point.y = contentSize.height - verticalLayout.bottom - size.height;
             }
             else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
@@ -1406,6 +1406,9 @@ CAResponder* CAView::nextResponder()
 void CAView::onEnter()
 {
     this->reViewlayout(m_pSuperview->m_obContentSize);
+    m_bRunning = true;
+    this->updateDraw();
+    
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
@@ -1413,11 +1416,7 @@ void CAView::onEnter()
         {
             (*itr)->onEnter();
         }
-        
     }
-    
-    m_bRunning = true;
-    this->updateDraw();
 }
 
 void CAView::onEnterTransitionDidFinish()

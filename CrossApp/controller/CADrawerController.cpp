@@ -10,7 +10,7 @@
 #include "animation/CAAnimation.h"
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
-
+#include "support/CANotificationCenter.h"
 NS_CC_BEGIN
 
 CADrawerController::CADrawerController()
@@ -27,12 +27,16 @@ CADrawerController::CADrawerController()
     this->getView()->setColor(CAColor_clear);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
+    
+    CANotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CADrawerController::changeStatusBarOrientation), CAApplicationDidChangeStatusBarOrientationNotification, NULL);
 }
 
 CADrawerController::~CADrawerController()
 {
     CC_SAFE_RELEASE(m_pLeftViewController);
     CC_SAFE_RELEASE(m_pRightViewController);
+    
+    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 bool CADrawerController::initWithController(CAViewController* leftViewController, CAViewController* rightViewController, float division)
@@ -112,7 +116,6 @@ void CADrawerController::viewDidLoad()
         m_pContainer[i]->release();
     }
     
-    m_pContainer[0]->setColor(CAColor_yellow);
     m_pContainer[0]->setAnchorPoint(DPoint(0.5f, 0.5f));
     m_pContainer[1]->setAnchorPoint(DPoint(0.0f, 0.5f));
     
@@ -231,7 +234,9 @@ void CADrawerController::updateViewFrame()
         DPoint(m_fCurrDivision, 0)
     };
     
-    if (m_bEffect3D)
+    const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
+    if (m_bEffect3D
+        && (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown))
     {
         float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
         float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
@@ -240,6 +245,11 @@ void CADrawerController::updateViewFrame()
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
         point[0].x = (m_fCurrDivision - m_fDivision) / 3;
+    }
+    else
+    {
+        m_pContainer[0]->setScale(1);
+        m_pContainer[1]->setScale(1);
     }
     
     DLayout layout[2];
@@ -284,6 +294,51 @@ void CADrawerController::scheduleHideAction(float dt)
         m_fCurrDivision = MAX(m_fCurrDivision - m_fDivision/12.0f * 60 * dt, 0);
         this->updateViewFrame();
     }
+}
+
+void CADrawerController::changeStatusBarOrientation(CAObject* obj)
+{
+    const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
+    if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
+    {
+        m_rHideLayout[0].horizontal.left = -m_fDivision;
+        m_rHideLayout[0].horizontal.width = m_fDivision;
+        m_rHideLayout[0].vertical = DVerticalLayoutFill;
+        
+        m_rShowLayout[0].horizontal.left = 0;
+        m_rShowLayout[0].horizontal.width = m_fDivision;
+        m_rShowLayout[0].vertical = DVerticalLayoutFill;
+        
+        
+        m_rHideLayout[1].horizontal = DHorizontalLayoutFill;
+        m_rHideLayout[1].vertical = DVerticalLayoutFill;
+        
+        m_rShowLayout[1].horizontal = DHorizontalLayout_L_R(m_fDivision, -m_fDivision);
+        m_rShowLayout[1].vertical = DVerticalLayoutFill;
+        
+        m_pBackgroundView->setLayout(DLayoutFill);
+    }
+    else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
+    {
+        m_rHideLayout[0].horizontal.left = -m_fDivision;
+        m_rHideLayout[0].horizontal.width = m_fDivision;
+        m_rHideLayout[0].vertical = DVerticalLayoutFill;
+        
+        m_rShowLayout[0].horizontal.left = 0;
+        m_rShowLayout[0].horizontal.width = m_fDivision;
+        m_rShowLayout[0].vertical = DVerticalLayoutFill;
+        
+        
+        m_rHideLayout[1].horizontal = DHorizontalLayoutFill;
+        m_rHideLayout[1].vertical = DVerticalLayoutFill;
+        
+        m_rShowLayout[1].horizontal = DHorizontalLayout_L_R(m_fDivision, -m_fDivision);
+        m_rShowLayout[1].vertical = DVerticalLayoutFill;
+        
+        m_pBackgroundView->setLayout(DLayout(DHorizontalLayout_L_W(0, m_fDivision), DVerticalLayoutFill));
+    }
+    
+    this->updateViewFrame();
 }
 
 bool CADrawerController::isReachBoundaryLeft()
@@ -361,6 +416,10 @@ void CADrawerController::setBackgroundView(CrossApp::CAView *var)
     if (m_pBackgroundView)
     {
         m_pBackgroundView->setLayout(DLayoutFill);
+        if (CAImageView* imageView = dynamic_cast<CAImageView*>(m_pBackgroundView))
+        {
+            imageView->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+        }
         this->getView()->insertSubview(m_pBackgroundView, -1);
     }
 }
@@ -368,6 +427,23 @@ void CADrawerController::setBackgroundView(CrossApp::CAView *var)
 CAView* CADrawerController::getBackgroundView()
 {
     return m_pBackgroundView;
+}
+
+void CADrawerController::setBackgroundImage(CAImage* var)
+{
+    if (m_pBackgroundView == NULL)
+    {
+        m_pBackgroundView = CAImageView::createWithLayout(DLayoutFill);
+        if (CAImageView* imageView = dynamic_cast<CAImageView*>(m_pBackgroundView))
+        {
+            imageView->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+        }
+        this->getView()->insertSubview(m_pBackgroundView, -1);
+    }
+    if (CAImageView* imageView = dynamic_cast<CAImageView*>(m_pBackgroundView))
+    {
+        imageView->setImage(var);
+    }
 }
 
 void CADrawerController::setTouchMoved(bool var)

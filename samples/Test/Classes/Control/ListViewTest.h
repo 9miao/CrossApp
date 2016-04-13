@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class CDListViewTest : public CAView ,CAListViewDelegate,CAListViewDataSource
+class CDListViewTest : public CAView, CAListViewDelegate, CAListViewDataSource
 {
 public:
     CDListViewTest();

@@ -17,13 +17,11 @@ void Scale9ImageViewTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-//    CAImageView* image = CAImageView::createWithLayout(DRectLayout(200,200,100,200,DRectLayout::L_R_T_H));
     CAImageView* image = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(200, 200), DVerticalLayout_T_H(100, 200)));
     image->setImage(CAImage::create("source_material/btn_rounded_normal.png"));
     this->getView()->addSubview(image);
     
     CAScale9ImageView* s9image = CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded_normal.png"));
-//    s9image->setLayout(DRectLayout(200,200,400,200,DRectLayout::L_R_T_H));
     s9image->setLayout(DLayout(DHorizontalLayout_L_R(200, 200), DVerticalLayout_T_H(400, 200)));
     this->getView()->addSubview(s9image);
 }

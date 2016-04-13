@@ -180,7 +180,6 @@ void CDNewsViewController::showAlert()
     btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
     p_alertView->addSubview(btn5);
     
-//    CALabel* test = CALabel::createWithLayout(DRectLayout(0, 0, 100, 40, DRectLayout::L_W_B_H));
     CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(100, 40)));
 	test->setColor(CAColor_gray);
     test->setTextAlignment(CATextAlignmentCenter);

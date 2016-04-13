@@ -48,7 +48,6 @@ void TabBarControllerTest::viewDidLoad()
         item.push_back(item2);
         item.push_back(item3);
     
-//        CATabBar* tabBar = CATabBar::createWithFrame(DRect(0, winSize.height-200, winSize.width, 98));
         CATabBar* tabBar = CATabBar::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 98)));
         tabBar->setItems(item);
         tabBar->showSelectedIndicator();

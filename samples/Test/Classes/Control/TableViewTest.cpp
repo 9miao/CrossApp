@@ -190,7 +190,6 @@ void TableViewTest::viewDidLoad()
     VIEWLIST.clear();
     this->getView()->setColor(CAColor_gray);
 
-//    p_TableView = CATableView::createWithLayout(DRectLayout(0,50,0,0,DRectLayout::L_R_T_B));
     p_TableView = CATableView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 50), DVerticalLayoutFill));
     p_TableView->setTableViewDataSource(this);
     p_TableView->setTableViewDelegate(this);
@@ -239,7 +238,6 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const DSize
         image->setImage(CAImage::create("source_material/second_2.png"));
         cell->addSubview(image);
         
-//        CALabel* cellText = CALabel::createWithLayout(DRectLayout(150,10,10,10,DRectLayout::L_R_T_B));
         CALabel* cellText = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(150, 10), DVerticalLayout_T_B(10, 10)));
         cellText->setTag(100);
         cellText->setFontSize(30);
@@ -261,7 +259,6 @@ CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table
     CAView* view = CAView::createWithColor(CAColor_gray);
     
     DSize _size = viewSize;
-//    CALabel* header = CALabel::createWithLayout(DRectLayout(50,0,0,0,DRectLayout::L_R_T_B));
     CALabel* header = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 0), DVerticalLayoutFill));
     header->setText(head);
     header->setFontSize(30);

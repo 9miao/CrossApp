@@ -18,7 +18,7 @@ void GifViewTest::viewDidLoad()
     this->getView()->setColor(CAColor_gray);
     
     CAGifView* GifView = CAGifView::createWithGif(CAGif::createWithFilePath("image/gifview1.gif"));
-    GifView->setLayout(DLayout(DHorizontalLayout_L_C(100, 0.5), DVerticalLayout_T_C(100, 0.5)));
+    GifView->setLayout(DLayout(DHorizontalLayout_W_C(400, 0.5), DVerticalLayout_H_C(400, 0.5)));
     //设置Gif永远重复
     GifView->setRepeatForever(true);
     //查看Gif是否永远重复

@@ -3,7 +3,6 @@
 #define __Test__ButtonTest__
 
 #include "CrossApp.h"
-#include "UiShow.h"
 
 USING_NS_CC;
 

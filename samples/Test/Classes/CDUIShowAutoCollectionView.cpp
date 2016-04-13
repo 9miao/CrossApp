@@ -83,7 +83,6 @@ CDUIShowAutoCollectionView::~CDUIShowAutoCollectionView()
 
 void CDUIShowAutoCollectionView::viewDidLoad()
 {
-//    p_AutoCollection = CAAutoCollectionView::createWithLayout(DRectLayout(0,0,0,0,DRectLayout::L_R_T_B));
     p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
     p_AutoCollection->setAllowsSelection(true);
     p_AutoCollection->setCollectionViewDelegate(this);
@@ -286,20 +285,20 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
         }
         case 16:
         {
-            AutoCollectionViewVerticalTest* ViewAutoCollectionViewVerticalTest = new class AutoCollectionViewVerticalTest();
-            ViewAutoCollectionViewVerticalTest->init();
-            ViewAutoCollectionViewVerticalTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewAutoCollectionViewVerticalTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewAutoCollectionViewVerticalTest, true);
+            AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new class AutoCollectionViewVerticalTest();
+            ViewContrllerAutoCollectionViewVerticalTest->init();
+            ViewContrllerAutoCollectionViewVerticalTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerAutoCollectionViewVerticalTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewVerticalTest, true);
             break;
         }
         case 17:
         {
-            AutoCollectionViewHorizontalTest* ViewAutoCollectionViewHorizontalTest = new AutoCollectionViewHorizontalTest();
-            ViewAutoCollectionViewHorizontalTest->init();
-            ViewAutoCollectionViewHorizontalTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewAutoCollectionViewHorizontalTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewAutoCollectionViewHorizontalTest, true);
+            AutoCollectionViewHorizontalTest* ViewContrllerAutoCollectionViewHorizontalTest = new AutoCollectionViewHorizontalTest();
+            ViewContrllerAutoCollectionViewHorizontalTest->init();
+            ViewContrllerAutoCollectionViewHorizontalTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerAutoCollectionViewHorizontalTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewHorizontalTest, true);
             break;
         }
             
@@ -314,11 +313,11 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
         }
         case 19:
         {
-            WaterfallViewTest* ViewWaterfallViewTest = new WaterfallViewTest();
-            ViewWaterfallViewTest->init();
-            ViewWaterfallViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewWaterfallViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewWaterfallViewTest, true);
+            WaterfallViewTest* ViewContrllerWaterfallViewTest = new WaterfallViewTest();
+            ViewContrllerWaterfallViewTest->init();
+            ViewContrllerWaterfallViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerWaterfallViewTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerWaterfallViewTest, true);
             break;
         }
         case 20:
@@ -450,7 +449,6 @@ CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCo
         p_Cell->addSubview(itemText);
         
         CAImageView* icon = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(30,30),DVerticalLayout_T_H(20, 123)));
-        // 30, 20, 123,DRectLayout::L_R_T_H));
         icon->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         icon->setTag(101);
         icon->setScale(0.6f);
