@@ -137,9 +137,10 @@
     <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp" />
     <ClCompile Include="..\Classes\CDWebViewController.cpp" />
     <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
-    <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest1111.cpp" />
+    <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\AlertViewTest.cpp" />
-    <ClCompile Include="..\Classes\Control\AutoCollectionViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewHorizontalTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp" />
     <ClCompile Include="..\Classes\Control\ButtonTest.cpp" />
     <ClCompile Include="..\Classes\Control\CollectionViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\FlashViewTest.cpp" />
@@ -161,7 +162,6 @@
     <ClCompile Include="..\Classes\Control\TableViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\TextFieldTest.cpp" />
     <ClCompile Include="..\Classes\Control\TextViewTest.cpp" />
-    <ClCompile Include="..\Classes\Control\UiShow.cpp" />
     <ClCompile Include="..\Classes\Control\VideoPlayerControlViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ViewAnimationTest.cpp" />
     <ClCompile Include="..\Classes\Control\WaterfallViewTest.cpp" />
@@ -183,7 +183,8 @@
     <ClInclude Include="..\Classes\CommonHttpManager.h" />
     <ClInclude Include="..\Classes\Control\ActivityIndicatorViewTest.h" />
     <ClInclude Include="..\Classes\Control\AlertViewTest.h" />
-    <ClInclude Include="..\Classes\Control\AutoCollectionViewTest.h" />
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewHorizontalTest.h" />
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h" />
     <ClInclude Include="..\Classes\Control\ButtonTest.h" />
     <ClInclude Include="..\Classes\Control\CollectionViewTest.h" />
     <ClInclude Include="..\Classes\Control\FlashViewTest.h" />
@@ -205,7 +206,6 @@
     <ClInclude Include="..\Classes\Control\TableViewTest.h" />
     <ClInclude Include="..\Classes\Control\TextFieldTest.h" />
     <ClInclude Include="..\Classes\Control\TextViewTest.h" />
-    <ClInclude Include="..\Classes\Control\UiShow.h" />
     <ClInclude Include="..\Classes\Control\VideoPlayerControlViewTest.h" />
     <ClInclude Include="..\Classes\Control\ViewAnimationTest.h" />
     <ClInclude Include="..\Classes\Control\WaterfallViewTest.h" />

@@ -742,7 +742,7 @@ CATextField* CATextField::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CATextField* CATextField::createWithLayout(const DRectLayout& layout)
+CATextField* CATextField::createWithLayout(const DLayout& layout)
 {
     CATextField* textField = new CATextField();
     if (textField && textField->initWithLayout(layout))
@@ -765,7 +765,7 @@ bool CATextField::init()
 
 	CAImage* image = CAImage::create("source_material/textField_bg.png");
 	m_pBackgroundView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+	m_pBackgroundView->setLayout(DLayoutFill);
 	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
 	m_pBackgroundView->setImage(image);
 	this->addSubview(m_pBackgroundView);

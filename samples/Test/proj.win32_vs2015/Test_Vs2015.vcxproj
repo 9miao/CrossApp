@@ -68,7 +68,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;..\Classes\Control;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -135,10 +135,38 @@
     <ClCompile Include="..\Classes\CDNewsImageController.cpp" />
     <ClCompile Include="..\Classes\CDNewsViewController.cpp" />
     <ClCompile Include="..\Classes\CDShowNewsImage.cpp" />
-    <ClCompile Include="..\Classes\CDUIShowCollectionView.cpp" />
-    <ClCompile Include="..\Classes\CDUIShowView.cpp" />
+    <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp" />
     <ClCompile Include="..\Classes\CDWebViewController.cpp" />
     <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
+    <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AlertViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewHorizontalTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ButtonTest.cpp" />
+    <ClCompile Include="..\Classes\Control\CollectionViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\FlashViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\GifViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\LabelTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ListViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\PageViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\PickerViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ProgressTest.cpp" />
+    <ClCompile Include="..\Classes\Control\RenderImageTest.cpp" />
+    <ClCompile Include="..\Classes\Control\Scale9ImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ScrollViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\SegmentedControlTest.cpp" />
+    <ClCompile Include="..\Classes\Control\SliderTest.cpp" />
+    <ClCompile Include="..\Classes\Control\StepperTest.cpp" />
+    <ClCompile Include="..\Classes\Control\SwitchTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TabBarControllerTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TableViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TextFieldTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TextViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\VideoPlayerControlViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ViewAnimationTest.cpp" />
+    <ClCompile Include="..\Classes\Control\WaterfallViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\WebViewTest.cpp" />
     <ClCompile Include="..\Classes\MenuViewController.cpp" />
     <ClCompile Include="..\Classes\RootWindow.cpp" />
     <ClCompile Include="main.cpp" />
@@ -151,10 +179,38 @@
     <ClInclude Include="..\Classes\CDNewsImageController.h" />
     <ClInclude Include="..\Classes\CDNewsViewController.h" />
     <ClInclude Include="..\Classes\CDShowNewsImage.h" />
-    <ClInclude Include="..\Classes\CDUIShowCollectionView.h" />
-    <ClInclude Include="..\Classes\CDUIShowView.h" />
+    <ClInclude Include="..\Classes\CDUIShowAutoCollectionView.h" />
     <ClInclude Include="..\Classes\CDWebViewController.h" />
     <ClInclude Include="..\Classes\CommonHttpManager.h" />
+    <ClInclude Include="..\Classes\Control\ActivityIndicatorViewTest.h" />
+    <ClInclude Include="..\Classes\Control\AlertViewTest.h" />
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewHorizontalTest.h" />
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h" />
+    <ClInclude Include="..\Classes\Control\ButtonTest.h" />
+    <ClInclude Include="..\Classes\Control\CollectionViewTest.h" />
+    <ClInclude Include="..\Classes\Control\FlashViewTest.h" />
+    <ClInclude Include="..\Classes\Control\GifViewTest.h" />
+    <ClInclude Include="..\Classes\Control\ImageViewTest.h" />
+    <ClInclude Include="..\Classes\Control\LabelTest.h" />
+    <ClInclude Include="..\Classes\Control\ListViewTest.h" />
+    <ClInclude Include="..\Classes\Control\PageViewTest.h" />
+    <ClInclude Include="..\Classes\Control\PickerViewTest.h" />
+    <ClInclude Include="..\Classes\Control\ProgressTest.h" />
+    <ClInclude Include="..\Classes\Control\RenderImageTest.h" />
+    <ClInclude Include="..\Classes\Control\Scale9ImageViewTest.h" />
+    <ClInclude Include="..\Classes\Control\ScrollViewTest.h" />
+    <ClInclude Include="..\Classes\Control\SegmentedControlTest.h" />
+    <ClInclude Include="..\Classes\Control\SliderTest.h" />
+    <ClInclude Include="..\Classes\Control\StepperTest.h" />
+    <ClInclude Include="..\Classes\Control\SwitchTest.h" />
+    <ClInclude Include="..\Classes\Control\TabBarControllerTest.h" />
+    <ClInclude Include="..\Classes\Control\TableViewTest.h" />
+    <ClInclude Include="..\Classes\Control\TextFieldTest.h" />
+    <ClInclude Include="..\Classes\Control\TextViewTest.h" />
+    <ClInclude Include="..\Classes\Control\VideoPlayerControlViewTest.h" />
+    <ClInclude Include="..\Classes\Control\ViewAnimationTest.h" />
+    <ClInclude Include="..\Classes\Control\WaterfallViewTest.h" />
+    <ClInclude Include="..\Classes\Control\WebViewTest.h" />
     <ClInclude Include="..\Classes\MenuViewController.h" />
     <ClInclude Include="..\Classes\RootWindow.h" />
     <ClInclude Include="main.h" />
