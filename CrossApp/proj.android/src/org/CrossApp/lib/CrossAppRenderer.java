@@ -54,7 +54,9 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	}
 
 	@Override
-	public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight) {
+	public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight)
+	{
+		CrossAppRenderer.nativeChanged(this.mScreenWidth, this.mScreenHeight);
 	}
 
 	@Override
@@ -98,6 +100,7 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	private static native boolean nativeKeyDown(final int pKeyCode);
 	private static native void nativeRender();
 	private static native void nativeInit(final int pWidth, final int pHeight);
+	private static native void nativeChanged(final int pWidth, final int pHeight);
 	private static native void nativeOnPause();
 	private static native void nativeOnResume();
 	private static native void nativeCloseKeyPad();

@@ -60,14 +60,6 @@ public class AndroidGPS {
 		@Override 
 		public void onLocationChanged(Location location) 
 		{ 
-			Log.i("onLocationChanged", "come in");
-            if (location != null)
-            {
-                Log.w("Location", "Current altitude = "
-                        + location.getAltitude());
-                Log.w("Location", "Current latitude = "
-                        + location.getLatitude());
-            }
             locationManager.removeUpdates(this);
             locationManager.setTestProviderEnabled(provider, false);
 		}
@@ -79,16 +71,11 @@ public class AndroidGPS {
         {
             switch (event)
             {
-            //第一次定位
             case GpsStatus.GPS_EVENT_FIRST_FIX:
                 break;
-            //卫星状态改变
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                //获取当前状态
                 GpsStatus gpsStatus=locationManager.getGpsStatus(null);
-                //获取卫星颗数的默认最大值
                 int maxSatellites = gpsStatus.getMaxSatellites();
-                //创建一个迭代器保存所有卫星 
                 Iterator<GpsSatellite> iters = gpsStatus.getSatellites().iterator();
                 int count = 0;     
                 while (iters.hasNext() && count <= maxSatellites)
@@ -98,10 +85,8 @@ public class AndroidGPS {
                 }   
                 System.out.println("搜索到："+count+"颗卫星");
                 break;
-            //定位启动
             case GpsStatus.GPS_EVENT_STARTED:
                 break;
-            //定位结束
             case GpsStatus.GPS_EVENT_STOPPED:
                 break;
             }
@@ -169,14 +154,14 @@ public class AndroidGPS {
 	private static void updateToNewLocation(Location location)
 	{
 
-        if (location != null)
-        {
-            double latitude = location.getLatitude();
-            double longitude= location.getLongitude();
-        }
-        else
-        {
-        }
+//        if (location != null)
+//        {
+//            double latitude = location.getLatitude();
+//            double longitude= location.getLongitude();
+//        }
+//        else
+//        {
+//        }
 
     }
 }

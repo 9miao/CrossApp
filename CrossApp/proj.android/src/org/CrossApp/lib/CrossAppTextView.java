@@ -72,12 +72,10 @@ import android.widget.TextView.OnEditorActionListener;
 	private OnEditorActionListener onEditorActionListener = null;
 	private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = null;
 	
-	//浠ｇ�����璋����瑕�
 	private boolean isSetText = false;
 	private String  beforeTextString = "";
 	private int selection = 0;
 	
-	//������寮瑰�洪�����
 	private boolean isShowKey = false;
 	private boolean isKeyAction = false;
 	
@@ -545,7 +543,6 @@ import android.widget.TextView.OnEditorActionListener;
     		@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
 			{
-				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 				if (isSetText)
 				{
@@ -557,12 +554,10 @@ import android.widget.TextView.OnEditorActionListener;
 				String  changedText = "";
 				if (arg3 > 0) 
 				{
-					//只是添加
 					changedText = string.substring(arg1, arg1 + arg3);
 				}
 				else 
 				{
-					//只是删除
 					changedText = "";
 				}
 
@@ -578,15 +573,7 @@ import android.widget.TextView.OnEditorActionListener;
 					isSetText = true;
 					textView.setText(string);
 					textView.setSelection(selection - arg2 + arg3);
-//					context.runOnGLThread(new Runnable() 
-//	            	{
-//	                    @Override
-//	                    public void run()
-//	                    {
-//	                    	ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
-//	    					text(mykey, textBuffer.array(), textBuffer.array().length);
-//	                    }
-//	                });
+
 					ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
 					isSetText = false;

@@ -14,6 +14,7 @@ basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CACamera.cpp \
 basics/CAGeometry.cpp \
+basics/CALayout.cpp \
 basics/CAObject.cpp \
 basics/CAResponder.cpp \
 basics/CAScheduler.cpp \

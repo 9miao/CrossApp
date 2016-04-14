@@ -31,7 +31,6 @@ public class AndroidPersonList
 	}
 	public static String CAGetPersonList()
 	{
-		// ������е���ϵ��  
         Cursor cur = s_pContext.getContentResolver().query(  
                 ContactsContract.Contacts.CONTENT_URI,  
                 null,  
@@ -40,7 +39,6 @@ public class AndroidPersonList
                 ContactsContract.Contacts.DISPLAY_NAME  
                         + " COLLATE LOCALIZED ASC");  
         ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
-        // ѭ������  
         if (cur.moveToFirst())
         {
             int idColumn = cur.getColumnIndex(ContactsContract.Contacts._ID);  
@@ -53,9 +51,7 @@ public class AndroidPersonList
        	    	try
 				{
 	            	FriendData data = new FriendData();
-	                // �����ϵ�˵�ID��  
 	                String contactId = cur.getString(idColumn);  
-	                // �����ϵ������  
 	                String disPlayName = cur.getString(displayNameColumn);  
 	                data.name = disPlayName;
 	                int phoneCount = cur  
@@ -75,8 +71,6 @@ public class AndroidPersonList
 	                            String phoneNumber = phones  
 	                                    .getString(phones  
 	                                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));   
-	                            //Log.i("phoneNumber", phoneNumber);  
-	                            //Log.i("phoneType", phoneType);  
 	                            data.phoneNumber.add( phoneNumber );
 	                        }
 	                        while (phones.moveToNext());  
@@ -84,7 +78,6 @@ public class AndroidPersonList
 	                    phones.close();
 	                }  
 	  
-	                // ��ȡ����ϵ������  
 	                Cursor emails = s_pContext.getContentResolver().query(  
 	                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,  
 	                        null,  
@@ -94,19 +87,15 @@ public class AndroidPersonList
 	                {  
 	                    do
 	                    {  
-	                        // �������еĵ绰����    
 	                        String emailValue = emails  
 	                                .getString(emails  
 	                                        .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
 	                          
-	                        //Log.i("emailType", emailType);  
-	                        //Log.i("emailValue", emailValue);  
 	                        data.emailValue = emailValue;
 	                    }
 	                    while (emails.moveToNext());  
 	                }  
 	                emails.close();
-	                 //��ȡ����ϵ�˵�ַ  
 	                Cursor address = s_pContext.getContentResolver()  
 	                        .query(  
 	                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
@@ -116,7 +105,6 @@ public class AndroidPersonList
 	                if (address.moveToFirst()) 
 	                {  
 	                    do {  
-	                        // �������еĵ�ַ  
 	                        String street = address  
 	                                .getString(address  
 	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));  
@@ -141,7 +129,6 @@ public class AndroidPersonList
 	                    while (address.moveToNext());  
 	                }  
 	                address.close();
-	                 //��ȡnickname��Ϣ  
 	                Cursor nicknames = s_pContext.getContentResolver().query(  
 	                        Data.CONTENT_URI,  
 	                        new String[] { Data._ID, Nickname.NAME },  
@@ -173,7 +160,6 @@ public class AndroidPersonList
         
         try
         {  
-            // �����������{}���Ǵ���һ������  
             JSONObject personList = new JSONObject();
             JSONArray personArray = new JSONArray();
             for ( int i = 0 ; i < vecFriend.size(); i ++ )
@@ -187,7 +173,6 @@ public class AndroidPersonList
 	            person.put("address_postCode" , data.address_postCode != null ? data.address_postCode : "null" );  
 	            person.put("address_formatAddress" , data.address_formatAddress != null ? data.address_formatAddress : "null" );
 	    		person.put("nickname" , data.nickname != null ? data.nickname : "null" );
-	            // ��һ����phone��ֵ�����飬������Ҫ�����������  
 	            JSONArray phone = new JSONArray();
 	            for ( int j = 0 ; j < data.phoneNumber.size(); j ++ )
 	            {
@@ -204,7 +189,6 @@ public class AndroidPersonList
         } 
         catch (JSONException ex) 
         {  
-            // ��Ϊnull��ʹ��json��֧�ֵ����ָ�ʽ(NaN, infinities)  
             throw new RuntimeException(ex);  
         }
 	}

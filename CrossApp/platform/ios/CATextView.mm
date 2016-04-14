@@ -332,7 +332,10 @@ void CATextView::setContentSize(const DSize& contentSize)
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textView_iOS setContentSize:rect.size];
     
-    this->showImage();
+    if (m_bRunning)
+    {
+        this->showImage();
+    }
 }
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {

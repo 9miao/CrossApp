@@ -341,23 +341,23 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		case 0:
 			boolean result = mAdapter.enable();
 			if(result)
-				returnBlueToothState(0);//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷晒锟�
+				returnBlueToothState(0);
 			else if(wasBtOpened)
-				returnBlueToothState(1);//锟斤拷锟斤拷锟窖撅拷锟斤拷锟斤拷
+				returnBlueToothState(1);
 			else
 			{
-				returnBlueToothState(2);//锟斤拷锟斤拷锟斤拷失锟斤拷
+				returnBlueToothState(2);
 			}
 			break;
 
 		case 1:
 			boolean result1 = mAdapter.disable();
 			if(result1)
-				returnBlueToothState(3);//锟斤拷锟斤拷锟截闭诧拷锟斤拷锟缴癸拷
+				returnBlueToothState(3);
 			else if(!wasBtOpened)
-				returnBlueToothState(4);//锟斤拷锟斤拷锟窖撅拷锟截憋拷
+				returnBlueToothState(4);
 			else
-				returnBlueToothState(5);//锟斤拷锟斤拷锟截憋拷失锟斤拷.
+				returnBlueToothState(5);
 			break;
 		case 2:
 			if (!wasBtOpened)
@@ -366,19 +366,16 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 				startActivityForResult(intent, REQUEST_OPEN_BT_CODE);
 			}
 			else
-				returnBlueToothState(1);//锟斤拷锟斤拷锟窖撅拷锟斤拷
+				returnBlueToothState(1);
 			break;
 		case 3:
 			if (!mAdapter.isDiscovering()){
-                Log.i(TAG, "btCancelDiscovery ### the bluetooth dont't discovering");
                 mAdapter.startDiscovery();
             }
             else
-                toast("锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟借备锟斤拷");
 			break;
 		case 4:
 			if (mAdapter.isDiscovering()){
-                Log.i(TAG, "btCancelDiscovery ### the bluetooth is isDiscovering");
                 mAdapter.cancelDiscovery();
             }
 			break;
@@ -391,41 +388,34 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			break;
 		}
     }
-    //锟斤拷锟斤拷扫锟斤拷时锟侥广播锟斤拷锟斤拷锟斤拷
+    
     public BroadcastReceiver BTDiscoveryReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            // TODO Auto-generated method stub
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT ACTION_DISCOVERY_STARTED ##");
                 returnStartedDiscoveryDevice();
             }
             else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT ACTION_DISCOVERY_FINISHED ##");
                 returnFinfishedDiscoveryDevice();
             }
             else if(BluetoothDevice.ACTION_FOUND.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT BluetoothDevice.ACTION_FOUND ##");
                 BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if(btDevice != null)
                 {
-                	Log.v(TAG , "Name : " + btDevice.getName() + " Address: " + btDevice.getAddress());
                 	AndroidBlueTooth mAndroidBlueTooth = new AndroidBlueTooth(btDevice.getAddress(),btDevice.getName());
                 	returnDiscoveryDevice(mAndroidBlueTooth);
                 }
             }
             else if(BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT ACTION_BOND_STATE_CHANGED ##");
 
                 int cur_bond_state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
                 int previous_bond_state = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.BOND_NONE);
-                Log.v(TAG, "### cur_bond_state ##" + cur_bond_state + " ~~ previous_bond_state" + previous_bond_state);
             }
         }
 
@@ -436,20 +426,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         switch (btState)
         {
             case BluetoothAdapter.STATE_OFF:
-                toast("锟斤拷锟斤拷状态:锟窖关憋拷");
-                Log.v(TAG, "BT State 锟斤拷 BluetoothAdapter.STATE_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
-                toast("锟斤拷锟斤拷状态:锟斤拷锟节关憋拷");
-                Log.v(TAG, "BT State :  BluetoothAdapter.STATE_TURNING_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
-                toast("锟斤拷锟斤拷状态:锟斤拷锟节达拷");
-                Log.v(TAG, "BT State 锟斤拷BluetoothAdapter.STATE_TURNING_ON ###");
                 break;
             case BluetoothAdapter.STATE_ON:
-                toast("锟斤拷锟斤拷状态:锟窖达拷");
-                Log.v(TAG, "BT State 锟斤拷BluetoothAdapter.STATE_ON ###");
                 break;
             default:
                 break;
@@ -563,7 +545,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	// ===========================================================
 	public void init() {
 
-    	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                                        ViewGroup.LayoutParams.FILL_PARENT);
@@ -571,13 +552,10 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         framelayout.setLayoutParams(framelayout_params);
         frame = framelayout;
 
-        // CrossAppGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
 
-        // ...add to FrameLayout
         framelayout.addView(this.mGLSurfaceView);
 
-        // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
         {
            this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
@@ -586,7 +564,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         mCrossAppRenderer = new CrossAppRenderer();
         this.mGLSurfaceView.setCrossAppRenderer(mCrossAppRenderer);
 
-        // Set framelayout as the content view
 		setContentView(framelayout);
 	}
 	
