@@ -401,7 +401,10 @@ void CATextField::setContentSize(const DSize& contentSize)
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     textField_iOS.frame = rect;
     
-    this->showImage();
+    if (m_bRunning)
+    {
+        this->showImage();
+    }
 }
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

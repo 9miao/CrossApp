@@ -69,7 +69,6 @@ import android.widget.TextView.OnEditorActionListener;
 	private String  beforeTextString = "";
 	private int selection = 0;
 
-	//是否弹出键盘
 	private boolean isShowKey = false;
 	private boolean isKeyAction = false;
 	
@@ -764,7 +763,6 @@ import android.widget.TextView.OnEditorActionListener;
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3)
 			{
-				//起始位置， 删除长度，增加长度
 				// TODO Auto-generated method stub
 
 				String string = arg0.toString();
@@ -772,12 +770,10 @@ import android.widget.TextView.OnEditorActionListener;
 				String  changedText = "";
 				if (arg3 > 0) 
 				{
-					//只是添加
 					changedText = string.substring(arg1, arg1 + arg3);
 				}
 				else 
 				{
-					//只是删除
 					changedText = "";
 				}
 
