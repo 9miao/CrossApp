@@ -27,6 +27,8 @@ protected:
     
     void viewDidUnload();
     
+    void changeStatusBarOrientation(CAObject* obj);
+    
 public:
     virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     

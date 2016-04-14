@@ -23,8 +23,7 @@ public:
     virtual ~CADrawerController();
     
     virtual bool initWithController(CAViewController* leftViewController,
-                                    CAViewController* rightViewController,
-                                    float division);
+                                    CAViewController* rightViewController);
     
     void replaceRightViewController(CAViewController* rightViewController);
     
@@ -54,11 +53,15 @@ public:
     
     virtual bool isReachBoundaryRight();
     
-    void setBackgroundView(CAView* var);
-    
-    CAView* getBackgroundView();
-    
     void setBackgroundImage(CAImage* var);
+    
+    CC_DEPRECATED_ATTRIBUTE void setBackgroundView(CAView* var);
+    
+    CC_DEPRECATED_ATTRIBUTE CAView* getBackgroundView();
+    
+    CC_DEPRECATED_ATTRIBUTE virtual bool initWithController(CAViewController* leftViewController,
+                                    CAViewController* rightViewController,
+                                    float division);
     
 protected:
     
@@ -75,6 +78,8 @@ protected:
     void scheduleHideAction(float dt);
     
     void changeStatusBarOrientation(CAObject* obj);
+    
+    void achieveLayout();
     
 protected:
     

@@ -769,7 +769,7 @@ void CAView::setLayout(const CrossApp::DLayout &layout)
     
     if (m_bRunning)
     {
-        this->reViewlayout(this->getSuperview()->m_obContentSize);
+        this->reViewlayout(this->getSuperview()->m_obContentSize, true);
     }
 }
 
@@ -832,7 +832,7 @@ const char* CAView::description()
     return crossapp_format_string("<CAView | TextTag = %s | Tag = %d >", m_sTextTag.c_str(), m_nTag).c_str();
 }
 
-void CAView::reViewlayout(const DSize& contentSize)
+void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
 {
     if (m_eLayoutType == 2)
     {
@@ -908,12 +908,31 @@ void CAView::reViewlayout(const DSize& contentSize)
                 point.y = contentSize.height * verticalLayout.center - size.height / 2;
             }
         }
-        
-        this->setContentSize(size);
+
+        if (allowAnimation
+            &&CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setContentSize(size, this);
+        }
+        else
+        {
+            this->setContentSize(size);
+        }
         
         DPoint p = m_obAnchorPointInPoints;
+        
         p = ccpAdd(p, point);
-        this->setPoint(p);
+        if (allowAnimation
+            &&CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setPoint(p, this);
+        }
+        else
+        {
+            this->setPoint(p);
+        }
     }
 }
 
@@ -1405,7 +1424,7 @@ CAResponder* CAView::nextResponder()
 
 void CAView::onEnter()
 {
-    this->reViewlayout(m_pSuperview->m_obContentSize);
+    this->reViewlayout(this->getSuperview()->m_obContentSize);
     m_bRunning = true;
     this->updateDraw();
     

@@ -44,12 +44,12 @@ void ViewAnimationTest::viewDidLoad()
         //Animation 1
         heart_index = 0;
         CAButton* btn1 = CAButton::create(CAButtonTypeRoundedRect);
-        btn1->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(240, 50)));
+        btn1->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(56, 0.25)));
         btn1->setTitleForState(CAControlStateNormal, "Play Animation");
         btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
         btn1->setTag(100);
         btn1->addTarget(this, CAControl_selector(ViewAnimationTest::doAction), CAControlEventTouchUpInSide);
-        animation_1_view = CAImageView::createWithCenter(DRect(winSize.width/2, winSize.height/2, 28, 24));
+        animation_1_view = CAImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(28, 0.5), DVerticalLayout_H_C(24, 0.5)));
         animation_1_view->setImage(CAImage::create("image/heart1.png"));
     
         CAView* view1 = CAView::createWithLayout(DLayoutFill);
@@ -61,23 +61,23 @@ void ViewAnimationTest::viewDidLoad()
     else if (AnimationNum == 1)
     {
         //Animation 2
-        CAImageView* bg = CAImageView::createWithCenter(DRect(winSize.width/2,winSize.height/2,winSize.width,80));
+        CAImageView* bg = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_C(0, 0.5), DVerticalLayout_H_C(80, 0.5)));
         bg->setImage(CAImage::create("image/navbg.jpg"));
     
-//        animation_2_textfield = CATextField::createWithLayout(DRectLayout(0,100,0,100,DRectLayout::L_R_T_H));//123456
-        animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
+//        animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
+        animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_W(90, 100), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setFontSize(40);
         animation_2_textfield->setKeyboardType(CATextField::Default);
         animation_2_textfield->setVisible(false);
     
-//        animation_2_btn_search = CAButton::createWithLayout(DRectLayout(20,56,570,48,DRectLayout::L_W_T_H), CAButtonTypeCustom);
-        animation_2_btn_search = CAButton::createWithCenter(DRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
+//        animation_2_btn_search = CAButton::createWithCenter(DRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
+        animation_2_btn_search = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(25, 56), DVerticalLayout_H_C(48, 0.5)), CAButtonTypeCustom);
         animation_2_btn_search->setImageForState(CAControlStateNormal, CAImage::create("image/search_btn.png"));
         animation_2_btn_search->addTarget(this, CAControl_selector(ViewAnimationTest::doAction), CAControlEventTouchUpInSide);
         animation_2_btn_search->setTag(201);
     
-//        animation_2_btn_cancel = CAButton::createWithLayout(DRectLayout(20,100,570,50,DRectLayout::R_W_T_H), CAButtonTypeCustom);
-        animation_2_btn_cancel = CAButton::createWithCenter(DRect(winSize.width-60,winSize.height/2,100,50), CAButtonTypeCustom);
+//        animation_2_btn_cancel = CAButton::createWithCenter(DRect(winSize.width-60,winSize.height/2,100,50), CAButtonTypeCustom);
+        animation_2_btn_cancel = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(20, 100), DVerticalLayout_H_C(50, 0.5)), CAButtonTypeCustom);
         animation_2_btn_cancel->setTitleForState(CAControlStateNormal, "Cancel");
         animation_2_btn_cancel->setTag(202);
         animation_2_btn_cancel->setTitleColorForState(CAControlStateNormal, CAColor_white);
@@ -96,13 +96,10 @@ void ViewAnimationTest::viewDidLoad()
     {
         //Animation 3
         animation_3_imageview = CAImageView::createWithLayout(DLayoutFill);
-//        animation_3_imageview = CAImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
         animation_3_imageview->setImage(CAImage::create("image/2.jpg"));
     
         CAButton* btn3 = CAButton::create(CAButtonTypeRoundedRect);
-//        btn3->setCenter(DRect(winSize.width/2, winSize.height/4, 200, 50));
-//        btn3->setLayout(DRectLayout(240,240,200,50,DRectLayout::L_R_T_H));
-        btn3->setLayout(DLayout(DHorizontalLayout_L_R(240, 240), DVerticalLayout_T_H(200, 50)));
+        btn3->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(56, 0.25)));
         btn3->setTitleForState(CAControlStateNormal, "Play Animation");
         btn3->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
         btn3->setTag(300);
@@ -148,11 +145,13 @@ void ViewAnimationTest::doAction(CAControl* btn,DPoint point)
         animation_2_textfield->setAlpha(0);
         animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,100,50));
 //        animation_2_textfield->setLayout(DRectLayout(90,500,560,60,DRectLayout::L_R_T_H));
+//        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 100), DVerticalLayout_H_C(50, 0.5)));
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
         animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,winSize.width-200,50));
 //        animation_2_textfield->setLayout(DRectLayout(90,100,560,60,DRectLayout::L_R_T_H));
+//        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 400), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setAlpha(1);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
         CAViewAnimation::commitAnimations();
@@ -160,18 +159,20 @@ void ViewAnimationTest::doAction(CAControl* btn,DPoint point)
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
         animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,0,50));
-//        animation_2_textfield->setLayout(DRectLayout(90,700,560,60,DRectLayout::L_R_T_H));
+//        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setAlpha(0);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
         CAViewAnimation::commitAnimations();
     }else if(tag==300){
         animation_3_imageview->setImageRect(DRect(0,0,100,winSize.height));
         animation_3_imageview->setFrame(DRect(0,0,100,winSize.height));
+//        animation_3_imageview->setLayout(DLayout(DHorizontalLayout_L_W(0, 100), DVerticalLayout_T_C(0, 0.5)));
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.8f);
         CAViewAnimation::setAnimationRepeatAutoreverses(true);
         animation_3_imageview->setImageRect(DRect(winSize.width-100,0,100,winSize.height));
         animation_3_imageview->setFrame(DRect(winSize.width-100,0,100,winSize.height));
+//        animation_3_imageview->setLayout(DLayout(DHorizontalLayout_R_W(0, 100), DVerticalLayout_T_C(0, 0.5)));
         CAViewAnimation::commitAnimations();
     }
 }

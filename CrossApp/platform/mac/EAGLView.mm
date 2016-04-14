@@ -43,25 +43,25 @@ static EAGLView *view;
 		0
     };
 	
+    frameZoomFactor_ = 1.0f;
+    view = self;
+    
 	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
 	
 	if (!pixelFormat)
 		NSLog(@"No OpenGL pixel format");
 	
-	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
-		
-		if( context )
-			[self setOpenGLContext:context];
-
-		// event delegate
+	if((self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]))
+    {
+        if(context)
+        {
+            [self setOpenGLContext:context];
+        }
 		eventDelegate_ = [CCEventDispatcher sharedDispatcher];
 	}
     
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
-
-    frameZoomFactor_ = 1.0f;
-	
-	view = self;
+    
 	return self;
 }
 
@@ -69,14 +69,14 @@ static EAGLView *view;
     // event delegate
     eventDelegate_ = [CCEventDispatcher sharedDispatcher];
     
-    CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
-    
     frameZoomFactor_ = 1.0f;
 	
 	view = self;
-    
+
     [super initWithFrame:frameRect pixelFormat:format];
 
+    CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
+    
     NSRect bounds = frameRect;
     bounds.origin = CGPointZero;
     NSTrackingArea* trackingArea = [[NSTrackingArea alloc]
@@ -85,7 +85,15 @@ static EAGLView *view;
                                     owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
     [self lockOpenGLContext];
+    
     return self;
+}
+
+-(void) setFrame:(NSRect)frame
+{
+    [super setFrame:frame];
+    
+    CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frame.size.width, frame.size.height);
 }
 
 - (void) update

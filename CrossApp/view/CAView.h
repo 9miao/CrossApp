@@ -298,7 +298,7 @@ public:
 
     virtual void update(float fDelta);
     
-    virtual void reViewlayout(const DSize& contentSize);
+    virtual void reViewlayout(const DSize& contentSize, bool allowAnimation = false);
     
     inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
     

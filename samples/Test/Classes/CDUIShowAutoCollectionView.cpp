@@ -250,16 +250,10 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             break;
         }
         case 13:
-        {
-            TabBarNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* TabBarRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            TabBarRightBtn->setTarget(this, CAControl_selector(CDUIShowAutoCollectionView::TabBarRightBtnRightcallback));
-            TabBarNavigationBar->addRightButtonItem(TabBarRightBtn);
-            
+        {            
             TabBarControllerTest* ViewContrllerTabBarControllerTest = new TabBarControllerTest();
             ViewContrllerTabBarControllerTest->init();
-            ViewContrllerTabBarControllerTest->setNavigationBarItem(TabBarNavigationBar);
+            ViewContrllerTabBarControllerTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
             ViewContrllerTabBarControllerTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTabBarControllerTest, true);
             break;

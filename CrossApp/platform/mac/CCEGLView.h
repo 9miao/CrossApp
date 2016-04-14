@@ -19,6 +19,8 @@ public:
     
     virtual ~CCEGLView(void);
     
+    virtual void setFrameSize(float width, float height);
+    
     virtual bool isOpenGLReady(void);
     virtual bool setContentScaleFactor(float contentScaleFactor);
     virtual void end();

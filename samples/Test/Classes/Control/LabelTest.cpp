@@ -59,7 +59,7 @@ void LabelTest::viewDidLoad()
         label->setFont(Font);
         label->setTextAlignment(CATextAlignmentCenter);
         label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(150, 40)));
+        label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.16)));
     
         CAFont Font1;
         Font1.fontSize = 36;
@@ -72,7 +72,7 @@ void LabelTest::viewDidLoad()
         label1->setFont(Font1);
         label1->setTextAlignment(CATextAlignmentCenter);
         label1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 40)));
+        label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.32)));
         
         CALabel* label2 = CALabel::create();
         CAFont Font2;
@@ -84,7 +84,7 @@ void LabelTest::viewDidLoad()
         label2->setFont(Font2);
         label2->setTextAlignment(CATextAlignmentCenter);
         label2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(450, 40)));
+        label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.48)));
     
         CALabel* label3 = CALabel::create();
         CAFont Font3;
@@ -96,7 +96,7 @@ void LabelTest::viewDidLoad()
         label3->setFont(Font3);
         label3->setTextAlignment(CATextAlignmentCenter);
         label3->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(600, 40)));
+        label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.64)));
     
         CALabel* label4 = CALabel::create();
         CAFont Font4;
@@ -106,7 +106,7 @@ void LabelTest::viewDidLoad()
         label4->setFont(Font4);
         label4->setTextAlignment(CATextAlignmentCenter);
         label4->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(750, 40)));
+        label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.8)));
     
         CAView* view = CAView::createWithLayout(DLayoutFill);
         view->addSubview(label);

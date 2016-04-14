@@ -12,26 +12,37 @@
 
 MenuViewController::MenuViewController()
 {
-
+    CANotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MenuViewController::changeStatusBarOrientation), CAApplicationDidChangeStatusBarOrientationNotification, NULL);
 }
 
 MenuViewController::~MenuViewController()
 {
-    
+    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 void MenuViewController::viewDidLoad()
 {
-    this->getView()->removeAllSubviews();
     this->getView()->setColor(CAColor_clear);
     
-    tableView = CATableView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0)));
+    tableView = CATableView::createWithLayout(DLayoutFill);
+    
+    const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
+    if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
+    {
+        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0)));
+    }
+    else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
+    {
+        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400)));
+    }
+    
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
     tableView->setBackgroundColor(CAColor_clear);
     tableView->setSeparatorColor(ccc4(166, 166, 166,100));
     tableView->setShowsScrollIndicators(false);
+    tableView->setScrollEnabled(false);
     this->getView()->addSubview(tableView);
     
 }
@@ -39,6 +50,19 @@ void MenuViewController::viewDidLoad()
 void MenuViewController::viewDidUnload()
 {
 
+}
+
+void MenuViewController::changeStatusBarOrientation(CAObject* obj)
+{
+    const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
+    if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
+    {
+        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0)));
+    }
+    else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
+    {
+        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400)));
+    }
 }
 
 void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

@@ -331,12 +331,12 @@ CC_DEPRECATED_ATTRIBUTE typedef DRect CCRect;
 CC_DEPRECATED_ATTRIBUTE typedef DRect CADipRect;
 CC_DEPRECATED_ATTRIBUTE typedef DRect CCRectMake;
 
-#define CCPointZero DPointZero;
-#define CCSizeZero DSizeZero;
-#define CCRectZero DRectZero;
-#define CADipPointZero DPointZero;
-#define CADipSizeZero DSizeZero;
-#define CADipRectZero DRectZero;
+#define CCPointZero DPointZero
+#define CCSizeZero DSizeZero
+#define CCRectZero DRectZero
+#define CADipPointZero DPointZero
+#define CADipSizeZero DSizeZero
+#define CADipRectZero DRectZero
 
 
 NS_CC_END

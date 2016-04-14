@@ -5,7 +5,8 @@
 #include "CCSet.h"
 #include "CATouch.h"
 #include "CATouchDispatcher.h"
-
+#include "basics/CAApplication.h"
+#import "EAGLView.h"
 NS_CC_BEGIN
 
 CCEGLView* CCEGLView::s_sharedView = NULL;
@@ -21,11 +22,26 @@ CCEGLView* CCEGLView::sharedOpenGLView(void)
 
 CCEGLView::CCEGLView(void)
 {
+
 }
 
 CCEGLView::~CCEGLView(void)
 {
     s_sharedView = NULL;
+}
+
+void CCEGLView::setFrameSize(float width, float height)
+{
+    CCEGLViewProtocol::setFrameSize(width, height);
+    
+    if (width / height > 1.25f)
+    {
+        this->setStatusBarOrientation(CAInterfaceOrientationLandscapeRight);
+    }
+    else
+    {
+        this->setStatusBarOrientation(CAInterfaceOrientationPortrait);
+    }
 }
 
 bool CCEGLView::isOpenGLReady(void)

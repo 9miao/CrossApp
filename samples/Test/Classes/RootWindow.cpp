@@ -44,7 +44,6 @@ bool RootWindow::init()
     {
         return false;
     }
-//    DSize winSize = this->getBounds().size;
     
     CAApplication::getApplication()->setNotificationView(CAView::createWithFrame(this->getBounds(), CAColor_green));
     
@@ -53,8 +52,8 @@ bool RootWindow::init()
     MenuViewController* _menuview = MenuViewController::create();
     
     CADrawerController* drawer = new CADrawerController();
-    drawer->initWithController(_menuview, m_pRootNavigationController, this->getBounds().size.width/6*5);
-    drawer->setBackgroundView(CAImageView::createWithImage(CAImage::create("image/bg.jpg")));
+    drawer->initWithController(_menuview, m_pRootNavigationController);
+    drawer->setBackgroundImage(CAImage::create("image/bg.jpg"));
     drawer->setEffect3D(true);
     
     this->setRootViewController(drawer);

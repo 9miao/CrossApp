@@ -117,8 +117,8 @@ void CAImageView::updateByImageViewScaleType()
     m_bUpdateByImageViewScaleType = true;
     
     DSize viewSize = m_obContentSize;
-    DRect rect = DRect(m_obRect);
     DSize imageSize = m_pobImage->getContentSize();
+    DRect rect = DRect(m_obRect);
     float viewRatio = viewSize.width / viewSize.height;
     float imageRatio = imageSize.width / imageSize.height;
     
@@ -149,13 +149,17 @@ void CAImageView::updateByImageViewScaleType()
         {
             if (imageRatio > viewRatio)
             {
+                rect.size.height = imageSize.height;
                 rect.size.width = imageSize.height * viewRatio;
                 rect.origin.x = (imageSize.width - rect.size.width) / 2;
+                rect.origin.y = 0;
             }
             else if (imageRatio < viewRatio)
             {
+                rect.size.width = imageSize.width;
                 rect.size.height = imageSize.width / viewRatio;
                 rect.origin.y = (imageSize.height - rect.size.height) / 2;
+                rect.origin.x = 0;
             }
         }
             break;
