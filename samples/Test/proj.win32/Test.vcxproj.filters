@@ -42,9 +42,6 @@
     <ClCompile Include="..\Classes\CommonHttpManager.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest1111.cpp">
-      <Filter>Classes\Controls</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Control\AlertViewTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
@@ -120,16 +117,19 @@
     <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Control\UiShow.cpp">
-      <Filter>Classes\Controls</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Control\PickerViewTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Control\AutoCollectionViewTest.cpp">
+    <ClCompile Include="..\Classes\Control\WaterfallViewTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Control\WaterfallViewTest.cpp">
+    <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewHorizontalTest.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,13 +251,13 @@
     <ClInclude Include="..\Classes\CDUIShowAutoCollectionView.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Control\UiShow.h">
-      <Filter>Classes\Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Control\AutoCollectionViewTest.h">
-      <Filter>Classes\Controls</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Control\WaterfallViewTest.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewHorizontalTest.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h">
       <Filter>Classes\Controls</Filter>
     </ClInclude>
   </ItemGroup>

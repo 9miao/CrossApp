@@ -710,7 +710,7 @@ CATextView* CATextView::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CATextView* CATextView::createWithLayout(const DRectLayout& layout)
+CATextView* CATextView::createWithLayout(const DLayout& layout)
 {
     CATextView* textView = new CATextView();
     if (textView&&textView->initWithLayout(layout))
@@ -735,13 +735,13 @@ bool CATextView::init()
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
 	m_pBackgroundView = CAScale9ImageView::createWithImage(image);
-    m_pBackgroundView->setLayout(DRectLayout(0, 0, 0, 0, DRectLayout::L_R_T_B));
+	m_pBackgroundView->setLayout(DLayoutFill);
 	m_pBackgroundView->setCapInsets(capInsets);
 	m_pBackgroundView->setImage(image);
 	this->insertSubview(m_pBackgroundView, -1);
 	
 	CATextViewWin32 *text = new CATextViewWin32(this);
-	text->initWithLayout(DRectLayout(5, 5, 5, 5, DRectLayout::L_R_T_B));
+	text->initWithLayout(DLayout(DHorizontalLayout_L_R(5, 5), DVerticalLayout_T_B(5, 5)));
 	text->autorelease();
 	this->addSubview(text);
 
