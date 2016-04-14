@@ -39,6 +39,8 @@ public:
 private:
 
     CATableView* tableView;
+    
+    CAImageView* m_pLogo;
 };
 
 #endif /* defined(__Test__MenuViewController__) */

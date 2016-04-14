@@ -24,18 +24,22 @@ void MenuViewController::viewDidLoad()
 {
     this->getView()->setColor(CAColor_clear);
     
-    tableView = CATableView::createWithLayout(DLayoutFill);
-    
+    DLayout tableViewLayout;
+    DLayout logoLayout;
     const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
     if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
     {
-        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0)));
+        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
+        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
     else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
     {
-        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400)));
+        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400));
+        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
     
+    tableView = CATableView::createWithLayout(DLayoutFill);
+    tableView->setLayout(tableViewLayout);
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
@@ -44,6 +48,10 @@ void MenuViewController::viewDidLoad()
     tableView->setShowsScrollIndicators(false);
     tableView->setScrollEnabled(false);
     this->getView()->addSubview(tableView);
+    
+    m_pLogo = CAImageView::createWithImage(CAImage::create("image/logo.png"));
+    m_pLogo->setLayout(logoLayout);
+    this->getView()->addSubview(m_pLogo);
     
 }
 
@@ -55,14 +63,21 @@ void MenuViewController::viewDidUnload()
 void MenuViewController::changeStatusBarOrientation(CAObject* obj)
 {
     const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
+    
+    DLayout tableViewLayout;
+    DLayout logoLayout;
     if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
     {
-        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0)));
+        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
+        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
     else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
     {
-        tableView->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400)));
+        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400));
+        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
+    tableView->setLayout(tableViewLayout);
+    m_pLogo->setLayout(logoLayout);
 }
 
 void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

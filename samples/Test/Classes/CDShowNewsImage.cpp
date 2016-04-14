@@ -54,7 +54,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         p_ScrollView->addSubview(temImage);
         viewList.pushBack(p_ScrollView);
     }
-//    p_PageView = CAPageView::createWithFrame(DRect(0, 30, winSize.width, winSize.height), CAPageViewDirectionHorizontal);
+    
     p_PageView = CAPageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(30, 0)), CAPageViewDirectionHorizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
@@ -63,7 +63,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     this->getView()->addSubview(p_PageView);
     
     p_bg = CAView::createWithColor(ccc4(0,0,0,200));
-    p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.65)));
+    p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.85)));
     this->getView()->addSubview(p_bg);
 
     p_title = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 80), DVerticalLayout_T_H(10, 40)));
@@ -123,7 +123,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const DP
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         
-        p_bg->setFrameOrigin(DPoint(0,winSize.height));
+        p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 0)));
         
         //执行动画
         CAViewAnimation::commitAnimations();
@@ -136,7 +136,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const DP
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         
-        p_bg->setFrameOrigin(DPoint(0,winSize.height/3*2));
+        p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.85)));
         
         //执行动画
         CAViewAnimation::commitAnimations();

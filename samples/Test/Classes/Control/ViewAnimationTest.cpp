@@ -65,7 +65,7 @@ void ViewAnimationTest::viewDidLoad()
         bg->setImage(CAImage::create("image/navbg.jpg"));
     
 //        animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
-        animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_W(90, 100), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setFontSize(40);
         animation_2_textfield->setKeyboardType(CATextField::Default);
         animation_2_textfield->setVisible(false);
@@ -77,7 +77,7 @@ void ViewAnimationTest::viewDidLoad()
         animation_2_btn_search->setTag(201);
     
 //        animation_2_btn_cancel = CAButton::createWithCenter(DRect(winSize.width-60,winSize.height/2,100,50), CAButtonTypeCustom);
-        animation_2_btn_cancel = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(20, 100), DVerticalLayout_H_C(50, 0.5)), CAButtonTypeCustom);
+        animation_2_btn_cancel = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 100), DVerticalLayout_H_C(50, 0.5)), CAButtonTypeCustom);
         animation_2_btn_cancel->setTitleForState(CAControlStateNormal, "Cancel");
         animation_2_btn_cancel->setTag(202);
         animation_2_btn_cancel->setTitleColorForState(CAControlStateNormal, CAColor_white);
@@ -143,36 +143,32 @@ void ViewAnimationTest::doAction(CAControl* btn,DPoint point)
         animation_2_textfield->setVisible(true);
         animation_2_btn_cancel->setVisible(false);
         animation_2_textfield->setAlpha(0);
-        animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,100,50));
-//        animation_2_textfield->setLayout(DRectLayout(90,500,560,60,DRectLayout::L_R_T_H));
-//        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 100), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,winSize.width-200,50));
-//        animation_2_textfield->setLayout(DRectLayout(90,100,560,60,DRectLayout::L_R_T_H));
-//        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 400), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_C(90, 0.5), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setAlpha(1);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
         CAViewAnimation::commitAnimations();
     }else if(tag==202){
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        animation_2_textfield->setFrame(DRect(90,winSize.height/2-25,0,50));
-//        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setAlpha(0);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
         CAViewAnimation::commitAnimations();
     }else if(tag==300){
-        animation_3_imageview->setImageRect(DRect(0,0,100,winSize.height));
-        animation_3_imageview->setFrame(DRect(0,0,100,winSize.height));
-//        animation_3_imageview->setLayout(DLayout(DHorizontalLayout_L_W(0, 100), DVerticalLayout_T_C(0, 0.5)));
+        
+        DSize imageSize = CAImage::create("image/2.jpg")->getContentSize();
+        
+        animation_3_imageview->setImageRect(DRect(0,0,0,imageSize.height));
+        animation_3_imageview->setLayout(DLayout(DHorizontalLayout_L_W(0, 0), DVerticalLayoutFill));
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.8f);
         CAViewAnimation::setAnimationRepeatAutoreverses(true);
-        animation_3_imageview->setImageRect(DRect(winSize.width-100,0,100,winSize.height));
-        animation_3_imageview->setFrame(DRect(winSize.width-100,0,100,winSize.height));
-//        animation_3_imageview->setLayout(DLayout(DHorizontalLayout_R_W(0, 100), DVerticalLayout_T_C(0, 0.5)));
+        animation_3_imageview->setImageRect(DRect(0,0,imageSize.width,imageSize.height));
+        animation_3_imageview->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayoutFill));
         CAViewAnimation::commitAnimations();
     }
 }

@@ -920,9 +920,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
             this->setContentSize(size);
         }
         
-        DPoint p = m_obAnchorPointInPoints;
-        
+        DPoint p = ccpCompMult(size, m_obAnchorPoint);
         p = ccpAdd(p, point);
+        
         if (allowAnimation
             &&CAViewAnimation::areAnimationsEnabled()
             && CAViewAnimation::areBeginAnimations())
