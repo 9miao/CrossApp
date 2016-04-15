@@ -1,6 +1,8 @@
 
 package org.CrossApp.lib;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
@@ -315,6 +317,5 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 		}
 		
 		sb.append("]");
-		Log.d(CrossAppGLSurfaceView.TAG, sb.toString());
 	}
 }

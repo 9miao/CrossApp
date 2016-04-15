@@ -6,7 +6,11 @@ import java.io.UnsupportedEncodingException;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
@@ -23,6 +27,7 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 
 	private long mLastTickInNanoSeconds;
+	private CrossAppGLSurfaceView mGLSurfaceView;
 	private int mScreenWidth;
 	private int mScreenHeight;
 
@@ -48,15 +53,33 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================
 
 	@Override
-	public void onSurfaceCreated(final GL10 pGL10, final EGLConfig pEGLConfig) {
+	public void onSurfaceCreated(final GL10 pGL10, final EGLConfig pEGLConfig) 
+	{
+		final int orientation;
+		if(((CrossAppActivity)CrossAppActivity.getContext()).getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        {
+        	orientation = 1;
+        }
+        else if(((CrossAppActivity)CrossAppActivity.getContext()).getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) 
+        {
+        	orientation = 2;
+        }
+        else
+        {
+        	orientation = 1;
+        }
+		
+		CrossAppRenderer.nativeChangedOrientation(orientation);
 		CrossAppRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
+		
 		this.mLastTickInNanoSeconds = System.nanoTime();
 	}
 
 	@Override
 	public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight)
 	{
-		CrossAppRenderer.nativeChanged(this.mScreenWidth, this.mScreenHeight);
+
+    	Log.e("CrossApp", "onSurfaceChanged--w:" + pWidth + "--h:"  + pHeight);
 	}
 
 	@Override
@@ -100,7 +123,8 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	private static native boolean nativeKeyDown(final int pKeyCode);
 	private static native void nativeRender();
 	private static native void nativeInit(final int pWidth, final int pHeight);
-	private static native void nativeChanged(final int pWidth, final int pHeight);
+	public static native void nativeChanged(final int pWidth, final int pHeight);
+	public static native void nativeChangedOrientation(final int type);
 	private static native void nativeOnPause();
 	private static native void nativeOnResume();
 	private static native void nativeCloseKeyPad();

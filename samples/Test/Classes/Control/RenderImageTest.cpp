@@ -44,10 +44,10 @@ void RenderImageTest::renderCallBack(CAControl* control, DPoint point)
     }else if(button->getTag()==2) {
         
         m_clvImage->setClippingEnabled(true);
-        CARenderImage* rm = CARenderImage::create(winSize.width-100, winSize.width-100);
+        CARenderImage* rm = CARenderImage::create(winSize.width-200, winSize.height-200);
         rm->printscreenWithView(m_clvImage);
         
-        renderImage = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100, 200)));
+        renderImage = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100, 100)));
         this->getView()->addSubview(renderImage);
         
         m_clvImage->setClippingEnabled(false);
@@ -110,7 +110,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     scrollRect.origin.x = 100;
     scrollRect.origin.y = 100;
     scrollRect.size.width = winSize.width - 200;
-    scrollRect.size.height = winSize.height - 300;
+    scrollRect.size.height = winSize.height - 200;
     
     m_clvImage = CAClippingView::create();
     m_clvImage->setStencil(getStencil(scrollRect.size, index));
@@ -143,12 +143,10 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     DRect rect;
     rect.origin = DPointZero;
     rect.size = scrollView->getViewSize();
-    CAImageView* imv = CAImageView::createWithFrame(rect);
+    CAImageView* imv = CAImageView::createWithLayout(DLayoutFill);
     imv->setImage(image);
     imv->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
     scrollView->addSubview(imv);
-    
-    
     
     m_clv = CAClippingView::create();
     m_clv->setStencil(getStencil(scrollRect.size, index));

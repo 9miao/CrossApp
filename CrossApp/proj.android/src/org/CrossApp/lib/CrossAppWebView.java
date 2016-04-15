@@ -134,8 +134,8 @@ public class CrossAppWebView extends WebView {
     }
 
     private void fixSize(int left, int top, int width, int height) {
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.LEFT|Gravity.TOP;
         layoutParams.leftMargin = left;
         layoutParams.topMargin = top;

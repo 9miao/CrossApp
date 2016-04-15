@@ -19,22 +19,22 @@ CCEGLView::CCEGLView()
     {
         case UIInterfaceOrientationPortrait:
         {
-            m_eOrientation = CAInterfaceOrientationPortrait;
+            this->setStatusBarOrientation(CAInterfaceOrientationPortrait);
         }
             break;
         case UIInterfaceOrientationPortraitUpsideDown:
         {
-            m_eOrientation = CAInterfaceOrientationPortraitUpsideDown;
+            this->setStatusBarOrientation(CAInterfaceOrientationPortrait);
         }
             break;
         case UIInterfaceOrientationLandscapeRight:
         {
-            m_eOrientation = CAInterfaceOrientationLandscapeRight;
+            this->setStatusBarOrientation(CAInterfaceOrientationLandscape);
         }
             break;
         case UIInterfaceOrientationLandscapeLeft:
         {
-            m_eOrientation = CAInterfaceOrientationLandscapeLeft;
+            this->setStatusBarOrientation(CAInterfaceOrientationLandscape);
         }
             break;
         default:

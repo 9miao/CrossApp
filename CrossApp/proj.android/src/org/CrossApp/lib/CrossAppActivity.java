@@ -9,7 +9,6 @@ import java.util.concurrent.Callable;
 
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -19,8 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
@@ -28,8 +25,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.view.View.OnAttachStateChangeListener;
+import android.view.View.OnLayoutChangeListener;
 import android.view.WindowManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -54,39 +51,51 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	// ===========================================================
     private CrossAppWebViewHelper mWebViewHelper = null;
 	private CrossAppGLSurfaceView mGLSurfaceView;
-	private CrossAppHandler mHandler;
-	public static CrossAppRenderer mCrossAppRenderer;
-	AndroidNativeTool actAndroidNativeTool;
-	AndroidVolumeControl androidVolumeControl;
-	
-	private static View rootview;
-	public static int currentBattery=0;
+	private static CrossAppRenderer mCrossAppRenderer;
 	private static CrossAppActivity crossAppActivity;
+	private CrossAppHandler mHandler;
+	private static Handler msHandler;
+	public static Handler mLightHandler;
+	private static View rootview;
+	private int screenWidth = 0;
+	private int screenHeight = 0;
+	private int orientation = 0;
+	private static int currentBattery = 0;
+	
 	private static FrameLayout frame;
-	native static void getWifiList(ArrayList<CustomScanResult> s);
-	public static List<ScanResult> list;
-	public static ScanResult mScanResult;
-	public static CustomScanResult cScanResult;
+	
+	private AndroidNativeTool actAndroidNativeTool;
+	private AndroidVolumeControl androidVolumeControl;
+	
+	private static List<ScanResult> list;
+	private static ScanResult mScanResult;
+	private static CustomScanResult cScanResult;
 	private static BluetoothAdapter mAdapter = null;
+	
     private final int REQUEST_OPEN_BT_CODE = 1;
     private final int REQUEST_DISCOVERY_BT_CODE = 2;
+    
+    native static void getWifiList(ArrayList<CustomScanResult> s);
     native static void returnBlueToothState(int state);
     native static void returnDiscoveryDevice(AndroidBlueTooth sender);
     native static void returnStartedDiscoveryDevice();
     native static void returnFinfishedDiscoveryDevice();
-    public static Handler msHandler;
+    
     
     
     //退到后台返回时候用
     public static CrossAppTextField _sTextField = null;
     public static CrossAppTextView _sTextView = null;
-    public static void setSingleTextField(CrossAppTextField text) {
+    
+    public static void setSingleTextField(CrossAppTextField text)
+    {
 		_sTextField = text;
 	}
-	public static void setSingleTextView(CrossAppTextView text) {
+    
+	public static void setSingleTextView(CrossAppTextView text) 
+	{
 		_sTextView = text;
 	}
-	
 	
 	public static CrossAppActivity getContext()
 	{
@@ -97,31 +106,19 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	{
 		return CrossAppActivity.frame;
 	}
-	
-	
-	
-	public static Handler mLightHandler;
-	// ===========================================================
-	// Constructors
-	// ===========================================================
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		
 		crossAppActivity = this;
 
-    	this.mHandler = new CrossAppHandler(this);
-    	actAndroidNativeTool = new AndroidNativeTool(this);
-    	AndroidVolumeControl.setContext(crossAppActivity);
-    	AndroidPersonList.Init(this);
-
     	this.init();
-    	rootview = this.getWindow().getDecorView();
+    	
 		CrossAppHelper.init(this, this);
-
-		exeHandler();
-		AndroidNetWorkManager.setContext(this);
+		
+		rootview = this.getWindow().getDecorView();
 		
 		 if(savedInstanceState == null)
 		 {
@@ -129,20 +126,28 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			CrossAppTextField.initWithHandler();
 			CrossAppTextView.initWithHandler();
 		 }
-		 else if (savedInstanceState != null && savedInstanceState.containsKey("WEBVIEW"))
+		 else if (savedInstanceState != null)
 		 {
-			 mWebViewHelper = new CrossAppWebViewHelper(frame);
-			 String[] strs = savedInstanceState.getStringArray("WEBVIEW");
-			 mWebViewHelper.setAllWebviews(strs);
-			 savedInstanceState.clear();
 			 CrossAppTextField.reload();
 			 CrossAppTextView.reload();
+			 if (savedInstanceState.containsKey("WEBVIEW"))
+			 {
+				 mWebViewHelper = new CrossAppWebViewHelper(frame);
+				 String[] strs = savedInstanceState.getStringArray("WEBVIEW");
+				 mWebViewHelper.setAllWebviews(strs);
+			 }
+			 savedInstanceState.clear();
 		 }
-		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-
-	     BatteryReceiver batteryReceiver = new BatteryReceiver();
-
-	     registerReceiver(batteryReceiver, intentFilter);
+		 
+		this.mHandler = new CrossAppHandler(this);
+		exeHandler();
+		AndroidNetWorkManager.setContext(this);
+		actAndroidNativeTool = new AndroidNativeTool(this);
+	    AndroidVolumeControl.setContext(crossAppActivity);
+	    AndroidPersonList.Init(this);
+		IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+	    BatteryReceiver batteryReceiver = new BatteryReceiver();
+	    registerReceiver(batteryReceiver, intentFilter);
 	     
 	}
 
@@ -179,25 +184,165 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			AndroidGPS.locationManager.removeUpdates(AndroidGPS.locationListener);
 		}
 	}
-//	private static native void reshare(final int pWidth, final int pHeight);
-//	public void onConfigurationChanged(Configuration newConfiguration)
-//	{
-//		super.onConfigurationChanged(newConfiguration);
-//		
-//		final DisplayMetrics displayMetrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        final int width = displayMetrics.widthPixels;
-//        final int height = displayMetrics.heightPixels;
-//        reshare(width, height);
-//	}
 	
-//	@Override
-//	protected void onDestroy() 
-//	{
-//		super.onDestroy();
-//		unregisterReceiver(BluetoothReciever) ; 
-//		unregisterReceiver(BTDiscoveryReceiver) ; 
-//	}
+
+	@Override
+	public void runOnGLThread(final Runnable pRunnable) {
+		this.mGLSurfaceView.queueEvent(pRunnable);
+	}
+
+	// ===========================================================
+	// Methods
+	// ===========================================================
+	public void init()
+	{
+		FrameLayout framelayout = new FrameLayout(this);
+		framelayout.layout(0, 0, 0, 0);
+		
+        this.frame = framelayout;
+        this.mGLSurfaceView = this.onCreateView();
+		
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        params.leftMargin = 0; 
+    	params.rightMargin = 0;
+    	params.topMargin = 0;
+    	params.bottomMargin = 0;
+    	
+        framelayout.addView(this.mGLSurfaceView, params);
+
+        if (isAndroidEmulator())
+        {
+           this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+        }
+        
+        this.mCrossAppRenderer = new CrossAppRenderer();
+        this.mGLSurfaceView.setCrossAppRenderer(mCrossAppRenderer);
+        this.setContentView(framelayout);
+        
+        
+        this.frame.addOnLayoutChangeListener(new OnLayoutChangeListener() {
+			
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
+			{
+				// TODO Auto-generated method stub
+				
+				
+				if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom)
+				{
+					if (Math.abs(oldBottom - bottom) > 100 && right == oldRight)
+					{
+						FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+				        params.leftMargin = 0; 
+				    	params.rightMargin = 0;
+				    	params.topMargin = 0;
+				    	params.bottomMargin = (oldBottom - bottom) > 100 ? (bottom - oldBottom) : 0;
+				    	mGLSurfaceView.setLayoutParams(params);
+					}
+					else
+					{
+						screenWidth = right;
+						screenHeight = bottom;
+						
+						FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+				        params.leftMargin = 0; 
+				    	params.rightMargin = 0;
+				    	params.topMargin = 0;
+				    	params.bottomMargin = 0;
+				    	mGLSurfaceView.setLayoutParams(params);
+					}
+					
+					mCrossAppRenderer.setScreenWidthAndHeight(screenWidth, screenHeight);
+			    	crossAppActivity.runOnGLThread(new Runnable() 
+			    	{
+			            @Override
+			            public void run()
+			            {
+			            	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
+			            }
+			        });  
+				}
+				
+			}
+		});
+	}
+	
+	public static int dip2px(Context context, float dpValue) {
+	     final float scale = context.getResources().getDisplayMetrics().density;
+	     return (int) (dpValue * scale + 0.5f);
+	}
+
+    public CrossAppGLSurfaceView onCreateView() {
+    	return new CrossAppGLSurfaceView(this);
+    }
+	
+    public int getStatusBarHeight() 
+    {
+    	  WindowManager.LayoutParams attrs = getWindow().getAttributes();
+    	  if((attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    	  {
+    		  return 0;
+    	  }
+    	  int result = 0;
+    	  int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+    	  if (resourceId > 0) {
+    	      result = getResources().getDimensionPixelSize(resourceId);
+    	  }
+    	  return result;
+    	}
+
+	public void onConfigurationChanged(Configuration newConfiguration)
+	{
+		super.onConfigurationChanged(newConfiguration);
+		
+		final DisplayMetrics displayMetrics = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		this.screenWidth = displayMetrics.widthPixels;
+		this.screenHeight = displayMetrics.heightPixels - this.getStatusBarHeight();
+		
+		mCrossAppRenderer.setScreenWidthAndHeight(screenWidth, screenHeight);
+
+		if(newConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+        	orientation = 1;
+        }
+        else if(newConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) 
+        {
+        	orientation = 2;
+        }
+        
+        this.runOnGLThread(new Runnable() 
+    	{
+            @Override
+            public void run()
+            {
+            	
+            	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
+            	CrossAppRenderer.nativeChangedOrientation(orientation);
+            	
+            	CrossAppTextField.updateImage();
+         		CrossAppTextView.updateImage();
+            	
+            	crossAppActivity.runOnUiThread(new Runnable() 
+             	{
+                     @Override
+                     public void run()
+                     {
+                 		Bundle savedInstanceState = new Bundle();
+                 		savedInstanceState.putStringArray("WEBVIEW", mWebViewHelper.getAllWebviews());;
+                 		mWebViewHelper = new CrossAppWebViewHelper(frame);
+                 		String[] strs = savedInstanceState.getStringArray("WEBVIEW");
+                 		mWebViewHelper.setAllWebviews(strs);
+                 		savedInstanceState.clear();
+                     }
+                 });
+            }
+        });
+        
+       
+	}
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		
@@ -205,10 +350,8 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		super.onSaveInstanceState(outState);
 	}
 
-
-	
-	class BatteryReceiver extends BroadcastReceiver{
-
+	class BatteryReceiver extends BroadcastReceiver
+	{
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -264,7 +407,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		ArrayList<CustomScanResult> cList = new ArrayList<CustomScanResult>();
 		if(list!=null){
             for(int i=0;i<list.size();i++){
-                //锟矫碉拷扫锟斤拷锟斤拷
                 mScanResult=list.get(i);
                 cScanResult = new CustomScanResult(mScanResult.SSID, mScanResult.BSSID, mScanResult.level);
                 if (cScanResult!=null) {
@@ -534,47 +676,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		msg.obj = new CrossAppHandler.EditBoxMessage(pTitle, pContent, pInputMode, pInputFlag, pReturnType, pMaxLength);
 		this.mHandler.sendMessage(msg);
 	}
-
-	@Override
-	public void runOnGLThread(final Runnable pRunnable) {
-		this.mGLSurfaceView.queueEvent(pRunnable);
-	}
-
-	// ===========================================================
-	// Methods
-	// ===========================================================
-	public void init() {
-
-        ViewGroup.LayoutParams framelayout_params =
-            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                                       ViewGroup.LayoutParams.FILL_PARENT);
-        FrameLayout framelayout = new FrameLayout(this);
-        framelayout.setLayoutParams(framelayout_params);
-        frame = framelayout;
-
-        this.mGLSurfaceView = this.onCreateView();
-
-        framelayout.addView(this.mGLSurfaceView);
-
-        if (isAndroidEmulator())
-        {
-           this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
-        }
-        
-        mCrossAppRenderer = new CrossAppRenderer();
-        this.mGLSurfaceView.setCrossAppRenderer(mCrossAppRenderer);
-
-		setContentView(framelayout);
-	}
-	
-	public static int dip2px(Context context, float dpValue) {
-	     final float scale = context.getResources().getDisplayMetrics().density;
-	     return (int) (dpValue * scale + 0.5f);
-	}
-
-    public CrossAppGLSurfaceView onCreateView() {
-    	return new CrossAppGLSurfaceView(this);
-    }
 
    private final static boolean isAndroidEmulator() {
       String model = Build.MODEL;

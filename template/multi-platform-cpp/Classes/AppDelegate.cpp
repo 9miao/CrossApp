@@ -16,14 +16,14 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CAApplication* pDirector = CAApplication::getApplication();
+    CAApplication* application = CAApplication::getApplication();
     
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
-    pDirector->setOpenGLView(pEGLView);
+    application->setOpenGLView(pEGLView);
 
     // run
-    pDirector->runWindow(RootWindow::create());
+    application->runWindow(RootWindow::create());
 
     return true;
 }

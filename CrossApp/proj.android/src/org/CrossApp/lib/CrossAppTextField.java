@@ -95,6 +95,18 @@ import android.widget.TextView.OnEditorActionListener;
     	}
 	}
 	
+	public static void updateImage()
+	{
+		Set<Integer> keys = (Set<Integer>) dict.keySet() ; 
+		Iterator<Integer> iterator = keys.iterator() ; 
+		while (iterator.hasNext())
+		{
+			Integer key = iterator.next();
+			CrossAppTextField textField = dict.get(key);
+			textField.getImage();
+		}
+	}
+	
 	public static void reload()
 	{
 		handler = new Handler(Looper.myLooper());
@@ -633,8 +645,8 @@ import android.widget.TextView.OnEditorActionListener;
         		textField.clearFocus();
         		
         		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
-            	params.leftMargin = -1000; 
-            	params.topMargin = -1000;
+            	params.leftMargin = -10000; 
+            	params.topMargin = 0;
             	textField.setLayoutParams(params);
         		
             	TimerTask task = new TimerTask()
@@ -739,9 +751,9 @@ import android.widget.TextView.OnEditorActionListener;
 		textField.setTextColor(textFieldTextColor);
 		textField.setImeOptions(keyBoardReturnType);
 		
-    	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
-    	params.leftMargin = -1000; 
-    	params.topMargin = -1000;
+    	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT) ; 
+    	params.leftMargin = -10000; 
+    	params.topMargin = 0;
     	params.width = contentSizeW;
     	params.height = contentSizeH;
     	layout.addView(textField, params) ;

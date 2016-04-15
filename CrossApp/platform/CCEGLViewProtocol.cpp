@@ -345,8 +345,16 @@ float CCEGLViewProtocol::getScale() const
 
 void CCEGLViewProtocol::setStatusBarOrientation(const CAInterfaceOrientation& var)
 {
-    m_eOrientation = var;
-    CANotificationCenter::sharedNotificationCenter()->postNotification(CAApplicationDidChangeStatusBarOrientationNotification, NULL);
+    CC_RETURN_IF(m_eOrientation == var);
+    if (m_eOrientation == CAInterfaceOrientationUnknown)
+    {
+        m_eOrientation = var;
+    }
+    else
+    {
+        m_eOrientation = var;
+        CANotificationCenter::sharedNotificationCenter()->postNotification(CAApplicationDidChangeStatusBarOrientationNotification, NULL);
+    }
 }
 
 const CAInterfaceOrientation& CCEGLViewProtocol::getStatusBarOrientation()

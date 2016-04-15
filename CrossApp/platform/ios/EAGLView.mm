@@ -132,17 +132,17 @@ static EAGLView *view = 0;
             break;
         case UIInterfaceOrientationPortraitUpsideDown:
         {
-            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationPortraitUpsideDown);
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationPortrait);
         }
             break;
         case UIInterfaceOrientationLandscapeRight:
         {
-            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationLandscapeRight);
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationLandscape);
         }
             break;
         case UIInterfaceOrientationLandscapeLeft:
         {
-            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationLandscapeLeft);
+            CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation(CrossApp::CAInterfaceOrientationLandscape);
         }
             break;
         default:
