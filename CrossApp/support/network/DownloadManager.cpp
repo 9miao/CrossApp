@@ -1,6 +1,8 @@
 
 
 #include "DownloadManager.h"
+#include <curl/curl.h>
+#include <curl/easy.h>
 #include "support/sqlite3/sqlite3.h"
 #include "support/zip_support/unzip.h"
 #include "platform/CCFileUtils.h"
@@ -646,11 +648,177 @@ void CADownloadManager::onSuccess(CADownloadResponse* request)
 
 #pragma CADownloadResponse
 
+static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userdata)
+{
+	FILE *fp = (FILE*)userdata;
+	size_t written = fwrite(ptr, size, nmemb, fp);
+	fflush(fp);
+	return written;
+}
+
+class DownloadResponseHelper : public CrossApp::CAObject
+{
+	typedef struct _Message
+	{
+		_Message() : what(0), obj(NULL){}
+		_Message(unsigned int w, void* o) : what(w), obj(o) {}
+
+		unsigned int what;
+
+		void* obj;
+
+	}Message;
+public:
+
+	DownloadResponseHelper()
+		: _curl(NULL)
+		, m_headers(NULL)
+	{
+		_messageQueue = new list<Message*>();
+		pthread_mutex_init(&_messageQueueMutex, NULL);
+		CAScheduler::schedule(schedule_selector(DownloadResponseHelper::update), this, 0);
+	}
+
+	~DownloadResponseHelper()
+	{
+		delete _messageQueue;
+	}
+
+	void sendMessage(unsigned int what, void* obj)
+	{
+		pthread_mutex_lock(&_messageQueueMutex);
+		_messageQueue->push_back(new Message(what, obj));
+		pthread_mutex_unlock(&_messageQueueMutex);
+	}
+
+	virtual void update(float dt)
+	{
+		std::list<Message*> MsgListTemp;
+
+		pthread_mutex_lock(&_messageQueueMutex);
+		MsgListTemp = *_messageQueue;
+		_messageQueue->clear();
+		pthread_mutex_unlock(&_messageQueueMutex);
+
+		for (std::list<Message*>::iterator it = MsgListTemp.begin(); it != MsgListTemp.end(); it++)
+		{
+			Message *msg = *it;
+
+			switch (msg->what)
+			{
+			case CADownloadResponse_DOWNLOAD_FINISH:
+			{
+				this->handleUpdateSucceed(msg);
+				CADownloadResponse* request = static_cast<CADownloadResponse*>(msg->obj);
+				_manager->onSuccess(request);
+			}
+			break;
+
+			case CADownloadResponse_PROGRESS:
+			{
+				ProgressMessage* message = static_cast<ProgressMessage*>(msg->obj);
+				std::list<Message*>::iterator it2 = it;
+				if (++it2 == MsgListTemp.end())
+				{
+					_manager->onProgress(message->request, message->percent, message->nowDownloaded, message->totalToDownload);
+				}
+
+				delete message;
+			}
+			break;
+
+			case CADownloadResponse_ERROR:
+			{
+				ErrorMessage* message = static_cast<ErrorMessage*>(msg->obj);
+				_manager->onError(message->request, message->code);
+				delete message;
+			}
+			break;
+
+			default: break;
+			}
+
+			delete msg;
+		}
+		MsgListTemp.clear();
+	}
+
+	bool downLoad(const std::string& downHeaders, const std::string& downloadUrl, double initialFileSize, FILE *fp)
+	{
+		_curl = curl_easy_init();
+		if (_curl == NULL)
+		{
+			return false;
+		}
+
+		if (!downHeaders.empty())
+		{
+			m_headers = curl_slist_append(m_headers, downHeaders.c_str());
+			curl_easy_setopt(_curl, CURLOPT_HTTPHEADER, m_headers);
+		}
+
+		// Download package
+		CURLcode res;
+		curl_easy_setopt(_curl, CURLOPT_URL, downloadUrl.c_str());
+
+		char cRange[32] = { 0 };
+		sprintf(cRange, "%.0f-", initialFileSize);
+		curl_easy_setopt(_curl, CURLOPT_RANGE, cRange);
+		curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, (long)initialFileSize);
+		curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
+		curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
+		curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
+		curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, CADownloadResponseProgressFunc);
+		curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
+
+		res = curl_easy_perform(_curl);
+		curl_easy_cleanup(_curl);
+		if (m_headers)
+		{
+			curl_slist_free_all(m_headers);
+			m_headers = NULL;
+		}
+		_curl = NULL;
+		return (res == CURLE_OK);
+	}
+	void Pause()
+	{
+		if (_curl)
+		{
+			curl_easy_pause(_curl, CURLPAUSE_ALL);
+		}
+	}
+	void Resume()
+	{
+		if (_curl)
+		{
+			curl_easy_pause(_curl, CURLPAUSE_CONT);
+		}
+	}
+	
+
+private:
+
+	void handleUpdateSucceed(Message *msg)
+	{
+		CADownloadResponse* manager = (CADownloadResponse*)msg->obj;
+		manager->setSearchPath();
+	}
+
+	CURL *_curl;
+
+	curl_slist *m_headers;
+
+	std::list<Message*> *_messageQueue;
+
+	pthread_mutex_t _messageQueueMutex;
+};
+
+
 CADownloadResponse::CADownloadResponse(const std::string& downloadUrl, const std::string& fileName, unsigned long downloadId, const std::string& downHeaders)
 : _fileName(fileName)
 , _downloadUrl(downloadUrl)
 , _downHeaders(downHeaders)
-, _curl(NULL)
 , _tid(NULL)
 , _connectionTimeout(0)
 , _initialFileSize(0)
@@ -660,11 +828,10 @@ CADownloadResponse::CADownloadResponse(const std::string& downloadUrl, const std
 , _downloadCmd(DownloadCmd_Null)
 , _downloadStatus(DownloadStatus_Running)
 , _download_id(downloadId)
-, m_headers(NULL)
 , m_fDelay(0)
 {
     checkStoragePath();
-    _schedule = new Helper();
+	_schedule = new DownloadResponseHelper();
     CCLog("CADownloadResponse id = %lu", _download_id);
 }
 
@@ -709,10 +876,7 @@ void* CADownloadResponseDownloadAndUncompress(void *data)
 
 		if (bDSucc || bAbort)
 		{
-			CADownloadResponse::Message *msg = new CADownloadResponse::Message();
-			msg->what = CADownloadResponse_DOWNLOAD_FINISH;
-			msg->obj = self;
-			self->_schedule->sendMessage(msg);
+			self->_schedule->sendMessage(CADownloadResponse_DOWNLOAD_FINISH, self);
 		}
     }
     while (0);
@@ -761,14 +925,14 @@ bool CADownloadResponse::checkDownloadStatus()
 
 	if (_downloadCmd == DownloadCmd_Pause && _downloadStatus == DownloadStatus_Running)
 	{
-		curl_easy_pause(_curl, CURLPAUSE_ALL);
+		_schedule->Pause();
 		_downloadCmd = DownloadCmd_Null;
 		_downloadStatus = DownloadStatus_Waiting;
 	}
 	
 	if (_downloadCmd == DownloadCmd_resume && _downloadStatus == DownloadStatus_Waiting)
 	{
-		curl_easy_pause(_curl, CURLPAUSE_CONT);
+		_schedule->Resume();
 		_downloadCmd = DownloadCmd_Null;
 		_downloadStatus = DownloadStatus_Running;
 	}
@@ -907,14 +1071,6 @@ void CADownloadResponse::setSearchPath()
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 }
 
-static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userdata)
-{
-    FILE *fp = (FILE*)userdata;
-    size_t written = fwrite(ptr, size, nmemb, fp);
-    fflush(fp);
-    return written;
-}
-
 int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     CADownloadResponse* request = (CADownloadResponse*)ptr;
@@ -939,9 +1095,6 @@ int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double now
     request->setLocalFileSize(nowDownloaded);
     request->setTotalFileSize(totalToDownload);
     
-    CADownloadResponse::Message *msg = new CADownloadResponse::Message();
-    msg->what = CADownloadResponse_PROGRESS;
-    
     ProgressMessage *progressData = new ProgressMessage();
     progressData->nowDownloaded = nowDownloaded;
     progressData->totalToDownload = totalToDownload;
@@ -955,9 +1108,8 @@ int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double now
 	}
     
     progressData->request = request;
-    msg->obj = progressData;
 
-    request->_schedule->sendMessage(msg);
+	request->_schedule->sendMessage(CADownloadResponse_PROGRESS, progressData);
     
 	CCLog("downloading... %d%%  download_id = %lu", progressData->percent, request->_download_id);
     
@@ -980,51 +1132,15 @@ bool CADownloadResponse::downLoad()
     chmod(outFileName.c_str(), 0666);
 #endif
     
-	_curl = curl_easy_init();
-	if (_curl == NULL)
+	if (!_schedule->downLoad(_downHeaders, _downloadUrl, _initialFileSize, fp))
 	{
 		sendErrorMessage(CADownloadManager::kNetwork);
 		fclose(fp);
 		return false;
 	}
 
-	if (!_downHeaders.empty())
-	{
-		m_headers = curl_slist_append(m_headers, _downHeaders.c_str());
-		curl_easy_setopt(_curl, CURLOPT_HTTPHEADER, m_headers);
-	}
-    
-    // Download package
-    CURLcode res;
-    curl_easy_setopt(_curl, CURLOPT_URL, _downloadUrl.c_str());
-
-	char cRange[32] = { 0 };
-	sprintf(cRange, "%.0f-", _initialFileSize);
-	curl_easy_setopt(_curl, CURLOPT_RANGE, cRange);
-	curl_easy_setopt(_curl, CURLOPT_RESUME_FROM, (long)_initialFileSize);
-    curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, downLoadPackage);
-    curl_easy_setopt(_curl, CURLOPT_WRITEDATA, fp);
-    curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, CADownloadResponseProgressFunc);
-    curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
-    
-    res = curl_easy_perform(_curl);
-    curl_easy_cleanup(_curl);
-    if (m_headers)
-    {
-        curl_slist_free_all(m_headers);
-        m_headers = NULL;
-    }
-
 	if (isDownloadAbort())
     {
-        fclose(fp);
-        return false;
-    }
-    
-    if (res != 0)
-    {
-        sendErrorMessage(CADownloadManager::kNetwork);
         fclose(fp);
         return false;
     }
@@ -1057,100 +1173,10 @@ unsigned int CADownloadResponse::getConnectionTimeout()
 
 void CADownloadResponse::sendErrorMessage(CADownloadManager::ErrorCode code)
 {
-    Message *msg = new Message();
-    msg->what = CADownloadResponse_ERROR;
-    
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage->code = code;
     errorMessage->request = this;
-    msg->obj = errorMessage;
-    
-    _schedule->sendMessage(msg);
-}
-
-// Implementation of CADownloadResponseHelper
-
-CADownloadResponse::Helper::Helper()
-{
-    _messageQueue = new list<Message*>();
-    pthread_mutex_init(&_messageQueueMutex, NULL);
-    CAScheduler::schedule(schedule_selector(CADownloadResponse::Helper::update), this, 0);
-}
-
-CADownloadResponse::Helper::~Helper()
-{
-    delete _messageQueue;
-}
-
-void CADownloadResponse::Helper::sendMessage(Message *msg)
-{
-    pthread_mutex_lock(&_messageQueueMutex);
-    _messageQueue->push_back(msg);
-    pthread_mutex_unlock(&_messageQueueMutex);
-}
-
-void CADownloadResponse::Helper::update(float dt)
-{
-    std::list<Message*> MsgListTemp;
-    
-    pthread_mutex_lock(&_messageQueueMutex);
-    MsgListTemp = *_messageQueue;
-    _messageQueue->clear();
-    pthread_mutex_unlock(&_messageQueueMutex);
-    
-    for (std::list<Message*>::iterator it = MsgListTemp.begin(); it != MsgListTemp.end(); it++)
-    {
-        Message *msg = *it;
-        
-        switch (msg->what)
-        {
-            case CADownloadResponse_DOWNLOAD_FINISH:
-            {
-                this->handleUpdateSucceed(msg);
-                CADownloadResponse* request = static_cast<CADownloadResponse*>(msg->obj);
-                _manager->onSuccess(request);
-            }
-				break;
-                
-            case CADownloadResponse_PROGRESS:
-            {
-                ProgressMessage* message = static_cast<ProgressMessage*>(msg->obj);
-                std::list<Message*>::iterator it2 = it;
-                if (++it2== MsgListTemp.end())
-                {
-                    _manager->onProgress(message->request, message->percent, message->nowDownloaded, message->totalToDownload);
-                }
-                
-                delete message;
-            }
-                break;
-                
-            case CADownloadResponse_ERROR:
-            {
-                ErrorMessage* message = static_cast<ErrorMessage*>(msg->obj);
-                _manager->onError(message->request, message->code);
-                delete message;
-            }
-                break;
-                
-            default: break;
-        }
-        
-        delete msg;
-    }
-    MsgListTemp.clear();
-}
-void CADownloadResponse::Helper::handleUpdateSucceed(Message *msg)
-{
-    CADownloadResponse* manager = (CADownloadResponse*)msg->obj;
-
-    manager->setSearchPath();
-
-//    string zipfileName = manager->_fileName;
-//    if (remove(zipfileName.c_str()) != 0)
-//    {
-//        CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
-//    }
+	_schedule->sendMessage(CADownloadResponse_ERROR, errorMessage);
 }
 
 NS_CC_END;

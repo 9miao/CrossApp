@@ -12,8 +12,6 @@
 #include "basics/CAObject.h"
 #include "basics/CASTLContainer.h"
 #include "platform/platform.h"
-#include <curl/curl.h>
-#include <curl/easy.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <string>
@@ -35,7 +33,7 @@ class CADownloadResponse;
 
 class CC_DLL CADownloadManager
 {
-
+	friend class DownloadResponseHelper;
     typedef struct _DownloadRecord
     {
         unsigned long   download_id;
@@ -154,10 +152,11 @@ private:
     
 };
 
+
 class CC_DLL CADownloadResponse : public CAObject
 {
 private:
-
+	friend class DownloadResponseHelper;
 	friend class CADownloadManager;
 
 	static CADownloadResponse* create(const std::string& downloadUrl,
@@ -213,49 +212,12 @@ private:
 
 private:
 
-	typedef struct _Message
-	{
-		_Message() : what(0), obj(NULL){}
-
-		unsigned int what;
-
-		void* obj;
-
-	}Message;
-
-	class Helper : public CrossApp::CAObject
-	{
-	public:
-
-		Helper();
-
-		~Helper();
-
-		virtual void update(float dt);
-
-		void sendMessage(Message *msg);
-
-	private:
-
-		void handleUpdateSucceed(Message *msg);
-
-		std::list<Message*> *_messageQueue;
-
-		pthread_mutex_t _messageQueueMutex;
-	};
-
-private:
-
 	std::string _fileName;
 
 	std::string _downloadUrl;
 	std::string _downHeaders;
 
-	CURL *_curl;
-
-	curl_slist *m_headers;
-
-	Helper *_schedule;
+	DownloadResponseHelper *_schedule;
 
 	pthread_t *_tid;
 

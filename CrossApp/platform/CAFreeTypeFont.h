@@ -10,6 +10,7 @@
 #define __CC_PLATFORM_CAFREETYPEFONT_H
 
 #include "platform/CCCommon.h"
+#include "platform/CAFTFontCache.h"
 #include "images/CAImage.h"
 #include <map>
 #include <string>
@@ -26,21 +27,6 @@ NS_CC_BEGIN
 
 class CATempTypeFont;
 class CAEmojiFont;
-
-typedef struct _TextAttribute
-{
-    int charSize;
-    float charlength;
-    
-}TextAttribute;
-
-typedef struct _TextViewLineInfo
-{
-	std::vector<TextAttribute> TextAttrVect;
-	int iStartCharPos;
-	int iEndCharPos;
-    
-}TextViewLineInfo;
 
 typedef struct TGlyph_
 {

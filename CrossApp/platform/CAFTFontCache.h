@@ -9,20 +9,29 @@
 #ifndef __CC_PLATFORM_CAFTFONTCACHE_H
 #define __CC_PLATFORM_CAFTFONTCACHE_H
 
-
-#include "platform/CAFreeTypeFont.h"
+#include "platform/CCCommon.h"
+#include "images/CAImage.h"
+#include <vector>
 
 NS_CC_BEGIN
 
 
-typedef struct FontDataTable
+typedef struct _TextAttribute
 {
-	std::string szFontName;
-	int iFontSize;
-	int iFontHeight;
-	CAFreeTypeFont ftFont;
-} FontDataTable;
+	int charSize;
+	float charlength;
 
+}TextAttribute;
+
+typedef struct _TextViewLineInfo
+{
+	std::vector<TextAttribute> TextAttrVect;
+	int iStartCharPos;
+	int iEndCharPos;
+
+}TextViewLineInfo;
+
+struct FontDataTable;
 
 class CC_DLL CAFTFontCache
 {
