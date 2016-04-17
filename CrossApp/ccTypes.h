@@ -348,11 +348,9 @@ typedef enum
 
 typedef enum
 {
-    CAInterfaceOrientationUnknown            = 0,
-    CAInterfaceOrientationPortrait           = 1,
-    CAInterfaceOrientationPortraitUpsideDown = 2,
-    CAInterfaceOrientationLandscapeLeft      = 3,
-    CAInterfaceOrientationLandscapeRight     = 4
+    CAInterfaceOrientationUnknown        = 0,
+    CAInterfaceOrientationPortrait       = 1,
+    CAInterfaceOrientationLandscape      = 2,
 }CAInterfaceOrientation;
 
 static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";

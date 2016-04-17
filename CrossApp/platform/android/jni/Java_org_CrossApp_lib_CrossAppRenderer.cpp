@@ -24,5 +24,16 @@ extern "C" {
             CCApplication::sharedApplication()->applicationWillEnterForeground();
         }
     }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeChanged(JNIEnv*  env, jobject thiz, jint w, jint h) {
+        if (CrossApp::CAApplication::getApplication()->getOpenGLView())
+        {
+            CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize((int)w, (int)h);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeChangedOrientation(JNIEnv*  env, jobject thiz, jint type) {
+        CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation((CAInterfaceOrientation)((int)type));
+    }
 
 }

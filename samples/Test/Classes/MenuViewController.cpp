@@ -27,16 +27,17 @@ void MenuViewController::viewDidLoad()
     DLayout tableViewLayout;
     DLayout logoLayout;
     const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
-    if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
-    {
-        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
-        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
-    }
-    else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
+    if (orientation == CAInterfaceOrientationLandscape)
     {
         tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400));
         logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
+    else
+    {
+        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
+        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
+    }
+    
     
     tableView = CATableView::createWithLayout(DLayoutFill);
     tableView->setLayout(tableViewLayout);
@@ -66,16 +67,17 @@ void MenuViewController::changeStatusBarOrientation(CAObject* obj)
     
     DLayout tableViewLayout;
     DLayout logoLayout;
-    if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
-    {
-        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
-        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
-    }
-    else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
+    if (orientation == CAInterfaceOrientationLandscape)
     {
         tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400));
         logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
+    else
+    {
+        tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
+        logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
+    }
+    
     tableView->setLayout(tableViewLayout);
     m_pLogo->setLayout(logoLayout);
 }

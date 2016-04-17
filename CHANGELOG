@@ -1,3 +1,37 @@
+#### CrossApp 1.4.0 Beta1 更新内容：
+
+#####1.新增自适应布局系统 DLayout
+使用方法详见官网文档以及test示例代码
+
+#####2.支持iOS平台设备旋转
+
+#####3.优化视频组件性能以及体验
+
+#####4.优化触摸体验
+
+#####5.新增CAFont字体类
+
+#####6.新增简易富文本CAFTRichFont类
+
+#####7.优化CAWaterfallView瀑布流组件
+
+#####8.优化CANavigationController
+
+#####9.优化CATabBarController
+
+#####10.优化CAAlertView
+
+#####11.优化CAGifView
+
+#####12.修复CAWebView在android平台的bug
+
+#####13.修复输入框在android平台某些情况无法获取内容的bug
+
+#####14.其他一些细节的优化
+
+**********************************************************************************
+
+
 #### CrossApp 1.3.1 正式版 更新内容：
 
 #####1.修复CATextField在iOS7.x，弹起键盘卡死的bug

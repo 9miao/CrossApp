@@ -153,7 +153,7 @@ void CADrawerController::viewDidDisappear()
 void CADrawerController::achieveLayout()
 {
     const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
-    if (orientation == CAInterfaceOrientationPortrait || orientation == CAInterfaceOrientationPortraitUpsideDown)
+    if (orientation == CAInterfaceOrientationLandscape)
     {
         m_fDivision = this->getView()->getBounds().size.width - 120;
         
@@ -172,7 +172,7 @@ void CADrawerController::achieveLayout()
         m_rShowLayout[1].horizontal = DHorizontalLayout_L_R(m_fDivision, -m_fDivision);
         m_rShowLayout[1].vertical = DVerticalLayoutFill;
     }
-    else if (orientation == CAInterfaceOrientationLandscapeLeft || CAInterfaceOrientationLandscapeRight)
+    else
     {
         m_fDivision = this->getView()->getBounds().size.width - 120;
         
@@ -191,6 +191,7 @@ void CADrawerController::achieveLayout()
         m_rShowLayout[1].horizontal = DHorizontalLayout_L_R(m_fDivision, -m_fDivision);
         m_rShowLayout[1].vertical = DVerticalLayoutFill;
     }
+    
 }
 
 void CADrawerController::changeStatusBarOrientation(CAObject* obj)

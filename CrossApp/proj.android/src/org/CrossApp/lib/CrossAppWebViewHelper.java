@@ -2,6 +2,7 @@ package org.CrossApp.lib;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -70,7 +71,7 @@ public class CrossAppWebViewHelper {
                         FrameLayout.LayoutParams.WRAP_CONTENT);
                 layout.addView(webView, lParams);
                 webView.setDrawingCacheEnabled(true);
-
+            	Log.e("ssssssssss","bbbbbbbbb setAllWebviews");
                 webViews.put(index, webView);
             }
         });
@@ -364,9 +365,20 @@ public class CrossAppWebViewHelper {
     	return strs;
     }
     
-    public static void setAllWebviews(String[] strs) {
+    public static void setAllWebviews(String[] strs) 
+    {
+    	if (webViews.size() > 0)
+    	{
+    		for (int i=0; i<webViews.size(); i++)
+    		{
+    			int key = webViews.keyAt(i);
+    			CrossAppWebView webView = webViews.get(key);
+    			layout.removeView(webView);
+    		}
+    	}
+
+    	webViews.clear();
     	int cnt = (strs.length-1) / 3;
-    	
     	viewTag = Integer.parseInt(strs[0]);
     	
     	for (int i=0; i<cnt; i++) {

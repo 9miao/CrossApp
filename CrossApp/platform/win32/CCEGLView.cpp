@@ -854,7 +854,7 @@ void CCEGLView::setFrameSize(float width, float height)
 
 	if (width / height > 1.25f)
 	{
-		this->setStatusBarOrientation(CAInterfaceOrientationLandscapeRight);
+		this->setStatusBarOrientation(CAInterfaceOrientationLandscape);
 	}
 	else
 	{
