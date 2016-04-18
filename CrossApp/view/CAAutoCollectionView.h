@@ -190,9 +190,8 @@ public:
 
 	CC_PROPERTY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
     
-	CC_SYNTHESIZE(CellHoriAlign, m_eCellHoriAlign, CellHoriAlign);
-    
-	CC_SYNTHESIZE(CellVertAlign, m_eCellVertAlign, CellVertAlign);
+	CC_SYNTHESIZE_PASS_BY_REF(CellHoriAlign, m_eCellHoriAlign, CellHoriAlign);
+	CC_SYNTHESIZE_PASS_BY_REF(CellVertAlign, m_eCellVertAlign, CellVertAlign);
 
 	CC_SYNTHESIZE(unsigned int, m_nHoriCellInterval, HoriCellInterval);
 	CC_SYNTHESIZE(unsigned int, m_nVertCellInterval, VertCellInterval);

@@ -16,7 +16,7 @@ CAListView::CAListView()
 , m_bAllowsSelection(false)
 , m_bAllowsMultipleSelection(false)
 , m_pHighlightedListCells(NULL)
-, m_pListViewOrientation(CAListViewOrientationVertical)
+, m_eOrientation(Vertical)
 , m_bAllowsHeadAndFootHover(true)
 , m_pListHeaderView(NULL)
 , m_pListFooterView(NULL)
@@ -181,7 +181,7 @@ void CAListView::setUnSelectAtIndex(unsigned int index)
 
 void CAListView::setShowsScrollIndicators(bool var)
 {
-    bool bVertScroll = m_pListViewOrientation == CAListViewOrientationVertical;
+    bool bVertScroll = m_eOrientation == Vertical;
     this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
     this->setShowsVerticalScrollIndicator(var && bVertScroll);
     m_bShowsScrollIndicators = var;
@@ -197,10 +197,10 @@ const CAVector<CAListViewCell*>& CAListView::displayingListCell()
     return m_vpUsedListCells;
 }
 
-void CAListView::setListViewOrientation(CAListViewOrientation var)
+void CAListView::setOrientation(const CAListView::Orientation& var)
 {
-	m_pListViewOrientation = var;
-	bool bVertScroll = m_pListViewOrientation == CAListViewOrientationVertical;
+	m_eOrientation = var;
+	bool bVertScroll = m_eOrientation == Vertical;
 	
 	setShowsVerticalScrollIndicator(bVertScroll);
 	setBounceVertical(bVertScroll);
@@ -208,11 +208,16 @@ void CAListView::setListViewOrientation(CAListViewOrientation var)
 	setBounceHorizontal(!bVertScroll);
 	setHorizontalScrollEnabled(!bVertScroll);
 	setVerticalScrollEnabled(bVertScroll);
+    
+    if(!m_mpUsedListCells.empty())
+    {
+        this->reloadData();
+    }
 }
 
-CAListViewOrientation CAListView::getListViewOrientation()
+const CAListView::Orientation& CAListView::getOrientation()
 {
-	return m_pListViewOrientation;
+	return m_eOrientation;
 }
 
 bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -423,7 +428,7 @@ void CAListView::reloadViewSizeData()
     int iStartPosition = 0;
     if (m_nListHeaderHeight > 0)
     {
-        m_rHeaderRect = (m_pListViewOrientation == CAListViewOrientationVertical)
+        m_rHeaderRect = (m_eOrientation == Vertical)
         ? DRect(0, iStartPosition, width, m_nListHeaderHeight)
         : DRect(iStartPosition, 0, m_nListHeaderHeight, height);
         iStartPosition += m_nListHeaderHeight;
@@ -437,7 +442,7 @@ void CAListView::reloadViewSizeData()
         unsigned int cellHeight = m_pListViewDataSource->listViewHeightForIndex(this, i);
         if (cellHeight > 0)
         {
-            DRect cellRect = (m_pListViewOrientation == CAListViewOrientationVertical)
+            DRect cellRect = (m_eOrientation == Vertical)
             ? DRect(0, iStartPosition, width, cellHeight)
             : DRect(iStartPosition, 0, cellHeight, height);
             m_rIndexRects[i] = cellRect;
@@ -445,7 +450,7 @@ void CAListView::reloadViewSizeData()
         }
         if (m_nSeparatorViewHeight > 0)
         {
-            m_rLineRects[i] = (m_pListViewOrientation == CAListViewOrientationVertical)
+            m_rLineRects[i] = (m_eOrientation == Vertical)
             ? DRect(0, iStartPosition, width, s_px_to_dip(m_nSeparatorViewHeight))
             : DRect(iStartPosition, 0, s_px_to_dip(m_nSeparatorViewHeight), height);
             iStartPosition += m_nSeparatorViewHeight;
@@ -454,13 +459,13 @@ void CAListView::reloadViewSizeData()
     
     if (m_nListFooterHeight > 0)
     {
-        m_rFooterRect = (m_pListViewOrientation == CAListViewOrientationVertical)
+        m_rFooterRect = (m_eOrientation == Vertical)
         ? DRect(0, iStartPosition, width, m_nListFooterHeight)
         : DRect(iStartPosition, 0, m_nListFooterHeight, height);
         iStartPosition += m_nListFooterHeight;
     }
     
-    if (m_pListViewOrientation == CAListViewOrientationVertical)
+    if (m_eOrientation == Vertical)
     {
         this->setViewSize(DSize(0, iStartPosition));
     }

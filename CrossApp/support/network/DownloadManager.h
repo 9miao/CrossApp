@@ -30,7 +30,7 @@ NS_CC_BEGIN
 
 class CADownloadManagerDelegate;
 class CADownloadResponse;
-
+class DownloadResponseHelper;
 class CC_DLL CADownloadManager
 {
 	friend class DownloadResponseHelper;

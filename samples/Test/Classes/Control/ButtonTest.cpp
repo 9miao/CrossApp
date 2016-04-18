@@ -22,9 +22,9 @@ void ButtonTest::viewDidLoad()
     btn1->setTag(1);
     //设置Layout
     btn1->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.16)));
-                    
-    //设置Button标题的显示文本
+    //设置Button标题的显示文本和字体大小
     btn1->setTitleForState(CAControlStateNormal, "Noborder");
+    btn1->setTitleFontSize(40);
     //设置Button的标题颜色和状态
     btn1->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
     //添加回调事件

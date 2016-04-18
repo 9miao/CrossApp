@@ -82,12 +82,20 @@ void WaterfallViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)
 {
-    CCLog("WaterfallViewTest%d", itemIndex);
+    //选中
+    CAWaterfallViewCell* cell = waterfallView->cellForRowAtIndexPath(itemIndex);
+    cell->getContentView()->setRotation(360);
+    cell->getContentView()->setScale(0.5f);
+    CAViewAnimation::beginAnimations("", NULL);
+    cell->getContentView()->setRotation(0);
+    cell->getContentView()->setScale(1.0f);
+    CAViewAnimation::commitAnimations();
+    CCLog("选中");
 }
 
 void WaterfallViewTest::waterfallViewDidDeselectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)
 {
-    CCLog("CellAtIndexPath%d", itemIndex);
+    CCLog("取消选中");
 }
 
 //Necessary
@@ -97,23 +105,27 @@ CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(CAWaterfallView *wa
     if (p_Cell == NULL)
     {
         p_Cell = CAWaterfallViewCell::create("CrossApp");
-        p_Cell->setAllowsSelected(false);
-        p_Cell->setBackgroundView(CAView::create());
+        
+        CAView* itemImage = CAView::createWithLayout(DLayoutFill);
+        itemImage->setTag(99);
+        p_Cell->getContentView()->addSubview(itemImage);
         
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignmentCenter);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-        p_Cell->addSubview(itemText);
+        p_Cell->getContentView()->addSubview(itemText);
     }
     
-    p_Cell->getBackgroundView()->setColor(colorArr.at(itemIndex));
+    //设置Item背景颜色
+    CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
+    itemImageView->setColor(colorArr.at(itemIndex));
     
     char pos[20] = "";
     sprintf(pos, "(%d)", itemIndex);
     
-    CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
     itemText->setText(pos);
     
     return  p_Cell;

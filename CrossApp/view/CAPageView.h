@@ -15,12 +15,6 @@
 
 USING_NS_CC;
 
-typedef enum
-{
-    CAPageViewDirectionHorizontal,
-    CAPageViewDirectionVertical
-}CAPageViewDirection;
-
 class CC_DLL CAPageView;
 class CC_DLL CAPageViewDelegate
 {
@@ -42,19 +36,26 @@ class CC_DLL CAPageView: public CAScrollView
 {
 public:
     
-    CAPageView(const CAPageViewDirection& type);
+    typedef enum
+    {
+        Horizontal = 0,
+        Vertical
+    }
+    Orientation;
+    
+    CAPageView(const Orientation& type);
     
     virtual ~CAPageView();
     
-    static CAPageView* createWithFrame(const DRect& rect, const CAPageViewDirection& type);
+    static CAPageView* createWithFrame(const DRect& rect, const Orientation& type);
     
-    static CAPageView* createWithCenter(const DRect& rect, const CAPageViewDirection& type);
+    static CAPageView* createWithCenter(const DRect& rect, const Orientation& type);
     
-    static CAPageView* createWithLayout(const DLayout& layout, const CAPageViewDirection& type);
+    static CAPageView* createWithLayout(const DLayout& layout, const Orientation& type);
     
     bool init();
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAPageViewDirection, m_ePageViewDirection, PageViewDirection);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
     
     CC_SYNTHESIZE(CAPageViewDelegate* , m_pPageViewDelegate, PageViewDelegate);
     
@@ -150,5 +151,7 @@ private:
     bool m_bListener;
 };
 
+#define CAPageViewDirectionHorizontal CAPageView::Horizontal
+#define CAPageViewDirectionVertical CAPageView::Vertical
 
 #endif /* defined(__HelloCpp__CAPageView__) */

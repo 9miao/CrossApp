@@ -213,6 +213,11 @@ void CAAutoCollectionView::setOrientation(const CAAutoCollectionView::Orientatio
 	setBounceHorizontal(!bVertScroll);
 	setHorizontalScrollEnabled(!bVertScroll);
 	setVerticalScrollEnabled(bVertScroll);
+    
+    if(!m_mpUsedCollectionCells.empty())
+    {
+        this->reloadData();
+    }
 }
 
 const CAAutoCollectionView::Orientation& CAAutoCollectionView::getOrientation()

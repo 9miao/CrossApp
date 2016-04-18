@@ -19,13 +19,6 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAListViewOrientationHorizontal,
-	CAListViewOrientationVertical
-}
-CAListViewOrientation;
-
 class CAListViewCell;
 class CAListView;
 
@@ -59,6 +52,15 @@ class CC_DLL CAListView : public CAScrollView
 {
 public:
     
+    typedef enum
+    {
+        Horizontal = 0,
+        Vertical
+    }
+    Orientation;
+    
+public:
+    
 	CAListView();
     
 	virtual ~CAListView();
@@ -75,9 +77,6 @@ public:
     
 	virtual bool init();
 
-	void reloadViewSizeData();
-
-	void clearData();
 	void reloadData();
 
 	CAListViewCell* dequeueReusableCellWithIdentifier(const char* reuseIdentifier);
@@ -96,7 +95,7 @@ public:
     
     const CAVector<CAListViewCell*>& displayingListCell();
     
-	CC_PROPERTY(CAListViewOrientation, m_pListViewOrientation, ListViewOrientation);
+	CC_PROPERTY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
 
     CC_SYNTHESIZE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);
     
@@ -139,6 +138,10 @@ protected:
     CAView* dequeueReusableLine();
     
     void firstReloadData();
+    
+    void reloadViewSizeData();
+    
+    void clearData();
     
 public:
 
@@ -277,6 +280,12 @@ private:
     
     friend class CAListView;
 };
+
+#define setListViewOrientation(_var_) setOrientation(_var_)
+#define getListViewOrientation(_var_) getOrientation(_var_)
+#define CAListViewOrientationHorizontal CAListView::Horizontal
+#define CAListViewOrientationVertical CAListView::Vertical
+
 
 NS_CC_END
 
