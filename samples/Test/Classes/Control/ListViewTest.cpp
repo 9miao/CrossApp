@@ -38,7 +38,7 @@ bool CDListViewTest::init()
     listView->setListViewDataSource(this);
     listView->setAllowsSelection(true);
     listView->setAllowsMultipleSelection(false);
-    listView->setListViewOrientation(CAListViewOrientationHorizontal);
+    listView->setOrientation(CAListView::Horizontal);
     //listView->setShowsHorizontalScrollIndicator(false);
     listView->setShowsScrollIndicators(false);
     

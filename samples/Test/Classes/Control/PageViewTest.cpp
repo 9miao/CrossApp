@@ -23,7 +23,7 @@ void PageViewTest::viewDidLoad()
     _view.pushBack(view2);
     _view.pushBack(view3);
     
-    p_pageView = CAPageView::createWithLayout(DLayoutFill, CAPageViewDirectionHorizontal);
+    p_pageView = CAPageView::createWithLayout(DLayoutFill, CAPageView::Horizontal);
     p_pageView->setViews(_view);
     p_pageView->setPageViewDelegate(this);
     this->getView()->addSubview(p_pageView);
