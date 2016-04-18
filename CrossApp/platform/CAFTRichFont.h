@@ -47,6 +47,16 @@ typedef struct FTLineInfoEx_
 
 } FTLineInfoEx;
 
+
+struct FontDataTable
+{
+	std::string szFontName;
+	int iFontSize;
+	int iFontHeight;
+	CAFreeTypeFont ftFont;
+};
+
+
 class CC_DLL CAFTRichFont
 {
 public:

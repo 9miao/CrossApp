@@ -1,6 +1,7 @@
 #include "CAFTFontCache.h"
 #include "basics/CAApplication.h"
 #include "platform/CCFileUtils.h"
+#include "platform/CAFTRichFont.h"
 #include "support/ccUTF8.h"
 #include "CAEmojiFont.h"
 using namespace std;
