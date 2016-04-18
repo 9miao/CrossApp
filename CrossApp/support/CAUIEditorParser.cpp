@@ -1219,6 +1219,93 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         }
 
 	}
+    else if (contrlType.compare("CAScrollView") == 0)
+    {
+        DLayout layout;
+        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
+                                              atoi(viewXml->Attribute("h_var2")),
+                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
+        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
+                                          atoi(viewXml->Attribute("v_var2")),
+                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
+        
+        CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
+        superview->addSubview(scrollView);
+        map.insert(viewXml->Attribute("textTag"), scrollView);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            scrollView->setZOrder(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundColor"))
+        {
+            scrollView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            scrollView->setBackgroundImage(CAImage::create(value));
+        }
+        
+        DSize viewSize = CrossApp::DSizeZero;
+        if (const char* value = viewXml->Attribute("viewSize_w"))
+        {
+            viewSize.width = atoi(value);
+        }
+        
+        if (const char* value = viewXml->Attribute("viewSize_h"))
+        {
+            viewSize.height = atoi(value);
+        }
+        scrollView->setViewSize(viewSize);
+        
+        DPoint contentOffSet = DPointZero;
+        if (const char* value = viewXml->Attribute("contentOffSet_x"))
+        {
+            contentOffSet.x = atoi(value);
+        }
+        if (const char* value = viewXml->Attribute("contentOffSet_y"))
+        {
+            contentOffSet.y = atoi(value);
+        }
+        scrollView->setContentOffset(contentOffSet, false);
+        
+        if (const char* value = viewXml->Attribute("minZoomScale"))
+        {
+            scrollView->setMinimumZoomScale(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("maxZoomScale"))
+        {
+            scrollView->setMaximumZoomScale(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("touchEnabledAtSubviews"))
+        {
+            scrollView->setTouchEnabledAtSubviews(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("showsHorizontalScrollIndicator"))
+        {
+            scrollView->setShowsHorizontalScrollIndicator(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("showsVerticalScrollIndicator"))
+        {
+            scrollView->setShowsVerticalScrollIndicator(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("bounceHorizontal"))
+        {
+            scrollView->setBounceHorizontal(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("bounceVertical"))
+        {
+            scrollView->setBounceVertical(bool(atoi(value)));
+        }
+    }
     else if (contrlType.compare("CAPageView") == 0)
     {
         DLayout layout;
@@ -1229,7 +1316,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                                           atoi(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
-        CAPageView* pageView = CAPageView::createWithLayout(layout, (CAPageView::Orientation)(atoi(viewXml->Attribute("driection"))));
+        CAPageView* pageView = CAPageView::createWithLayout(layout, (CAPageView::Orientation)(atoi(viewXml->Attribute("orientation"))));
         
         superview->addSubview(pageView);
         map.insert(viewXml->Attribute("textTag"), pageView);
@@ -1239,9 +1326,14 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             pageView->setZOrder(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("color"))
+        if (const char* value = viewXml->Attribute("backgroundColor"))
         {
             pageView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            pageView->setBackgroundImage(CAImage::create(value));
         }
         
         if(const char* value = viewXml->Attribute("spacing"))
@@ -1269,89 +1361,6 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             pageView->CAScrollView::setBounces(atoi(value));
         }
     }
-    else if (contrlType.compare("CATableView") == 0)
-    {
-        DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
-                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
-                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
-        
-        CATableView* tableView = CATableView::createWithLayout(layout);
-        superview->addSubview(tableView);
-        map.insert(viewXml->Attribute("textTag"), tableView);
-   
-        if (const char* value = viewXml->Attribute("z"))
-        {
-            tableView->setZOrder(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("color"))
-        {
-            tableView->setBackgroundColor(ccc4Int(atoi(value)));
-        }
-
-        if (const char* value = viewXml->Attribute("headerHeight"))
-        {
-            tableView->setTableHeaderHeight(atoi(value));
-        }
-
-        if (const char* value = viewXml->Attribute("footerHeight"))
-        {
-            tableView->setTableFooterHeight(atoi(value));
-        }
-
-        if (const char* value = viewXml->Attribute("separatorHeight"))
-        {
-            tableView->setSeparatorViewHeight(atoi(value));
-        }
-
-        if (const char* value = viewXml->Attribute("separatorColor"))
-        {
-            tableView->setSeparatorColor(ccc4Int(atoi(value)));
-        }
-
-        if (const char* value = viewXml->Attribute("bounce"))
-        {
-            tableView->CAScrollView::setBounces(bool(atoi(value)));
-        }
-
-        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
-        {
-            tableView->setShowsScrollIndicators(bool(atoi(value)));
-        }
-
-        if (const char* value = viewXml->Attribute("headerRefreshView"))
-        {
-            if(bool(atoi(value)))
-            {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
-                tableView->setHeaderRefreshView(pullview);
-            }
-        }
-        
-        if (const char* value = viewXml->Attribute("footerRefreshView"))
-        {
-            if(bool(atoi(value)))
-            {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
-                tableView->setFooterRefreshView(pullview);
-            }
-        }
-        
-        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
-        {
-            tableView->setAlwaysTopSectionHeader(bool(atoi(value)));
-        }
-        
-        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
-        {
-            tableView->setAlwaysBottomSectionFooter(bool(atoi(value)));
-        }
-    }
-
     else if (contrlType.compare("CAListView") == 0)
     {
         DLayout layout;
@@ -1371,9 +1380,19 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             listView->setZOrder(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("color"))
+        if (const char* value = viewXml->Attribute("backgroundColor"))
         {
             listView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            listView->setBackgroundImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("orientation"))
+        {
+            listView->setOrientation((CAListView::Orientation)atoi(value));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1395,12 +1414,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             listView->setSeparatorColor(ccc4Int(atoi(value)));
         }
-        
-        if (const char* value = viewXml->Attribute("orientation"))
-        {
-            listView->setOrientation((CAListView::Orientation)atoi(value));
-        }
-        
+
         if (const char* value = viewXml->Attribute("bounce"))
         {
             listView->CAScrollView::setBounces(bool(atoi(value)));
@@ -1435,6 +1449,94 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             listView->setAllowsHeadAndFootHover(var);
         }
     }
+    else if (contrlType.compare("CATableView") == 0)
+    {
+        DLayout layout;
+        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
+                                              atoi(viewXml->Attribute("h_var2")),
+                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
+        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
+                                          atoi(viewXml->Attribute("v_var2")),
+                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
+        
+        CATableView* tableView = CATableView::createWithLayout(layout);
+        superview->addSubview(tableView);
+        map.insert(viewXml->Attribute("textTag"), tableView);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            tableView->setZOrder(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundColor"))
+        {
+            tableView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            tableView->setBackgroundImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            tableView->setTableHeaderHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            tableView->setTableFooterHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("separatorHeight"))
+        {
+            tableView->setSeparatorViewHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("separatorColor"))
+        {
+            tableView->setSeparatorColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            tableView->CAScrollView::setBounces(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            tableView->setShowsScrollIndicators(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+            if(bool(atoi(value)))
+            {
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeHeader);
+                tableView->setHeaderRefreshView(pullview);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            if(bool(atoi(value)))
+            {
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::CAPullToRefreshType::CAPullToRefreshTypeFooter);
+                tableView->setFooterRefreshView(pullview);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
+        {
+            tableView->setAlwaysTopSectionHeader(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
+        {
+            tableView->setAlwaysBottomSectionFooter(bool(atoi(value)));
+        }
+    }
+
     else if (contrlType.compare("CAAutoCollectionView") == 0)
     {
         DLayout layout;
@@ -1454,9 +1556,14 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             collectionView->setZOrder(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("color"))
+        if (const char* value = viewXml->Attribute("backgroundColor"))
         {
             collectionView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            collectionView->setBackgroundImage(CAImage::create(value));
         }
         
         if (const char* value = viewXml->Attribute("orientation"))
@@ -1571,9 +1678,14 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             waterfallView->setZOrder(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("color"))
+        if (const char* value = viewXml->Attribute("backgroundColor"))
         {
             waterfallView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            waterfallView->setBackgroundImage(CAImage::create(value));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1649,88 +1761,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             waterfallView->setAllowsMultipleSelection(bool(atoi(value)));
         }
     }
-    else if (contrlType.compare("CAScrollView") == 0)
-    {
-        DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
-                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
-                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
-        
-        CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
-        superview->addSubview(scrollView);
-        map.insert(viewXml->Attribute("textTag"), scrollView);
-        
-        if (const char* value = viewXml->Attribute("z"))
-        {
-            scrollView->setZOrder(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("color"))
-        {
-            scrollView->setBackgroundColor(ccc4Int(atoi(value)));
-        }
-        
-		DSize viewSize = CrossApp::DSizeZero;
-		if (const char* value = viewXml->Attribute("viewSize_w"))
-		{
-			viewSize.width = atoi(value);
-		}
-
-		if (const char* value = viewXml->Attribute("viewSize_h"))
-		{
-			viewSize.height = atoi(value);
-		}
-		scrollView->setViewSize(viewSize);
-
-        DPoint contentOffSet = DPointZero;
-        if (const char* value = viewXml->Attribute("contentOffSet_x"))
-        {
-            contentOffSet.x = atoi(value);
-        }
-        if (const char* value = viewXml->Attribute("contentOffSet_y"))
-        {
-            contentOffSet.y = atoi(value);
-        }
-        scrollView->setContentOffset(contentOffSet, false);
-        
-        if (const char* value = viewXml->Attribute("minZoomScale"))
-        {
-            scrollView->setMinimumZoomScale(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("maxZoomScale"))
-        {
-            scrollView->setMaximumZoomScale(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("touchEnabledAtSubviews"))
-        {
-            scrollView->setTouchEnabledAtSubviews(bool(atoi(value)));
-        }
-        
-        if (const char* value = viewXml->Attribute("showsHorizontalScrollIndicator"))
-        {
-            scrollView->setShowsHorizontalScrollIndicator(bool(atoi(value)));
-        }
-        
-        if (const char* value = viewXml->Attribute("showsVerticalScrollIndicator"))
-        {
-            scrollView->setShowsVerticalScrollIndicator(bool(atoi(value)));
-        }
-        
-        if (const char* value = viewXml->Attribute("bounceHorizontal"))
-        {
-            scrollView->setBounceHorizontal(bool(atoi(value)));
-        }
-        
-        if (const char* value = viewXml->Attribute("bounceVertical"))
-        {
-            scrollView->setBounceVertical(bool(atoi(value)));
-        }
-    }
+    
 
     return view;
 
