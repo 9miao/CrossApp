@@ -656,6 +656,8 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 	return written;
 }
 
+int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
+
 class DownloadResponseHelper : public CrossApp::CAObject
 {
 	typedef struct _Message
