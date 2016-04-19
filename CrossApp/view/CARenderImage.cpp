@@ -300,23 +300,23 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     DPoint point = DPointZero;
     if (view->getSuperview())
     {
-        point.y += view->getSuperview()->getFrame().size.height;
+        point.y = view->getSuperview()->m_obContentSize.height;
     }
     else
     {
-        point.y += CAApplication::getApplication()->getWinSize().height;
+        point.y = CAApplication::getApplication()->getWinSize().height;
     }
-    point.y -= view->getFrame().size.height;
+    point.y -= view->m_obContentSize.height;
     point.y += offset.y;
     point.x -= offset.x;
     
-    DPoint originalFrameOrigin = view->getFrameOrigin();
+    DPoint originalPoint = view->m_obPoint;
     DPoint originalAnchorPoint = view->getAnchorPoint();
     float originalRotationX = view->getRotationX();
     
-    view->setAnchorPoint(DPoint(0.5f, 0.5f));
     view->setRotationX(originalRotationX + 180);
-    view->setFrameOrigin(point);
+    view->setAnchorPoint(DPoint(0.0f, 1.0f));
+    view->setPoint(point);
     
     this->beginWithClear(backgroundColor);
     view->visit();
@@ -324,7 +324,7 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     
     view->setRotationX(originalRotationX);
     view->setAnchorPoint(originalAnchorPoint);
-    view->setFrameOrigin(originalFrameOrigin);
+    view->setPoint(originalPoint);
 }
 
 void CARenderImage::begin()

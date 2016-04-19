@@ -8,34 +8,8 @@
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup textures
- * @{
- */
-
-typedef enum eImageFormat
+class CC_DLL CARenderImage : public CAView
 {
-    kCCImageFormatJPEG      = 0,
-    kCCImageFormatPNG       = 1,
-} tCCImageFormat;
-/**
-@brief CARenderImage is a generic rendering target. To render things into it,
-simply construct a render target, call begin on it, call visit on any cocos
-scenes or objects to render them, and call end. For convenience, render texture
-adds a sprite as it's display child with the results, so you can simply add
-the render Image to your scene and treat it like any other CocosNode.
-There are also functions for saving the render Image to disk in PNG or JPG format.
-
-@since v0.8.1
-*/
-class CC_DLL CARenderImage : public CAView 
-{
-    /** The CAImageView being used.
-    The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
-    The blending function can be changed in runtime by calling:
-    - [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-    */
-    CC_PROPERTY(CAImageView*, m_pImageView, ImageView)
 public:
 
     CARenderImage();
@@ -90,6 +64,8 @@ public:
     bool isAutoDraw() const;
     void setAutoDraw(bool bAutoDraw);
 
+    CC_PROPERTY(CAImageView*, m_pImageView, ImageView)
+    
 protected:
     
     void begin();
