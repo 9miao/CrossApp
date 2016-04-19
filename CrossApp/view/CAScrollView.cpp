@@ -1118,7 +1118,7 @@ void CAScrollView::endHeaderRefresh()
 {
     if (m_pHeaderRefreshView)
     {
-        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNone);
+        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::None);
     }
 }
 
@@ -1126,7 +1126,7 @@ void CAScrollView::endFooterRefresh()
 {
     if (m_pFooterRefreshView)
     {
-        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNone);
+        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::None);
     }
 }
 
@@ -1160,11 +1160,11 @@ void CAScrollView::changedFromPullToRefreshView()
         }
         if (layout.vertical.top < y)
         {
-            m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
+            m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Normal);
         }
         else
         {
-            m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStatePulling);
+            m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Pulling);
         }
     }
     if (m_pFooterRefreshView)
@@ -1177,11 +1177,11 @@ void CAScrollView::changedFromPullToRefreshView()
         }
         if (size.height - m_obContentSize.height - layout.vertical.bottom > y)
         {
-            m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateNormal);
+            m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Normal);
         }
         else
         {
-            m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStatePulling);
+            m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Pulling);
         }
     } 
 }
@@ -1192,7 +1192,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     {
         this->stopDeaccelerateScroll();
         this->setContentOffset(DPoint(0, -128), true);
-        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
+        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Refreshing);
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewHeaderBeginRefreshing(this);
@@ -1203,7 +1203,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     {
         this->stopDeaccelerateScroll();
         this->setContentOffset(DPoint(0, this->getViewSize().height - this->getBounds().size.height + 128), true);
-        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::CAPullToRefreshStateRefreshing);
+        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Refreshing);
         
         if (m_pScrollViewDelegate)
         {

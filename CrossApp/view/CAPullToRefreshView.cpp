@@ -16,7 +16,7 @@
 
 NS_CC_BEGIN
 
-CAPullToRefreshView::CAPullToRefreshView(const CAPullToRefreshType& type)
+CAPullToRefreshView::CAPullToRefreshView(const PullToRefreshType& type)
 :m_eLayoutLinearType(CALayoutLinearHorizontal)
 ,m_eType(type)
 ,m_pPullToImage(NULL)
@@ -29,7 +29,7 @@ CAPullToRefreshView::CAPullToRefreshView(const CAPullToRefreshType& type)
 ,m_sReleaseToRefreshText("")
 ,m_sRefreshingText("")
 ,m_cLabelColor(CAColor_gray)
-,m_eStateType(CAPullToRefreshStateNone)
+,m_eStateType(None)
 {
     
 }
@@ -40,7 +40,7 @@ CAPullToRefreshView::~CAPullToRefreshView()
     CC_SAFE_RELEASE(m_pLoadingView);
 }
 
-CAPullToRefreshView* CAPullToRefreshView::create(const CAPullToRefreshType& type)
+CAPullToRefreshView* CAPullToRefreshView::create(const PullToRefreshType& type)
 {
     CAPullToRefreshView* view = new CAPullToRefreshView(type);
     if (view && view->init())
@@ -135,7 +135,7 @@ void CAPullToRefreshView::startLayout()
         this->addSubview(m_pRefreshingLabel);
     }
     
-    this->setPullToRefreshStateType(CAPullToRefreshStateNormal);
+    this->setPullToRefreshStateType(Normal);
     this->updateLayout();
 }
 
@@ -181,16 +181,16 @@ void CAPullToRefreshView::updateLayout()
     }
 }
 
-void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateType& stateType)
+void CAPullToRefreshView::setPullToRefreshStateType(const PullToRefreshStateType& stateType)
 {
     CC_RETURN_IF(m_eStateType == stateType);
     
-    CC_RETURN_IF(stateType != CAPullToRefreshStateNone && m_eStateType == CAPullToRefreshStateRefreshing);
+    CC_RETURN_IF(stateType != None && m_eStateType == Refreshing);
     m_eStateType = stateType;
     switch (m_eStateType)
     {
-        case CAPullToRefreshStateNone:
-        case CAPullToRefreshStateNormal:
+        case None:
+        case Normal:
         {
             if (m_pLoadingView)
             {
@@ -209,7 +209,7 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
             CAViewAnimation::commitAnimations();
         }
             break;
-        case CAPullToRefreshStatePulling:
+        case Pulling:
         {
             if (m_pLoadingView)
             {
@@ -228,7 +228,7 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
             CAViewAnimation::commitAnimations();
         }
             break;
-        case CAPullToRefreshStateRefreshing:
+        case Refreshing:
         {
             if (m_pLoadingView)
             {
@@ -251,12 +251,12 @@ void CAPullToRefreshView::setPullToRefreshStateType(const CAPullToRefreshStateTy
 
 bool CAPullToRefreshView::isCanRefresh()
 {
-    return m_eStateType == CAPullToRefreshStatePulling;
+    return m_eStateType == Pulling;
 }
 
 bool CAPullToRefreshView::isRefreshing()
 {
-    return m_eStateType == CAPullToRefreshStateRefreshing;
+    return m_eStateType == Refreshing;
 }
 
 NS_CC_END

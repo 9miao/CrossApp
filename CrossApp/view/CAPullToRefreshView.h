@@ -24,18 +24,16 @@ public:
     
     typedef enum
     {
-        CAPullToRefreshTypeHeader = 0,
-        CAPullToRefreshTypeFooter,
-//        CAPullToRefreshTypeLeftHeader,
-//        CAPullToRefreshTypeRightFooter,
-        CAPullToRefreshTypeCustom
-    }CAPullToRefreshType;
+        Header = 0,
+        Footer,
+        Custom
+    }PullToRefreshType;
     
-    CAPullToRefreshView(const CAPullToRefreshType& type);
+    CAPullToRefreshView(const PullToRefreshType& type);
     
     virtual ~CAPullToRefreshView();
     
-    static CAPullToRefreshView* create(const CAPullToRefreshType& type);
+    static CAPullToRefreshView* create(const PullToRefreshType& type);
     
     virtual bool init();
     
@@ -53,7 +51,7 @@ public:
     
     CC_SYNTHESIZE_PASS_BY_REF(CALayoutLinearType, m_eLayoutLinearType, LayoutLinearType);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAPullToRefreshType, m_eType, PullToRefreshType);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(PullToRefreshType, m_eType, Type);
     
 protected:
     
@@ -65,14 +63,14 @@ protected:
     
     typedef enum
     {
-        CAPullToRefreshStateNormal = 1,
-        CAPullToRefreshStatePulling,
-        CAPullToRefreshStateRefreshing,
-        CAPullToRefreshStateNone
+        Normal = 1,
+        Pulling,
+        Refreshing,
+        None
     }
-    CAPullToRefreshStateType;
+    PullToRefreshStateType;
     
-    void setPullToRefreshStateType(const CAPullToRefreshStateType& stateType);
+    void setPullToRefreshStateType(const PullToRefreshStateType& stateType);
     
     bool isCanRefresh();
     
@@ -92,8 +90,12 @@ protected:
     
     CAImageView* m_pPullToImageView;
     
-    CAPullToRefreshStateType m_eStateType;
+    PullToRefreshStateType m_eStateType;
 };
+
+#define CAPullToRefreshTypeHeader Header
+#define CAPullToRefreshTypeFooter Footer
+#define CAPullToRefreshTypeCustom Custom
 
 NS_CC_END
 
