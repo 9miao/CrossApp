@@ -95,12 +95,13 @@ public:
      */
     inline void setRequestData(const char* buffer, unsigned int len)
     {
-        _requestData.assign(buffer, buffer + len);
+		_requestData.resize(len);
+		memcpy(&_requestData[0], buffer, len);
     };
     /** Get the request data pointer back */
     inline char* getRequestData()
     {
-        return &(_requestData.front());
+        return (char*)_requestData.c_str();
     }
     /** Get the size of request data back */
     inline int getRequestDataSize()
@@ -170,7 +171,7 @@ protected:
     // properties
     HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
     std::string                 _url;            /// target url that this request is sent to
-    std::vector<char>           _requestData;    /// used for POST
+    std::string		            _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
     CAObject*          _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
