@@ -1,10 +1,10 @@
 
 #include "TableViewTest.h"
-#include "support/device/CADevice.h"
-#include "CrossAppExt.h"
+//#include "support/device/CADevice.h"
+//#include "CrossAppExt.h"
 
 USING_NS_CC;
-USING_NS_CC_EXT;
+//USING_NS_CC_EXT;
 
 std::vector<std::string> sectionTitle;
 
@@ -69,7 +69,7 @@ bool ETableView::init(const CrossApp::DRect &rect)
     p_TableView->setTableViewDataSource(this);
     p_TableView->setShowsScrollIndicators(false);
     p_TableView->setSeparatorViewHeight(0);
-    p_TableView->setScrollEnabled(false);
+    p_TableView->setScrollEnabled(true);
     p_TableView->setSeparatorColor(CAColor_clear);
     this->addSubview(p_TableView);
     return true;
@@ -197,6 +197,7 @@ void TableViewTest::viewDidLoad()
     p_TableView->setAllowsMultipleSelection(false);
     p_TableView->setShowsScrollIndicators(false);
     p_TableView->setSelectRowAtIndexPath(2, 1);
+    
     this->getView()->addSubview(p_TableView);
     
     ETableView* p_TableView1 = ETableView::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 50), DVerticalLayoutFill));
@@ -211,7 +212,7 @@ void TableViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void TableViewTest::etableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+void TableViewTest::etableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row) //1
 {
     //CCLog("ssss====%d",row);
     p_TableView->setContentOffset(DPoint(0,313*row), false);

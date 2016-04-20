@@ -11,12 +11,12 @@
 
 #include "RootWindow.h"
 
-class CDNewsImageTableCell : public CATableViewCell
+class CDNewsImagecollectionCell : public CACollectionViewCell
 {
 public:
-    CDNewsImageTableCell();
-    virtual ~CDNewsImageTableCell();
-    static CDNewsImageTableCell* create(const std::string& identifier);
+    CDNewsImagecollectionCell();
+    virtual ~CDNewsImagecollectionCell();
+    static CDNewsImagecollectionCell* create(const std::string& identifier);
     virtual void highlightedTableViewCell();
     virtual void selectedTableViewCell();
     
@@ -30,7 +30,8 @@ public:
     int cell_tag;
 };
 
-class CDNewsImageController : public CAViewController,CATableViewDelegate,CATableViewDataSource, CAScrollViewDelegate
+class CDNewsImageController : public CAViewController, CAScrollViewDelegate, CAAutoCollectionViewDataSource, CAAutoCollectionViewDelegate
+
 {
 public:
     CDNewsImageController(int index);
@@ -42,12 +43,13 @@ public:
     
     //CREATE_FUNC(CDNewsImageController);
 public:
-    virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    virtual void tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
+    virtual void collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
+    virtual void collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item);
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
-    virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
-    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
+    virtual CACollectionViewCell* collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item);
+    virtual DSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item);
+    virtual unsigned int numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section);
+    virtual unsigned int numberOfSections(CAAutoCollectionView *collectionView);    
     
     virtual void scrollViewHeaderBeginRefreshing(CAScrollView* view);
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
@@ -62,7 +64,7 @@ public:
 public:
     string getSign(std::map<std::string,std::string> key_value);
     DSize winSize;
-    CATableView* p_TableView;
+    CAAutoCollectionView* p_AutoCollectionView;
     CAActivityIndicatorView* p_pLoading;
     std::vector<newsImage > m_ImageMsg;
     int urlID;

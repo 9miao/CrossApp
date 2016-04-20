@@ -43,6 +43,12 @@ public:
     int showViewAnimationNavigationBar;
     CANavigationBarItem* ViewAnimationNavigationBar;
     
+    int showAutoCollectionVerticalNavigationBar;
+    CANavigationBarItem* AutoCollectionVerticalNavigationBar;
+    
+    int showAutoCollectionHorizontalNavigationBar;
+    CANavigationBarItem* AutoCollectionHorizontalNavigationBar;
+    
 public:
     
     void SliderRightBtnRightcallback(CAControl* control, DPoint point);
@@ -58,6 +64,10 @@ public:
     void PickerViewRightBtnRightcallback(CAControl* control, DPoint point);
     
     void ViewAnimationRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void AutoCollectionVerticalRightBtnRightcallback(CAControl* control, DPoint point);
+    
+    void AutoCollectionHorizontalRightBtnRightcallback(CAControl* control, DPoint point);
     
     void refreshData(float interval);
     

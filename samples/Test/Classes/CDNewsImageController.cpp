@@ -9,20 +9,20 @@
 #include "CDNewsImageController.h"
 #include "CDShowNewsImage.h"
 
-CDNewsImageTableCell::CDNewsImageTableCell()
+CDNewsImagecollectionCell::CDNewsImagecollectionCell()
 {
     cell_tag = 0;
     this->setAllowsSelected(false);
 }
 
-CDNewsImageTableCell::~CDNewsImageTableCell()
+CDNewsImagecollectionCell::~CDNewsImagecollectionCell()
 {
     
 }
 
-CDNewsImageTableCell* CDNewsImageTableCell::create(const std::string& identifier)
+CDNewsImagecollectionCell* CDNewsImagecollectionCell::create(const std::string& identifier)
 {
-    CDNewsImageTableCell* tableViewCell = new CDNewsImageTableCell();
+    CDNewsImagecollectionCell* tableViewCell = new CDNewsImagecollectionCell();
     if(tableViewCell&&tableViewCell->initWithReuseIdentifier(identifier))
     {
         tableViewCell->autorelease();
@@ -32,16 +32,16 @@ CDNewsImageTableCell* CDNewsImageTableCell::create(const std::string& identifier
     return NULL;
 }
 
-void CDNewsImageTableCell::highlightedTableViewCell()
+void CDNewsImagecollectionCell::highlightedTableViewCell()
 {
     this->setBackgroundView(CAView::createWithColor(ccc4(0, 0, 0, 128)));
 }
 
-void CDNewsImageTableCell::selectedTableViewCell()
+void CDNewsImagecollectionCell::selectedTableViewCell()
 {
     this->setBackgroundView(CAView::createWithColor(ccc4(0, 0, 0, 128)));
 }
-void CDNewsImageTableCell::initWithCell(int num)
+void CDNewsImagecollectionCell::initWithCell(int num)
 {
     cell_tag = CCRANDOM_0_1()*4+1;
     CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(40, 90), DVerticalLayout_B_H(100, 40)));
@@ -84,7 +84,7 @@ void CDNewsImageTableCell::initWithCell(int num)
 }
 
 CDNewsImageController::CDNewsImageController(int index)
-:p_TableView(NULL)
+:p_AutoCollectionView(NULL)
 ,p_pLoading(NULL)
 ,p_section(1)
 {
@@ -120,15 +120,11 @@ string CDNewsImageController::getSign(std::map<std::string,std::string> key_valu
 void CDNewsImageController::viewDidLoad()
 {
     CCLog("NewsImageController");
-    winSize = this->getView()->getBounds().size;
+    
     m_ImageMsg.clear();
     m_ImageNum.clear();
 
     if (m_ImageMsg.empty()) {
-//        std::map<std::string,
-//        std::string> key_value;
-//        char temurl[200];
-//        sprintf(temurl, "http://h5.9miao.com/pic?num=1&tag=%s",imageTag[urlID]);
         
         std::map<std::string,std::string> key_value;
         key_value["tag"] = imageTag[urlID];
@@ -140,8 +136,7 @@ void CDNewsImageController::viewDidLoad()
         CCLog("sign===%s",tempSign.c_str()); 
         key_value["sign"] = tempSign;
         string tempUrl = "http://api.9miao.com/newsgirlpic/";
-        CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,
-                                                   CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
+        CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
         {
             p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_H_C(0, 0.5)));
             this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
@@ -161,26 +156,28 @@ void CDNewsImageController::initImageTableView()
         return;
     }
 
-    if (p_TableView!=NULL)
+    if (p_AutoCollectionView!=NULL)
     {
-        this->getView()->removeSubview(p_TableView);
-        p_TableView = NULL;
+        this->getView()->removeSubview(p_AutoCollectionView);
+        p_AutoCollectionView = NULL;
     }
-    p_TableView= CATableView::createWithLayout(DLayoutFill);
-    p_TableView->setTableViewDataSource(this);
-    p_TableView->setTableViewDelegate(this);
-    p_TableView->setAllowsSelection(true);
-    p_TableView->setScrollViewDelegate(this);
-    p_TableView->setAllowsMultipleSelection(false);
-    p_TableView->setSeparatorViewHeight(10);
-    p_TableView->setSeparatorColor(ccc4(240,240,240,255));
-    this->getView()->addSubview(p_TableView);
     CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
     refreshDiscount->setLabelColor(CAColor_black);
     CAPullToRefreshView *refreshDiscount1 = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
     refreshDiscount1->setLabelColor(CAColor_black);
-    p_TableView->setFooterRefreshView(refreshDiscount);
-    p_TableView->setHeaderRefreshView(refreshDiscount1);
+    
+    p_AutoCollectionView = CAAutoCollectionView::createWithLayout(DLayoutFill);
+    p_AutoCollectionView->setCollectionViewDataSource(this);
+    p_AutoCollectionView->setCollectionViewDelegate(this);
+    p_AutoCollectionView->setScrollViewDelegate(this);
+    p_AutoCollectionView->setAllowsSelection(true);
+    p_AutoCollectionView->setAllowsMultipleSelection(false);
+    p_AutoCollectionView->setHoriCellInterval(20);
+    p_AutoCollectionView->setVertCellInterval(20);
+    p_AutoCollectionView->setFooterRefreshView(refreshDiscount);
+    p_AutoCollectionView->setHeaderRefreshView(refreshDiscount1);
+    p_AutoCollectionView->setBackgroundColor(ccc4(240,240,240,255));
+    this->getView()->addSubview(p_AutoCollectionView);
 }
 
 void CDNewsImageController::showAlert()
@@ -274,10 +271,15 @@ void CDNewsImageController::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void CDNewsImageController::scrollViewStopMoved(CrossApp::CAScrollView *view)
 {
-    CAVector<CATableViewCell*> temVec =  p_TableView->displayingTableCell();
+//    CATableView*  p_TableView;
+//    CAVector<CATableViewCell*> temVec =  p_TableView->displayingTableCell();
+    
+    CAVector<CACollectionViewCell*> temVec = p_AutoCollectionView->displayingCollectionCell();
+    
+    
     for(int i=0;i<temVec.size();i++)
     {
-        CDNewsImageTableCell* cell = (CDNewsImageTableCell*)temVec.at(i);
+        CDNewsImagecollectionCell* cell = (CDNewsImagecollectionCell*)temVec.at(i);
         CCLog("cell-index===%d",cell->getRow());
         int row = cell->getRow();
         int img_num = m_ImageNum[row];
@@ -327,7 +329,7 @@ void CDNewsImageController::onRequestFinished(const HttpResponseStatus& status, 
         }
         else
         {
-            p_TableView->reloadData();
+            p_AutoCollectionView->reloadData();
         }
     }
     while (0);
@@ -367,7 +369,7 @@ void CDNewsImageController::onRefreshRequestFinished(const HttpResponseStatus& s
         }
         else
         {
-            p_TableView->reloadData();
+            p_AutoCollectionView->reloadData();
         }
     }
     while (0);
@@ -378,7 +380,7 @@ void CDNewsImageController::viewDidUnload()
     
 }
 
-void CDNewsImageController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+void CDNewsImageController::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     CCLog("title====%d",(int)getRandNum());
     CDShowNewsImage* _controller = new CDShowNewsImage();
@@ -388,37 +390,37 @@ void CDNewsImageController::tableViewDidSelectRowAtIndexPath(CATableView* table,
     _controller->autorelease();
     RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
     RootWindow::getInstance()->getRootNavigationController()->pushViewController(_controller, true);
-    _controller->initNewsImageView(m_ImageMsg[row]);
+    _controller->initNewsImageView(m_ImageMsg[item]);
 }
 
-void CDNewsImageController::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+void CDNewsImageController::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     
 }
 
-CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
+CACollectionViewCell* CDNewsImageController::collectionCellAtIndex(CAAutoCollectionView* collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    CDNewsImageTableCell* cell = dynamic_cast<CDNewsImageTableCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
+    CDNewsImagecollectionCell* cell = dynamic_cast<CDNewsImagecollectionCell*>(collectionView->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
-        cell = CDNewsImageTableCell::create("CrossApp");
+        cell = CDNewsImagecollectionCell::create("CrossApp");
         cell->initWithCell(1);
-
+        
     }
     CALabel* cellText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
-    cellText->setText(m_ImageMsg[row].m_title);
+    cellText->setText(m_ImageMsg[item].m_title);
     
     CALabel* cellTextdsc = (CALabel*)cell->getContentView()->getSubviewByTag(101);
-    cellTextdsc->setText(m_ImageMsg[row].m_imageDesc[1]);
+    cellTextdsc->setText(m_ImageMsg[item].m_imageDesc[1]);
     
-    int img_num = m_ImageNum[row];
+    int img_num = m_ImageNum[item];
     
     if (img_num==1)
     {
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.5), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage2()->setVisible(false);
         cell->getImage3()->setVisible(false);
@@ -429,12 +431,12 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage2()->setVisible(true);
         cell->getImage2()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage2()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage2()->setUrl(m_ImageMsg[row].m_imageUrl[2]);
+        cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
         
         cell->getImage3()->setVisible(false);
         cell->getImage4()->setVisible(false);
@@ -444,18 +446,18 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage2()->setVisible(true);
         cell->getImage2()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_T_C(1, 0.25)));
         cell->getImage2()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage2()->setUrl(m_ImageMsg[row].m_imageUrl[2]);
-
+        cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
+        
         cell->getImage3()->setVisible(true);
         cell->getImage3()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_B_C(1, 0.75)));
         cell->getImage3()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage3()->setUrl(m_ImageMsg[row].m_imageUrl[3]);
-
+        cell->getImage3()->setUrl(m_ImageMsg[item].m_imageUrl[3]);
+        
         cell->getImage4()->setVisible(false);
     }
     else if(img_num==4)
@@ -463,35 +465,39 @@ CATableViewCell* CDNewsImageController::tableCellAtIndex(CATableView* table, con
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_T_C(1, 0.25)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage2()->setVisible(true);
         cell->getImage2()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_T_C(1, 0.25)));
         cell->getImage2()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage2()->setUrl(m_ImageMsg[row].m_imageUrl[2]);
-
+        cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
+        
         cell->getImage3()->setVisible(true);
         cell->getImage3()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_B_C(1, 0.75)));
         cell->getImage3()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage3()->setUrl(m_ImageMsg[row].m_imageUrl[3]);
-
+        cell->getImage3()->setUrl(m_ImageMsg[item].m_imageUrl[3]);
+        
         cell->getImage4()->setVisible(true);
         cell->getImage4()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_B_C(1, 0.75)));
         cell->getImage4()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage4()->setUrl(m_ImageMsg[row].m_imageUrl[4]);
+        cell->getImage4()->setUrl(m_ImageMsg[item].m_imageUrl[4]);
     }
     return cell;
-    
 }
 
-unsigned int CDNewsImageController::numberOfRowsInSection(CATableView *table, unsigned int section)
+DSize CDNewsImageController::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
-    return m_ImageMsg.size();
+    return DSize(640,560);
 }
 
-unsigned int CDNewsImageController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+unsigned int CDNewsImageController::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
-    return 650;
+    return (unsigned int)m_ImageMsg.size();
+}
+
+unsigned int CDNewsImageController::numberOfSections(CAAutoCollectionView *collectionView)
+{
+    return 1;
 }
 
 float CDNewsImageController::getRandNum()

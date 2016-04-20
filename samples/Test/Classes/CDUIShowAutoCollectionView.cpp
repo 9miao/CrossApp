@@ -279,18 +279,30 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
         }
         case 16:
         {
-            AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new class AutoCollectionViewVerticalTest();
+            AutoCollectionVerticalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
+            
+            CABarButtonItem* AutoCollectionVerticalRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
+            AutoCollectionVerticalRightBtn->setTarget(this, CAControl_selector(CDUIShowAutoCollectionView::AutoCollectionVerticalRightBtnRightcallback));
+            AutoCollectionVerticalNavigationBar->addRightButtonItem(AutoCollectionVerticalRightBtn);
+
+            AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new AutoCollectionViewVerticalTest();
             ViewContrllerAutoCollectionViewVerticalTest->init();
-            ViewContrllerAutoCollectionViewVerticalTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerAutoCollectionViewVerticalTest->setNavigationBarItem(AutoCollectionVerticalNavigationBar);
             ViewContrllerAutoCollectionViewVerticalTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewVerticalTest, true);
             break;
         }
         case 17:
         {
+            AutoCollectionHorizontalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
+            
+            CABarButtonItem* AutoCollectionHorizontalRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
+            AutoCollectionHorizontalRightBtn->setTarget(this, CAControl_selector(CDUIShowAutoCollectionView::AutoCollectionHorizontalRightBtnRightcallback));
+            AutoCollectionHorizontalNavigationBar->addRightButtonItem(AutoCollectionHorizontalRightBtn);
+            
             AutoCollectionViewHorizontalTest* ViewContrllerAutoCollectionViewHorizontalTest = new AutoCollectionViewHorizontalTest();
             ViewContrllerAutoCollectionViewHorizontalTest->init();
-            ViewContrllerAutoCollectionViewHorizontalTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerAutoCollectionViewHorizontalTest->setNavigationBarItem(AutoCollectionHorizontalNavigationBar);
             ViewContrllerAutoCollectionViewHorizontalTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewHorizontalTest, true);
             break;

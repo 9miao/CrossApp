@@ -54,7 +54,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         viewList.pushBack(p_ScrollView);
     }
     
-    p_PageView = CAPageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(30, 0)), CAPageView::Horizontal);
+    p_PageView = CAPageView::createWithLayout(DLayoutFill, CAPageView::Horizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
     p_PageView->setBackgroundColor(CAColor_black);
