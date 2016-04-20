@@ -22,6 +22,16 @@ static AppDelegate s_sharedApplication;
                                          styleMask:( NSClosableWindowMask | NSTitledWindowMask )
                                            backing:NSBackingStoreBuffered
                                              defer:YES];
+    // create the contentView
+    contentView = [[NSView alloc]initWithFrame:rect];
+    
+    NSString* title = @"CrossApp";
+    // set window parameters
+    [window becomeFirstResponder];
+    [window setContentView:contentView];
+    [window setTitle:[NSString stringWithFormat:@"%@ (%dx%d)", title, Screen_Width, Screen_Height]];
+    [window makeKeyAndOrderFront:self];
+    [window setAcceptsMouseMovedEvents:NO];
     
     NSOpenGLPixelFormatAttribute attributes[] =
     {
@@ -32,18 +42,10 @@ static AppDelegate s_sharedApplication;
     };
     
     NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
-    
     // allocate our GL view
     // (isn't there already a shared EAGLView?)
-    glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
-    
-    NSString* title = @"CrossApp";
-    // set window parameters
-    [window becomeFirstResponder];
-    [window setContentView:glView];
-    [window setTitle:[NSString stringWithFormat:@"%@ (%dx%d)", title, Screen_Width, Screen_Height]];
-    [window makeKeyAndOrderFront:self];
-    [window setAcceptsMouseMovedEvents:NO];
+    glView = [[EAGLView alloc] initWithFrame:[contentView bounds] pixelFormat:pixelFormat];
+    [contentView addSubview:glView];
     
     CrossApp::CCApplication::sharedApplication()->run();
 }

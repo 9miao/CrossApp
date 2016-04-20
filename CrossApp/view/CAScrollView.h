@@ -211,7 +211,7 @@ protected:
     
     bool isFooterRefreshing();
     
-    void setContainerPoint(const DPoint& point, const DSize& size = DSizeZero);
+    void setContainerPoint(const DPoint& point, const DSize& size = DSize(-1, -1));
     
     virtual void setContentSize(const DSize& var);
     

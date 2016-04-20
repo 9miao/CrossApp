@@ -33,11 +33,10 @@ void CDShowNewsImage::viewDidUnload()
 void CDShowNewsImage::initNewsImageView(newsImage _image)
 {
     m_image = _image;
+    
     CAVector<CAView* > viewList;
-
-    for (int i=0; i<m_image.m_imageUrl.size(); i++) {
-        //初始化viewList
-//        CommonUrlImageView* temImage = CommonUrlImageView::createWithFrame(DRect(0,0,winSize.width,winSize.height));
+    for (int i=0; i<m_image.m_imageUrl.size(); i++)
+    {
         CommonUrlImageView* temImage = CommonUrlImageView::createWithLayout(DLayoutFill);
         temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
         temImage->setImage(CAImage::create("HelloWorld.png"));
@@ -55,18 +54,19 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         viewList.pushBack(p_ScrollView);
     }
     
-    p_PageView = CAPageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(30, 0)), CAPageViewDirectionHorizontal);
+    p_PageView = CAPageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(30, 0)), CAPageView::Horizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
     p_PageView->setBackgroundColor(CAColor_black);
     p_PageView->setPageViewDelegate(this);
+    p_PageView->setSpacing(40);
     this->getView()->addSubview(p_PageView);
     
     p_bg = CAView::createWithColor(ccc4(0,0,0,200));
     p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.85)));
     this->getView()->addSubview(p_bg);
 
-    p_title = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 80), DVerticalLayout_T_H(10, 40)));
+    p_title = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 80), DVerticalLayout_T_H(10, 50)));
     p_title->setText(m_image.m_title);
 	p_title->setColor(CAColor_white);
     p_title->setFontSize(34);
@@ -75,7 +75,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     
     char temp[10];
     sprintf(temp, "1/%lu",m_image.m_imageUrl.size());
-    p_index = CALabel::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 70), DVerticalLayout_T_H(10, 30)));
+    p_index = CALabel::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 70), DVerticalLayout_T_H(10, 50)));
     p_index->setText(temp);
 	p_index->setColor(CAColor_white);
     p_index->setFontSize(30);
