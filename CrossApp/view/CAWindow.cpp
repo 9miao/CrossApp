@@ -28,7 +28,6 @@ bool CAWindow::init()
     {
         this->setContentSize(pApplication->getWinSize());
         this->setPoint(m_obContentSize/2);
-        m_bRunning = true;
         bRet = true;
     }
     return bRet;
