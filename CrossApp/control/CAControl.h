@@ -73,6 +73,8 @@ protected:
     
     virtual void removeAllTargets();
     
+    using CAView::initWithColor;
+    
 protected:
     
     CAObject* m_pTarget[CAControlEventMax];

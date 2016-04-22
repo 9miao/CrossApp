@@ -910,7 +910,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
         }
 
         if (allowAnimation
-            &&CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areAnimationsEnabled()
             && CAViewAnimation::areBeginAnimations())
         {
             CAViewAnimation::getInstance()->setContentSize(size, this);
@@ -924,7 +924,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
         p = ccpAdd(p, point);
         
         if (allowAnimation
-            &&CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areAnimationsEnabled()
             && CAViewAnimation::areBeginAnimations())
         {
             CAViewAnimation::getInstance()->setPoint(p, this);

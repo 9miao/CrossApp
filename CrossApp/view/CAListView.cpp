@@ -495,7 +495,7 @@ void CAListView::clearData()
 		CC_CONTINUE_IF(cell == NULL);
 		m_mpFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
-		cell->resetListViewCell();
+		cell->resetCell();
 	}
 	m_vpUsedListCells.clear();
 	
@@ -572,7 +572,7 @@ void CAListView::recoveryCell()
 		
 		m_mpFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
-		cell->resetListViewCell();
+		cell->resetCell();
 		itr->second = NULL;
         m_vpUsedListCells.eraseObject(cell);
 		
@@ -682,22 +682,14 @@ CAView* CAListView::dequeueReusableLine()
 #pragma CAListViewCell
 
 CAListViewCell::CAListViewCell()
-:m_pBackgroundView(NULL)
-,m_pContentView(NULL)
-,m_nIndex(UINT_NONE)
-,m_bControlStateEffect(true)
-,m_bAllowsSelected(true)
+:m_nIndex(UINT_NONE)
 {
-    this->setHaveNextResponder(true);
-    this->setDisplayRange(false);
-    this->setColor(CAColor_clear);
 }
 
 
 CAListViewCell::~CAListViewCell()
 {
-    CC_SAFE_RELEASE_NULL(m_pContentView);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+
 }
 
 CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
@@ -710,67 +702,6 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 	}
 	CC_SAFE_DELETE(cell);
 	return NULL;
-}
-
-bool CAListViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
-{
-    m_pContentView = new CAView();
-    m_pContentView->setLayout(DLayoutFill);
-    this->addSubview(m_pContentView);
-    
-    this->setBackgroundView(CAView::create());
-    this->setReuseIdentifier(reuseIdentifier);
-    this->normalListViewCell();
-    
-    return true;
-}
-
-void CAListViewCell::setBackgroundView(CrossApp::CAView *var)
-{
-    CC_RETURN_IF(var == m_pBackgroundView);
-    m_pContentView->removeSubview(m_pBackgroundView);
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pBackgroundView);
-    m_pBackgroundView = var;
-    CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setLayout(DLayoutFill);
-    m_pContentView->insertSubview(m_pBackgroundView, -1);
-}
-
-CAView* CAListViewCell::getBackgroundView()
-{
-    return m_pBackgroundView;
-}
-
-void CAListViewCell::setControlState(const CAControlState& var)
-{
-    if (m_bAllowsSelected == false && var == CAControlStateSelected)
-    {
-        CAControl::setControlState(CAControlStateNormal);
-    }
-    else
-    {
-        CAControl::setControlState(var);
-    }
-    
-    CC_RETURN_IF(m_bControlStateEffect == false);
-    switch (var)
-    {
-        case CAControlStateNormal:
-			this->normalListViewCell();
-            break;
-        case CAControlStateHighlighted:
-			this->highlightedListViewCell();
-            break;
-        case CAControlStateSelected:
-			this->selectedListViewCell();
-            break;
-        case CAControlStateDisabled:
-			this->disabledListViewCell();
-            break;
-        default:
-            break;
-    }
 }
 
 void CAListViewCell::normalListViewCell()
@@ -799,14 +730,29 @@ void CAListViewCell::disabledListViewCell()
     m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
 }
 
-void CAListViewCell::resetListViewCell()
+void CAListViewCell::normalCell()
 {
-    this->setVisible(true);
     this->normalListViewCell();
+}
+
+void CAListViewCell::highlightedCell()
+{
+    this->highlightedListViewCell();
+}
+
+void CAListViewCell::selectedCell()
+{
+    this->selectedListViewCell();
+}
+
+void CAListViewCell::disabledCell()
+{
+    this->disabledListViewCell();
+}
+
+void CAListViewCell::recoveryCell()
+{
     this->recoveryListViewCell();
-    m_pContentView->setLayout(DLayoutFill);
-    m_pContentView->setScale(1.0f);
-    m_pContentView->setRotation(0);
 }
 
 NS_CC_END

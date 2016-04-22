@@ -234,6 +234,8 @@
 		B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91319E9181800F24BE6 /* CCScriptSupport.h */; };
 		B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91419E9181800F24BE6 /* JSViewController.cpp */; };
 		B047B91919E9181800F24BE6 /* JSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91519E9181800F24BE6 /* JSViewController.h */; };
+		B048ADF41CC9BC0A0039C5BB /* CACell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B048ADF21CC9BC0A0039C5BB /* CACell.cpp */; };
+		B048ADF51CC9BC0A0039C5BB /* CACell.h in Headers */ = {isa = PBXBuildFile; fileRef = B048ADF31CC9BC0A0039C5BB /* CACell.h */; };
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
 		B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */; };
 		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
@@ -608,6 +610,8 @@
 		B047B91319E9181800F24BE6 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		B047B91419E9181800F24BE6 /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
 		B047B91519E9181800F24BE6 /* JSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSViewController.h; sourceTree = "<group>"; };
+		B048ADF21CC9BC0A0039C5BB /* CACell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACell.cpp; sourceTree = "<group>"; };
+		B048ADF31CC9BC0A0039C5BB /* CACell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACell.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
 		B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
 		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
@@ -1437,6 +1441,8 @@
 				B0B05F761BB1483200B891CE /* CADrawView.h */,
 				B0B05F771BB1483200B891CE /* CAGifView.cpp */,
 				B0B05F781BB1483200B891CE /* CAGifView.h */,
+				B048ADF21CC9BC0A0039C5BB /* CACell.cpp */,
+				B048ADF31CC9BC0A0039C5BB /* CACell.h */,
 				B0B05F791BB1483200B891CE /* CAImageView.cpp */,
 				B0B05F7A1BB1483200B891CE /* CAImageView.h */,
 				B0B05F7B1BB1483200B891CE /* CALabel.cpp */,
@@ -1612,6 +1618,7 @@
 				3E21544F1B8180340075448E /* features.h in Headers */,
 				B0B05FA01BB1483200B891CE /* CAAutoCollectionView.h in Headers */,
 				04EABA6B1956D75A00198A8E /* ccShader_PositionTextureColor_frag.h in Headers */,
+				B048ADF51CC9BC0A0039C5BB /* CACell.h in Headers */,
 				04EABA6C1956D75A00198A8E /* ccShader_PositionTextureColor_vert.h in Headers */,
 				04EABA6D1956D75A00198A8E /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				04EABA6F1956D75A00198A8E /* CAShaderCache.h in Headers */,
@@ -1745,6 +1752,7 @@
 				04EAB0911956D75600198A8E /* CAButton.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
 				B0B05F9F1BB1483200B891CE /* CAAutoCollectionView.cpp in Sources */,
+				B048ADF41CC9BC0A0039C5BB /* CACell.cpp in Sources */,
 				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				B0B05FCF1BB1483200B891CE /* CAWindow.cpp in Sources */,

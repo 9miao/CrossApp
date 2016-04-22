@@ -9,11 +9,12 @@
 #ifndef __CrossApp__CAAutoCollectionView__
 #define __CrossApp__CAAutoCollectionView__
 
-#include "view/CAView.h"
-#include "view/CAScale9ImageView.h"
-#include "controller/CABarItem.h"
-#include "view/CATableView.h"
-#include "view/CALabel.h"
+#include <iostream>
+#include <set>
+#include "view/CAScrollView.h"
+#include "view/CACell.h"
+#include "basics/CASTLContainer.h"
+#include "basics/CAIndexPath.h"
 
 NS_CC_BEGIN
 

@@ -478,7 +478,7 @@ void CATableView::clearData()
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
         itr4->second = NULL;
         cell->removeFromSuperview();
-        cell->resetTableViewCell();
+        cell->resetCell();
     }
     m_mpUsedTableCells.clear();
     m_vpUsedTableCells.clear();
@@ -698,7 +698,7 @@ void CATableView::recoveryTableCell()
         CC_CONTINUE_IF(rect.intersectsRect(cellRect));
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
         cell->removeFromSuperview();
-        cell->resetTableViewCell();
+        cell->resetCell();
         itr->second = NULL;
         m_vpUsedTableCells.eraseObject(cell);
         
@@ -829,22 +829,15 @@ float CATableView::getRowHeightInSectionInRow(unsigned int section, unsigned int
 #pragma CATableViewCell
 
 CATableViewCell::CATableViewCell()
-:m_pBackgroundView(NULL)
-,m_pContentView(NULL)
-,m_nSection(UINT_NONE)
+:m_nSection(UINT_NONE)
 ,m_nRow(UINT_NONE)
-,m_bControlStateEffect(true)
-,m_bAllowsSelected(true)
 {
-    this->setHaveNextResponder(true);
-    this->setDisplayRange(false);
-    this->setColor(CAColor_clear);
+
 }
 
 CATableViewCell::~CATableViewCell()
 {
-    CC_SAFE_RELEASE_NULL(m_pContentView);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+
 }
 
 CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
@@ -858,68 +851,6 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
     CC_SAFE_DELETE(cell);
     return NULL;
 }
-
-bool CATableViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
-{
-    m_pContentView = new CAView();
-    m_pContentView->setLayout(DLayoutFill);
-    this->addSubview(m_pContentView);
-    
-    this->setBackgroundView(CAView::create());
-    this->setReuseIdentifier(reuseIdentifier);
-    this->normalTableViewCell();
-    
-    return true;
-}
-
-void CATableViewCell::setBackgroundView(CrossApp::CAView *var)
-{
-    CC_RETURN_IF(var == m_pBackgroundView);
-    m_pContentView->removeSubview(m_pBackgroundView);
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pBackgroundView);
-    m_pBackgroundView = var;
-    CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setLayout(DLayoutFill);
-    m_pContentView->insertSubview(m_pBackgroundView, -1);
-}
-
-CAView* CATableViewCell::getBackgroundView()
-{
-    return m_pBackgroundView;
-}
-
-void CATableViewCell::setControlState(const CAControlState& var)
-{
-    if (m_bAllowsSelected == false && var == CAControlStateSelected)
-    {
-        CAControl::setControlState(CAControlStateNormal);
-    }
-    else
-    {
-        CAControl::setControlState(var);
-    }
-    
-    CC_RETURN_IF(m_bControlStateEffect == false);
-    switch (m_eControlState)
-    {
-        case CAControlStateNormal:
-            this->normalTableViewCell();
-            break;
-        case CAControlStateHighlighted:
-            this->highlightedTableViewCell();
-            break;
-        case CAControlStateSelected:
-            this->selectedTableViewCell();
-            break;
-        case CAControlStateDisabled:
-            this->disabledTableViewCell();
-            break;
-        default:
-            break;
-    }
-}
-
 void CATableViewCell::normalTableViewCell()
 {
     CC_RETURN_IF(m_pBackgroundView == NULL);
@@ -946,14 +877,29 @@ void CATableViewCell::disabledTableViewCell()
     m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
 }
 
-void CATableViewCell::resetTableViewCell()
+void CATableViewCell::normalCell()
 {
-    this->setVisible(true);
     this->normalTableViewCell();
+}
+
+void CATableViewCell::highlightedCell()
+{
+    this->highlightedTableViewCell();
+}
+
+void CATableViewCell::selectedCell()
+{
+    this->selectedTableViewCell();
+}
+
+void CATableViewCell::disabledCell()
+{
+    this->disabledTableViewCell();
+}
+
+void CATableViewCell::recoveryCell()
+{
     this->recoveryTableViewCell();
-    m_pContentView->setLayout(DLayoutFill);
-    m_pContentView->setScale(1.0f);
-    m_pContentView->setRotation(0);
 }
 
 NS_CC_END

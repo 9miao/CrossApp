@@ -9,13 +9,12 @@
 #ifndef __CrossApp__CAListView__
 #define __CrossApp__CAListView__
 
-#include "view/CAView.h"
-#include "view/CAScrollView.h"
-#include "view/CAScale9ImageView.h"
-#include "controller/CABarItem.h"
-#include "view/CALabel.h"
-#include "basics/CASTLContainer.h"
+#include <iostream>
 #include <set>
+#include "view/CAScrollView.h"
+#include "view/CACell.h"
+#include "basics/CASTLContainer.h"
+#include "basics/CAIndexPath.h"
 
 NS_CC_BEGIN
 
@@ -228,7 +227,7 @@ private:
     std::set<unsigned int> m_pSelectedListCells;
 };
 
-class CC_DLL CAListViewCell : public CAControl
+class CC_DLL CAListViewCell : public CACell
 {
 public:
     
@@ -237,46 +236,30 @@ public:
 	virtual ~CAListViewCell();
 
 	static CAListViewCell* create(const std::string& reuseIdentifier);
-
-	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
-
-    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
-    
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nIndex, Index);
-    
-    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
-    
-    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
+
 protected:
     
-    virtual void normalListViewCell();
+    virtual void normalCell();
     
-    virtual void highlightedListViewCell();
+    virtual void highlightedCell();
     
-    virtual void selectedListViewCell();
+    virtual void selectedCell();
     
-    virtual void disabledListViewCell();
+    virtual void disabledCell();
     
-    virtual void recoveryListViewCell(){};
+    virtual void recoveryCell();
     
-    void setControlState(const CAControlState& var);
+    CC_DEPRECATED_ATTRIBUTE virtual void normalListViewCell();
     
-private:
+    CC_DEPRECATED_ATTRIBUTE virtual void highlightedListViewCell();
     
-    void resetListViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void selectedListViewCell();
     
-    using CAView::init;
+    CC_DEPRECATED_ATTRIBUTE virtual void disabledListViewCell();
     
-    using CAView::initWithCenter;
-    
-    using CAView::initWithFrame;
-    
-    using CAView::initWithColor;
+    CC_DEPRECATED_ATTRIBUTE virtual void recoveryListViewCell(){};
     
     friend class CAListView;
 };

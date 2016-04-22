@@ -9,11 +9,12 @@
 #ifndef __CrossApp__CACollectionView__
 #define __CrossApp__CACollectionView__
 
-#include "view/CAView.h"
-#include "view/CAScale9ImageView.h"
-#include "controller/CABarItem.h"
-#include "view/CATableView.h"
-#include "view/CALabel.h"
+#include <iostream>
+#include <set>
+#include "view/CAScrollView.h"
+#include "view/CACell.h"
+#include "basics/CASTLContainer.h"
+#include "basics/CAIndexPath.h"
 
 NS_CC_BEGIN
 
@@ -265,9 +266,9 @@ private:
 	std::map<std::string, CAVector<CACollectionViewCell*> > m_mpFreedCollectionCells;
 };
 
-class CC_DLL CACollectionViewCell : public CAControl
+class CC_DLL CACollectionViewCell : public CACell
 {
-	friend class CAAutoCollectionView;
+	
 public:
     
 	CACollectionViewCell();
@@ -276,25 +277,23 @@ public:
 
 	static CACollectionViewCell* create(const std::string& reuseIdentifier);
 
-	virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
-
-    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
-    
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
-    
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
     
-    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
-    
-    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
 protected:
+    
+    virtual void normalCell();
+    
+    virtual void highlightedCell();
+    
+    virtual void selectedCell();
+    
+    virtual void disabledCell();
+    
+    virtual void recoveryCell();
     
 	virtual void normalCollectionViewCell();
     
@@ -305,22 +304,10 @@ protected:
 	virtual void disabledCollectionViewCell();
 
     virtual void recoveryCollectionViewCell(){};
-    
-    void setControlState(const CAControlState& var);
-    
-private:
-    
-    void resetCollectionViewCell();
-    
-    using CAView::init;
-    
-    using CAView::initWithCenter;
-    
-    using CAView::initWithFrame;
-    
-    using CAView::initWithColor;
-    
+
     friend class CACollectionView;
+    
+    friend class CAAutoCollectionView;
 };
 
 NS_CC_END

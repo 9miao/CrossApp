@@ -556,7 +556,7 @@ void CAAutoCollectionView::clearData()
 		CC_CONTINUE_IF(cell == NULL);
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
-		cell->resetCollectionViewCell();
+		cell->resetCell();
 	}
 	m_vpUsedCollectionCells.clear();
 
@@ -816,7 +816,7 @@ void CAAutoCollectionView::recoveryCollectionCell()
 
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
-		cell->resetCollectionViewCell();
+		cell->resetCell();
 		itr->second = NULL;
         m_vpUsedCollectionCells.eraseObject(cell);
 	}

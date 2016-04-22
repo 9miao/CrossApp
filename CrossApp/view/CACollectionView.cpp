@@ -478,7 +478,7 @@ void CACollectionView::clearData()
 		CC_CONTINUE_IF(cell == NULL);
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
-		cell->resetCollectionViewCell();
+		cell->resetCell();
 	}
 	m_vpUsedCollectionCells.clear();
 
@@ -628,7 +628,7 @@ void CACollectionView::recoveryCollectionCell()
 
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
-		cell->resetCollectionViewCell();
+		cell->resetCell();
 		itr->second = NULL;
         m_vpUsedCollectionCells.eraseObject(cell);
 	}
@@ -761,23 +761,17 @@ CACollectionViewCell* CACollectionView::getHighlightCollectionCell()
 #pragma CACollectionViewCell
 
 CACollectionViewCell::CACollectionViewCell()
-:m_pBackgroundView(NULL)
-, m_nSection(UINT_NONE)
+: m_nSection(UINT_NONE)
 , m_nRow(UINT_NONE)
 , m_nItem(UINT_NONE)
-, m_bControlStateEffect(true)
-, m_bAllowsSelected(true)
 {
-    this->setHaveNextResponder(true);
-    this->setDisplayRange(false);
-    this->setColor(CAColor_clear);
+
 }
 
 
 CACollectionViewCell::~CACollectionViewCell()
 {
-    CC_SAFE_RELEASE_NULL(m_pContentView);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+
 }
 
 CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdentifier)
@@ -790,67 +784,6 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 	}
 	CC_SAFE_DELETE(cell);
 	return NULL;
-}
-
-bool CACollectionViewCell::initWithReuseIdentifier(const std::string& reuseIdentifier)
-{
-    m_pContentView = new CAView();
-    m_pContentView->setLayout(DLayoutFill);
-    this->addSubview(m_pContentView);
-    
-	this->setBackgroundView(CAView::create());
-	this->setReuseIdentifier(reuseIdentifier);
-	this->normalCollectionViewCell();
-
-	return true;
-}
-
-void CACollectionViewCell::setBackgroundView(CrossApp::CAView *var)
-{
-    CC_RETURN_IF(var == m_pBackgroundView);
-    m_pContentView->removeSubview(m_pBackgroundView);
-	CC_SAFE_RETAIN(var);
-	CC_SAFE_RELEASE(m_pBackgroundView);
-	m_pBackgroundView = var;
-	CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setLayout(DLayoutFill);
-	m_pContentView->insertSubview(m_pBackgroundView, -1);
-}
-
-CAView* CACollectionViewCell::getBackgroundView()
-{
-	return m_pBackgroundView;
-}
-
-void CACollectionViewCell::setControlState(const CAControlState& var)
-{
-	if (m_bAllowsSelected == false && var == CAControlStateSelected)
-	{
-		CAControl::setControlState(CAControlStateNormal);
-	}
-	else
-	{
-		CAControl::setControlState(var);
-	}
-
-	CC_RETURN_IF(m_bControlStateEffect == false);
-	switch (m_eControlState)
-	{
-	case CAControlStateNormal:
-		this->normalCollectionViewCell();
-		break;
-	case CAControlStateHighlighted:
-		this->highlightedCollectionViewCell();
-		break;
-	case CAControlStateSelected:
-		this->selectedCollectionViewCell();
-		break;
-	case CAControlStateDisabled:
-		this->disabledCollectionViewCell();
-		break;
-	default:
-		break;
-	}
 }
 
 void CACollectionViewCell::normalCollectionViewCell()
@@ -879,14 +812,29 @@ void CACollectionViewCell::disabledCollectionViewCell()
 	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
 }
 
-void CACollectionViewCell::resetCollectionViewCell()
+void CACollectionViewCell::normalCell()
 {
-	this->setVisible(true);
-	this->normalCollectionViewCell();
-	this->recoveryCollectionViewCell();
-    m_pContentView->setLayout(DLayoutFill);
-    m_pContentView->setScale(1.0f);
-    m_pContentView->setRotation(0);
+    this->normalCollectionViewCell();
+}
+
+void CACollectionViewCell::highlightedCell()
+{
+    this->highlightedCollectionViewCell();
+}
+
+void CACollectionViewCell::selectedCell()
+{
+    this->selectedCollectionViewCell();
+}
+
+void CACollectionViewCell::disabledCell()
+{
+    this->disabledCollectionViewCell();
+}
+
+void CACollectionViewCell::recoveryCell()
+{
+    this->recoveryCollectionViewCell();
 }
 
 NS_CC_END

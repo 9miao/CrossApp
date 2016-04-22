@@ -9,11 +9,12 @@
 #ifndef __CrossApp__CAWaterfallView__
 #define __CrossApp__CAWaterfallView__
 
-#include "view/CAView.h"
-#include "view/CAScale9ImageView.h"
-#include "controller/CABarItem.h"
-#include "view/CATableView.h"
-#include "view/CALabel.h"
+#include <iostream>
+#include <set>
+#include "view/CAScrollView.h"
+#include "view/CACell.h"
+#include "basics/CASTLContainer.h"
+#include "basics/CAIndexPath.h"
 
 NS_CC_BEGIN
 
@@ -237,9 +238,8 @@ private:
 	std::vector<unsigned int> m_nColumnHeightVect;
 };
 
-class CC_DLL CAWaterfallViewCell : public CAControl
+class CC_DLL CAWaterfallViewCell : public CACell
 {
-    friend class CAWaterfallView;
 public:
     
     CAWaterfallViewCell();
@@ -247,22 +247,20 @@ public:
     virtual ~CAWaterfallViewCell();
     
     static CAWaterfallViewCell* create(const std::string& reuseIdentifier);
-    
-    virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
-    
-    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
-    
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
-    
-    CC_SYNTHESIZE_READONLY(unsigned int, m_nItemIndex, ItemIndex);
-    
-    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
-    
-    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-    
+
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nItem, Item);
+
 protected:
+    
+    virtual void normalCell();
+    
+    virtual void highlightedCell();
+    
+    virtual void selectedCell();
+    
+    virtual void disabledCell();
+    
+    virtual void recoveryCell();
     
     virtual void normalWaterfallViewCell();
     
@@ -273,20 +271,8 @@ protected:
     virtual void disabledWaterfallViewCell();
     
     virtual void recoveryWaterfallViewCell(){};
-    
-    void setControlState(const CAControlState& var);
-    
-private:
-    
-    void resetWaterfallViewCell();
-    
-    using CAView::init;
-    
-    using CAView::initWithCenter;
-    
-    using CAView::initWithFrame;
-    
-    using CAView::initWithColor;
+
+    friend class CAWaterfallView;
 };
 
 NS_CC_END

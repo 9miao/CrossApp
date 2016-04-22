@@ -10,10 +10,10 @@
 #define __CrossApp_CATableView__
 
 #include <iostream>
-#include "CAScrollView.h"
 #include <set>
+#include "view/CAScrollView.h"
+#include "view/CACell.h"
 #include "basics/CASTLContainer.h"
-#include "control/CAControl.h"
 #include "basics/CAIndexPath.h"
 
 NS_CC_BEGIN
@@ -279,7 +279,7 @@ protected:
     
 };
 
-class CC_DLL CATableViewCell: public CAControl
+class CC_DLL CATableViewCell: public CACell
 {
     
 public:
@@ -289,25 +289,23 @@ public:
     virtual ~CATableViewCell();
     
     static CATableViewCell* create(const std::string& reuseIdentifier);
-    
-    virtual bool initWithReuseIdentifier(const std::string& reuseIdentifier);
-    
-    CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
-    
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
 
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
-    
     CC_SYNTHESIZE_READONLY(unsigned int, m_nSection, Section);
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
-    
-    CC_SYNTHESIZE_IS(bool, m_bControlStateEffect, ControlStateEffect);
-    
-    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
 
 protected:
 
+    virtual void normalCell();
+    
+    virtual void highlightedCell();
+    
+    virtual void selectedCell();
+    
+    virtual void disabledCell();
+    
+    virtual void recoveryCell();
+    
     virtual void normalTableViewCell();
     
     virtual void highlightedTableViewCell();
@@ -318,22 +316,7 @@ protected:
 
     virtual void recoveryTableViewCell(){};
     
-    void setControlState(const CAControlState& var);
-    
-private:
-    
-    void resetTableViewCell();
-    
-    using CAView::init;
-    
-    using CAView::initWithCenter;
-    
-    using CAView::initWithFrame;
-    
-    using CAView::initWithColor;
-    
     friend class CATableView;
-
 };
 
 NS_CC_END;
