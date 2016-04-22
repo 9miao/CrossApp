@@ -134,7 +134,6 @@
 		1551A6D0158F2ADE00E66CFE /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = 1551A410158F2ADE00E66CFE /* vec2.c */; };
 		1551A6D1158F2ADE00E66CFE /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 1551A411158F2ADE00E66CFE /* vec3.c */; };
 		1551A6D2158F2ADE00E66CFE /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 1551A412158F2ADE00E66CFE /* vec4.c */; };
-		1551A719158F2ADE00E66CFE /* CCAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A46C158F2ADE00E66CFE /* CCAccelerometerDelegate.h */; };
 		1551A71B158F2ADE00E66CFE /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A46E158F2ADE00E66CFE /* CCCommon.h */; };
 		1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */; };
 		1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */; };
@@ -142,8 +141,6 @@
 		1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A478158F2ADE00E66CFE /* CCSAXParser.h */; };
 		1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */; };
 		1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */; };
-		1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */; };
-		1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */; };
 		1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A482158F2ADE00E66CFE /* CCCommon.mm */; };
 		1551A72F158F2ADE00E66CFE /* CAApplicationCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */; };
 		1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */; };
@@ -394,6 +391,9 @@
 		B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
 		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
+		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
+		E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */; };
+		E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
 		EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */; };
 		EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */; };
@@ -507,7 +507,6 @@
 		1551A410158F2ADE00E66CFE /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
 		1551A411158F2ADE00E66CFE /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		1551A412158F2ADE00E66CFE /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
-		1551A46C158F2ADE00E66CFE /* CCAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometerDelegate.h; sourceTree = "<group>"; };
 		1551A46E158F2ADE00E66CFE /* CCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCommon.h; sourceTree = "<group>"; };
 		1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformConfig.h; sourceTree = "<group>"; };
 		1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
@@ -515,8 +514,6 @@
 		1551A478158F2ADE00E66CFE /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
-		1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
-		1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAccelerometer.mm; sourceTree = "<group>"; };
 		1551A482158F2ADE00E66CFE /* CCCommon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon.mm; sourceTree = "<group>"; };
 		1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplicationCaller.h; sourceTree = "<group>"; };
 		1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAApplicationCaller.mm; sourceTree = "<group>"; };
@@ -782,6 +779,9 @@
 		B0E951441BC63CFA00DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
 		B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
 		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
+		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
+		E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
+		E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAccelerometer.mm; sourceTree = "<group>"; };
 		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
@@ -1137,6 +1137,7 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */,
 				B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */,
 				B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */,
 				B07E81131C33B34800A39C95 /* CATextView.h */,
@@ -1154,7 +1155,6 @@
 				0460ED18195700EE00D13001 /* CCApplicationProtocol.h */,
 				0460ED19195700EE00D13001 /* CCEGLViewProtocol.cpp */,
 				0460ED1A195700EE00D13001 /* CCEGLViewProtocol.h */,
-				1551A46C158F2ADE00E66CFE /* CCAccelerometerDelegate.h */,
 				1551A46E158F2ADE00E66CFE /* CCCommon.h */,
 				1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */,
 				1AC6CE8716B910CD00330EFD /* CCFileUtils.h */,
@@ -1172,6 +1172,8 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */,
+				E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */,
 				B07E81151C33B36700A39C95 /* CATextView.mm */,
 				022160781C1FAD42009FFCFC /* CATextField.mm */,
 				B0C3BD471ADE726B009BE71A /* CAClipboard.mm */,
@@ -1184,8 +1186,6 @@
 				0460ED2C1957019600D13001 /* CCEGLView.mm */,
 				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
 				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
-				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
-				1551A47F158F2ADE00E66CFE /* CCAccelerometer.mm */,
 				1551A482158F2ADE00E66CFE /* CCCommon.mm */,
 				1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */,
 				1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */,
@@ -1556,6 +1556,7 @@
 				04EABB151956DAEA00198A8E /* CASegmentedControl.cpp in Headers */,
 				04EABB161956DAEA00198A8E /* CASlider.cpp in Headers */,
 				04EABB171956DAEA00198A8E /* CASwitch.cpp in Headers */,
+				E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */,
 				B09205DE19D5645300CB99C1 /* CAThread.h in Headers */,
 				04EABB191956DAEA00198A8E /* CABarItem.cpp in Headers */,
 				04EABB1A1956DAEA00198A8E /* CAViewController.cpp in Headers */,
@@ -1606,7 +1607,6 @@
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
-				1551A719158F2ADE00E66CFE /* CCAccelerometerDelegate.h in Headers */,
 				3E0F75381B7DD0C4004CFD41 /* CADevice.h in Headers */,
 				B0ADAE841B2E7F1B00BE8FA3 /* CAPageView.h in Headers */,
 				3E0F75521B7DD0C4004CFD41 /* json_lib.h in Headers */,
@@ -1621,7 +1621,6 @@
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
 				3E19F2AF1B8B0ED100720027 /* CALocation.h in Headers */,
 				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
-				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */,
 				B02A776A19B82F7300C4A5EF /* CAStepper.h in Headers */,
 				3E0F754A1B7DD0C4004CFD41 /* CSContentJsonDictionary.h in Headers */,
@@ -1644,6 +1643,7 @@
 				1551A81B158F2ADF00E66CFE /* ccGLStateCache.h in Headers */,
 				1551A81C158F2ADF00E66CFE /* ccShader_Position_uColor_frag.h in Headers */,
 				3E0F75691B7DD0C4004CFD41 /* HttpResponse.h in Headers */,
+				E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */,
 				B0ADAE6A1B2E7F1B00BE8FA3 /* CAAlertView.h in Headers */,
 				1551A81D158F2ADF00E66CFE /* ccShader_Position_uColor_vert.h in Headers */,
 				1551A81E158F2ADF00E66CFE /* ccShader_PositionColor_frag.h in Headers */,
@@ -1853,7 +1853,6 @@
 				1551A724158F2ADE00E66CFE /* CCSAXParser.cpp in Sources */,
 				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
 				EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */,
-				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
 				B0A11DBB1AE8E0B300933BF6 /* gif_font.c in Sources */,
 				B0ADAE731B2E7F1B00BE8FA3 /* CADrawingPrimitives.cpp in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
@@ -1907,6 +1906,7 @@
 				3E0F75551B7DD0C4004CFD41 /* json_value.cpp in Sources */,
 				B0412DCE1BC7966C00E2C118 /* CAVideoPlayerDecoder.cpp in Sources */,
 				04EA9FDF1956CE2500198A8E /* CAFPSImages.c in Sources */,
+				E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */,
 				B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */,
 				3E19F2A51B8B0ED100720027 /* CAAddress.mm in Sources */,
 				B0A11DC01AE8E0B300933BF6 /* gifalloc.c in Sources */,

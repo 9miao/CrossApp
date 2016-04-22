@@ -20,51 +20,47 @@ extern "C"
 const char* ShowAddress()
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidPersonList" , "CAGetPersonList" , "()Ljava/lang/String;"))
-	{
-        
-		jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-        const char* b = jmi.env->GetStringUTFChars( a , 0 );
-        return b;
-        
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getPersonList" , "()Ljava/lang/String;"))
+	{        
+		jstring sList = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+		const char* utfSList = jmi.env->GetStringUTFChars(sList, 0);
+		return utfSList;
 	}
 }
+
 extern "C"
 {
     float JAVAgetBrightness()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "getScreenBrightness" , "()I"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getScreenBrightness" , "()I"))
         {
-            
-            jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
-            int b = a;
-            return (float)b/255.0f;
-            
+            jint nBrightness = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
+			int brightness = nBrightness;
+			return (float)brightness / 255.0f;
         }
     }
     
     void JAVAgetWifiList()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getWifiList" , "()V"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getWifiList" , "()V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
         }
     }
+
     CAWifiInfo JAVAgetWifiConnection()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getWifiConnectionInfo" , "()Lorg/CrossApp/lib/CustomScanResult;"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getWifiConnectionInfo" , "()Lorg/CrossApp/lib/CrossAppCustomScanResult;"))
         {
             jobject obj = (jobject)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
             jclass cls_arraylist = jmi.env->GetObjectClass(obj);
             jmethodID user_getssid = jmi.env->GetMethodID(cls_arraylist,"getssid","()Ljava/lang/String;");
-            jmethodID user_getmac = jmi.env->GetMethodID(cls_arraylist,"getmac","()Ljava/lang/String;");
-            
+            jmethodID user_getmac = jmi.env->GetMethodID(cls_arraylist,"getmac","()Ljava/lang/String;");  
             jstring ssid = (jstring)jmi.env->CallObjectMethod(obj,user_getssid);
             jstring mac = (jstring)jmi.env->CallObjectMethod(obj,user_getmac);
-            
             const char *ssidPtr = jmi.env->GetStringUTFChars(ssid,0);
             const char *macPtr = jmi.env->GetStringUTFChars(mac,0);
         
@@ -79,12 +75,13 @@ extern "C"
     void JAVABlueToothManager()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getContext" , "()Lorg/CrossApp/lib/CrossAppActivity;"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getDevice" , "()Lorg/CrossApp/lib/CrossAppDevice;"))
         {
             jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
             
-            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/CrossAppActivity","initBlueTooth","()V");
-            if (isHave) {
+            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/CrossAppDevice","initBlueTooth","()V");
+            if (isHave) 
+			{
                 jmi.env->CallVoidMethod(obj, jmi.methodID);
             }
         }
@@ -93,10 +90,10 @@ extern "C"
     void JAVABlueSetType(int type)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getContext" , "()Lorg/CrossApp/lib/CrossAppActivity;"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getDevice" , "()Lorg/CrossApp/lib/CrossAppDevice;"))
         {
             jobject obj = jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-            bool isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/CrossAppActivity","setBlueToothActionType","(I)V");
+            jint isHave =JniHelper::getMethodInfo(jmi,"org/CrossApp/lib/CrossAppDevice","setBlueToothActionType","(I)V");
             if (isHave)
             {
                 jmi.env->CallVoidMethod(obj, jmi.methodID,type);
@@ -107,87 +104,106 @@ extern "C"
     void JAVAsendLocalNotification(const char* title,const char* content,unsigned long time)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;J)V"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;J)V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(title),jmi.env->NewStringUTF(content),time);
             
         }
     }
+
     void setJAVABrightness(int sender)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "setScreenBrightness" , "(I)V"))
-        {
-            
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender);
-            
-        }
-        
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setScreenBrightness" , "(I)V"))
+        {            
+            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender);           
+        }       
     }
 
     float JAVAgetVolume(int type)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidVolumeControl" , "getCallVolum" , "(I)F"))
-        {
-                
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getVolum" , "(I)F"))
+        {   
             jfloat a = (jfloat)jmi.env->CallStaticFloatMethod(jmi.classID , jmi.methodID,type);
             float b = a;
             return b;
-                
         }
     }
     
     void JAVAsetVolume(float sender,int type)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidVolumeControl" , "setCallVolum" , "(FI)V"))
-        {
-                
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender,type);
-                
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setVolum" , "(FI)V"))
+        {    
+            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender,type);   
         }
     }
     
     float JAVAgetBattery()
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getBatteryLevel" , "()I"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getBatteryLevel" , "()I"))
         {
             jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
             int b = a;
             return (float)b/100.0f;
         }
     }
-    void JAVAgetNewVersion(const std::string &url,unsigned int versionNumber
-                           ,const std::string &appId)
+
+    void JAVAgetNewVersion(const std::string &url,unsigned int versionNumber,const std::string &appId)
     {
         JniMethodInfo jmi;
         if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "getNewVersion" , "(Ljava/lang/String;I)V"))
         {
             
-            jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()),versionNumber);
-            
-            
+            jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()),versionNumber); 
         }
     }
+
     bool JAVAisNetWorkAvailble()
-    {
-        
+    {        
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNetWorkManager" , "getAPNType" , "()I"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAPNType" , "()I"))
         {
-            
             jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
             int b = a;
             return (bool)b;
         }
     }
+
+	void JAVAStartAccelerometer()
+	{
+		JniMethodInfo jmi;
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "enableAccelerometer", "()V"))
+		{
+			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+		}
+	}
+
+	void JAVASetAccelerometer(float interval)
+	{
+		JniMethodInfo jmi;
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "setAccelerometerInterval", "(F)V"))
+		{
+			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID,interval);
+		}
+	}
+
+	void JAVAStopAccelerometer()
+	{
+		JniMethodInfo jmi;
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "disableAccelerometer", "()V"))
+		{
+			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+		}
+	}
+
     CANetWorkType JAVAgetNetWorkType()
     {
         CANetWorkType networkType = CANetWorkTypeNone;
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNetWorkManager" , "getAPNType" , "()I"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAPNType" , "()I"))
         {
             
             jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
@@ -217,7 +233,7 @@ const char* getSystemVersionWithIOS()
 const char* getAppVersion()
 {
     JniMethodInfo jmi;
-    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "getAppVersion" , "()Ljava/lang/String;"))
+    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAppVersion" , "()Ljava/lang/String;"))
     {
         jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
         const char* b = jmi.env->GetStringUTFChars( a , 0 );
@@ -230,7 +246,7 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
 	JniMethodInfo jmi;
 	const char* path;
 	std::string savePath;
-	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/AndroidNativeTool", "getSaveImagePath", "()Ljava/lang/String;"))
+	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "getSaveImagePath", "()Ljava/lang/String;"))
 	{
 		jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
 		path = jmi.env->GetStringUTFChars(a, 0);
@@ -239,35 +255,27 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
 	savePath = savePath + imageName + ".jpg";
 	image->saveToFile(savePath);
 
-	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/AndroidNativeTool", "UpdateCamera", "(Ljava/lang/String;)V"))
+	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "UpdateCamera", "(Ljava/lang/String;)V"))
 	{
 		jmi.env->CallStaticIntMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
 	}	
 }
 
-
-double* getGPSLocation()
+void JAVAUpdatingLocation()
 {
-	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidGPS" , "getLocation" , "()[D"))
+    JniMethodInfo jmi;
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "startUpdatingLocation" , "()V"))
 	{
-		jdoubleArray doublearr = (jdoubleArray)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-        if (doublearr==NULL) {
-            double arr[2]={0.0f,0.0f};
-            return arr;
-        }
-        double *b = jmi.env->GetDoubleArrayElements( doublearr , NULL );
-        return b;
+        jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
 	}
 }
 
-void start()//ex
+void JAVAStopUpdateLocation()
 {
-    JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppActivity" , "startGps" , "()V"))
+	JniMethodInfo jmi;
+	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopUpdatingLocation", "()V"))
 	{
-        jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-        
+		jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
 	}
 }
 
@@ -276,10 +284,10 @@ void sendLocalNotification(const char* title,const char* content,unsigned long t
     JAVAsendLocalNotification(title,content,time);
 }
 
-void setVolume(float sender,int type)
+void setVolume(float sender, CAVolumeType type)
 {
-        
-    JAVAsetVolume(sender,type);
+	int mType = (int)type;
+	JAVAsetVolume(sender, mType);
 }
 
 CAWifiInfo getWifiConnectionInfo()
@@ -287,29 +295,25 @@ CAWifiInfo getWifiConnectionInfo()
     return JAVAgetWifiConnection();
 }
     
-float getVolume(int type)
+float getVolume(CAVolumeType type)
 {
-    JAVAgetVolume(type);
+	int mType = (int)type;
+    JAVAgetVolume(mType);
 }
     
 float getBatteryLevel()
 {
     return JAVAgetBattery();
 }
-void openBlueTooth()
-{
-    JAVABlueToothManager();
-}
+
 static CABlueToothDelegate *bluetoothdelegate =NULL;
     
 void initBlueTooth(CABlueToothDelegate *target)
 {
     bluetoothdelegate = target;
-    openBlueTooth();
+	JAVABlueToothManager();
 }
 
-
-    
 void setBlueToothType(CABlueToothType type)
 {
     int intType = (int)type;
@@ -329,10 +333,10 @@ void updateVersion(const std::string &url
     
 }
     
-void OpenAlbum(int type)
+void JAVAOpenAlbum(int type)
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageAlbum" , "(I)V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "CAImageAlbum" , "(I)V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
@@ -346,16 +350,16 @@ CANetWorkType getNetWorkType()
 void OpenURL(const std::string &url)
 {
     JniMethodInfo jmi;
-    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "browserOpenURL" , "(Ljava/lang/String;)V"))
+    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
     {
         jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()));
     }
 }
     
-void OpenCamera(int type)
+void JAVAOpenCamera(int type)
 {
     JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/AndroidNativeTool" , "CAImageCapture" , "(I)V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "CAImageCapture" , "(I)V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
@@ -377,45 +381,35 @@ public:
 };
     
 #endif
-    
+
 
 static CAMediaDelegate *delegate = NULL;
 static ToMainThread *main = NULL;
 static const char *_path = NULL;
-//static CALocationDelegate *locationDelegate = NULL;
+static CALocationDelegate *locationDelegate = NULL;
 static CAWifiDelegate *wifidelegate = NULL;
+static CAAccelerometerDelegate* accelerometerDelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
 void openCamera(CAMediaDelegate* target)
 {
     delegate = target;
-//    if (allowEdit) {
-//        OpenCamera(0);
-//    }
-//    else
-    {
-        OpenCamera(1);
-    }
-    
+
+    JAVAOpenCamera(1);
 }
     
-void getWifiList(CAWifiDelegate *target)
+void getWifiListWithAndroid(CAWifiDelegate *target)
 {
     wifidelegate = target;
+
     JAVAgetWifiList();
 }
     
 void openAlbum(CAMediaDelegate* target)
 {
     delegate = target;
-//    if (allowEdit) {
-//        OpenAlbum(0);
-//    }
-//    else
-    {
-        OpenAlbum(1);
-    }
 
+    JAVAOpenAlbum(1);
 }
     
 vector<CAAddressBookRecord> getAddressBook()
@@ -481,7 +475,34 @@ void setScreenBrightness(float brightness)
     setJAVABrightness(sender);
 }
 
-    
+void startAccelerometer(CAAccelerometerDelegate* delegate)
+{
+	accelerometerDelegate = delegate;
+
+	JAVAStartAccelerometer();
+}
+
+void setAccelerometerInterval(float interval)
+{
+	JAVASetAccelerometer(interval);
+}
+
+void stopAccelerometer()
+{
+	JAVAStopAccelerometer();
+}
+
+void startUpdateLocation(CALocationDelegate* gpsDelegate)
+{
+	locationDelegate = gpsDelegate;
+	JAVAUpdatingLocation();
+}
+
+void stopUpdateLocation()
+{
+	JAVAStopUpdateLocation();
+}
+
 ToMainThread::ToMainThread()
 {
     
@@ -524,13 +545,15 @@ void ToMainThread::runDelegate()
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_AndroidNativeTool_NativeReturn
+
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_NativeReturn
     ( JNIEnv* env,jobject thiz ,jstring arg1, jobject arg2)
     {
         const char* str = env->GetStringUTFChars(arg1, false);
         ToMainThread::sharedMain()->getPath(str);
     }
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnBlueToothState(JNIEnv *env,jobject obj,jint sender)
+
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppBlueTooth_returnBlueToothState(JNIEnv *env, jobject obj, jint sender)
     {
         int type = sender;
         
@@ -540,7 +563,7 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnStartedDiscoveryDevice(JNIEnv *env,jobject obj)
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppBlueTooth_returnStartedDiscoveryDevice(JNIEnv *env, jobject obj)
     {
         if(bluetoothdelegate)
         {
@@ -548,7 +571,7 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnFinfishedDiscoveryDevice(JNIEnv *env,jobject obj)
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppBlueTooth_returnFinfishedDiscoveryDevice(JNIEnv *env, jobject obj)
     {
         if(bluetoothdelegate)
         {
@@ -557,7 +580,7 @@ extern "C"
     }
     
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_returnDiscoveryDevice(JNIEnv *env,jobject obj,jobject sender)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppBlueTooth_returnDiscoveryDevice(JNIEnv *env,jobject obj,jobject sender)
     {
         jclass bluetoothtype = env->GetObjectClass(sender);
         jmethodID getaddress = env->GetMethodID(bluetoothtype,"getAddress","()Ljava/lang/String;");
@@ -579,12 +602,68 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppActivity_getWifiList(JNIEnv *env,jobject obj,jobject obj_wifiArray)
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppAccelerometer_onSensorChanged(
+		JNIEnv *env, 
+		jobject obj,
+		jfloat px,
+		jfloat py,
+		jfloat pz,
+		jlong pTime)
+	{
+		CAAcceleration* acceleration = new CAAcceleration();
+		acceleration->x = px;
+		acceleration->y = py;
+		acceleration->z = pz;		
+		acceleration->timestamp = pTime;
+
+		accelerometerDelegate->didAccelerate(acceleration);
+	}
+
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGPS_returnLocationInfo(JNIEnv *env, jobject obj, jobject sender)
+	{
+		jclass gpsInfoType = env->GetObjectClass(sender);
+
+
+		jmethodID getLongitude = env->GetMethodID(gpsInfoType, "getLongitude", "()Ljava/lang/String;");
+		jmethodID getLatitude = env->GetMethodID(gpsInfoType, "getLatitude", "()Ljava/lang/String;");
+		jmethodID getAltitude = env->GetMethodID(gpsInfoType, "getAltitude", "()Ljava/lang/String;");
+		jmethodID getSpeed = env->GetMethodID(gpsInfoType, "getSpeed", "()Ljava/lang/String;");
+		jmethodID getBearing = env->GetMethodID(gpsInfoType, "getBearing", "()Ljava/lang/String;");
+
+		jstring sLongitude = (jstring)env->CallObjectMethod(sender, getLongitude);
+		jstring sLatitude = (jstring)env->CallObjectMethod(sender, getLatitude);
+		jstring sAltitude = (jstring)env->CallObjectMethod(sender, getAltitude);
+		jstring sSpeed = (jstring)env->CallObjectMethod(sender, getSpeed);
+		jstring sBearing = (jstring)env->CallObjectMethod(sender, getBearing);
+
+		const char *sLongitudeCStr = env->GetStringUTFChars(sLongitude, 0);
+		const char *sLatitudeCStr = env->GetStringUTFChars(sLatitude, 0);
+		const char *sAltitudeCStr = env->GetStringUTFChars(sAltitude, 0);
+		const char *sSpeedCStr = env->GetStringUTFChars(sSpeed, 0);
+		const char *sBearingCStr = env->GetStringUTFChars(sBearing, 0);
+
+		CALocationInfo info;
+		info.sLongitude = sLongitudeCStr;
+		info.sLatitude = sLatitudeCStr;
+		info.sAltitude = sAltitudeCStr;
+		info.sSpeed = sSpeedCStr;
+		info.sBearing = sBearingCStr;
+
+
+		if (locationDelegate)
+		{
+			locationDelegate->getLocationChanged(info);
+		}
+	}
+
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppDevice_getWifiList(JNIEnv *env,jobject obj,jobject obj_wifiArray)
     {
         jclass cls_arraylist = env->GetObjectClass(obj_wifiArray);
-        jmethodID   mGetID      = env->GetMethodID(cls_arraylist,"get","(I)Ljava/lang/Object;");
-        jmethodID   mSizeID         = env->GetMethodID(cls_arraylist,"size","()I");
+        jmethodID   mGetID    = env->GetMethodID(cls_arraylist,"get","(I)Ljava/lang/Object;");
+        jmethodID   mSizeID   = env->GetMethodID(cls_arraylist,"size","()I");
+
         int len = env->CallIntMethod(obj_wifiArray,mSizeID);
+
         std::vector<CAWifiInfo> wfinfo;
         for (int i=0; i<len; i++)
         {
@@ -598,6 +677,7 @@ extern "C"
             jstring mac = (jstring)env->CallObjectMethod(obj_user,user_getmac);
             const char *ssidPtr = env->GetStringUTFChars(ssid,0);
             const char *macPtr = env->GetStringUTFChars(mac,0);
+
             CAWifiInfo wifiInfo;
             wifiInfo.ssid = ssidPtr;
             wifiInfo.mac = macPtr;
@@ -609,8 +689,6 @@ extern "C"
         {
             wifidelegate->getWifiListFunc(wfinfo);
         }
-        
-        
     }
 }
 

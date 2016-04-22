@@ -1,6 +1,6 @@
 
 
-#include "CCAccelerometer.h"
+#include "CAAccelerometer.h"
 #include "CCEGLView.h"
 #include "basics/CAApplication.h"
 #include "ccMacros.h"
@@ -88,7 +88,7 @@ namespace
 
     void myAccelerometerKeyHook( UINT message,WPARAM wParam,LPARAM lParam )
     {
-		CrossApp::CCAccelerometer    *pAccelerometer = CrossApp::CAApplication::getApplication()->getAccelerometer();
+		CrossApp::CAAccelerometer    *pAccelerometer = CrossApp::CAApplication::getApplication()->getAccelerometer();
         bool                        sendUpdate=false;
         switch( message )
         {
@@ -126,18 +126,18 @@ namespace
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer() : 
+CAAccelerometer::CAAccelerometer() :
     m_pAccelDelegate(NULL)
 {
     memset(&m_obAccelerationValue, 0, sizeof(m_obAccelerationValue));
 }
 
-CCAccelerometer::~CCAccelerometer() 
+CAAccelerometer::~CAAccelerometer()
 {
 
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+void CAAccelerometer::setDelegate(CAAccelerometerDelegate* pDelegate) 
 {
     m_pAccelDelegate = pDelegate;
 
@@ -157,12 +157,12 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
     }
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void CAAccelerometer::setAccelerometerInterval(float interval)
 {
 
 }
 
-void CCAccelerometer::update( double x,double y,double z,double timestamp ) 
+void CAAccelerometer::update(double x, double y, double z, double timestamp)
 {
     if (m_pAccelDelegate)
     {

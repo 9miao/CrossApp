@@ -211,11 +211,7 @@ float getBatteryLevel()
     double deviceLevel = [UIDevice currentDevice].batteryLevel;
     return deviceLevel;
 }
-void getWifiList(CAWifiDelegate *target)
-{
-    
-    
-}
+
 CAWifiInfo getWifiConnectionInfo()
 {
     NSArray *ifs = (id)CNCopySupportedInterfaces();
@@ -238,15 +234,43 @@ CAWifiInfo getWifiConnectionInfo()
     wifiInfo.level = 0;
     return wifiInfo;
 }
- 
+
 void initBlueTooth(CABlueToothDelegate *target)
 {
     target->getBlueToothState((CABlueToothState)[[[CABlueTooth alloc] init] getBlueToothState]);
+    
 }
 
 void setBlueToothType(CABlueToothType type)
 {
-        
+    
+}
+
+void startUpdateLocation(CALocationDelegate* gpsDelegate)
+{
+    CALocation* location = [CALocation sharedLocation];
+    [location setSender:gpsDelegate];
+    [location startUpdatingLocation];
+}
+
+void stopUpdateLocation()
+{
+    [[CALocation sharedLocation] stopUpdatingLocation];
+}
+
+void startAccelerometer(CAAccelerometerDelegate* delegate)
+{
+    CAAccelerometer::sharedAccelerometer()->setDelegate(delegate);
+}
+
+void setAccelerometerInterval(float interval)
+{
+    CAAccelerometer::sharedAccelerometer()->setAccelerometerInterval(interval);
+}
+
+void stopAccelerometer()
+{
+    CAAccelerometer::sharedAccelerometer()->stopAccelerometer();
 }
     
 }

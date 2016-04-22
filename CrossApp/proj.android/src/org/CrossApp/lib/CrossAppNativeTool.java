@@ -43,13 +43,13 @@ import android.widget.Toast;
 
 
 @SuppressLint("SdCardPath")
-public class AndroidNativeTool
+public class CrossAppNativeTool
 {
 	private static AlertDialog mDialog = null;
 	private static Activity s_pContext;
 	native static void NativeReturn( String arg1 , Object arg2 );
 
-	public AndroidNativeTool( final Activity context )
+	public CrossAppNativeTool( final Activity context )
 	{
 		s_pContext = context;
 	}

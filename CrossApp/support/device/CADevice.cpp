@@ -60,13 +60,12 @@ namespace CADevice
         return CANetWorkTypeWifi;
     }
     
-    void setVolume(float sender,int type)
+	void setVolume(float sender, CAVolumeType type)
     {
         
     }
     
-    float getVolume(int type)
-
+	float getVolume(CAVolumeType type)
     {
         return 1.0f;
     }
@@ -94,7 +93,12 @@ namespace CADevice
     {
         
     }
-    
+
+	void getWifiListWithAndroid(CAWifiDelegate *target)
+	{
+
+	}
+
     CAWifiInfo getWifiConnectionInfo()
     {
         return CAWifiInfo();
@@ -114,6 +118,32 @@ namespace CADevice
 	{
 		
 	}
+
+	CC_DLL void startAccelerometer(CAAccelerometerDelegate* delegate)
+	{
+
+	}
+
+	CC_DLL void setAccelerometerInterval(float interval)
+	{
+
+	}
+
+	CC_DLL void stopAccelerometer()
+	{
+
+	}
+
+	CC_DLL void startUpdateLocation(CALocationDelegate* gpsDelegate)
+	{
+
+	}
+
+	CC_DLL void stopUpdateLocation()
+	{
+
+	}
+
 }
 
 NS_CC_END

@@ -1,17 +1,14 @@
 package org.CrossApp.lib;
 
-import android.R.integer;
-
-
-public class CustomScanResult {
+public class CrossAppCustomScanResult {
 	private String ssid;
 	private String mac;
 	private int level;
-	public CustomScanResult()
+	public CrossAppCustomScanResult()
 	{
 		
 	}
-	public CustomScanResult(String ssid,String mac,int level)
+	public CrossAppCustomScanResult(String ssid,String mac,int level)
 	{
 		this.level=level;
 		this.ssid = ssid;

@@ -11,12 +11,17 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
+import android.util.Log;
 
 @SuppressLint("DefaultLocale")
-public class AndroidNetWorkManager {
+public class CrossAppNetWorkManager {
+	
 	private static Activity s_pActivity;
+	
     private static WifiManager mWifiManager;  
+    
     private static WifiInfo mWifiInfo;  
+        
     private static List<ScanResult> mWifiList;
     
     private static List<WifiConfiguration> mWifiConfigurations;  
@@ -26,7 +31,9 @@ public class AndroidNetWorkManager {
 	public static void setContext(Activity activity)
 	{
         mWifiManager=(WifiManager) activity.getSystemService(Context.WIFI_SERVICE);  
+
         mWifiInfo=mWifiManager.getConnectionInfo(); 
+        
 		s_pActivity = activity;
 	}
 	
@@ -38,8 +45,8 @@ public class AndroidNetWorkManager {
 		
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo(); 
 		 
-		if(networkInfo==null){ 
-		 
+		if(networkInfo==null)
+		{ 
 		    return netType; 
 		} 
 		 
@@ -70,47 +77,58 @@ public class AndroidNetWorkManager {
             mWifiManager.setWifiEnabled(true);  
         }  
     }  
+
     public void closeWifi(){  
         if(!mWifiManager.isWifiEnabled()){  
             mWifiManager.setWifiEnabled(false);  
         }  
     }  
+
     public int checkState()
     {    
         return mWifiManager.getWifiState();    
     }    
+
     public void acquireWifiLock()
     {  
         mWifiLock.acquire();  
     }  
+  
     public void releaseWifiLock()
     {  
         if(mWifiLock.isHeld()){  
             mWifiLock.acquire();  
         }  
     }  
+
     public void createWifiLock()
     {  
         mWifiLock=mWifiManager.createWifiLock("test");  
     }
+
     public List<WifiConfiguration> getConfiguration()
     {  
         return mWifiConfigurations;  
     }  
+
     public void connetionConfiguration(int index)
     {  
         if(index>mWifiConfigurations.size())
         {  
             return ;  
         }  
+
         mWifiManager.enableNetwork(mWifiConfigurations.get(index).networkId, true);  
     }  
     public static void startScan()
     {  
         mWifiManager.startScan();  
+
         mWifiList=mWifiManager.getScanResults();  
+
         mWifiConfigurations=mWifiManager.getConfiguredNetworks();  
     }  
+
     public static List<ScanResult> getWifiList()
     {  
         return mWifiList;  
@@ -121,12 +139,15 @@ public class AndroidNetWorkManager {
     	WifiInfo mInfo = mWifiManager.getConnectionInfo();
     	return mInfo;
     }
+  
     public StringBuffer lookUpScan()
     {  
         StringBuffer sb=new StringBuffer();  
+        
         for(int i=0;i<mWifiList.size();i++)
         {  
             sb.append("Index_" + new Integer(i + 1).toString() + ":");  
+ 
             sb.append((mWifiList.get(i)).toString()).append("\n");  
         }  
         return sb;    
@@ -146,9 +167,11 @@ public class AndroidNetWorkManager {
     {  
         return (mWifiInfo==null)?0:mWifiInfo.getIpAddress();  
     } 
-    
+     
     public int getNetWordId()
     {  
+    	Log.i("net word id ","networid :"+mWifiInfo.getNetworkId());
+    	
         return (mWifiInfo==null)?0:mWifiInfo.getNetworkId();  
     }  
     
@@ -156,14 +179,18 @@ public class AndroidNetWorkManager {
     {  
         return (mWifiInfo==null)?"NULL":mWifiInfo.toString();  
     }  
+
     public void addNetWork(WifiConfiguration configuration)
     {  
         int wcgId=mWifiManager.addNetwork(configuration);  
+        
         mWifiManager.enableNetwork(wcgId, true);  
     }  
+
     public void disConnectionWifi(int netId)
     {  
         mWifiManager.disableNetwork(netId);  
+        
         mWifiManager.disconnect();  
     }  
 }

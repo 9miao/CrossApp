@@ -48,7 +48,7 @@ public class CrossAppHelper {
 		CrossAppHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
 		CrossAppHelper.nativeSetApkPath(applicationInfo.sourceDir);
 
-		CrossAppHelper.sCrossAppAccelerometer = new CrossAppAccelerometer(pContext);
+		CrossAppHelper.setsCrossAppAccelerometer(new CrossAppAccelerometer(pContext));
 		CrossAppHelper.sCocos2dMusic = new CrossAppMusic(pContext);
 		CrossAppHelper.sCocos2dSound = new CrossAppSound(pContext);
 		CrossAppHelper.sAssetManager = pContext.getAssets();
@@ -93,20 +93,32 @@ public class CrossAppHelper {
 	}
 
 	public static void enableAccelerometer() {
-		CrossAppHelper.sAccelerometerEnabled = true;
-		CrossAppHelper.sCrossAppAccelerometer.enable();
+		CrossAppHelper.setsAccelerometerEnabled(true);
+		CrossAppHelper.getsCrossAppAccelerometer().enable();
 	}
 
 
 	public static void setAccelerometerInterval(float interval) {
-		CrossAppHelper.sCrossAppAccelerometer.setInterval(interval);
+		CrossAppHelper.getsCrossAppAccelerometer().setInterval(interval);
 	}
 
 	public static void disableAccelerometer() {
-		CrossAppHelper.sAccelerometerEnabled = false;
-		CrossAppHelper.sCrossAppAccelerometer.disable();
+		CrossAppHelper.setsAccelerometerEnabled(false);
+		CrossAppHelper.getsCrossAppAccelerometer().disable();
+	}
+	
+	public static void onResume() {
+		if (CrossAppHelper.issAccelerometerEnabled()) {
+			CrossAppHelper.getsCrossAppAccelerometer().enable();
+		}
 	}
 
+	public static void onPause() {
+		if (CrossAppHelper.issAccelerometerEnabled()) {
+			CrossAppHelper.getsCrossAppAccelerometer().disable();
+		}
+	}
+	
 	public static void preloadBackgroundMusic(final String pPath) {
 		CrossAppHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);
 	}
@@ -192,17 +204,6 @@ public class CrossAppHelper {
 		CrossAppHelper.sCocos2dSound.end();
 	}
 
-	public static void onResume() {
-		if (CrossAppHelper.sAccelerometerEnabled) {
-			CrossAppHelper.sCrossAppAccelerometer.enable();
-		}
-	}
-
-	public static void onPause() {
-		if (CrossAppHelper.sAccelerometerEnabled) {
-			CrossAppHelper.sCrossAppAccelerometer.disable();
-		}
-	}
 
 	public static void terminateProcess() {
 		android.os.Process.killProcess(android.os.Process.myPid());
@@ -319,6 +320,22 @@ public class CrossAppHelper {
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
+
+	public static boolean issAccelerometerEnabled() {
+		return sAccelerometerEnabled;
+	}
+
+	public static void setsAccelerometerEnabled(boolean sAccelerometerEnabled) {
+		CrossAppHelper.sAccelerometerEnabled = sAccelerometerEnabled;
+	}
+
+	public static CrossAppAccelerometer getsCrossAppAccelerometer() {
+		return sCrossAppAccelerometer;
+	}
+
+	public static void setsCrossAppAccelerometer(CrossAppAccelerometer sCrossAppAccelerometer) {
+		CrossAppHelper.sCrossAppAccelerometer = sCrossAppAccelerometer;
+	}
 
 	public static interface CrossAppHelperListener {
 		public void showDialog(final String pTitle, final String pMessage);

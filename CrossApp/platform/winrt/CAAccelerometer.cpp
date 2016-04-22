@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CrossApp.h"
-#include "CCAccelerometer.h"
+#include "CAAccelerometer.h"
 using namespace Windows::Foundation;
 using namespace Windows::Devices::Sensors;
 using namespace Windows::Graphics::Display;
@@ -31,17 +31,17 @@ using namespace Windows::Graphics::Display;
 
 NS_CC_BEGIN
 
-CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+CAAccelerometer::CAAccelerometer() : m_pAccelDelegate(NULL)
 {
 	m_accelerometer = nullptr;
 }
 
-CCAccelerometer::~CCAccelerometer() 
+CAAccelerometer::~CAAccelerometer()
 {
 
 }
 
-void CCAccelerometer::setAccelerometerInterval(float interval)
+void CAAccelerometer::setAccelerometerInterval(float interval)
 {
 	auto a =  Accelerometer::GetDefault();
     if(a)
@@ -52,7 +52,7 @@ void CCAccelerometer::setAccelerometerInterval(float interval)
     }
 }
 
-void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+void CAAccelerometer::setDelegate(CAAccelerometerDelegate* pDelegate)
 {
 	m_pAccelDelegate = pDelegate;
 

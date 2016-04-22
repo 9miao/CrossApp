@@ -26,21 +26,21 @@ THE SOFTWARE.
 #ifndef __PLATFORM_WINRT_UIACCELEROMETER_H__
 #define __PLATFORM_WINRT_UIACCELEROMETER_H__
 
-#include "platform/CCAccelerometerDelegate.h"
+#include "platform/CAAccelerometerDelegate.h"
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class CC_DLL CAAccelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+    CAAccelerometer();
+    ~CAAccelerometer();
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(CAAccelerometerDelegate* pDelegate);
     void setAccelerometerInterval(float interval);
 private:
-    CCAcceleration m_obAccelerationValue;
-    CCAccelerometerDelegate* m_pAccelDelegate;
+    CAAcceleration m_obAccelerationValue;
+    CAAccelerometerDelegate* m_pAccelDelegate;
 	Windows::Devices::Sensors::Accelerometer^ m_accelerometer;
 };
 

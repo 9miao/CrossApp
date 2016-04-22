@@ -162,7 +162,7 @@
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "platform/ios/CCAccelerometer.h"
+    #include "platform/ios/CAAccelerometer.h"
     #include "platform/ios/CCApplication.h"
     #include "platform/ios/CCEGLView.h"
     #include "platform/ios/CCGL.h"
@@ -170,7 +170,7 @@
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "platform/android/CCAccelerometer.h"
+    #include "platform/android/CAAccelerometer.h"
     #include "platform/android/CCApplication.h"
     #include "platform/android/CCEGLView.h"
     #include "platform/android/CCGL.h"
@@ -179,7 +179,7 @@
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	#include "platform/win32/CCAccelerometer.h"
+	#include "platform/win32/CAAccelerometer.h"
 	#include "platform/win32/CCApplication.h"
 	#include "platform/win32/CCEGLView.h"
 	#include "platform/win32/CCGL.h"
@@ -191,12 +191,12 @@
 	#include "platform/winrt/CCEGLView.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCAccelerometer.h"
+	#include "platform/winrt/CAAccelerometer.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	#include "platform/mac/CCAccelerometer.h"
+	#include "platform/mac/CAAccelerometer.h"
 	#include "platform/mac/CCApplication.h"
 	#include "platform/mac/CCEGLView.h"
 	#include "platform/mac/CCGL.h"
@@ -205,7 +205,7 @@
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "platform/linux/CCAccelerometer.h"
+	#include "platform/linux/CAAccelerometer.h"
 	#include "platform/linux/CCApplication.h"
 	#include "platform/linux/CCEGLView.h"
 	#include "platform/linux/CCGL.h"

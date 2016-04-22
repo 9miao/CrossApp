@@ -1,25 +1,25 @@
 
-#include "CCAccelerometer.h"
+#include "CAAccelerometer.h"
 #include "jni/Java_org_CrossApp_lib_CrossAppHelper.h"
 #include <stdio.h>
 #include <android/log.h>
 
 #define TG3_GRAVITY_EARTH                    (9.80665f)
-#define  LOG_TAG    "CCAccelerometer_android"
+#define  LOG_TAG    "CAAccelerometer_android"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 namespace CrossApp
 {
-    CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+	CAAccelerometer::CAAccelerometer() : m_pAccelDelegate(NULL)
     {
     }
 
-    CCAccelerometer::~CCAccelerometer() 
+	CAAccelerometer::~CAAccelerometer()
     {
 
     }
 
-    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+	void CAAccelerometer::setDelegate(CAAccelerometerDelegate* pDelegate)
     {
         m_pAccelDelegate = pDelegate;
 
@@ -33,13 +33,13 @@ namespace CrossApp
         }
     }
 
-    void CCAccelerometer::setAccelerometerInterval(float interval) 
+	void CAAccelerometer::setAccelerometerInterval(float interval)
     {
         setAccelerometerIntervalJNI(interval);
     }
 
 
-    void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
+	void CAAccelerometer::update(float x, float y, float z, long sensorTimeStamp)
     {
         if (m_pAccelDelegate)
         {

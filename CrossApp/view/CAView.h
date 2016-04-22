@@ -18,7 +18,7 @@
 #include "shaders/CAGLProgram.h"
 #include "kazmath/kazmath.h"
 #include "dispatcher/CAProtocols.h"
-#include "platform/CCAccelerometerDelegate.h"
+#include "platform/CAAccelerometerDelegate.h"
 #include "basics/CAResponder.h"
 #include "images/CAImageCache.h"
 

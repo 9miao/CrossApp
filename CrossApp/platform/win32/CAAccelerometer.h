@@ -25,22 +25,22 @@ THE SOFTWARE.
 #ifndef __PLATFORM_WIN32_UIACCELEROMETER_H__
 #define __PLATFORM_WIN32_UIACCELEROMETER_H__
 
-#include "platform/CCAccelerometerDelegate.h"
+#include "platform/CAAccelerometerDelegate.h"
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class CC_DLL CAAccelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
+	CAAccelerometer();
+	~CAAccelerometer();
 
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(CAAccelerometerDelegate* pDelegate);
     void setAccelerometerInterval(float interval);
     void update( double x,double y,double z,double timestamp );
 private:
-    CCAcceleration m_obAccelerationValue;
-    CCAccelerometerDelegate* m_pAccelDelegate;
+    CAAcceleration m_obAccelerationValue;
+    CAAccelerometerDelegate* m_pAccelDelegate;
 };
 
 NS_CC_END

@@ -1,24 +1,24 @@
 package org.CrossApp.lib;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
+import android.util.Log;
 
-public class AndroidVolumeControl extends Service{
+public class CrossAppVolumeControl extends Service{
 
 	public static Activity s_pContext;
 	public static AudioManager audioManager = null;
 	public static void setContext(Context context)
 	{
 		s_pContext =(Activity) context;
-		audioManager = (AudioManager)s_pContext.getSystemService(s_pContext.AUDIO_SERVICE);
+		audioManager = (AudioManager)s_pContext.getSystemService(Context.AUDIO_SERVICE);
 	}
 
-	public static float getCallVolum(int ringtype)
+	public static float getVolum(int ringtype)
 	{
 		int max = 0;
 		float current =0.0f;
@@ -46,9 +46,10 @@ public class AndroidVolumeControl extends Service{
 		default:
 			break;
 		}
+		
+		
 		max = audioManager.getStreamMaxVolume(type );
-
-	    current = (float)audioManager.getStreamVolume( AudioManager.STREAM_VOICE_CALL )/(float)max;
+	    current = (float)audioManager.getStreamVolume(type )/(float)max;
 		return current;
 	}
 	
@@ -77,6 +78,7 @@ public class AndroidVolumeControl extends Service{
 			break;
 		}
 		int max = audioManager.getStreamMaxVolume(ringType );
+		Log.i("volume", "volume   volume "+max);
 		int value = (int) ((float)max*sender);
 		audioManager.setStreamVolume(ringType,value, 0);
 	}

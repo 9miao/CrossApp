@@ -12,6 +12,7 @@
 #include <iostream>
 #include "basics/CAObject.h"
 #include "images/CAImage.h"
+#include "platform/CAAccelerometerDelegate.h"
 
 NS_CC_BEGIN
 
@@ -53,6 +54,24 @@ public:
     virtual ~CAMediaDelegate(){};
     
     virtual void getSelectedImage(CAImage *image) = 0;
+};
+
+
+struct CALocationInfo
+{
+	std::string sLongitude;
+	std::string sLatitude;
+	std::string sAltitude;
+	std::string sSpeed;
+	std::string sBearing;
+};
+
+class CC_DLL CALocationDelegate
+{
+public:
+	virtual ~CALocationDelegate(){};
+
+	virtual void getLocationChanged(CALocationInfo info){};
 };
 
 class CC_DLL CABlueToothDelegate
@@ -114,6 +133,17 @@ typedef enum
     
 }CANetWorkType;
 
+typedef enum
+{
+	CAVolumeMusic = 0,
+	CAVolumeSystem,
+	CAVolumeRing,
+	CAVolumeVoicCall,
+	CAVolumeAlarm,
+	CAVolumeNotification
+
+}CAVolumeType;
+
 namespace CADevice
 {
     CC_DLL const char* getSystemVersionWithIOS();
@@ -136,11 +166,13 @@ namespace CADevice
     
     CC_DLL CANetWorkType getNetWorkType();
     
-    CC_DLL void getWifiList(CAWifiDelegate *target);
+	CC_DLL void getWifiListWithAndroid(CAWifiDelegate *target);
     
-    CC_DLL void setVolume(float sender, int type);
+	CC_DLL CAWifiInfo getWifiConnectionInfo();
+
+    CC_DLL void setVolume(float sender, CAVolumeType type);
     
-    CC_DLL float getVolume(int type);
+    CC_DLL float getVolume(CAVolumeType type);
     
     CC_DLL void OpenURL(const std::string &url);
     
@@ -149,14 +181,22 @@ namespace CADevice
     CC_DLL bool isNetWorkAvailble();
     
     CC_DLL void sendLocalNotification(const char* title, const char* content, unsigned long time);
-    
-    CC_DLL CAWifiInfo getWifiConnectionInfo();
-    
+
     CC_DLL void initBlueTooth(CABlueToothDelegate *target);
     
     CC_DLL void setBlueToothType(CABlueToothType type);
     
     CC_DLL void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName);
+    
+	CC_DLL void startUpdateLocation(CALocationDelegate* gpsDelegate);
+
+	CC_DLL void stopUpdateLocation();
+
+    CC_DLL void startAccelerometer(CAAccelerometerDelegate* delegate);
+
+	CC_DLL void setAccelerometerInterval(float interval);
+
+	CC_DLL void stopAccelerometer();
 };
 
 NS_CC_END

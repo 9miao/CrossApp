@@ -31,7 +31,7 @@ class CAScheduler;
 class CCActionManager;
 class CATouchDispatcher;
 class CAKeypadDispatcher;
-class CCAccelerometer;
+class CAAccelerometer;
 
 
 class CC_DLL CAApplication : public CAObject, public TypeInfo
@@ -250,12 +250,12 @@ public:
      */
     CC_PROPERTY(CAKeypadDispatcher*, m_pKeypadDispatcher, KeypadDispatcher);
 
-    /** CCAccelerometer associated with this director
+    /** CAAccelerometer associated with this director
      @since v2.0
      @js NA
      @lua NA
      */
-    CC_PROPERTY(CCAccelerometer*, m_pAccelerometer, Accelerometer);
+    CC_PROPERTY(CAAccelerometer*, m_pAccelerometer, Accelerometer);
 
     /* delta time since last tick to main loop */
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
