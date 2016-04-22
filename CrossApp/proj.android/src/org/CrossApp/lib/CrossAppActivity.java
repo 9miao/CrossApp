@@ -1,4 +1,5 @@
 
+
 package org.CrossApp.lib;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     
     
     
-    //退到后台返回时候用
+    //�����板����拌�������跺�����
     public static CrossAppTextField _sTextField = null;
     public static CrossAppTextView _sTextView = null;
     

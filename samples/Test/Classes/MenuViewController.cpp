@@ -22,8 +22,6 @@ MenuViewController::~MenuViewController()
 
 void MenuViewController::viewDidLoad()
 {
-    CAApplication::getApplication()->getRootWindow();
-    
     this->getView()->setColor(CAColor_clear);
     
     DLayout tableViewLayout;

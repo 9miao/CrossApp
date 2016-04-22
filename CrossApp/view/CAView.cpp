@@ -934,6 +934,10 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
             this->setPoint(p);
         }
     }
+    else
+    {
+        this->updateDraw();
+    }
 }
 
 void CAView::updateDraw()
