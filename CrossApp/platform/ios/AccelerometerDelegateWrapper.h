@@ -1,22 +1,22 @@
 
-
 #import <Foundation/Foundation.h>
-#import "CCAccelerometerDelegate.h"
+#import "CAAccelerometerDelegate.h"
 #import <UIKit/UIKit.h>
-#import <CoreMotion/CoreMotion.h>
 
 @interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
-    CrossApp::CCAccelerometerDelegate *delegate_;
-    CrossApp::CCAcceleration *acceleration_;
+    CrossApp::CAAccelerometerDelegate *delegate_;
+    CrossApp::CAAcceleration *acceleration_;
+    
 }
 
-@property(readwrite) CrossApp::CCAccelerometerDelegate *delegate_;
-@property(readwrite) CrossApp::CCAcceleration *acceleration_;
+@property(readwrite) CrossApp::CAAccelerometerDelegate *delegate_;
+@property(readwrite) CrossApp::CAAcceleration *acceleration_;
 
 + (id) sharedAccelerometerDispather;
 - (id) init;
-- (void) addDelegate: (CrossApp::CCAccelerometerDelegate *) delegate;
+- (void) addDelegate: (CrossApp::CAAccelerometerDelegate *) delegate;
 - (void) setAccelerometerInterval:(float)interval;
+- (void) stopAccelerometerInterval;
 
 @end
