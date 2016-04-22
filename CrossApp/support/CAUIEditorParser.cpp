@@ -40,11 +40,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), view);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         view->setLayout(layout);
         
@@ -65,11 +65,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), imageView);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         imageView->setLayout(layout);
         
@@ -100,11 +100,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), scale9ImageVew);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         scale9ImageVew->setLayout(layout);
         
@@ -155,11 +155,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), label);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         label->setLayout(layout);
         
@@ -242,11 +242,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), btn);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         btn->setLayout(layout);
         
@@ -524,11 +524,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 	else if (contrlType.compare("CATextField") == 0)
 	{
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
 
         CATextField* textField = CATextField::createWithLayout(layout);
@@ -641,11 +641,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), sw);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         sw->setLayout(layout);
         
@@ -688,11 +688,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), segmentControl);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         segmentControl->setLayout(layout);
         
@@ -809,11 +809,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), progress);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         progress->setLayout(layout);
         
@@ -855,11 +855,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 	else if (contrlType.compare("CATextView") == 0)
 	{
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
 
 		CATextView* textView = CATextView::createWithLayout(layout);
@@ -905,11 +905,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), slider);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         slider->setLayout(layout);
         
@@ -965,11 +965,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), stepper);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         stepper->setLayout(layout);
         
@@ -1015,11 +1015,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), activity);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         activity->setLayout(layout);
         
@@ -1098,11 +1098,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAPickerView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAPickerView* pickerView = CAPickerView::createWithLayout(layout);
@@ -1147,11 +1147,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 	else if (contrlType.compare("CADatePickerView") == 0)
 	{
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
 
 		CADatePickerView* datePicker = CADatePickerView::createWithLayout(layout, (CADatePickerMode)atoi(viewXml->Attribute("mode")));
@@ -1171,11 +1171,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAWebView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAWebView* webView = CAWebView::createWithLayout(layout);
@@ -1205,11 +1205,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         map.insert(viewXml->Attribute("textTag"), gifView);
         
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         gifView->setLayout(layout);
         
@@ -1222,11 +1222,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAScrollView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
@@ -1309,11 +1309,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAPageView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAPageView* pageView = CAPageView::createWithLayout(layout, (CAPageView::Orientation)(atoi(viewXml->Attribute("orientation"))));
@@ -1364,11 +1364,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAListView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAListView* listView = CAListView::createWithLayout(layout);
@@ -1452,11 +1452,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CATableView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CATableView* tableView = CATableView::createWithLayout(layout);
@@ -1540,11 +1540,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAAutoCollectionView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAAutoCollectionView* collectionView = CAAutoCollectionView::createWithLayout(layout);
@@ -1662,11 +1662,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     else if (contrlType.compare("CAWaterfallView") == 0)
     {
         DLayout layout;
-        layout.horizontal = DHorizontalLayout(atoi(viewXml->Attribute("h_var1")),
-                                              atoi(viewXml->Attribute("h_var2")),
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
                                               (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
-        layout.vertical = DVerticalLayout(atoi(viewXml->Attribute("v_var1")),
-                                          atoi(viewXml->Attribute("v_var2")),
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
         CAWaterfallView* waterfallView = CAWaterfallView::createWithLayout(layout);

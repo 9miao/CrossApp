@@ -20,7 +20,7 @@ public:
         L_C,
         R_W,
         R_C,
-        W_C
+        W_C = 5
     }
     Type;
     
