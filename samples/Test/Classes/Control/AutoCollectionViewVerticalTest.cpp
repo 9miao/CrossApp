@@ -219,14 +219,14 @@ AutoCollectionViewVerticalTest::~AutoCollectionViewVerticalTest()
 
 void CDUIShowAutoCollectionView::AutoCollectionVerticalRightBtnRightcallback(CAControl* control, DPoint point)
 {
-    if (showAutoCollectionHorizontalNavigationBar >= 1)
+    if (showAutoCollectionVerticalNavigationBar >= 1)
     {
-        showAutoCollectionHorizontalNavigationBar = 0;
-        AutoCollectionViewVerticalNum = showAutoCollectionHorizontalNavigationBar;
+        showAutoCollectionVerticalNavigationBar = 0;
+        AutoCollectionViewVerticalNum = showAutoCollectionVerticalNavigationBar;
     }
     else
     {
-        AutoCollectionViewVerticalNum = ++showAutoCollectionHorizontalNavigationBar;
+        AutoCollectionViewVerticalNum = ++showAutoCollectionVerticalNavigationBar;
     }
     
     AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new AutoCollectionViewVerticalTest();

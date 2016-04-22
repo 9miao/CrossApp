@@ -2,6 +2,8 @@
 #include "LabelTest.h"
 #include "CDUIShowAutoCollectionView.h"
 
+int LabelNum = 0;
+
 LabelTest::LabelTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
@@ -12,9 +14,8 @@ LabelTest::~LabelTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
+    LabelNum = 0;
 }
-
-int LabelNum = 0;
 
 void CDUIShowAutoCollectionView::LabelRightBtnRightcallback(CAControl* control, DPoint point)
 {

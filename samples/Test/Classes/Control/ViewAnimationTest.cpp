@@ -2,6 +2,8 @@
 #include "ViewAnimationTest.h"
 #include "CDUIShowAutoCollectionView.h"
 
+int AnimationNum = 0;
+
 ViewAnimationTest::ViewAnimationTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
@@ -12,9 +14,8 @@ ViewAnimationTest::~ViewAnimationTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
+    AnimationNum = 0;
 }
-
-int AnimationNum = 0;
 
 void CDUIShowAutoCollectionView::ViewAnimationRightBtnRightcallback(CAControl* control, DPoint point)
 {
@@ -64,19 +65,16 @@ void ViewAnimationTest::viewDidLoad()
         CAImageView* bg = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_C(0, 0.5), DVerticalLayout_H_C(80, 0.5)));
         bg->setImage(CAImage::create("image/navbg.jpg"));
     
-//        animation_2_textfield = CATextField::createWithFrame(DRect(90,winSize.height/2-25,100,50));
         animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setFontSize(40);
         animation_2_textfield->setKeyboardType(CATextField::Default);
         animation_2_textfield->setVisible(false);
     
-//        animation_2_btn_search = CAButton::createWithCenter(DRect(70,winSize.height/2,56,48), CAButtonTypeCustom);
         animation_2_btn_search = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(25, 56), DVerticalLayout_H_C(48, 0.5)), CAButtonTypeCustom);
         animation_2_btn_search->setImageForState(CAControlStateNormal, CAImage::create("image/search_btn.png"));
         animation_2_btn_search->addTarget(this, CAControl_selector(ViewAnimationTest::doAction), CAControlEventTouchUpInSide);
         animation_2_btn_search->setTag(201);
     
-//        animation_2_btn_cancel = CAButton::createWithCenter(DRect(winSize.width-60,winSize.height/2,100,50), CAButtonTypeCustom);
         animation_2_btn_cancel = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 100), DVerticalLayout_H_C(50, 0.5)), CAButtonTypeCustom);
         animation_2_btn_cancel->setTitleForState(CAControlStateNormal, "Cancel");
         animation_2_btn_cancel->setTag(202);

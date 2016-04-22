@@ -2,6 +2,8 @@
 #include "SliderTest.h"
 #include "CDUIShowAutoCollectionView.h"
 
+int SliderNum = 0;
+
 SliderTest::SliderTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
@@ -12,9 +14,8 @@ SliderTest::~SliderTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
+    SliderNum = 0;
 }
-
-int SliderNum = 0;
 
 void CDUIShowAutoCollectionView::SliderRightBtnRightcallback(CAControl* control, DPoint point)
 {
