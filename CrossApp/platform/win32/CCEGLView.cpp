@@ -279,7 +279,7 @@ bool CCEGLView::Create()
             WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,    // Extended Style For The Window
             kWindowClassName,                                    // Class Name
             wszBuf,                                                // Window Title
-            WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
+			WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,        // Defined Window Style
             0, 0,                                                // Window Position
             //TODO: Initializing width with a large value to avoid getting a wrong client area by 'GetClientRect' function.
             1000,                                               // Window Width
@@ -571,17 +571,41 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		}
       break;
 #endif /* #if(_MSC_VER >= 1600) */
-    case WM_SIZE:
-        switch (wParam)
-        {
-        case SIZE_RESTORED:
-            CCApplication::sharedApplication()->applicationWillEnterForeground();
-            break;
-        case SIZE_MINIMIZED:
-            CCApplication::sharedApplication()->applicationDidEnterBackground();
-            break;
-        }
-        break;
+	case WM_SIZE:
+	{
+					static int oldWidth = 0, oldHeight = 0;
+					switch (wParam)
+					{
+					case SIZE_RESTORED:
+					{
+										  CCApplication::sharedApplication()->applicationWillEnterForeground();
+										  if (oldWidth > 0 && oldHeight > 0)
+										  {
+											  this->setFrameSize(oldWidth, oldHeight);
+											  CCApplication::sharedApplication()->applicationDidExitFullScreen();
+										  }
+					}
+						break;
+					case SIZE_MINIMIZED:
+					{
+										   CCApplication::sharedApplication()->applicationDidEnterBackground();
+					}
+						break;
+					case SIZE_MAXIMIZED:
+					{
+										   oldWidth = m_obScreenSize.width * 2;
+										   oldHeight = m_obScreenSize.height * 2;
+										   RECT rt;
+										   SystemParametersInfo(SPI_GETWORKAREA, 0, &rt, 0);    // 获得工作区大小 
+										   int w = (rt.right - rt.left) * 2;
+										   int h = (rt.bottom - rt.top - 24) * 2;
+										   this->setFrameSize(w, h);
+										   CCApplication::sharedApplication()->applicationDidToggleFullScreen();
+					}
+						break;
+					}
+	}
+		break;
     case WM_KEYDOWN:
         switch (wParam)
         {

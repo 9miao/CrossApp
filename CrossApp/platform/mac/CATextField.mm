@@ -570,8 +570,8 @@ bool CATextField::init()
     this->addSubview(m_pImgeView);
     m_pImgeView->setTextTag("textField");
 
-    setMarginLeft(m_iMarginLeft);
-    setMarginRight(m_iMarginRight);
+    this->setMarginLeft(m_iMarginLeft);
+    this->setMarginRight(m_iMarginRight);
     
     return true;
 }
@@ -606,6 +606,15 @@ void CATextField::setContentSize(const DSize& contentSize)
     size.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textField_MAC setContentSize:size];
 
+    if (m_eClearBtn == WhileEditing)
+    {
+        m_eClearBtn = None;
+        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), "source_material/clear_button.png");
+        DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
+        [textField_MAC setMarginRight:worldContentSize.width];
+        m_eClearBtn = WhileEditing;
+    }
+    
     m_pImgeView->setFrame([textField_MAC getDRect]);
     
     this->showImage();
@@ -794,7 +803,7 @@ int CATextField::getMarginRight()
 void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& filePath)
 {
     //set margins
-    setMarginLeft(imgSize.width);
+    this->setMarginLeft(imgSize.width);
     
     //setimage
     CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTag(1010);
@@ -816,7 +825,7 @@ void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& fil
 void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& filePath)
 {
     //set margins
-    setMarginRight(imgSize.width);
+    this->setMarginRight(imgSize.width);
     
     //setimage
     CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
@@ -841,7 +850,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
 {
     if (var == WhileEditing)
     {
-        setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
+        this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
         
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
         rightMarginView->setImageForState(CAControlStateAll, CAImage::create("source_material/clear_button.png"));
@@ -861,7 +870,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
         {
             rightMarginView->removeFromSuperview();
         }
-        setMarginRight(10);
+        this->setMarginRight(10);
     }
     
     m_eClearBtn = var;
@@ -923,7 +932,7 @@ void CATextField::clearBtnCallBack(CAControl* con, DPoint point)
 {
     if (getText().length() > 0)
     {
-        setText("");
+        this->setText("");
         if (this->isFirstResponder() == false)
         {
             this->delayShowImage();

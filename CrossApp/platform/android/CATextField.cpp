@@ -509,11 +509,7 @@ void CATextField::hideNativeTextField()
 
 void CATextField::showNativeTextField()
 {
-    const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
-    if (orientation == CAInterfaceOrientationPortrait)
-    {
-        CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
-    }
+    CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
 }
 
 void CATextField::delayShowImage()
@@ -603,6 +599,16 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(contentSize);
+    
+    if (m_eClearBtn == WhileEditing)
+    {
+        if (m_eClearBtn == WhileEditing)
+        {
+            m_eClearBtn = None;
+            this->setMarginImageRight(DSize(contentSize.height, contentSize.height), "");
+            m_eClearBtn = WhileEditing;
+        }
+    }
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     

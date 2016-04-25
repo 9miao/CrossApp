@@ -19,7 +19,7 @@
 #include <stdarg.h>
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-#include "platform/mac/CAAccelerometer.h"
+#include "CAAccelerometer.h"
 #include "shaders/CAShaderCache.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"

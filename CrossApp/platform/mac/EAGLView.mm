@@ -10,8 +10,8 @@
 #import "CATouch.h"
 #import "CCWindow.h"
 #import "CCEventDispatcher.h"
-#import "CCEGLView.h"
 #include "CADensityDpi.h"
+#include "CCApplication.h"
 
 //USING_NS_CC;
 static EAGLView *view;
@@ -251,8 +251,11 @@ static EAGLView *view;
         [fullScreenWindow_ makeKeyAndOrderFront:self];
 		[fullScreenWindow_ makeMainWindow];
 		//[fullScreenWindow_ setNextResponder:superViewGLView_];
+        CrossApp::CCApplication::sharedApplication()->applicationDidToggleFullScreen();
 
-    } else {
+    }
+    else
+    {
 
         // Remove glView from fullscreen window
         [openGLview removeFromSuperview];
@@ -270,6 +273,7 @@ static EAGLView *view;
         // Show the window
         [windowGLView_ makeKeyAndOrderFront:self];
 		[windowGLView_ makeMainWindow];
+        CrossApp::CCApplication::sharedApplication()->applicationDidExitFullScreen();
     }
 	
 	// issue #1189
