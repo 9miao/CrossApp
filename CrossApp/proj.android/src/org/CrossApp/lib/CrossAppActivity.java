@@ -1,24 +1,28 @@
 
 package org.CrossApp.lib;
 
+import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -62,28 +66,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	private int screenHeight = 0;
 	
 	private int orientation = 0;
-	
-	private static BluetoothAdapter mAdapter = null;
-	
-    private final int REQUEST_OPEN_BT_CODE = 1;
-    
-    private final int REQUEST_DISCOVERY_BT_CODE = 2;
-    
-    native static void returnBlueToothState(int state);
-    
-    native static void returnDiscoveryDevice(CrossAppBlueTooth sender);
-    
-    native static void returnStartedDiscoveryDevice();
-    
-    native static void returnFinfishedDiscoveryDevice();
     
     public static CrossAppTextField _sTextField = null;
     
     public static CrossAppTextView _sTextView = null;
     
     public static CrossAppNativeTool nativeTool;
-    
-    public static CrossAppDevice actAppDevice;
     
     public static void setSingleTextField(CrossAppTextField text) 
     {
@@ -126,7 +114,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
 		CrossAppNetWorkManager.setContext(this);
 		
-		 actAppDevice = new CrossAppDevice(this) {};
+		new CrossAppDevice(this) {};
 		
 		nativeTool = new CrossAppNativeTool(this);
 
@@ -142,33 +130,24 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			
 			CrossAppTextField.initWithHandler();
 			
-			CrossAppTextView.initWithHandler();
-			
+			CrossAppTextView.initWithHandler();			
 		 }
 		 else if (savedInstanceState != null)
 		 {
 			 CrossAppTextField.reload();
+             
 			 CrossAppTextView.reload();
+             
 			 if (savedInstanceState.containsKey("WEBVIEW"))
 			 {
 				 mWebViewHelper = new CrossAppWebViewHelper(frame);
+                 
 				 String[] strs = savedInstanceState.getStringArray("WEBVIEW");
+                 
 				 mWebViewHelper.setAllWebviews(strs);
 			 }
 			 savedInstanceState.clear();
 		 }
-		 
-		this.mHandler = new CrossAppHandler(this);
-		
-		exeHandler();
-		
-		CrossAppNetWorkManager.setContext(this);
-		
-	    CrossAppVolumeControl.setContext(s_pActivity);
-		
-	    CrossAppPersonList.Init(this);
-		
-		IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 	}
 
 	@Override
@@ -241,89 +220,19 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		return "";
     }
 
-	public BroadcastReceiver BluetoothReciever = new BroadcastReceiver()
+
+    private void toast(String str)
     {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            // TODO Auto-generated method stub
-            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction()))
-            {
+    	System.out.println(str);
 
-                int btState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
-                        BluetoothAdapter.STATE_OFF);
-
-                printBTState(btState);
-            }
-            else if(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED.equals(intent.getAction()))
-            {
-                int cur_mode_state = intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, BluetoothAdapter.SCAN_MODE_NONE);
-                int previous_mode_state = intent.getIntExtra(BluetoothAdapter.EXTRA_PREVIOUS_SCAN_MODE, BluetoothAdapter.SCAN_MODE_NONE);
-
-            }
-        }
-
-    };
-    
-    public BroadcastReceiver BTDiscoveryReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            // TODO Auto-generated method stub
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(intent.getAction()))
-            {
-                returnStartedDiscoveryDevice();
-            }
-            else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(intent.getAction()))
-            {
-                returnFinfishedDiscoveryDevice();
-            }
-            else if(BluetoothDevice.ACTION_FOUND.equals(intent.getAction()))
-            {
-                BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if(btDevice != null)
-                {
-                	CrossAppBlueTooth mAndroidBlueTooth = new CrossAppBlueTooth(btDevice.getAddress(),btDevice.getName());
-                	returnDiscoveryDevice(mAndroidBlueTooth);
-                }
-            }
-            else if(BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(intent.getAction()))
-            {
-                int cur_bond_state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
-                int previous_bond_state = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.BOND_NONE);
-            }
-        }
-
-    };
-
-    private void printBTState(int btState)
-    {
-        switch (btState)
-        {
-            case BluetoothAdapter.STATE_OFF:
-                break;
-            case BluetoothAdapter.STATE_TURNING_OFF:
-                break;
-            case BluetoothAdapter.STATE_TURNING_ON:
-                break;
-            case BluetoothAdapter.STATE_ON:
-                break;
-            default:
-                break;
-        }
+        Toast.makeText(CrossAppActivity.this, str, Toast.LENGTH_SHORT).show();
     }
 
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	 {
 		 nativeTool.onActivityResult(requestCode, resultCode, intent);
 	 }
-	 
-	public static void CAImageAlbum(int type)
-	{
-		CrossAppNativeTool.CAImageAlbum(type);
-	}
-		
+
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -332,27 +241,19 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	public static void setScreenBrightness(int value) {
-		try {
-			//System.putInt(s_pActivity.getContentResolver(),android.provider.Settings.System.SCREEN_BRIGHTNESS,value);
-			WindowManager.LayoutParams lp = s_pActivity.getWindow().getAttributes();
-			lp.screenBrightness = (value<=0?1:value) / 255f;
-			s_pActivity.getWindow().setAttributes(lp);
-		} catch (Exception e) {
-			Toast.makeText(s_pActivity,"error",Toast.LENGTH_SHORT).show();
-		}
-	}
-	
 	private void exeHandler(){
 		if(mLightHandler ==null){
 			mLightHandler = new Handler(){
 
 				 @Override
-				public void handleMessage(Message msg) {
-					int value = msg.what;
+				public void handleMessage(Message msg) {					 
+					 int value = msg.what;
 					 WindowManager.LayoutParams lp = s_pActivity.getWindow().getAttributes();
 					 lp.screenBrightness = value/255.0f;
 					 s_pActivity.getWindow().setAttributes(lp);
+					 
+					 ContentResolver resolver = s_pActivity.getContentResolver();
+					 saveBrightness(resolver,value);
 				}
 			 };
 		 }
@@ -373,12 +274,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
             };
         }
 	}
-	
-	public static void startUpdatingLocation() {
-		CrossAppGPS.Init(s_pActivity);
-		CrossAppGPS.getLocation();
-	}
-	
+		
+	public static void saveBrightness(ContentResolver resolver, int brightness) {
+        Uri uri = android.provider.Settings.System.getUriFor("screen_brightness");
+        android.provider.Settings.System.putInt(resolver, "screen_brightness",brightness);
+        resolver.notifyChange(uri, null);
+    }
 	
 	@Override
 	public void showDialog(final String pTitle, final String pMessage) {
@@ -430,8 +331,7 @@ public void init()
         this.mGLSurfaceView.setCrossAppRenderer(mCrossAppRenderer);
         
         this.setContentView(framelayout);
-        
-	}
+    }
 	
 	public static int dip2px(Context context, float dpValue) {
 	     final float scale = context.getResources().getDisplayMetrics().density;
@@ -457,7 +357,7 @@ public void init()
     	  return result;
     }
 	
-		public void onConfigurationChanged(Configuration newConfiguration)
+	public void onConfigurationChanged(Configuration newConfiguration)
 	{
 		super.onConfigurationChanged(newConfiguration);
 		

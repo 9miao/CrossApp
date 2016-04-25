@@ -266,20 +266,18 @@ public abstract class CrossAppDevice  extends Activity  {
         
         Notification notification = new Notification.Builder(s_pContext)    
         .setAutoCancel(true)  
-        .setSmallIcon(R.drawable.alert_dark_frame)
+        .setSmallIcon(0x7020000)
         .setNumber(6)
         .setTicker(title)
         .setContentTitle(title)    
         .setContentText(content)       
         .setContentIntent(pendingIntent)
-        .setSmallIcon(R.drawable.stat_notify_sync_noanim)
         .setWhen(System.currentTimeMillis())   
         .setOngoing(false)
         .build();   
         
 
         notification.contentIntent = pendingIntent;
-        notification.when = System.currentTimeMillis();
         notification.flags = Notification.FLAG_AUTO_CANCEL;//鐐瑰嚮鍚庤嚜鍔ㄦ秷澶� 
         notification.defaults = Notification.DEFAULT_VIBRATE;
         notification.defaults = Notification.DEFAULT_SOUND;//澹伴煶榛樿  
