@@ -4,9 +4,8 @@
 #define __SCRIPT_SUPPORT_H__
 
 #include "platform/CCCommon.h"
-#include "CAAccelerometer.h"
+#include "platform/mac/CAAccelerometer.h"
 #include "cocoa/CCSet.h"
-#include "CAAccelerometer.h"
 #include <map>
 #include <string>
 #include <list>
