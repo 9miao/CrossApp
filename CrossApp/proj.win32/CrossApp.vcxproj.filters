@@ -523,6 +523,9 @@
     <ClCompile Include="..\basics\CALayout.cpp">
       <Filter>basics</Filter>
     </ClCompile>
+    <ClCompile Include="..\view\CACell.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1055,6 +1058,9 @@
     </ClInclude>
     <ClInclude Include="..\basics\CALayout.h">
       <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CACell.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
