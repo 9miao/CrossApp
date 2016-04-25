@@ -574,33 +574,48 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_SIZE:
 	{
 					static int oldWidth = 0, oldHeight = 0;
+					static bool windowState = 0;
 					switch (wParam)
 					{
 					case SIZE_RESTORED:
 					{
-										  CCApplication::sharedApplication()->applicationWillEnterForeground();
-										  if (oldWidth > 0 && oldHeight > 0)
+										  if (windowState == 2)
+										  {
+											  CCApplication::sharedApplication()->applicationWillEnterForeground();
+											  
+										  }
+										  else if (windowState == 1)
 										  {
 											  this->setFrameSize(oldWidth, oldHeight);
 											  CCApplication::sharedApplication()->applicationDidExitFullScreen();
 										  }
+										  windowState = 0;
+					}
+						break;
+					case SIZE_MAXIMIZED:
+					{
+										   if (windowState == 2)
+										   {
+											   CCApplication::sharedApplication()->applicationWillEnterForeground();
+										   }
+										   else if (windowState == 0)
+										   {
+											   oldWidth = m_obScreenSize.width * 2;
+											   oldHeight = m_obScreenSize.height * 2;
+											   RECT rt;
+											   SystemParametersInfo(SPI_GETWORKAREA, 0, &rt, 0);    // 获得工作区大小 
+											   int w = (rt.right - rt.left) * 2;
+											   int h = (rt.bottom - rt.top - 24) * 2;
+											   this->setFrameSize(w, h);
+											   CCApplication::sharedApplication()->applicationDidToggleFullScreen();
+										   }
+										   windowState = 1;
 					}
 						break;
 					case SIZE_MINIMIZED:
 					{
 										   CCApplication::sharedApplication()->applicationDidEnterBackground();
-					}
-						break;
-					case SIZE_MAXIMIZED:
-					{
-										   oldWidth = m_obScreenSize.width * 2;
-										   oldHeight = m_obScreenSize.height * 2;
-										   RECT rt;
-										   SystemParametersInfo(SPI_GETWORKAREA, 0, &rt, 0);    // 获得工作区大小 
-										   int w = (rt.right - rt.left) * 2;
-										   int h = (rt.bottom - rt.top - 24) * 2;
-										   this->setFrameSize(w, h);
-										   CCApplication::sharedApplication()->applicationDidToggleFullScreen();
+										   windowState = 2;
 					}
 						break;
 					}

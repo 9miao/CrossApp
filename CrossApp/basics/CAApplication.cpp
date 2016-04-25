@@ -15,7 +15,6 @@
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-#include "CAAccelerometer.h"
 #include "dispatcher/CATouch.h"
 #include "support/user_default/CAUserDefault.h"
 #include "shaders/ccGLStateCache.h"
