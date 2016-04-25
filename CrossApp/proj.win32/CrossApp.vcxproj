@@ -285,6 +285,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\view\CAAlertView.cpp" />
     <ClCompile Include="..\view\CAAutoCollectionView.cpp" />
     <ClCompile Include="..\view\CABatchView.cpp" />
+    <ClCompile Include="..\view\CACell.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
     <ClCompile Include="..\view\CACollectionView.cpp" />
     <ClCompile Include="..\view\CADatePickerView.cpp" />
@@ -467,6 +468,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\view\CAAlertView.h" />
     <ClInclude Include="..\view\CAAutoCollectionView.h" />
     <ClInclude Include="..\view\CABatchView.h" />
+    <ClInclude Include="..\view\CACell.h" />
     <ClInclude Include="..\view\CAClippingView.h" />
     <ClInclude Include="..\view\CACollectionView.h" />
     <ClInclude Include="..\view\CADatePickerView.h" />
