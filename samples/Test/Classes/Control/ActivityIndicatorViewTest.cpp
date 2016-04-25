@@ -2,6 +2,8 @@
 #include "ActivityIndicatorViewTest.h"
 #include "CDUIShowAutoCollectionView.h"
 
+int ActivityIndicatorNum = 0;
+
 ActivityIndicatorViewTest::ActivityIndicatorViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
@@ -12,9 +14,8 @@ ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
+    ActivityIndicatorNum = 0;
 }
-
-int ActivityIndicatorNum = 0;
 
 void CDUIShowAutoCollectionView::ActivityIndicatorRightBtnRightcallback(CAControl* control, DPoint point)
 {
@@ -37,6 +38,7 @@ void CDUIShowAutoCollectionView::ActivityIndicatorRightBtnRightcallback(CAContro
 
 void ActivityIndicatorViewTest::viewDidLoad()
 {
+    CCLog("ActivityIndicatorNum == %d", ActivityIndicatorNum);
     if (ActivityIndicatorNum == 0)
     {
         CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
@@ -48,7 +50,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
         view1->setColor(CAColor_gray);
         this->getView()->addSubview(view1);
     }
-    if (ActivityIndicatorNum == 1)
+    else if (ActivityIndicatorNum == 1)
     {
         CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
         idc2->setStyle(CAActivityIndicatorViewStyleGrayLarge);
@@ -59,7 +61,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
         view2->setColor(CAColor_gray);
         this->getView()->addSubview(view2);
     }
-    if (ActivityIndicatorNum == 2)
+    else if (ActivityIndicatorNum == 2)
     {
         CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
         idc3->setStyle(CAActivityIndicatorViewStyleWhite);
@@ -72,7 +74,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
         view3->setColor(CAColor_gray);
         this->getView()->addSubview(view3);
     }
-    if (ActivityIndicatorNum == 3)
+    else if (ActivityIndicatorNum == 3)
     {
         CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
         idc4->setStyle(CAActivityIndicatorViewStyleGray);
@@ -85,7 +87,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
         view4->setColor(CAColor_gray);
         this->getView()->addSubview(view4);
     }
-    if (ActivityIndicatorNum == 4)
+    else
     {
         CAImage* image = CAImage::create("image/indicator2.png");
         CAImageView* imageView = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));

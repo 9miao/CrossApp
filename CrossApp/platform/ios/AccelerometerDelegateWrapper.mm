@@ -45,13 +45,15 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     delegate_ = delegate;
     
     _motionManager = [[CMMotionManager alloc] init];
-    if (_motionManager.accelerometerAvailable) {
+    if (_motionManager.accelerometerAvailable)
+    {
         // 启动设备的运动更新，通过给定的队列向给定的处理程序提供数据。
         [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
             
             [self performSelectorOnMainThread:@selector(handleDeviceMotion:) withObject:motion waitUntilDone:YES];
         }];
-    }else
+    }
+    else
     {
         [self setMotionManager:nil];
     }

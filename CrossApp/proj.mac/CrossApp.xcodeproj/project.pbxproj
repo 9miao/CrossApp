@@ -104,7 +104,7 @@
 		04EAB0DB1956D75600198A8E /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0E01956D74D00198A8E /* vec3.c */; };
 		04EAB0DC1956D75600198A8E /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0E11956D74D00198A8E /* vec4.c */; };
 		04EAB10A1956D75600198A8E /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */; };
-		04EAB10B1956D75600198A8E /* CCAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1211956D74D00198A8E /* CCAccelerometerDelegate.h */; };
+		04EAB10B1956D75600198A8E /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1211956D74D00198A8E /* CAAccelerometerDelegate.h */; };
 		04EAB10C1956D75600198A8E /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1221956D74D00198A8E /* CCCommon.h */; };
 		04EAB10E1956D75600198A8E /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA1241956D74D00198A8E /* CCFileUtils.cpp */; };
 		04EAB10F1956D75600198A8E /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1251956D74D00198A8E /* CCFileUtils.h */; };
@@ -115,7 +115,7 @@
 		04EAB1191956D75600198A8E /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */; };
 		04EAB1461956D75600198A8E /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1601956D74D00198A8E /* CCApplication.h */; };
 		04EAB1471956D75600198A8E /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA1611956D74D00198A8E /* CCApplication.mm */; };
-		04EAB14A1956D75600198A8E /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1641956D74D00198A8E /* CCAccelerometer.h */; };
+		04EAB14A1956D75600198A8E /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1641956D74D00198A8E /* CAAccelerometer.h */; };
 		04EAB14B1956D75600198A8E /* CCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA1651956D74D00198A8E /* CCCommon.mm */; };
 		04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1671956D74D00198A8E /* CCEventDispatcher.h */; };
 		04EAB14E1956D75600198A8E /* CCEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA1681956D74D00198A8E /* CCEventDispatcher.mm */; };
@@ -450,7 +450,7 @@
 		04EAA0E01956D74D00198A8E /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		04EAA0E11956D74D00198A8E /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
-		04EAA1211956D74D00198A8E /* CCAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometerDelegate.h; sourceTree = "<group>"; };
+		04EAA1211956D74D00198A8E /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
 		04EAA1221956D74D00198A8E /* CCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCommon.h; sourceTree = "<group>"; };
 		04EAA1241956D74D00198A8E /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		04EAA1251956D74D00198A8E /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
@@ -461,7 +461,7 @@
 		04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLViewProtocol.cpp; sourceTree = "<group>"; };
 		04EAA1601956D74D00198A8E /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		04EAA1611956D74D00198A8E /* CCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCApplication.mm; sourceTree = "<group>"; };
-		04EAA1641956D74D00198A8E /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
+		04EAA1641956D74D00198A8E /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		04EAA1651956D74D00198A8E /* CCCommon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon.mm; sourceTree = "<group>"; };
 		04EAA1671956D74D00198A8E /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
 		04EAA1681956D74D00198A8E /* CCEventDispatcher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEventDispatcher.mm; sourceTree = "<group>"; };
@@ -994,7 +994,7 @@
 				B08F4BCC19C7E66C008DE306 /* CAFTFontCache.h */,
 				B01F64F71964FE2F005C14FC /* CADensityDpi.h */,
 				04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */,
-				04EAA1211956D74D00198A8E /* CCAccelerometerDelegate.h */,
+				04EAA1211956D74D00198A8E /* CAAccelerometerDelegate.h */,
 				04EAA1221956D74D00198A8E /* CCCommon.h */,
 				04EAA1241956D74D00198A8E /* CCFileUtils.cpp */,
 				04EAA1251956D74D00198A8E /* CCFileUtils.h */,
@@ -1024,7 +1024,7 @@
 				0460ECF31956F97A00D13001 /* CCEGLView.mm */,
 				04EAA1601956D74D00198A8E /* CCApplication.h */,
 				04EAA1611956D74D00198A8E /* CCApplication.mm */,
-				04EAA1641956D74D00198A8E /* CCAccelerometer.h */,
+				04EAA1641956D74D00198A8E /* CAAccelerometer.h */,
 				04EAA1651956D74D00198A8E /* CCCommon.mm */,
 				04EAA1671956D74D00198A8E /* CCEventDispatcher.h */,
 				04EAA1681956D74D00198A8E /* CCEventDispatcher.mm */,
@@ -1572,7 +1572,7 @@
 				04EAB0CE1956D75600198A8E /* vec3.h in Headers */,
 				04EAB0CF1956D75600198A8E /* vec4.h in Headers */,
 				04EAB10A1956D75600198A8E /* CCApplicationProtocol.h in Headers */,
-				04EAB10B1956D75600198A8E /* CCAccelerometerDelegate.h in Headers */,
+				04EAB10B1956D75600198A8E /* CAAccelerometerDelegate.h in Headers */,
 				04EAB10C1956D75600198A8E /* CCCommon.h in Headers */,
 				B0A7157F1A43F6DE00A85FB9 /* CAWebViewImpl.h in Headers */,
 				3E2153E21B817AB80075448E /* CADevice.h in Headers */,
@@ -1583,7 +1583,7 @@
 				04EAB1161956D75600198A8E /* CCSAXParser.h in Headers */,
 				04EAB1461956D75600198A8E /* CCApplication.h in Headers */,
 				B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */,
-				04EAB14A1956D75600198A8E /* CCAccelerometer.h in Headers */,
+				04EAB14A1956D75600198A8E /* CAAccelerometer.h in Headers */,
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
 				04EAB14F1956D75600198A8E /* CCFileUtilsMac.h in Headers */,
 				B0F9B66E1C8E7F4F00BE7B1B /* CARichLabel.h in Headers */,

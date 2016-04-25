@@ -2,6 +2,8 @@
 #include "ImageViewTest.h"
 #include "CDUIShowAutoCollectionView.h"
 
+int ImageViewNum = 0;
+
 ImageViewTest::ImageViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
@@ -12,9 +14,8 @@ ImageViewTest::~ImageViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
+    ImageViewNum = 0;
 }
-
-int ImageViewNum = 0;
 
 void CDUIShowAutoCollectionView::ImageViewRightBtnRightcallback(CAControl* control, DPoint point)
 {

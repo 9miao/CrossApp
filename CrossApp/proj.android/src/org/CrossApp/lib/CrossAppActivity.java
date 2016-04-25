@@ -1,8 +1,6 @@
 
 package org.CrossApp.lib;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
 import android.annotation.SuppressLint;
@@ -21,7 +19,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.View.OnLayoutChangeListener;
 import android.view.WindowManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -252,7 +249,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
             // TODO Auto-generated method stub
             if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### Bluetooth State has changed ##");
 
                 int btState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
                         BluetoothAdapter.STATE_OFF);
@@ -261,18 +257,14 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
             }
             else if(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### ACTION_SCAN_MODE_CHANGED##");
                 int cur_mode_state = intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, BluetoothAdapter.SCAN_MODE_NONE);
                 int previous_mode_state = intent.getIntExtra(BluetoothAdapter.EXTRA_PREVIOUS_SCAN_MODE, BluetoothAdapter.SCAN_MODE_NONE);
-
-                Log.v(TAG, "### cur_mode_state ##" + cur_mode_state + " ~~ previous_mode_state" + previous_mode_state);
 
             }
         }
 
     };
     
-    //闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归幍顐︽晸閺傘倖瀚归弮鍫曟晸娓氥儱绠嶉幘顓㈡晸閺傘倖瀚归柨鐔告灮閹风兘鏁撻弬銈嗗
     public BroadcastReceiver BTDiscoveryReceiver = new BroadcastReceiver()
     {
         @Override
@@ -281,32 +273,25 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
             // TODO Auto-generated method stub
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT ACTION_DISCOVERY_STARTED ##");
                 returnStartedDiscoveryDevice();
             }
             else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT ACTION_DISCOVERY_FINISHED ##");
                 returnFinfishedDiscoveryDevice();
             }
             else if(BluetoothDevice.ACTION_FOUND.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT BluetoothDevice.ACTION_FOUND ##");
                 BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if(btDevice != null)
                 {
-                	Log.v(TAG , "Name : " + btDevice.getName() + " Address: " + btDevice.getAddress());
                 	CrossAppBlueTooth mAndroidBlueTooth = new CrossAppBlueTooth(btDevice.getAddress(),btDevice.getName());
                 	returnDiscoveryDevice(mAndroidBlueTooth);
                 }
             }
             else if(BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(intent.getAction()))
             {
-                Log.v(TAG, "### BT ACTION_BOND_STATE_CHANGED ##");
-
                 int cur_bond_state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
                 int previous_bond_state = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.BOND_NONE);
-                Log.v(TAG, "### cur_bond_state ##" + cur_bond_state + " ~~ previous_bond_state" + previous_bond_state);
             }
         }
 
@@ -317,28 +302,16 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         switch (btState)
         {
             case BluetoothAdapter.STATE_OFF:
-                Log.v(TAG, "BT State 闁跨喐鏋婚幏锟紹luetoothAdapter.STATE_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
-                toast("闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归悩鑸碉拷:闁跨喐鏋婚幏鐑芥晸閼哄倸鍙ч幉瀣");
-                Log.v(TAG, "BT State :  BluetoothAdapter.STATE_TURNING_OFF ###");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
-                Log.v(TAG, "BT State 闁跨喐鏋婚幏绋uetoothAdapter.STATE_TURNING_ON ###");
                 break;
             case BluetoothAdapter.STATE_ON:
-                Log.v(TAG, "BT State 闁跨喐鏋婚幏绋uetoothAdapter.STATE_ON ###");
                 break;
             default:
                 break;
         }
-    }
-
-    private void toast(String str)
-    {
-    	System.out.println(str);
-
-        //Toast.makeText(CrossAppActivity.this, str, Toast.LENGTH_SHORT).show();
     }
 
 	 public void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -458,53 +431,6 @@ public void init()
         
         this.setContentView(framelayout);
         
-        
-        this.frame.addOnLayoutChangeListener(new OnLayoutChangeListener() {
-			
-			@Override
-			public void onLayoutChange(View v, int left, int top, int right,
-					int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
-			{
-				// TODO Auto-generated method stub
-				
-				
-				if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom)
-				{
-					if (Math.abs(oldBottom - bottom) > 100 && right == oldRight)
-					{
-						FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-				        params.leftMargin = 0; 
-				    	params.rightMargin = 0;
-				    	params.topMargin = 0;
-				    	params.bottomMargin = (oldBottom - bottom) > 100 ? (bottom - oldBottom) : 0;
-				    	mGLSurfaceView.setLayoutParams(params);
-					}
-					else
-					{
-						screenWidth = right;
-						screenHeight = bottom;
-						
-						FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-				        params.leftMargin = 0; 
-				    	params.rightMargin = 0;
-				    	params.topMargin = 0;
-				    	params.bottomMargin = 0;
-				    	mGLSurfaceView.setLayoutParams(params);
-					}
-					
-					mCrossAppRenderer.setScreenWidthAndHeight(screenWidth, screenHeight);
-			    	s_pActivity.runOnGLThread(new Runnable() 
-			    	{
-			            @Override
-			            public void run()
-			            {
-			            	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
-			            }
-			        });  
-				}
-				
-			}
-		});
 	}
 	
 	public static int dip2px(Context context, float dpValue) {

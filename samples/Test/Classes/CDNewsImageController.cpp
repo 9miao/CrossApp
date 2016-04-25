@@ -271,9 +271,6 @@ void CDNewsImageController::scrollViewFooterBeginRefreshing(CAScrollView* view)
 
 void CDNewsImageController::scrollViewStopMoved(CrossApp::CAScrollView *view)
 {
-//    CATableView*  p_TableView;
-//    CAVector<CATableViewCell*> temVec =  p_TableView->displayingTableCell();
-    
     CAVector<CACollectionViewCell*> temVec = p_AutoCollectionView->displayingCollectionCell();
     
     

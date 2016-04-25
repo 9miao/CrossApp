@@ -83,33 +83,9 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	}
 
 	@Override
-	public void onDrawFrame(final GL10 gl) {
-		/*
-		 * FPS controlling algorithm is not accurate, and it will slow down FPS
-		 * on some devices. So comment FPS controlling code.
-		 */
-		
-		/*
-		final long nowInNanoSeconds = System.nanoTime();
-		final long interval = nowInNanoSeconds - this.mLastTickInNanoSeconds;
-		*/
-
-		// should render a frame when onDrawFrame() is called or there is a
-		// "ghost"
+	public void onDrawFrame(final GL10 gl) 
+	{
 		CrossAppRenderer.nativeRender();
-
-		/*
-		// fps controlling
-		if (interval < CrossAppRenderer.sAnimationInterval) {
-			try {
-				// because we render it before, so we should sleep twice time interval
-				Thread.sleep((CrossAppRenderer.sAnimationInterval - interval) / CrossAppRenderer.NANOSECONDSPERMICROSECOND);
-			} catch (final Exception e) {
-			}
-		}
-
-		this.mLastTickInNanoSeconds = nowInNanoSeconds;
-		*/
 	}
 
 	// ===========================================================

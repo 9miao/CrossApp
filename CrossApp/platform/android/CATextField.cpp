@@ -474,9 +474,9 @@ bool CATextField::becomeFirstResponder()
 
 	bool result = CAView::becomeFirstResponder();
 
-	becomeFirstResponderID(m_u__ID);
-
-	this->showNativeTextField();
+    becomeFirstResponderID(m_u__ID);
+    
+    this->showNativeTextField();
 
 	if (m_eClearBtn == WhileEditing)
 	{
@@ -509,8 +509,11 @@ void CATextField::hideNativeTextField()
 
 void CATextField::showNativeTextField()
 {
-    this->update(0);
-    CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
+    const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
+    if (orientation == CAInterfaceOrientationPortrait)
+    {
+        CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
+    }
 }
 
 void CATextField::delayShowImage()

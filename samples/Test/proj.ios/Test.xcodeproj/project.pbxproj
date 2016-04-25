@@ -130,6 +130,7 @@
 		B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */; };
 		B082115B1CABC472003E5EF5 /* WaterfallViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08211581CABC472003E5EF5 /* WaterfallViewTest.cpp */; };
 		B08BBA231BC8A6A50044340B /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08BBA211BC8A6A50044340B /* CDNewsImageController.cpp */; };
+		B08BE2261CCDB61B001A0F36 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08BE2251CCDB61B001A0F36 /* CoreMotion.framework */; };
 		B093DB4F1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB4B1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.cpp */; };
 		B093DB501CBCDECD00E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB4D1CBCDECD00E98AD6 /* AutoCollectionViewVerticalTest.cpp */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
@@ -450,6 +451,7 @@
 		B08211591CABC472003E5EF5 /* WaterfallViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaterfallViewTest.h; path = ../Classes/Control/WaterfallViewTest.h; sourceTree = "<group>"; };
 		B08BBA211BC8A6A50044340B /* CDNewsImageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsImageController.cpp; path = ../Classes/CDNewsImageController.cpp; sourceTree = "<group>"; };
 		B08BBA221BC8A6A50044340B /* CDNewsImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsImageController.h; path = ../Classes/CDNewsImageController.h; sourceTree = "<group>"; };
+		B08BE2251CCDB61B001A0F36 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		B093DB4B1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewHorizontalTest.cpp; path = ../Classes/Control/AutoCollectionViewHorizontalTest.cpp; sourceTree = "<group>"; };
 		B093DB4C1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewHorizontalTest.h; path = ../Classes/Control/AutoCollectionViewHorizontalTest.h; sourceTree = "<group>"; };
 		B093DB4D1CBCDECD00E98AD6 /* AutoCollectionViewVerticalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewVerticalTest.cpp; path = ../Classes/Control/AutoCollectionViewVerticalTest.cpp; sourceTree = "<group>"; };
@@ -548,14 +550,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */,
-				B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */,
-				B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */,
 				B039AF8D1BC7BFB1002C1FDB /* libbz2.1.0.tbd in Frameworks */,
 				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 				4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */,
 				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				B08BE2261CCDB61B001A0F36 /* CoreMotion.framework in Frameworks */,
+				B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */,
+				B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */,
+				B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */,
 				B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */,
 				B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */,
 				B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */,
@@ -696,6 +699,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B08BE2251CCDB61B001A0F36 /* CoreMotion.framework */,
 				B039AF9B1BC7C58E002C1FDB /* libSDL2.a */,
 				B039AF991BC7C539002C1FDB /* CoreAudioKit.framework */,
 				B039AF971BC7C52D002C1FDB /* CoreAudio.framework */,

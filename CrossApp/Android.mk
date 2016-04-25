@@ -91,6 +91,7 @@ view/CAImageView.cpp \
 view/CALabel.cpp \
 view/CARenderImage.cpp \
 view/CAScale9ImageView.cpp \
+view/CACell.cpp \
 view/CAScrollView.cpp \
 view/CAListView.cpp \
 view/CATableView.cpp \
