@@ -41,7 +41,7 @@ public:
 private:
     CAAcceleration m_obAccelerationValue;
     CAAccelerometerDelegate* m_pAccelDelegate;
-	Windows::Devices::Sensors::Accelerometer^ m_accelerometer;
+	Windows::Devices::Sensors::Accelerometer  m_accelerometer;
 };
 
 NS_CC_END

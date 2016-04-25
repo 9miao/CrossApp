@@ -1,7 +1,7 @@
 
 
-#ifndef __PLATFORM_IPHONE_CCACCELEROMETER_H__
-#define __PLATFORM_IPHONE_CCACCELEROMETER_H__
+#ifndef __PLATFORM_IPHONE_CAACCELEROMETER_H__
+#define __PLATFORM_IPHONE_CAACCELEROMETER_H__
 
 #include "platform/CAAccelerometerDelegate.h"
 

@@ -10,8 +10,6 @@
 
 #include "platform/CAAccelerometerDelegate.h"
 
-namespace   cocos2d {
-
 class CAAccelerometer
 {
 public:
@@ -26,6 +24,5 @@ public:
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 
-}//namespace   cocos2d
 
 #endif /* CAACCELEROMETER_H_ */
