@@ -13,7 +13,7 @@
 
         <activity android:name="org.CrossApp.hellocpp.HelloCpp"
                   android:label="@string/app_name"
-                  android:screenOrientation="user"
+                  android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:windowSoftInputMode="adjustPan"
                   android:configChanges="orientation">

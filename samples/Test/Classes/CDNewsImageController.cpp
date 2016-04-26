@@ -277,17 +277,30 @@ void CDNewsImageController::scrollViewStopMoved(CrossApp::CAScrollView *view)
     for(int i=0;i<temVec.size();i++)
     {
         CDNewsImagecollectionCell* cell = (CDNewsImagecollectionCell*)temVec.at(i);
-        CCLog("cell-index===%d",cell->getRow());
-        int row = cell->getRow();
+        int row = cell->getItem();
         int img_num = m_ImageNum[row];
         
-        for (int i=0; i<img_num; i++)
+        if (img_num == 1)
         {
-            CommonUrlImageView* temImage = dynamic_cast<CommonUrlImageView*>(cell->getContentView()->getSubviewByTag(200 + i));
-            if (temImage)
-            {
-                temImage->setUrl(m_ImageMsg[row].m_imageUrl[1 + i]);
-            }
+            cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[0]);
+        }
+        else if (img_num == 2)
+        {
+            cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[0]);
+            cell->getImage2()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+        }
+        else if (img_num == 3)
+        {
+            cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[0]);
+            cell->getImage2()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+            cell->getImage3()->setUrl(m_ImageMsg[row].m_imageUrl[2]);
+        }
+        else
+        {
+            cell->getImage1()->setUrl(m_ImageMsg[row].m_imageUrl[0]);
+            cell->getImage2()->setUrl(m_ImageMsg[row].m_imageUrl[1]);
+            cell->getImage3()->setUrl(m_ImageMsg[row].m_imageUrl[2]);
+            cell->getImage4()->setUrl(m_ImageMsg[row].m_imageUrl[3]);
         }
     }
 }
@@ -417,7 +430,7 @@ CACollectionViewCell* CDNewsImageController::collectionCellAtIndex(CAAutoCollect
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.5), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
+        //cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[0]);
         
         cell->getImage2()->setVisible(false);
         cell->getImage3()->setVisible(false);
@@ -428,12 +441,12 @@ CACollectionViewCell* CDNewsImageController::collectionCellAtIndex(CAAutoCollect
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
+        //cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[0]);
         
         cell->getImage2()->setVisible(true);
         cell->getImage2()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage2()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
+        //cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage3()->setVisible(false);
         cell->getImage4()->setVisible(false);
@@ -443,17 +456,17 @@ CACollectionViewCell* CDNewsImageController::collectionCellAtIndex(CAAutoCollect
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_T_C(1, 0.5)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
+        //cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[0]);
         
         cell->getImage2()->setVisible(true);
         cell->getImage2()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_T_C(1, 0.25)));
         cell->getImage2()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
+        //cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage3()->setVisible(true);
         cell->getImage3()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_B_C(1, 0.75)));
         cell->getImage3()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage3()->setUrl(m_ImageMsg[item].m_imageUrl[3]);
+        //cell->getImage3()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
         
         cell->getImage4()->setVisible(false);
     }
@@ -462,22 +475,22 @@ CACollectionViewCell* CDNewsImageController::collectionCellAtIndex(CAAutoCollect
         cell->getImage1()->setVisible(true);
         cell->getImage1()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_T_C(1, 0.25)));
         cell->getImage1()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
+        //cell->getImage1()->setUrl(m_ImageMsg[item].m_imageUrl[0]);
         
         cell->getImage2()->setVisible(true);
         cell->getImage2()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_T_C(1, 0.25)));
         cell->getImage2()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
+        //cell->getImage2()->setUrl(m_ImageMsg[item].m_imageUrl[1]);
         
         cell->getImage3()->setVisible(true);
         cell->getImage3()->setLayout(DLayout(DHorizontalLayout_R_C(1, 0.75), DVerticalLayout_B_C(1, 0.75)));
         cell->getImage3()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage3()->setUrl(m_ImageMsg[item].m_imageUrl[3]);
+        //cell->getImage3()->setUrl(m_ImageMsg[item].m_imageUrl[2]);
         
         cell->getImage4()->setVisible(true);
         cell->getImage4()->setLayout(DLayout(DHorizontalLayout_L_C(1, 0.25), DVerticalLayout_B_C(1, 0.75)));
         cell->getImage4()->setImage(CAImage::create("image/HelloWorld.png"));
-        cell->getImage4()->setUrl(m_ImageMsg[item].m_imageUrl[4]);
+        //cell->getImage4()->setUrl(m_ImageMsg[item].m_imageUrl[3]);
     }
     return cell;
 }

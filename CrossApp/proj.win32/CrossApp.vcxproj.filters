@@ -114,9 +114,6 @@
     <ClCompile Include="..\platform\platform.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CCAccelerometer.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCApplication.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -526,6 +523,9 @@
     <ClCompile Include="..\view\CACell.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\win32\CAAccelerometer.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -560,9 +560,6 @@
     </ClInclude>
     <ClInclude Include="..\platform\platform.h">
       <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CCAccelerometer.h">
-      <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\win32\CCApplication.h">
       <Filter>platform\win32</Filter>
@@ -1061,6 +1058,9 @@
     </ClInclude>
     <ClInclude Include="..\view\CACell.h">
       <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAAccelerometer.h">
+      <Filter>platform\win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
