@@ -308,6 +308,7 @@ CATextView::~CATextView()
 {
     s_map.erase(m_u__ID);
     textViewOnRemoveView(m_u__ID);
+    CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
 }
 
 void CATextView::onEnterTransitionDidFinish()

@@ -273,13 +273,8 @@ void CATextView::update(float t)
 }
 void CATextView::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextView::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+    CC_RETURN_IF(CAScheduler::isScheduled(schedule_selector(CATextView::showImage), this));
+    CAScheduler::schedule(schedule_selector(CATextView::showImage), this, 0, 0, 0);
 }
 void CATextView::showImage()
 {

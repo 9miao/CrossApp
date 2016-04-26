@@ -606,7 +606,7 @@ CATextView::CATextView()
 
 CATextView::~CATextView()
 {
-    
+    CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
 }
 
 void CATextView::onEnterTransitionDidFinish()

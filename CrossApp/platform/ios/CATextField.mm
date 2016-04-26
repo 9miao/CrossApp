@@ -291,13 +291,8 @@ void CATextField::showNativeTextField()
 
 void CATextField::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextField::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+    CC_RETURN_IF(CAScheduler::isScheduled(schedule_selector(CATextField::showImage), this));
+    CAScheduler::schedule(schedule_selector(CATextField::showImage), this, 0, 0, 0);
 }
 
 void CATextField::showImage()

@@ -645,6 +645,7 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
+    CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
 }
 
 void CATextField::onEnterTransitionDidFinish()
