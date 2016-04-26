@@ -573,8 +573,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 #endif /* #if(_MSC_VER >= 1600) */
 	case WM_SIZE:
 	{
-					static int oldWidth = 0, oldHeight = 0;
-					static bool windowState = 0;
+					static int oldWidth = 0, oldHeight = 0, windowState = 0;
 					switch (wParam)
 					{
 					case SIZE_RESTORED:
