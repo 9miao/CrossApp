@@ -611,7 +611,7 @@ void CAView::setContentSize(const DSize & contentSize)
         this->updateImageRect();
         if (m_pContentContainer)
         {
-            m_pContentContainer->viewSizeDidChanged();
+            m_pContentContainer->viewOnSizeTransitionDidChanged();
         }
         
         CAVector<CAView*>::iterator itr;
