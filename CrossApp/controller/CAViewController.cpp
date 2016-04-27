@@ -108,6 +108,14 @@ void CAViewController::viewOnExitTransitionDidStart()
     
 }
 
+void CAViewController::viewOnSizeTransitionDidChanged()
+{
+    if (m_bLifeLock)
+    {
+        this->viewSizeDidChanged();
+    }
+}
+
 std::string CAViewController::getNibName()
 {
     return typeid(*this).name();

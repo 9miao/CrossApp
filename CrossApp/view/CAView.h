@@ -473,6 +473,8 @@ public:
     virtual void viewOnEnterTransitionDidFinish() = 0;
     
     virtual void viewOnExitTransitionDidStart() = 0;
+    
+    virtual void viewOnSizeTransitionDidChanged() = 0;
 };
 
 static bool compareSubviewZOrder(CAView* one, CAView* two)

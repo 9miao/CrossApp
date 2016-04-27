@@ -94,6 +94,8 @@ public:
     
     virtual void viewDidDisappear() {};
     
+    virtual void viewSizeDidChanged() {};
+    
     virtual void keyBackClicked() {};
     
     virtual void keyMenuClicked() {};
@@ -107,6 +109,8 @@ private:
     void viewOnEnterTransitionDidFinish();
     
     void viewOnExitTransitionDidStart();
+    
+    void viewOnSizeTransitionDidChanged();
     
     void parser();
     

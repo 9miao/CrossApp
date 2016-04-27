@@ -609,6 +609,10 @@ void CAView::setContentSize(const DSize & contentSize)
         m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
         
         this->updateImageRect();
+        if (m_pContentContainer)
+        {
+            m_pContentContainer->viewSizeDidChanged();
+        }
         
         CAVector<CAView*>::iterator itr;
         for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
