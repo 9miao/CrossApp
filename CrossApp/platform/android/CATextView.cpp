@@ -298,10 +298,9 @@ CATextView::CATextView()
 , m_eReturnType(Default)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
-    s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
+    s_map[m_u__ID] = this;
 	textViewOnCreateView(m_u__ID);
-    textViewSetFontSizeJNI(m_u__ID, m_iFontSize / 2);
 }
 
 CATextView::~CATextView()
@@ -391,7 +390,7 @@ void CATextView::delayShowImage()
     if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
     {
         CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDuration(0.1f);
 		CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextView::showImage));
         CAViewAnimation::commitAnimations();
     }

@@ -398,11 +398,9 @@ CATextField::CATextField()
 , m_eReturnType(Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
-    s_map[m_u__ID] = this;
     this->setHaveNextResponder(false);
+    s_map[m_u__ID] = this;
     onCreateView(m_u__ID);
-    this->setPlaceHolderText("");
-    setFontSizeJNI(m_u__ID, m_iFontSize / 2);
 }
 
 CATextField::~CATextField()
@@ -518,7 +516,7 @@ void CATextField::delayShowImage()
     if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
     {
         CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDuration(0.1f);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextField::showImage));
         CAViewAnimation::commitAnimations();
     }

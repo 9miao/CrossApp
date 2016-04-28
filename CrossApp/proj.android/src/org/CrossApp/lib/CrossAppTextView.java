@@ -384,7 +384,7 @@ import android.widget.TextView.OnEditorActionListener;
             public void run()
             {
             	bmp = textView.getDrawingCache();
-            	if (bmp != null)
+            	if (bmp != null && imageData == null)
             	{
             		imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
             		bmp.copyPixelsToBuffer(imageData);
@@ -395,6 +395,7 @@ import android.widget.TextView.OnEditorActionListener;
                         public void run()
                         {
                         	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
+                        	imageData = null;
                         }
                     });
             	}
@@ -454,31 +455,22 @@ import android.widget.TextView.OnEditorActionListener;
             	params.topMargin = 0;
             	textView.setLayoutParams(params);
         		
-            	TimerTask task = new TimerTask()
-            	{    
-            		public void run()
-            		{    
-            			bmp = textView.getDrawingCache();
-                    	if (bmp != null)
-                    	{
-                    		imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
-                    		bmp.copyPixelsToBuffer(imageData);
-                    		
-                    		context.runOnGLThread(new Runnable() 
-                        	{
-                                @Override
-                                public void run()
-                                {
-                                	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
-                                }
-                            });
-                    	}
-            		}    
-            	};  
+            	bmp = textView.getDrawingCache();
+            	if (bmp != null && imageData == null)
+            	{
+            		imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
+            		bmp.copyPixelsToBuffer(imageData);
             		
-            	Timer timer = new Timer();  
-            	timer.schedule(task, (long) 50);
-				
+            		context.runOnGLThread(new Runnable() 
+                	{
+                        @Override
+                        public void run()
+                        {
+                        	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
+                        	imageData = null;
+                        }
+                    });
+            	} 
             }
         });
     }
@@ -526,6 +518,7 @@ import android.widget.TextView.OnEditorActionListener;
 		if (textView != null)
 		{
 			layout.removeView(textView);
+			textView = null;
 		}
 		
 		textView = new EditText(context) ; 

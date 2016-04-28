@@ -71,7 +71,7 @@ public class CrossAppWebViewHelper {
                         FrameLayout.LayoutParams.WRAP_CONTENT);
                 layout.addView(webView, lParams);
                 webView.setDrawingCacheEnabled(true);
-            	Log.e("ssssssssss","bbbbbbbbb setAllWebviews");
+                Log.d(TAG, "createWebView");
                 webViews.put(index, webView);
             }
         });
@@ -91,11 +91,32 @@ public class CrossAppWebViewHelper {
             @Override
             public void run() {
                 CrossAppWebView webView = webViews.get(index);
+                Log.d(TAG, "removeWebView @@@@@@@@@@@@@@@@@@@@@@@");
                 if (webView != null) {
                     webViews.remove(index);
                     layout.removeView(webView);
+                    Log.d(TAG, "removeWebView");
                     webView.destroy();
                 }
+            }
+        });
+    }
+    
+    @SuppressWarnings("unused")
+    public static void removeAllWebViews() {
+        CrossAppActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            	for (int i=0; i<webViews.size(); i++)
+        		{
+        			CrossAppWebView webView = webViews.get(webViews.keyAt(i));
+        			if (webView != null) {
+                        layout.removeView(webView);
+                        Log.d(TAG, "removeWebView");
+                        webView.destroy();
+                    }
+        		}
+            	webViews.clear();
             }
         });
     }
@@ -176,6 +197,9 @@ public class CrossAppWebViewHelper {
         CrossAppActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+            	System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxx loadUrlWithRect");
+            	System.out.println(url);
+            	System.out.println(size);
                 CrossAppWebView webView = webViews.get(index);
                 if (webView != null) {
 					String[] s = size.split("-");
@@ -367,17 +391,8 @@ public class CrossAppWebViewHelper {
     
     public static void setAllWebviews(String[] strs) 
     {
-    	if (webViews.size() > 0)
-    	{
-    		for (int i=0; i<webViews.size(); i++)
-    		{
-    			int key = webViews.keyAt(i);
-    			CrossAppWebView webView = webViews.get(key);
-    			layout.removeView(webView);
-    		}
-    	}
-
-    	webViews.clear();
+    	removeAllWebViews();
+    	
     	int cnt = (strs.length-1) / 3;
     	viewTag = Integer.parseInt(strs[0]);
     	
@@ -385,6 +400,7 @@ public class CrossAppWebViewHelper {
     		int index = Integer.parseInt(strs[3*i+1]);
     		createWebView(index);
     		loadUrlWithRect(index, strs[3*i+2], strs[3*i+3]);
+    		System.out.println("setAllWebviews  create...");
     	}
     }
 }

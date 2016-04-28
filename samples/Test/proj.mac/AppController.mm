@@ -74,6 +74,6 @@
 	-(IBAction) exitFullScreen:(id)sender
 	{
 		[[EAGLView sharedEGLView] setFullScreen:NO];
-	}
+    }
 
 @end

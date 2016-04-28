@@ -4,7 +4,9 @@ package org.CrossApp.lib;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -28,6 +30,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import org.CrossApp.lib.CrossAppVolumeControl;
 import org.CrossApp.lib.CrossAppNetWorkManager;
 import org.CrossApp.lib.CrossAppDevice;
@@ -388,20 +391,15 @@ public void init()
             	
             	CrossAppTextField.updateImage();
          		CrossAppTextView.updateImage();
-            	
+         		
             	s_pActivity.runOnUiThread(new Runnable() 
              	{
                      @Override
                      public void run()
                      {
-                 		Bundle savedInstanceState = new Bundle();
-                 		savedInstanceState.putStringArray("WEBVIEW", mWebViewHelper.getAllWebviews());;
-                 		mWebViewHelper = new CrossAppWebViewHelper(frame);
-                 		String[] strs = savedInstanceState.getStringArray("WEBVIEW");
-                 		mWebViewHelper.setAllWebviews(strs);
-                 		savedInstanceState.clear();
+                 		//mWebViewHelper.setAllWebviews(mWebViewHelper.getAllWebviews());
                      }
-                 });
+             	});
             }
         });  
 	}
