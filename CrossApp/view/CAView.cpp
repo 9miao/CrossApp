@@ -1505,9 +1505,9 @@ CATransformation CAView::nodeToParentTransform(void)
         // Translate values
         float height = 0;
         
-        if (this->getSuperview())
+        if (this->m_pSuperview)
         {
-            height = this->getSuperview()->getBounds().size.height;
+            height = this->m_pSuperview->m_obContentSize.height;
         }
         else
         {
