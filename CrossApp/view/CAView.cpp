@@ -584,6 +584,8 @@ void CAView::setAnchorPoint(const DPoint& anchorPoint)
     {
         DPoint anchorPointInPoints = ccpCompMult(m_obContentSize, anchorPoint);
         
+//        float new_angle_X = atanf(anchorPointInPoints.y / anchorPointInPoints.x) * 180 / M_PI;
+        
         DPoint point = ccpSub(m_obPoint, ccpCompMult(ccpSub(m_obAnchorPointInPoints, anchorPointInPoints),
                                                      DPoint(m_fScaleX, m_fScaleY)));
         

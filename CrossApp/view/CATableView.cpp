@@ -591,7 +591,7 @@ void CATableView::reloadData()
             y += m_nRowHeightss[i][j];
             
             m_rLineRectss[i][j] = DRect(0, y, width, s_px_to_dip(m_nSeparatorViewHeight));
-            y += m_nSeparatorViewHeight;
+            y += s_px_to_dip(m_nSeparatorViewHeight);
         }
         
         DRect sectionFooterRect = DRect(0, y, width, m_nSectionFooterHeights.at(i));

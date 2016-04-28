@@ -453,7 +453,7 @@ void CAListView::reloadViewSizeData()
             m_rLineRects[i] = (m_eOrientation == Vertical)
             ? DRect(0, iStartPosition, width, s_px_to_dip(m_nSeparatorViewHeight))
             : DRect(iStartPosition, 0, s_px_to_dip(m_nSeparatorViewHeight), height);
-            iStartPosition += m_nSeparatorViewHeight;
+            iStartPosition += s_px_to_dip(m_nSeparatorViewHeight);
         }
     }
     
@@ -559,6 +559,8 @@ void CAListView::recoveryCell()
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
     rect.origin.y -= rect.size.height * 0.1f;
+    rect.origin.x -= rect.size.width * 0.1f;
+    rect.size.width *= 1.2f;
     rect.size.height *= 1.2f;
     
 	std::map<unsigned int, CAListViewCell*>::iterator itr;
@@ -589,6 +591,8 @@ void CAListView::loadCell()
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
     rect.origin.y -= rect.size.height * 0.1f;
+    rect.origin.x -= rect.size.width * 0.1f;
+    rect.size.width *= 1.2f;
     rect.size.height *= 1.2f;
     
 	std::map<unsigned int, CAListViewCell*>::iterator itr;
