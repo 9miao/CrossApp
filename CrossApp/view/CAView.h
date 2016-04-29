@@ -245,7 +245,7 @@ public:
 
     virtual void updateTransform(void);
 
-    virtual CATransformation nodeToParentTransform(void);
+    virtual CATransformation viewToSuperviewTransform(void);
 
     DRect convertRectToNodeSpace(const DRect& worldRect);
 

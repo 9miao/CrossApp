@@ -566,15 +566,24 @@ void CAView::setAnchorPointInPoints(const DPoint& anchorPointInPoints)
     {
         DPoint anchorPoint = DPoint(anchorPointInPoints.x / m_obContentSize.width,
                                     anchorPointInPoints.y / m_obContentSize.height);
-        
-        DPoint point = ccpSub(m_obPoint, ccpCompMult(ccpSub(m_obAnchorPointInPoints, anchorPointInPoints),
-                                                     DPoint(m_fScaleX, m_fScaleY)));
+
+        if (m_bRunning)
+        {
+            this->viewToSuperviewTransform();
+        }
         
         m_obAnchorPoint = anchorPoint;
         m_obAnchorPointInPoints = anchorPointInPoints;
         
-        this->setPoint(point);
-        this->updateDraw();
+        if (m_bRunning)
+        {
+            DPoint point = anchorPointInPoints;
+            point.y = m_obContentSize.height - point.y;
+            point = DPointApplyAffineTransform(point, m_sTransform);
+            point.y = this->m_pSuperview->m_obContentSize.height - point.y;
+            this->setPoint(point);
+            this->updateDraw();
+        }
     }
 }
 
@@ -584,16 +593,23 @@ void CAView::setAnchorPoint(const DPoint& anchorPoint)
     {
         DPoint anchorPointInPoints = ccpCompMult(m_obContentSize, anchorPoint);
         
-//        float new_angle_X = atanf(anchorPointInPoints.y / anchorPointInPoints.x) * 180 / M_PI;
-        
-        DPoint point = ccpSub(m_obPoint, ccpCompMult(ccpSub(m_obAnchorPointInPoints, anchorPointInPoints),
-                                                     DPoint(m_fScaleX, m_fScaleY)));
+        if (m_bRunning)
+        {
+            this->viewToSuperviewTransform();
+        }
         
         m_obAnchorPoint = anchorPoint;
         m_obAnchorPointInPoints = anchorPointInPoints;
         
-        this->setPoint(point);
-        this->updateDraw();
+        if (m_bRunning)
+        {
+            DPoint point = anchorPointInPoints;
+            point.y = m_obContentSize.height - point.y;
+            point = DPointApplyAffineTransform(point, m_sTransform);
+            point.y = this->m_pSuperview->m_obContentSize.height - point.y;
+            this->setPoint(point);
+            this->updateDraw();
+        }
     }
 }
 
@@ -1367,7 +1383,7 @@ void CAView::transform()
     kmMat4 transfrom4x4;
     
     // Convert 3x3 into 4x4 matrix
-    CATransformation tmpAffine = this->nodeToParentTransform();
+    CATransformation tmpAffine = this->viewToSuperviewTransform();
     CGAffineToGL(&tmpAffine, transfrom4x4.mat);
     
     // Update Z vertex manually
@@ -1497,7 +1513,7 @@ void CAView::update(float fDelta)
 
 }
 
-CATransformation CAView::nodeToParentTransform(void)
+CATransformation CAView::viewToSuperviewTransform(void)
 {
     if (m_bTransformDirty)
     {
@@ -1676,11 +1692,11 @@ void CAView::updateTransform()
             
             if( !m_pSuperview || m_pSuperview == m_pobBatchView)
             {
-                m_transformToBatch = nodeToParentTransform();
+                m_transformToBatch = viewToSuperviewTransform();
             }
             else
             {
-                m_transformToBatch = CATransformationConcat( nodeToParentTransform() , m_pSuperview->m_transformToBatch );
+                m_transformToBatch = CATransformationConcat( viewToSuperviewTransform() , m_pSuperview->m_transformToBatch );
             }
 
             DSize size = m_obContentSize;

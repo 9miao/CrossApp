@@ -493,15 +493,17 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             CATouch* touch0 = dynamic_cast<CATouch*>(m_vTouches.at(0));
             CATouch* touch1 = dynamic_cast<CATouch*>(m_vTouches.at(1));
             
+            if (m_eMultitouchGesture == Rotate)
+            {
+                m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
+            }
+            
             if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == ZoomAndRotate)
             {
                 m_fBeganZoomScale = m_fZoomScale;
                 m_fBeganTouchLength = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
                                                   this->convertToNodeSpace(touch1->getLocation()));
-            }
-            
-            if (m_eMultitouchGesture == Zoom)
-            {
+                
                 DPoint mid_point = ccpMidpoint(m_pContainer->convertToNodeSpace(touch0->getLocation()),
                                                m_pContainer->convertToNodeSpace(touch1->getLocation()));
                 m_pContainer->setAnchorPointInPoints(mid_point);
@@ -511,7 +513,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 }
                 m_bZooming = true;
             }
-            
+
             if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
             {
                 DPoint beganRotationVector = ccpSub(this->convertToNodeSpace(touch0->getLocation()),
@@ -519,7 +521,6 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 
                 m_fBeganGestureAngle = CC_RADIANS_TO_DEGREES(ccpAngleSigned(beganRotationVector, DPoint(1, 0)));
                 m_fBeganAngle = m_pContainer->getRotation();
-                m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
             }
 
             m_tPointOffset.clear();
@@ -709,7 +710,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_fBeganTouchLength = 0.0f;
         m_bZooming = false;
         
-        m_pContainer->setAnchorPoint(DPointZero);
+        m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
     }
 }
 

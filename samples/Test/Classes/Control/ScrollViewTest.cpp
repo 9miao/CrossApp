@@ -18,7 +18,7 @@ void ScrollViewTest::viewDidLoad()
     p_ScrollView = CAScrollView::createWithLayout(DLayoutFill);
     p_ScrollView->setMinimumZoomScale(0.2f);
     p_ScrollView->setMaximumZoomScale(5.0f);
-    p_ScrollView->setMultitouchGesture(CAScrollView::MultitouchGesture::Zoom);
+    p_ScrollView->setMultitouchGesture(CAScrollView::MultitouchGesture::ZoomAndRotate);
     this->getView()->addSubview(p_ScrollView);
     p_ScrollView->setViewSize(DSize(2160, 3840));
     
