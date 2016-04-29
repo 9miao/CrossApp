@@ -89,10 +89,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         float y = m_obContentSize.height;
         layout.vertical = DVerticalLayout_T_B(y, -y);
         view->setLayout(layout);
-        
-        DRect endFrame = DRectZero;
-        endFrame.size = view->getFrame().size;
-        
+
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);

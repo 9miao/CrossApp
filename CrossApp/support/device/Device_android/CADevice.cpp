@@ -257,7 +257,7 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
 
 	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "UpdateCamera", "(Ljava/lang/String;)V"))
 	{
-		jmi.env->CallStaticIntMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
+		jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
 	}	
 }
 
