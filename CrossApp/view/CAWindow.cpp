@@ -85,9 +85,10 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
     if (animated)
     {
         CAView* view = m_pModalViewController->getView();
-        DRect frame = view->getFrame();
-        frame.origin.y = frame.size.height;
-        view->setFrame(frame);
+        DLayout layout = view->getLayout();
+        float y = m_obContentSize.height;
+        layout.vertical = DVerticalLayout_T_B(y, -y);
+        view->setLayout(layout);
         
         DRect endFrame = DRectZero;
         endFrame.size = view->getFrame().size;
@@ -97,7 +98,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         CAViewAnimation::setAnimationDelay(0.1f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWindow::presentEnd));
-        view->setFrame(endFrame);
+        view->setLayout(DLayoutFill);
         CAViewAnimation::commitAnimations();
     }
     else
@@ -128,16 +129,16 @@ void CAWindow::dismissModalViewController(bool animated)
     if (animated)
     {
         CAView* view = m_pModalViewController->getView();
-        
-        DRect endFrame = view->getFrame();
-        endFrame.origin.y = endFrame.size.height;
-        
+
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
         CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWindow::dismissEnd));
-        view->setFrame(endFrame);
+        DLayout layout = view->getLayout();
+        float y = m_obContentSize.height;
+        layout.vertical = DVerticalLayout_T_B(y, -y);
+        view->setLayout(layout);
         CAViewAnimation::commitAnimations();
     }
     else
