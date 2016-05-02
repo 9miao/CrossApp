@@ -220,12 +220,12 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
+    <ClCompile Include="..\platform\win32\CAAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CAClipboard.cpp" />
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
     <ClCompile Include="..\platform\win32\CATextField.cpp" />
     <ClCompile Include="..\platform\win32\CATextView.cpp" />
     <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp" />
-    <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView.cpp" />
@@ -287,6 +287,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\view\CAAlertView.cpp" />
     <ClCompile Include="..\view\CAAutoCollectionView.cpp" />
     <ClCompile Include="..\view\CABatchView.cpp" />
+    <ClCompile Include="..\view\CACell.cpp" />
     <ClCompile Include="..\view\CAClippingView.cpp" />
     <ClCompile Include="..\view\CACollectionView.cpp" />
     <ClCompile Include="..\view\CADatePickerView.cpp" />
@@ -366,7 +367,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\platform\CATempTypeFont.h" />
     <ClInclude Include="..\platform\CATextField.h" />
     <ClInclude Include="..\platform\CATextView.h" />
-    <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCEGLViewProtocol.h" />
@@ -375,8 +375,8 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\platform.h" />
+    <ClInclude Include="..\platform\win32\CAAccelerometer.h" />
     <ClInclude Include="..\platform\win32\CAWebViewImpl.h" />
-    <ClInclude Include="..\platform\win32\CCAccelerometer.h" />
     <ClInclude Include="..\platform\win32\CCApplication.h" />
     <ClInclude Include="..\platform\win32\CCEGLView.h" />
     <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h" />
@@ -468,6 +468,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\view\CAAlertView.h" />
     <ClInclude Include="..\view\CAAutoCollectionView.h" />
     <ClInclude Include="..\view\CABatchView.h" />
+    <ClInclude Include="..\view\CACell.h" />
     <ClInclude Include="..\view\CAClippingView.h" />
     <ClInclude Include="..\view\CACollectionView.h" />
     <ClInclude Include="..\view\CADatePickerView.h" />
