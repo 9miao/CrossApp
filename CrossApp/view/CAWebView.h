@@ -51,6 +51,10 @@ public:
 
     static CAWebView* createWithLayout(const DLayout& layout);
     
+    virtual void onEnterTransitionDidFinish();
+    
+    virtual void onExitTransitionDidStart();
+    
     /**
     * Set javascript interface scheme.
     * @see #onJsCallback

@@ -71,7 +71,6 @@ public class CrossAppWebViewHelper {
                         FrameLayout.LayoutParams.WRAP_CONTENT);
                 layout.addView(webView, lParams);
                 webView.setDrawingCacheEnabled(true);
-                Log.d(TAG, "createWebView");
                 webViews.put(index, webView);
             }
         });
@@ -91,7 +90,6 @@ public class CrossAppWebViewHelper {
             @Override
             public void run() {
                 CrossAppWebView webView = webViews.get(index);
-                Log.d(TAG, "removeWebView @@@@@@@@@@@@@@@@@@@@@@@");
                 if (webView != null) {
                     webViews.remove(index);
                     layout.removeView(webView);
@@ -136,20 +134,15 @@ public class CrossAppWebViewHelper {
 
     @SuppressWarnings("unused")
     public static void setWebViewRect(final int index, final int left, final int top, final int maxWidth, final int maxHeight) {
-    	Callable<Boolean> callable = new Callable<Boolean>() {
+    	CrossAppActivity.runOnUiThread(new Runnable() {
             @Override
-            public Boolean call() throws Exception {
-                CrossAppWebView webView = webViews.get(index);
+            public void run() {
+            	CrossAppWebView webView = webViews.get(index);
                 if (webView != null) {
                     webView.setWebViewRect(left, top, maxWidth, maxHeight);
                 }
-                return true;
             }
-        };
-        try {
-            callInMainThread(callable);
-        } catch (Exception e) {
-        }
+        });
     }
 
     @SuppressWarnings("unused")

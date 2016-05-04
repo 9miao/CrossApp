@@ -74,8 +74,6 @@ CAWebView *CAWebView::createWithLayout(const CrossApp::DLayout &layout)
 
 bool CAWebView::init()
 {
-    CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
-    
     m_pLoadingView = CAActivityIndicatorView::create();
     m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
     m_pLoadingView->setLayout(DLayoutFill);
@@ -83,6 +81,18 @@ bool CAWebView::init()
 	this->addSubview(m_pLoadingView);
     
     return true;
+}
+
+void CAWebView::onEnterTransitionDidFinish()
+{
+    CAView::onEnterTransitionDidFinish();
+    CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
+}
+
+void CAWebView::onExitTransitionDidStart()
+{
+    CAView::onExitTransitionDidStart();
+    CAScheduler::unschedule(schedule_selector(CAWebView::update), this);
 }
 
 void CAWebView::setJavascriptInterfaceScheme(const std::string &scheme)

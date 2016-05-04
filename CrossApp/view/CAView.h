@@ -343,9 +343,9 @@ protected:
     
     void detachSubview(CAView *subview);
     
-    void updateDraw();
+    virtual void updateDraw();
     
-    void updateColor(void);
+    virtual void updateColor(void);
     
     virtual void setPoint(const DPoint &point);
     
