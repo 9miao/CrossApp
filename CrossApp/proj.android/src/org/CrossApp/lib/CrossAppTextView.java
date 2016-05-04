@@ -106,19 +106,7 @@ import android.widget.TextView.OnEditorActionListener;
     		layout = CrossAppActivity.getFrameLayout();
     	}
 	}
-	
-	public static void updateImage()
-	{
-		Set<Integer> keys = (Set<Integer>) dict.keySet() ; 
-		Iterator<Integer> iterator = keys.iterator() ; 
-		while (iterator.hasNext())
-		{
-			Integer key = iterator.next();
-			CrossAppTextView textView = dict.get(key);
-			textView.getImage();
-		}
-	}
-	
+
 	public static void reload()
 	{
 		handler = new Handler(Looper.myLooper());
@@ -369,6 +357,17 @@ import android.widget.TextView.OnEditorActionListener;
             	params.width = width;
             	params.height = height;
             	textView.setLayoutParams(params);
+            	
+            	TimerTask task = new TimerTask()
+        		{    
+        			public void run()
+        			{    
+        				getImage();
+        			}    
+        		};  
+        		
+        		Timer timer = new Timer();  
+        		timer.schedule(task, (long) 100);
             }
         });
     }

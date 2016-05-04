@@ -388,9 +388,6 @@ public void init()
             	
             	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
             	CrossAppRenderer.nativeChangedOrientation(orientation);
-            	
-            	CrossAppTextField.updateImage();
-         		CrossAppTextView.updateImage();
          		
             	s_pActivity.runOnUiThread(new Runnable() 
              	{

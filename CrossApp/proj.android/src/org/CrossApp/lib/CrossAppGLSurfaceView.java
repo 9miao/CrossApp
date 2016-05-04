@@ -235,7 +235,7 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 	protected void onSizeChanged(final int pNewSurfaceWidth, final int pNewSurfaceHeight, final int pOldSurfaceWidth, final int pOldSurfaceHeight) 
 	{
         if(!this.isInEditMode())
-        {            
+        {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	        params.leftMargin = 0; 
 	    	params.rightMargin = 0;
