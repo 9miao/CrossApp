@@ -68,29 +68,6 @@ void TextFieldTest::textFieldShouldReturn(CATextField* sender)
 
 void TextFieldTest::keyBoardHeight(CATextField* sender, int height)
 {
-    switch (sender->getTag())
-    {
-        case 100:
-        {
-            CATextField* textField = dynamic_cast<CATextField*>(this->getView()->getSubviewByTag(101));
-            if (textField)
-            {
-                textField->setText(crossapp_format_string("键盘高度%d", height));
-            }
-        }
-            break;
-        case 101:
-        {
-            CATextField* textField = dynamic_cast<CATextField*>(this->getView()->getSubviewByTag(100));
-            if (textField)
-            {
-                textField->setText(crossapp_format_string("键盘高度%d", height));
-            }
-        }
-            break;
-        default:
-            break;
-    }
 }
 
 
