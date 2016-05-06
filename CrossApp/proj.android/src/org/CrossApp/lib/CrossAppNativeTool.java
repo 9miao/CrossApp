@@ -39,6 +39,7 @@ import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 
@@ -108,14 +109,8 @@ public class CrossAppNativeTool
 	
 	public static void CAImageAlbum(int type)
 	{
-        Intent getImage = new Intent();
-        
-        if (Build.VERSION.SDK_INT >= 19){
-            getImage.setAction(Intent.ACTION_OPEN_DOCUMENT);
-        }else{
-            getImage.setAction(Intent.ACTION_GET_CONTENT);
-        }
-        
+		Intent getImage = new Intent();
+		getImage.setAction(Intent.ACTION_GET_CONTENT);
         getImage.addCategory(Intent.CATEGORY_OPENABLE);
         getImage.setType("image/*");
         
@@ -148,7 +143,6 @@ public class CrossAppNativeTool
 
 	public static void setScreenBrightness( int value) 
 	{
-		 
 	   CrossAppActivity mActivity = (CrossAppActivity)s_pContext;
 	   mActivity.mLightHandler.sendEmptyMessage(value);
 	}
@@ -209,8 +203,7 @@ public class CrossAppNativeTool
 	}
 	
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
-    {  
-    	Log.i("qiaoxin", "onActivityResult:requestCode:"+requestCode+ " resultCode: " + resultCode + " Intent:  "+ intent);
+    {
         if (resultCode == -1)
         {  
             switch (requestCode) 
@@ -220,8 +213,7 @@ public class CrossAppNativeTool
             	final String uriStr = getPath(s_pContext, intent.getData());
             	
             	String fileStr = getRealFilePath(s_pContext, intent.getData());
-            	
-            	
+
                 CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
 					@Override
 					public void run() {
@@ -295,10 +287,6 @@ public class CrossAppNativeTool
             case 0: 
             	 Uri takePhoto;
             	 
-            	// Uri photoUri = s_pContext. getContentResolver().insert(
-            		//	 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-            			// intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             	if (intent != null && intent.getData() != null) 
             	{
             		takePhoto= intent.getData();  
