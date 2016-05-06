@@ -180,7 +180,7 @@ namespace CADevice
     
     CC_DLL bool isNetWorkAvailble();
     
-    CC_DLL void sendLocalNotification(const char* title, const char* content, unsigned long time);
+    CC_DLL void sendLocalNotification(const char* title, const char* content,int time);
 
     CC_DLL void initBlueTooth(CABlueToothDelegate *target);
     

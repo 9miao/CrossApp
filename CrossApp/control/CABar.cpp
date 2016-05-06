@@ -171,20 +171,26 @@ void CANavigationBar::showTitle()
     
     if (CAView* titleView = m_pItem->getTitleView())
     {
-        DRect rect;
-        rect.size = m_pContentView->getBounds().size;
-        rect.origin = rect.size/2;
-        rect.size.width = rect.size.width - rect.size.height * 4;
-        
-        float aspectRatio = 0;
-        if (!titleView->getFrame().size.equals(DSizeZero))
+        if (titleView->getLayout().equals(DLayoutZero))
         {
-            aspectRatio = titleView->getFrame().size.width / titleView->getFrame().size.height;
+            DLayout layout;
+            
+            if (!titleView->getBounds().size.equals(DSizeZero))
+            {
+                layout.horizontal.center = 0.5f;
+                layout.horizontal.width = titleView->getBounds().size.width;
+                layout.vertical.center = 0.5f;
+                layout.vertical.height = titleView->getBounds().size.height;
+            }
+            else
+            {
+                layout.horizontal = DHorizontalLayout_L_R(100, 100);
+                layout.vertical = DVerticalLayout_T_B(5, 5);
+            }
+            
+            titleView->setLayout(layout);
         }
         
-        rect.size.height *= 2/3.0f;
-        rect.size.width = aspectRatio < FLT_EPSILON ? rect.size.width : aspectRatio * rect.size.height;
-        titleView->setCenter(rect);
         m_pContentView->addSubview(titleView);
         m_pTitle = titleView;
     }

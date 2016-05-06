@@ -78,29 +78,9 @@ void OpenURL(const std::string &url)
     
 #endif
 }
-  
-/* //EX
- 
-void startLocation(CALocationDelegate* target)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    CALocation *location = [[CALocation alloc] init];
-    [location setLocation:target];
-    [location startUpdatingLocation];
-#endif
-}
- 
-*/
     
 void sendLocalNotification(const char* title,const char* content,unsigned long time)
 {
-//    let _app = UIApplication.sharedApplication()
-//    _app.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert|UIUserNotificationType.Badge|UIUserNotificationType.Sound, categories: nil));
-//    [[UIApplication sharedApplication] registerUserNotificationSettings:[]]
-    
-    
-
-    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         
         UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
@@ -120,25 +100,17 @@ void sendLocalNotification(const char* title,const char* content,unsigned long t
     }
     
     UILocalNotification *notification = [[[UILocalNotification alloc] init] autorelease];
-//    设置10秒之后
     NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:10];
     if (notification != nil) {
-        // 设置推送时间
         notification.fireDate = pushDate;
-        // 设置时区
         notification.timeZone = [NSTimeZone defaultTimeZone];
-        // 设置重复间隔
         notification.repeatInterval = kCFCalendarUnitDay;
-        // 推送声音
         notification.soundName = UILocalNotificationDefaultSoundName;
-        // 推送内容
+        notification.alertTitle = [NSString stringWithCString:title encoding:NSUTF8StringEncoding];
         notification.alertBody = [NSString stringWithCString:content encoding:NSUTF8StringEncoding];
-        //显示在icon上的红色圈中的数子
         notification.applicationIconBadgeNumber = 1;
-        //设置userinfo 方便在之后需要撤销的时候使用
         NSDictionary *info = [NSDictionary dictionaryWithObject:@"name" forKey:@"key"];
         notification.userInfo = info;
-        //添加推送到UIApplication
         UIApplication *app = [UIApplication sharedApplication];
         [app scheduleLocalNotification:notification]; 
         

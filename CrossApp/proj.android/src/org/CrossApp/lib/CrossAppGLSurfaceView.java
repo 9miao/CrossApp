@@ -58,7 +58,7 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 		return mGLSurfaceView;
 	}
 
-	public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) 
+	public static void queueAccelerometer(final float x, final float y, final float z, final float timestamp)
 	{
 		mGLSurfaceView.queueEvent(new Runnable()
 		{

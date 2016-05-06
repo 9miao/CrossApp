@@ -80,6 +80,7 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     acceleration_->x = deviceMotion.gravity.x;
     acceleration_->y = deviceMotion.gravity.y;
     acceleration_->z = deviceMotion.gravity.z;
+    acceleration_->timestamp = _motionManager.deviceMotionUpdateInterval;
     
     delegate_->didAccelerate(acceleration_);
     
