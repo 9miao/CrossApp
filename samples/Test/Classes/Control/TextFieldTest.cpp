@@ -38,7 +38,6 @@ void TextFieldTest::viewDidLoad()
     textField2->setSecureTextEntry(true);
     textField2->setDelegate(this);
     this->getView()->addSubview(textField2);
- 
 }
 
 void TextFieldTest::viewDidUnload()

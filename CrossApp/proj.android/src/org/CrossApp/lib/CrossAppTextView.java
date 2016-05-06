@@ -450,7 +450,7 @@ import android.widget.TextView.OnEditorActionListener;
         			}    
         		};  
         		Timer timer = new Timer();  
-        		timer.schedule(task, (long) 10);
+        		timer.schedule(task, (long) 20);
             	
         		context.runOnGLThread(new Runnable() 
             	{
@@ -489,7 +489,7 @@ import android.widget.TextView.OnEditorActionListener;
         			}    
         		};  
         		Timer timer = new Timer();  
-        		timer.schedule(task, (long) 10);
+        		timer.schedule(task, (long) 20);
         		
         		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textView.getLayoutParams(); 
         		params.leftMargin = -10000; 

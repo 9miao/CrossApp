@@ -633,7 +633,7 @@ import android.widget.TextView.OnEditorActionListener;
         			}    
         		};  
         		Timer timer = new Timer();  
-        		timer.schedule(task, (long) 10);
+        		timer.schedule(task, (long) 20);
             	
             	
         		if (clearButton != null)
@@ -684,7 +684,7 @@ import android.widget.TextView.OnEditorActionListener;
         			}    
         		};  
         		Timer timer = new Timer();  
-        		timer.schedule(task, (long) 10);
+        		timer.schedule(task, (long) 20);
         		
         		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
             	params.leftMargin = -10000; 
