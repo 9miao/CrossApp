@@ -79,7 +79,7 @@ void OpenURL(const std::string &url)
 #endif
 }
     
-void sendLocalNotification(const char* title,const char* content,unsigned long time)
+void sendLocalNotification(const char* title,const char* content,int time)
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         
@@ -100,7 +100,7 @@ void sendLocalNotification(const char* title,const char* content,unsigned long t
     }
     
     UILocalNotification *notification = [[[UILocalNotification alloc] init] autorelease];
-    NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:10];
+    NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:time];
     if (notification != nil) {
         notification.fireDate = pushDate;
         notification.timeZone = [NSTimeZone defaultTimeZone];
