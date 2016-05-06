@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
@@ -117,7 +118,7 @@ public class CrossAppAccelerometer implements SensorEventListener {
 			y = -tmp;
 		}		
 		
-		CrossAppGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
+		CrossAppGLSurfaceView.queueAccelerometer(x,y,z,mInterval);
 		
 		/*
 		if(BuildConfig.DEBUG) {
@@ -135,7 +136,7 @@ public class CrossAppAccelerometer implements SensorEventListener {
         // Native method called from CrossAppGLSurfaceView (To be in the same thread)
 	// ===========================================================
     
-	public static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);
+	public static native void onSensorChanged(final float pX, final float pY, final float pZ, float pTimestamp);
 
 	// ===========================================================
 	// Inner and Anonymous Classes

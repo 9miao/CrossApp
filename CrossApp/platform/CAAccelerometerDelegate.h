@@ -16,7 +16,7 @@ public:
     double y;
     double z;
 
-    double timestamp;
+    float timestamp;
 };
 
 /**

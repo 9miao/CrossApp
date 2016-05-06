@@ -2,27 +2,37 @@ package org.CrossApp.lib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import junit.framework.Test;
 
 import org.CrossApp.lib.CrossAppBattery;
 
 import android.R;
+import android.R.drawable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 @SuppressLint("SimpleDateFormat")
 public abstract class CrossAppDevice  extends Activity  {
@@ -47,6 +57,14 @@ public abstract class CrossAppDevice  extends Activity  {
 	
 	public static int currentBattery=0;
     
+	private static long lastUpdateTime;
+	
+	private static final int UPTATE_INTERVAL_TIME = 1000;
+	
+	private static float mInterval;
+	
+	private static int mIndex = 0;
+	
 	public CrossAppDevice( final Activity context )
 	{
 		s_pDevice = this;
@@ -250,40 +268,58 @@ public abstract class CrossAppDevice  extends Activity  {
 	{
 		return CrossAppVolumeControl.getVolum(type);
 	}
-	
-	
-	public static void sendLocalNotification(String title,String content,long time)
+
+	public static void showNotification(String title,String content)
 	{
+		
         NotificationManager manager = (NotificationManager) s_pContext.getSystemService(Context.NOTIFICATION_SERVICE); 
- 
+        
+        ComponentName name = new ComponentName(s_pContext.getPackageName(), s_pContext.getPackageName()+"."+s_pContext.getLocalClassName());
+        
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setClass(s_pContext, CrossAppDevice.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        Context mContext = s_pContext.getApplicationContext();
+        intent.setClass(s_pContext, CrossAppActivity.class);
+        intent.setPackage("com.tencent.mobileqq");
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);     
+        intent.setComponent(name);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(mContext,0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(CrossAppActivity.getContext(),0,intent,0);
         
         Notification notification = new Notification.Builder(s_pContext)    
         .setAutoCancel(true)  
-        .setSmallIcon(0x7020000)
-        .setNumber(6)
+        .setSmallIcon(0x7f020000)
         .setTicker(title)
         .setContentTitle(title)    
         .setContentText(content)       
         .setContentIntent(pendingIntent)
-        .setWhen(System.currentTimeMillis())   
+        .setWhen(System.currentTimeMillis())
         .setOngoing(false)
         .build();   
         
-
-        notification.contentIntent = pendingIntent;
         notification.flags = Notification.FLAG_AUTO_CANCEL;//鐐瑰嚮鍚庤嚜鍔ㄦ秷澶� 
-        notification.defaults = Notification.DEFAULT_VIBRATE;
         notification.defaults = Notification.DEFAULT_SOUND;//澹伴煶榛樿  
-
         
-        manager.notify(1, notification);//鍙戝姩閫氱煡        
+        ++mIndex;
+		
+        manager.notify(mIndex, notification);//鍙戝姩閫氱煡        	
+	}
+	
+	public static void sendLocalNotification(final String title,final String content,int time)
+	{
+		
+		TimerTask task = new TimerTask(){   
+
+		    public void run(){   
+		    	
+		    	showNotification(title, content);
+		    }   
+
+		};   
+
+		Timer timer = new Timer(); 
+		 
+		timer.schedule(task, (long)time*1000); 
 	}
 	
     public static boolean isGooglePhotosUri(Uri uri) {  
@@ -310,6 +346,7 @@ public abstract class CrossAppDevice  extends Activity  {
 	{
 		CrossAppGPS.stopUpdateLocation();
 	}
+	
     /** 
      * Get the value of the data column for this Uri. This is useful for 
      * MediaStore Uris, and other file-based ContentProviders. 

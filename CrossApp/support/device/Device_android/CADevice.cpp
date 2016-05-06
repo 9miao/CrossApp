@@ -101,10 +101,10 @@ extern "C"
         }
     }
     
-    void JAVAsendLocalNotification(const char* title,const char* content,unsigned long time)
+	void JAVAsendLocalNotification(const char* title, const char* content, int time)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;J)V"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;I)V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(title),jmi.env->NewStringUTF(content),time);
             
@@ -257,7 +257,7 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
 
 	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "UpdateCamera", "(Ljava/lang/String;)V"))
 	{
-		jmi.env->CallStaticIntMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
+		jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
 	}	
 }
 
@@ -279,7 +279,7 @@ void JAVAStopUpdateLocation()
 	}
 }
 
-void sendLocalNotification(const char* title,const char* content,unsigned long time)
+void sendLocalNotification(const char* title, const char* content, int time)
 {
     JAVAsendLocalNotification(title,content,time);
 }
@@ -336,7 +336,7 @@ void updateVersion(const std::string &url
 void JAVAOpenAlbum(int type)
 {
 	JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "CAImageAlbum" , "(I)V"))
+	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppNativeTool" , "CAImageAlbum" , "(I)V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
@@ -364,7 +364,7 @@ void JAVAOpenCamera(int type)
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
 }
-    
+
 class ToMainThread:public CAObject
 {
 public:
@@ -608,7 +608,7 @@ extern "C"
 		jfloat px,
 		jfloat py,
 		jfloat pz,
-		jlong pTime)
+		jfloat pTime)
 	{
 		CAAcceleration* acceleration = new CAAcceleration();
 		acceleration->x = px;
