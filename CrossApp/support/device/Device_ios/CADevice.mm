@@ -79,7 +79,7 @@ void OpenURL(const std::string &url)
 #endif
 }
     
-void sendLocalNotification(const char* title,const char* content,unsigned long time)
+void sendLocalNotification(const char* title,const char* content,int time)
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         
