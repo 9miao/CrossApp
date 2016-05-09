@@ -89,7 +89,7 @@ namespace CADevice
         return 0;
     }
     
-    void sendLocalNotification(const char* title,const char* content,unsigned long time)
+    void sendLocalNotification(const char* title,const char* content,int time)
     {
         
     }
@@ -114,35 +114,35 @@ namespace CADevice
         
     }
 	
-	CC_DLL void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
+	void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
 	{
 		
 	}
 
-	CC_DLL void startAccelerometer(CAAccelerometerDelegate* delegate)
+	void startUpdateLocation(CALocationDelegate* gpsDelegate)
 	{
 
 	}
 
-	CC_DLL void setAccelerometerInterval(float interval)
+	void stopUpdateLocation()
 	{
 
 	}
+    
+    void startAccelerometer(CAAccelerometerDelegate* delegate)
+    {
+        
+    }
+    
+    void setAccelerometerInterval(float interval)
+    {
+        
+    }
 
-	CC_DLL void stopAccelerometer()
-	{
-
-	}
-
-	CC_DLL void startUpdateLocation(CALocationDelegate* gpsDelegate)
-	{
-
-	}
-
-	CC_DLL void stopUpdateLocation()
-	{
-
-	}
+    void stopAccelerometer()
+    {
+        
+    }
 
 }
 
