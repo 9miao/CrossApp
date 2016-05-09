@@ -162,7 +162,7 @@ void CAListView::setSelectAtIndex(unsigned int index)
 
 	if (CAListViewCell* cell = m_mpUsedListCells[index])
 	{
-		cell->setControlStateSelected();
+		cell->setControlState(CAControlStateSelected);
 	}
 	m_pSelectedListCells.insert(index);
 }
@@ -174,7 +174,7 @@ void CAListView::setUnSelectAtIndex(unsigned int index)
     CC_RETURN_IF(m_pSelectedListCells.find(index) == m_pSelectedListCells.end());
     if (CAListViewCell* cell = m_mpUsedListCells.at(index))
     {
-        cell->setControlStateNormal();
+        cell->setControlState(CAControlStateNormal);
     }
     m_pSelectedListCells.erase(index);
 }
@@ -244,7 +244,7 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 {
                     if (m_pHighlightedListCells)
                     {
-                        m_pHighlightedListCells->setControlStateNormal();
+                        m_pHighlightedListCells->setControlState(CAControlStateNormal);
                     }
                     m_pHighlightedListCells = pCell;
                 }
@@ -273,7 +273,7 @@ void CAListView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 		if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
 		{
-			m_pHighlightedListCells->setControlStateNormal();
+			m_pHighlightedListCells->setControlState(CAControlStateNormal);
 		}
 
 		m_pHighlightedListCells = NULL;
@@ -315,7 +315,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAListViewCell* cell = m_mpUsedListCells[iDeSelectIndex])
 			{
-				cell->setControlStateNormal();
+				cell->setControlState(CAControlStateNormal);
 			}
 			if (m_pListViewDelegate)
 			{
@@ -327,7 +327,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAListViewCell* cell = m_mpUsedListCells[iSelectIndex])
 			{
-				cell->setControlStateSelected();
+				cell->setControlState(CAControlStateSelected);
 			}
 			if (m_pListViewDelegate)
 			{
@@ -348,7 +348,7 @@ void CAListView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
         {
-            m_pHighlightedListCells->setControlStateNormal();
+            m_pHighlightedListCells->setControlState(CAControlStateNormal);
         }
 		m_pHighlightedListCells = NULL;
 	}
@@ -375,17 +375,17 @@ void CAListView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
                     unsigned int index = m_pHighlightedListCells->getIndex();
                     if (m_pSelectedListCells.count(index))
                     {
-                        m_pHighlightedListCells->setControlStateHighlighted();
+                        m_pHighlightedListCells->setControlState(CAControlStateHighlighted);
                     }
                     else
                     {
-                        m_pHighlightedListCells->setControlStateNormal();
+                        m_pHighlightedListCells->setControlState(CAControlStateNormal);
                     }
                     
                 }
                 
                 m_pHighlightedListCells = pCell;
-                pCell->setControlStateHighlighted();
+                pCell->setControlState(CAControlStateHighlighted);
 
                 break;
             }
@@ -400,11 +400,11 @@ void CAListView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
         unsigned int index = m_pHighlightedListCells->getIndex();
         if (m_pSelectedListCells.count(index))
         {
-            m_pHighlightedListCells->setControlStateSelected();
+            m_pHighlightedListCells->setControlState(CAControlStateSelected);
         }
         else
         {
-            m_pHighlightedListCells->setControlStateNormal();
+            m_pHighlightedListCells->setControlState(CAControlStateNormal);
         }
         m_pHighlightedListCells = NULL;
     }
@@ -617,7 +617,7 @@ void CAListView::loadCell()
 
 		if (m_pSelectedListCells.count(index))
 		{
-			cell->setControlStateSelected();
+			cell->setControlState(CAControlStateSelected);
 		}
         
         if (m_pListViewDataSource)

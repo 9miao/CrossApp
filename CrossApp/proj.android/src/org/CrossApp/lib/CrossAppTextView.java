@@ -147,11 +147,7 @@ import android.widget.TextView.OnEditorActionListener;
 	private static native void text(int key, byte[] text, int lenght);
     public void init(int key)
     {
-    	
-    	
     	mykey = key;
-    	dict.put(key, this);
-
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
@@ -534,12 +530,14 @@ import android.widget.TextView.OnEditorActionListener;
 	static public void createTextView(final int key)
 	{
 		CrossAppTextView text = new CrossAppTextView();
+		dict.put(key, text);
 		text.init(key);
 	}
 	
 	static public void removeTextView(final int key) 
 	{
 		final CrossAppTextView var = dict.get(key);
+		dict.remove(key);
 		if (var != null)
 		{
 			context.runOnUiThread(new Runnable() 
@@ -548,7 +546,6 @@ import android.widget.TextView.OnEditorActionListener;
 	            public void run()
 	            {
 	            	var.removeThis();
-	            	dict.remove(key);
 	            }
 	        });
 		}
@@ -576,7 +573,7 @@ import android.widget.TextView.OnEditorActionListener;
 		textView.setTextColor(textViewTextColor);
 		textView.setImeOptions(keyBoardReturnType);
 		
-    	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
+    	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT) ; 
     	params.leftMargin = -10000; 
     	params.topMargin = 0;
     	params.width = contentSizeW;

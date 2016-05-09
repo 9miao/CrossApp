@@ -29,6 +29,8 @@ public class CrossAppCamera
 	static private byte[] data;
 	static private int width;
 	static private int height;
+	static private Bitmap bmp;
+	static private ByteBuffer imageData;
 	
 	private static native void onByte(byte[] buf, int wdith, int height);
 	private static native void onByte2(byte[] buf, int lenght);
@@ -104,7 +106,7 @@ public class CrossAppCamera
         				
         				mCamera.setParameters(mParameters);
         				
-        				//显示
+        				//��剧ず
         				try 
         				{
         					mCamera.setPreviewDisplay(mSurfaceHolder);
@@ -142,32 +144,32 @@ public class CrossAppCamera
         		                height = parameters.getPreviewSize().height;
         						data = arg0;
         						Log.e("xxxxxxxxxxx    ", "w = " + width + "   h = " + height);
-//        						
-//  
-//        						int frameSize = width * height;  
-//        				        int[] rgba = new int[frameSize];  
-//        				  
-//        				            for (int i = 0; i < height; i++)  
-//        				                for (int j = 0; j < width; j++) {  
-//        				                    int y = (0xff & ((int) data[i * width + j]));  
-//        				                    int u = (0xff & ((int) data[frameSize + (i >> 1) * width + (j & ~1) + 0]));  
-//        				                    int v = (0xff & ((int) data[frameSize + (i >> 1) * width + (j & ~1) + 1]));  
-//        				                    y = y < 16 ? 16 : y;  
-//        				  
-//        				                    int r = Math.round(1.164f * (y - 16) + 1.596f * (v - 128));  
-//        				                    int g = Math.round(1.164f * (y - 16) - 0.813f * (v - 128) - 0.391f * (u - 128));  
-//        				                    int b = Math.round(1.164f * (y - 16) + 2.018f * (u - 128));  
-//        				  
-//        				                    r = r < 0 ? 0 : (r > 255 ? 255 : r);  
-//        				                    g = g < 0 ? 0 : (g > 255 ? 255 : g);  
-//        				                    b = b < 0 ? 0 : (b > 255 ? 255 : b);  
-//        				  
-//        				                    rgba[i * width + j] = 0xff000000 + (b << 16) + (g << 8) + r;  
-//        				                }  
-//        				  
-//        				        final Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);  
-//        				        bmp.setPixels(rgba, 0 , width, 0, 0, width, height);  
-//        						
+        						
+  
+        						int frameSize = width * height;  
+        				        int[] rgba = new int[frameSize];  
+        				  
+        				            for (int i = 0; i < height; i++)  
+        				                for (int j = 0; j < width; j++) {  
+        				                    int y = (0xff & ((int) data[i * width + j]));  
+        				                    int u = (0xff & ((int) data[frameSize + (i >> 1) * width + (j & ~1) + 0]));  
+        				                    int v = (0xff & ((int) data[frameSize + (i >> 1) * width + (j & ~1) + 1]));  
+        				                    y = y < 16 ? 16 : y;  
+        				  
+        				                    int r = Math.round(1.164f * (y - 16) + 1.596f * (v - 128));  
+        				                    int g = Math.round(1.164f * (y - 16) - 0.813f * (v - 128) - 0.391f * (u - 128));  
+        				                    int b = Math.round(1.164f * (y - 16) + 2.018f * (u - 128));  
+        				  
+        				                    r = r < 0 ? 0 : (r > 255 ? 255 : r);  
+        				                    g = g < 0 ? 0 : (g > 255 ? 255 : g);  
+        				                    b = b < 0 ? 0 : (b > 255 ? 255 : b);  
+        				  
+        				                    rgba[i * width + j] = 0xff000000 + (b << 16) + (g << 8) + r;  
+        				                }  
+        				  
+        				        bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);  
+        				        bmp.setPixels(rgba, 0 , width, 0, 0, width, height);  
+        						
 //        				        ImageView v= new ImageView(CrossAppActivity.getContext());
 //        				        v.setImageBitmap(bmp);
 //        				        FrameLayout layout = CrossAppActivity.getFrameLayout();
@@ -178,18 +180,20 @@ public class CrossAppCamera
 //        		            	params.bottomMargin = 300;
 //        		            	layout.addView(v, params) ;
         				        
-//        				        boolean avaliable = bmp == null || (bmp !=null && bmp.isRecycled()) ? false : true ; 
-//        						Log.e("xxxxxxxxxxx    ", "" + avaliable);
-//        						final ByteBuffer imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
-//        						bmp.copyPixelsToBuffer(imageData);
-//        						
+        				        boolean avaliable = bmp == null || (bmp !=null && bmp.isRecycled()) ? false : true ; 
+        						Log.e("xxxxxxxxxxx    ", "" + avaliable);
+        						imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
+        						bmp.copyPixelsToBuffer(imageData);
+        						
         						
         						CrossAppActivity.getContext().runOnGLThread(new Runnable() 
         	                	{
         	                        @Override
         	                        public void run()
         	                        {
-        	                        	onByte( data, width, height);
+        	                        	onByte(imageData.array(), bmp.getWidth(), bmp.getHeight());
+//        	                        	imageData = null;
+//        	                        	bmp = null;
         	                        }
         	                    });
         					}

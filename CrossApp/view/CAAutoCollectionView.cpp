@@ -167,7 +167,7 @@ void CAAutoCollectionView::setSelectRowAtIndexPath(unsigned int section, unsigne
 	CAIndexPath3E indexPath = CAIndexPath3E(section, 0, item);
 	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
-		cell->setControlStateSelected();
+		cell->setControlState(CAControlStateSelected);
 	}
 	m_pSelectedCollectionCells.insert(indexPath);
 }
@@ -180,7 +180,7 @@ void CAAutoCollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsig
 	CC_RETURN_IF(m_pSelectedCollectionCells.find(indexPath) == m_pSelectedCollectionCells.end());
 	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
-		cell->setControlStateNormal();
+		cell->setControlState(CAControlStateNormal);
 	}
 	m_pSelectedCollectionCells.erase(indexPath);
 }
@@ -249,7 +249,7 @@ bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 {
                     if (m_pHighlightedCollectionCells)
                     {
-                        m_pHighlightedCollectionCells->setControlStateNormal();
+                        m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
                     }
                     
                     m_pHighlightedCollectionCells = pCell;
@@ -279,7 +279,7 @@ void CAAutoCollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 		if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
 		{
-			m_pHighlightedCollectionCells->setControlStateNormal();
+			m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
 		}
 
 		m_pHighlightedCollectionCells = NULL;
@@ -319,7 +319,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[deselectedIndexPath])
 			{
-				cell->setControlStateNormal();
+				cell->setControlState(CAControlStateNormal);
 			}
 			if (m_pCollectionViewDelegate)
 			{
@@ -331,7 +331,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[selectedIndexPath])
 			{
-				cell->setControlStateSelected();
+				cell->setControlState(CAControlStateSelected);
 			}
 			if (m_pCollectionViewDelegate)
 			{
@@ -354,7 +354,7 @@ void CAAutoCollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
         if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
         {
-            m_pHighlightedCollectionCells->setControlStateNormal();
+            m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
         }
 		m_pHighlightedCollectionCells = NULL;
 	}
@@ -382,17 +382,17 @@ void CAAutoCollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
                                                         m_pHighlightedCollectionCells->getItem());
                     if (m_pSelectedCollectionCells.count(index))
                     {
-                        m_pHighlightedCollectionCells->setControlStateHighlighted();
+                        m_pHighlightedCollectionCells->setControlState(CAControlStateHighlighted);
                     }
                     else
                     {
-                        m_pHighlightedCollectionCells->setControlStateNormal();
+                        m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
                     }
                     
                 }
                 
                 m_pHighlightedCollectionCells = cell;
-                cell->setControlStateHighlighted();
+                cell->setControlState(CAControlStateHighlighted);
                 
                 break;
             }
@@ -409,11 +409,11 @@ void CAAutoCollectionView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
                                             m_pHighlightedCollectionCells->getItem());
         if (m_pSelectedCollectionCells.count(index))
         {
-            m_pHighlightedCollectionCells->setControlStateSelected();
+            m_pHighlightedCollectionCells->setControlState(CAControlStateSelected);
         }
         else
         {
-            m_pHighlightedCollectionCells->setControlStateNormal();
+            m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
         }
         m_pHighlightedCollectionCells = NULL;
     }
@@ -852,7 +852,7 @@ void CAAutoCollectionView::loadCollectionCell()
             
 			if (m_pSelectedCollectionCells.count(r))
 			{
-				cell->setControlStateSelected();
+				cell->setControlState(CAControlStateSelected);
 			}
             
             if (m_pCollectionViewDataSource)
