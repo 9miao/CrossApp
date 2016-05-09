@@ -526,6 +526,9 @@
     <ClCompile Include="..\platform\win32\CAAccelerometer.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\shaders\CAGPUAdapter.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1061,6 +1064,9 @@
     </ClInclude>
     <ClInclude Include="..\platform\win32\CAAccelerometer.h">
       <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\CAGPUAdapter.h">
+      <Filter>shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
