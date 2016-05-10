@@ -232,6 +232,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
     <ClCompile Include="..\script_support\JSViewController.cpp" />
     <ClCompile Include="..\shaders\CAGLProgram.cpp" />
+    <ClCompile Include="..\shaders\CAGPUAdapter.cpp" />
     <ClCompile Include="..\shaders\CAShaderCache.cpp" />
     <ClCompile Include="..\shaders\CATransformation.cpp" />
     <ClCompile Include="..\shaders\ccGLStateCache.cpp" />
@@ -385,6 +386,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\script_support\CCScriptSupport.h" />
     <ClInclude Include="..\script_support\JSViewController.h" />
     <ClInclude Include="..\shaders\CAGLProgram.h" />
+    <ClInclude Include="..\shaders\CAGPUAdapter.h" />
     <ClInclude Include="..\shaders\CAShaderCache.h" />
     <ClInclude Include="..\shaders\CATransformation.h" />
     <ClInclude Include="..\shaders\ccGLStateCache.h" />
