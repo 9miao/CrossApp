@@ -258,18 +258,12 @@ extern "C"
     
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
     {
-        char* buffer = (char*)malloc(sizeof(char) * lenght);
-        env->GetByteArrayRegion(textBuffer, 0, lenght, (jbyte *)buffer);
-        
         std::string text;
         text.resize(lenght);
-        for (int i=0; i<lenght; i++)
-        {
-            text[i] = buffer[i];
-        }
+        env->GetByteArrayRegion(textBuffer, 0, lenght, (jbyte *)&text[0]);
         
         s_lock = true;
-		CATextView* textView = s_map[(int)key];
+        CATextView* textView = s_map[(int)key];
         textView->setText(text);
         s_lock = false;
     }

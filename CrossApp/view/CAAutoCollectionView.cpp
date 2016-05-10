@@ -429,7 +429,7 @@ bool CAAutoCollectionView::fillSectionRowData(CollectionViewRow& r, DSize rSize)
 {
 	if (m_eOrientation == Vertical)
 	{
-		int dw = this->getBounds().size.width - 2 * m_iHoriMargins;
+		int dw = m_obContentSize.width - 2 * m_iHoriMargins;
 
 		if (r.iIniValue + rSize.width > dw && r.iMaxValue > 0)
 			return false;
@@ -447,7 +447,7 @@ bool CAAutoCollectionView::fillSectionRowData(CollectionViewRow& r, DSize rSize)
 	}
 	else
 	{
-		int dw = this->getBounds().size.height - 2 * m_iVertMargins;
+		int dw = m_obContentSize.height - 2 * m_iVertMargins;
 
 		if (r.iIniValue + rSize.height > dw && r.iMaxValue > 0)
 			return false;
@@ -532,7 +532,7 @@ void CAAutoCollectionView::reloadViewSizeData()
 	viewHeight += m_nCollectionHeaderHeight;
 	viewHeight += m_nCollectionFooterHeight;
 
-	DSize size = this->getBounds().size;
+	DSize size = m_obContentSize;
 	if (m_eOrientation == Vertical)
 	{
 		size.height = viewHeight;
@@ -661,13 +661,13 @@ int CAAutoCollectionView::calculateAllRects()
 	int dw = 0, dd = 0, dv = 0;
 	if (m_eOrientation == Vertical)
 	{
-		dw = this->getBounds().size.width - 2 * m_iHoriMargins;
+		dw = m_obContentSize.width - 2 * m_iHoriMargins;
 		dd = m_iVertMargins + m_nCollectionHeaderHeight;
 		dv = m_nVertCellInterval;
 	}
 	else
 	{
-		dw = this->getBounds().size.height - 2 * m_iVertMargins;
+		dw = m_obContentSize.height - 2 * m_iVertMargins;
 		dd = m_iHoriMargins + m_nCollectionHeaderHeight;
 		dv = m_nHoriCellInterval;
 	}
@@ -900,7 +900,7 @@ void CAAutoCollectionView::updateSectionHeaderAndFooterRects()
 		if (footer && m_bAlwaysBottomSectionFooter)
 		{
 			DPoint p2 = rect.origin;
-			p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
+			p2.y = MIN(rect.origin.y + m_obContentSize.height - footerHeight,
 				cvs.rSectionRect.origin.y + cvs.rSectionRect.size.height - footerHeight);
 			p2.y = MAX(p2.y, cvs.rSectionRect.origin.y + headerHeight);
 			footer->setFrameOrigin(p2);
