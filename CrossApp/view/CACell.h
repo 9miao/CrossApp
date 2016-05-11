@@ -13,8 +13,7 @@
 #include "control/CAControl.h"
 
 NS_CC_BEGIN
-
-class CC_DLL CACell: public CAControl
+class CC_DLL CACell: public CAView
 {
     
 public:
@@ -50,18 +49,30 @@ protected:
     virtual void recoveryCell(){};
     
     void setControlState(const CAControlState& var);
+
+    const CAControlState& getControlState();
+    
+    void setControlStateNormal();
+    
+    void setControlStateHighlighted();
+    
+    void setControlStateDisabled();
+    
+    void setControlStateSelected();
     
     void resetCell();
     
 private:
 
-    using CAControl::init;
+    using CAView::init;
     
-    using CAControl::initWithCenter;
+    using CAView::initWithCenter;
     
-    using CAControl::initWithFrame;
+    using CAView::initWithFrame;
     
-    using CAControl::initWithLayout;
+    using CAView::initWithLayout;
+    
+    CAControlState m_eControlState;
 };
 
 NS_CC_END;

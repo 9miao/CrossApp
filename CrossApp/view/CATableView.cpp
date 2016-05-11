@@ -154,7 +154,7 @@ bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 {
                     if (m_pHighlightedTableCells)
                     {
-                        m_pHighlightedTableCells->setControlStateNormal();
+                        m_pHighlightedTableCells->setControlState(CAControlStateNormal);
                     }
                     m_pHighlightedTableCells = cell;
                 }
@@ -183,7 +183,7 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
         {
-            m_pHighlightedTableCells->setControlStateNormal();
+            m_pHighlightedTableCells->setControlState(CAControlStateNormal);
         }
         
         m_pHighlightedTableCells = NULL;
@@ -225,7 +225,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         {
             if (CATableViewCell* cell = m_mpUsedTableCells[deselectedIndexPath])
             {
-                cell->setControlStateNormal();
+                cell->setControlState(CAControlStateNormal);
             }
             if (m_pTableViewDelegate)
             {
@@ -239,7 +239,7 @@ void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         {
             if (CATableViewCell* cell = m_mpUsedTableCells[selectedIndexPath])
             {
-                cell->setControlStateSelected();
+                cell->setControlState(CAControlStateSelected);
             }
             if (m_pTableViewDelegate)
             {
@@ -263,7 +263,7 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
         {
-            m_pHighlightedTableCells->setControlStateNormal();
+            m_pHighlightedTableCells->setControlState(CAControlStateNormal);
         }
         m_pHighlightedTableCells = NULL;
     }
@@ -289,17 +289,17 @@ void CATableView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
                     CAIndexPath2E index = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
                     if (m_pSelectedTableCells.count(index))
                     {
-                        m_pHighlightedTableCells->setControlStateHighlighted();
+                        m_pHighlightedTableCells->setControlState(CAControlStateHighlighted);
                     }
                     else
                     {
-                        m_pHighlightedTableCells->setControlStateNormal();
+                        m_pHighlightedTableCells->setControlState(CAControlStateNormal);
                     }
                     
                 }
                 
                 m_pHighlightedTableCells = cell;
-                cell->setControlStateHighlighted();
+                cell->setControlState(CAControlStateHighlighted);
 
                 break;
             }
@@ -314,11 +314,11 @@ void CATableView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
         CAIndexPath2E index = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
         if (m_pSelectedTableCells.count(index))
         {
-            m_pHighlightedTableCells->setControlStateSelected();
+            m_pHighlightedTableCells->setControlState(CAControlStateSelected);
         }
         else
         {
-            m_pHighlightedTableCells->setControlStateNormal();
+            m_pHighlightedTableCells->setControlState(CAControlStateNormal);
         }
         m_pHighlightedTableCells = NULL;
     }
@@ -405,7 +405,7 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     CAIndexPath2E indexPath = CAIndexPath2E(section, row);
     if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
     {
-        cell->setControlStateSelected();
+        cell->setControlState(CAControlStateSelected);
     }
     
     m_pSelectedTableCells.insert(indexPath);
@@ -419,7 +419,7 @@ void CATableView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int r
     CC_RETURN_IF(m_pSelectedTableCells.find(indexPath) == m_pSelectedTableCells.end());
     if (CATableViewCell* cell = m_mpUsedTableCells.at(indexPath))
     {
-        cell->setControlStateNormal();
+        cell->setControlState(CAControlStateNormal);
     }
     m_pSelectedTableCells.erase(indexPath);
 }
@@ -659,7 +659,7 @@ void CATableView::loadTableCell()
             m_vpUsedTableCells.pushBack(cell);
             if (m_pSelectedTableCells.count(indexPath))
             {
-                cell->setControlStateSelected();
+                cell->setControlState(CAControlStateSelected);
             }
             if (m_pTableViewDataSource)
             {

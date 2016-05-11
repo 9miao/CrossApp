@@ -73,11 +73,11 @@ void CACell::setControlState(const CAControlState& var)
 {
     if (m_bAllowsSelected == false && var == CAControlStateSelected)
     {
-        CAControl::setControlState(CAControlStateNormal);
+        m_eControlState = CAControlStateNormal;
     }
     else
     {
-        CAControl::setControlState(var);
+        m_eControlState = var;
     }
     
     CC_RETURN_IF(m_bControlStateEffect == false);
@@ -98,6 +98,31 @@ void CACell::setControlState(const CAControlState& var)
         default:
             break;
     }
+}
+
+const CAControlState& CACell::getControlState()
+{
+    return m_eControlState;
+}
+
+void CACell::setControlStateNormal()
+{
+    this->setControlState(CAControlStateNormal);
+}
+
+void CACell::setControlStateHighlighted()
+{
+    this->setControlState(CAControlStateNormal);
+}
+
+void CACell::setControlStateDisabled()
+{
+    this->setControlState(CAControlStateNormal);
+}
+
+void CACell::setControlStateSelected()
+{
+    this->setControlState(CAControlStateNormal);
 }
 
 void CACell::normalCell()

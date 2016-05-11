@@ -136,7 +136,6 @@ import android.widget.TextView.OnEditorActionListener;
     public void init(int key)
     {
     	mykey = key;
-    	dict.put(key, this);
     	context.runOnUiThread(new Runnable() 
     	{
             @Override
@@ -686,6 +685,7 @@ import android.widget.TextView.OnEditorActionListener;
         		Timer timer = new Timer();  
         		timer.schedule(task, (long) 20);
         		
+        		
         		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)textField.getLayoutParams(); 
             	params.leftMargin = -10000; 
             	params.topMargin = 0;
@@ -742,12 +742,14 @@ import android.widget.TextView.OnEditorActionListener;
 	static public void createTextField(final int key)
 	{
 		CrossAppTextField text = new CrossAppTextField();
+		dict.put(key, text);
 		text.init(key);
 	}
 	
 	static public void removeTextField(final int key) 
 	{
 		final CrossAppTextField var = dict.get(key);
+		dict.remove(key);
 		if (var != null)
 		{
 			context.runOnUiThread(new Runnable() 
@@ -756,7 +758,6 @@ import android.widget.TextView.OnEditorActionListener;
 	            public void run()
 	            {
 	            	var.removeThis();
-	            	dict.remove(key);
 	            }
 	        });
 		}

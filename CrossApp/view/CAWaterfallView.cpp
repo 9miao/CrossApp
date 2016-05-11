@@ -156,7 +156,7 @@ void CAWaterfallView::setSelectRowAtIndexPath(unsigned int itemIndex)
 
 	if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells.at(itemIndex))
 	{
-		cell->setControlStateSelected();
+		cell->setControlState(CAControlStateSelected);
 	}
 	m_pSelectedWaterfallCells.insert(itemIndex);
 }
@@ -166,7 +166,7 @@ void CAWaterfallView::setUnSelectRowAtIndexPath(unsigned int itemIndex)
 	CC_RETURN_IF(m_pSelectedWaterfallCells.find(itemIndex) == m_pSelectedWaterfallCells.end());
 	if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells.at(itemIndex))
 	{
-		cell->setControlStateNormal();
+		cell->setControlState(CAControlStateNormal);
 	}
 	m_pSelectedWaterfallCells.erase(itemIndex);
 }
@@ -211,7 +211,7 @@ bool CAWaterfallView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 				{
 					if (m_pHighlightedWaterfallCells)
 					{
-						m_pHighlightedWaterfallCells->setControlStateNormal();
+						m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
 					}
 
 					m_pHighlightedWaterfallCells = pCell;
@@ -241,7 +241,7 @@ void CAWaterfallView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 		if (m_pHighlightedWaterfallCells->getControlState() == CAControlStateHighlighted)
 		{
-			m_pHighlightedWaterfallCells->setControlStateNormal();
+			m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
 		}
 
 		m_pHighlightedWaterfallCells = NULL;
@@ -281,7 +281,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[deselectedIndex])
 			{
-				cell->setControlStateNormal();
+				cell->setControlState(CAControlStateNormal);
 			}
 			if (m_pWaterfallViewDelegate)
 			{
@@ -293,7 +293,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[selectedIndex])
 			{
-				cell->setControlStateSelected();
+				cell->setControlState(CAControlStateSelected);
 			}
 			if (m_pWaterfallViewDelegate)
 			{
@@ -316,7 +316,7 @@ void CAWaterfallView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 		if (m_pHighlightedWaterfallCells->getControlState() == CAControlStateHighlighted)
 		{
-			m_pHighlightedWaterfallCells->setControlStateNormal();
+			m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
 		}
 		m_pHighlightedWaterfallCells = NULL;
 	}
@@ -342,16 +342,16 @@ void CAWaterfallView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 					int index = m_pHighlightedWaterfallCells->getItem();
 					if (m_pSelectedWaterfallCells.count(index))
 					{
-						m_pHighlightedWaterfallCells->setControlStateHighlighted();
+						m_pHighlightedWaterfallCells->setControlState(CAControlStateHighlighted);
 					}
 					else
 					{
-						m_pHighlightedWaterfallCells->setControlStateNormal();
+						m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
 					}
 				}
 
 				m_pHighlightedWaterfallCells = cell;
-				cell->setControlStateHighlighted();
+				cell->setControlState(CAControlStateHighlighted);
 
 				break;
 			}
@@ -366,11 +366,11 @@ void CAWaterfallView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 		int index = m_pHighlightedWaterfallCells->getItem();
 		if (m_pSelectedWaterfallCells.count(index))
 		{
-			m_pHighlightedWaterfallCells->setControlStateSelected();
+			m_pHighlightedWaterfallCells->setControlState(CAControlStateSelected);
 		}
 		else
 		{
-			m_pHighlightedWaterfallCells->setControlStateNormal();
+			m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
 		}
 		m_pHighlightedWaterfallCells = NULL;
 	}
@@ -580,7 +580,7 @@ void CAWaterfallView::loadWaterfallCell()
 
 			if (m_pSelectedWaterfallCells.count(r))
 			{
-				cell->setControlStateSelected();
+				cell->setControlState(CAControlStateSelected);
 			}
 
 			if (m_pWaterfallViewDataSource)
