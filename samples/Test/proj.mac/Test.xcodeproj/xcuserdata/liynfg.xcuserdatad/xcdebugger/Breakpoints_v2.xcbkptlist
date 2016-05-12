@@ -26,7 +26,7 @@
                   moduleName = "Test"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/MenuViewController.cpp"
-                  timestampString = "484560505.516961"
+                  timestampString = "484733106.143787"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
@@ -41,7 +41,7 @@
                   moduleName = "Test"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/MenuViewController.cpp"
-                  timestampString = "484560505.517989"
+                  timestampString = "484733106.14407"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
@@ -56,7 +56,7 @@
                   moduleName = "Test"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/MenuViewController.cpp"
-                  timestampString = "484560505.518299"
+                  timestampString = "484733106.144295"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
@@ -71,7 +71,7 @@
                   moduleName = "Test"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/MenuViewController.cpp"
-                  timestampString = "484560505.518579"
+                  timestampString = "484733106.144566"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
@@ -86,12 +86,60 @@
                   moduleName = "Test"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/MenuViewController.cpp"
-                  timestampString = "484560505.518776"
+                  timestampString = "484733106.144998"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
                   endingLineNumber = "20"
                   offsetFromSymbolStart = "70">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/Control/CollectionViewTest.cpp"
+            timestampString = "484732170.811326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "CollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CollectionViewTest::scrollViewFooterBeginRefreshing(CrossApp::CAScrollView*)"
+                  moduleName = "Test"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/Control/CollectionViewTest.cpp"
+                  timestampString = "484733106.14948"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "non-virtual thunk to CollectionViewTest::scrollViewFooterBeginRefreshing(CrossApp::CAScrollView*)"
+                  moduleName = "Test"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/liynfg/XiangMu/YinQing/CrossApp/samples/Test/Classes/Control/CollectionViewTest.cpp"
+                  timestampString = "484733106.1498"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "11">
                </Location>
             </Locations>
          </BreakpointContent>

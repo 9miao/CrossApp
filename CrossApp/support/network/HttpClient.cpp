@@ -153,9 +153,9 @@ static void* networkThread(void *data)
         }
 
         
-        pthread_mutex_lock(&httpClient->s_requestQueueMutex);
+        pthread_mutex_lock(&httpClient->s_responseQueueMutex);
         httpClient->s_responseQueue.pushBack(response);
-        pthread_mutex_unlock(&httpClient->s_requestQueueMutex);
+        pthread_mutex_unlock(&httpClient->s_responseQueueMutex);
         
         CAScheduler::getScheduler()->resumeTarget(httpClient);
     }

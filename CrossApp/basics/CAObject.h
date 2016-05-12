@@ -86,6 +86,8 @@ public:
     
     void performSelector(SEL_CallFunc callFunc, float afterDelay);
     
+    void performSelector(SEL_CallFuncO callFunc, float afterDelay);
+    
     CC_SYNTHESIZE(void*, m_pUserData, UserData);
     
     CC_SYNTHESIZE_RETAIN(CAObject*, m_pUserObject, UserObject);

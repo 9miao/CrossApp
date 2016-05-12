@@ -47,7 +47,7 @@
         // (isn't there already a shared EAGLView?)
         glView = [[[EAGLView alloc] initWithFrame:[view bounds] pixelFormat:pixelFormat] autorelease];;
         [view addSubview:glView];
-        
+
 		CrossApp::CCApplication::sharedApplication()->run();
 	}
 
