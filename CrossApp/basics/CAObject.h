@@ -120,6 +120,7 @@ public:
 
 private:
 	void updateDelayTimers(float dt);
+	void releaseAllDelays();
 	std::vector<tDelayTimerElement> m_vDelayTEVect;
 };
 

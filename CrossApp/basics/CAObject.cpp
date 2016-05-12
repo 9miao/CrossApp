@@ -33,6 +33,8 @@ CAObject::CAObject(void)
 CAObject::~CAObject(void)
 {
     CAScheduler::unscheduleAllForTarget(this);
+
+	releaseAllTDelays();
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -140,6 +142,15 @@ void CAObject::updateDelayTimers(float dt)
 	{
 		CAScheduler::unschedule(schedule_selector(CAObject::updateDelayTimers), this);
 	}
+}
+
+void CAObject::releaseAllTDelays()
+{
+	for (int i = 0; i < m_vDelayTEVect.size(); i++)
+	{
+		CC_SAFE_RELEASE(m_vDelayTEVect[i].pObj);
+	}
+	m_vDelayTEVect.clear();
 }
 
 CAZone::CAZone(CAObject *pObject)
