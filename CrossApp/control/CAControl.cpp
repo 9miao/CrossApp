@@ -20,6 +20,7 @@ CAControl::CAControl()
         m_pTarget[i] = NULL;
     }
     this->setHaveNextResponder(false);
+    this->setMultipleTouchEnabled(false);
 }
 
 CAControl::~CAControl()

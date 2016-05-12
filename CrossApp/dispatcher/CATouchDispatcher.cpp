@@ -23,6 +23,7 @@ CATouchController::CATouchController()
 :m_pTouch(NULL)
 ,m_pEvent(NULL)
 ,m_tFirstPoint(DPointZero)
+,m_bBanMultipleTouch(false)
 {
     
 }
@@ -34,6 +35,11 @@ CATouchController::~CATouchController()
     m_vTouchMovedsViewCache.clear();
     CC_SAFE_RELEASE_NULL(m_pTouch);
     CC_SAFE_RELEASE_NULL(m_pEvent);
+    
+    if (m_bBanMultipleTouch == true)
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->m_bBanMultipleTouch = false;
+    }
 }
 
 int CATouchController::getTouchID()
@@ -114,6 +120,11 @@ void CATouchController::passingTouchesViews(float dt)
     if (!isContainsFirstPoint && view && view->isTouchEnabled() && view->isVisible())
     {
         this->touchBeganWithResponder(view);
+        if (view->isMultipleTouchEnabled() == false)
+        {
+            m_bBanMultipleTouch = true;
+            CAApplication::getApplication()->getTouchDispatcher()->m_bBanMultipleTouch = true;
+        }
     }
     
     CC_RETURN_IF(m_vTouchesViews.empty());
@@ -134,6 +145,11 @@ void CATouchController::passingTouchesViews(float dt)
         }
         else
         {
+            if (m_vTouchesViews.at(i)->isMultipleTouchEnabled() == false)
+            {
+                m_bBanMultipleTouch = true;
+                CAApplication::getApplication()->getTouchDispatcher()->m_bBanMultipleTouch = true;
+            }
             i++;
         }
     }
@@ -473,6 +489,7 @@ void CATouchController::touchCancelledWithResponder(CAResponder* responder)
 CATouchDispatcher::CATouchDispatcher(void)
 :m_iDispatchEvents(0)
 ,m_bLocked(false)
+,m_bBanMultipleTouch(false)
 ,m_pFirstResponder(NULL)
 ,m_pScrollRunningResponder(NULL)
 {
@@ -515,6 +532,7 @@ void CATouchDispatcher::setDispatchEventsFalse()
 void CATouchDispatcher::touchesBegan(CCSet *touches, CAEvent *pEvent)
 {
     CC_RETURN_IF(!isDispatchEvents() );
+    CC_RETURN_IF(m_bBanMultipleTouch == true);
     m_bLocked = true;
     
     CATouch *pTouch;

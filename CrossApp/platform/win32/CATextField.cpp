@@ -646,16 +646,17 @@ CATextField::CATextField()
 CATextField::~CATextField()
 {
     CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    m_pDelegate = NULL;
 }
 
 void CATextField::onEnterTransitionDidFinish()
 {
-    CAView::onEnterTransitionDidFinish();
+    CAControl::onEnterTransitionDidFinish();
 }
 
 void CATextField::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CAControl::onExitTransitionDidStart();
 
 	CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
 }
@@ -667,7 +668,7 @@ bool CATextField::resignFirstResponder()
 		return false;
 	}
 
-    bool result = CAView::resignFirstResponder();
+    bool result = CAControl::resignFirstResponder();
 
 	if (m_eClearBtn == WhileEditing)
 	{
@@ -683,7 +684,7 @@ bool CATextField::becomeFirstResponder()
 		return false;
 	}
 
-	bool result = CAView::becomeFirstResponder();
+	bool result = CAControl::becomeFirstResponder();
 
 	if (m_eClearBtn == WhileEditing)
 	{
@@ -758,7 +759,7 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-	if (!CAView::init())
+	if (!CAControl::init())
 	{
 		return false;
 	}
@@ -798,7 +799,7 @@ void CATextField::update(float dt)
 
 void CATextField::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(contentSize);
+    CAControl::setContentSize(contentSize);
 
 	if (m_pTextField)
 	{

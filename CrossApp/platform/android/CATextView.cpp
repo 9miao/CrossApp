@@ -302,18 +302,19 @@ CATextView::~CATextView()
     s_map.erase(m_u__ID);
     textViewOnRemoveView(m_u__ID);
     CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    m_pDelegate = NULL;
 }
 
 void CATextView::onEnterTransitionDidFinish()
 {
-    CAView::onEnterTransitionDidFinish();
+    CAControl::onEnterTransitionDidFinish();
     
     this->delayShowImage();
 }
 
 void CATextView::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CAControl::onExitTransitionDidStart();
     
     if (this->isFirstResponder())
     {
@@ -328,7 +329,7 @@ bool CATextView::resignFirstResponder()
 		return false;
 	}
 
-    bool result = CAView::resignFirstResponder();
+    bool result = CAControl::resignFirstResponder();
 
     textViewResignFirstResponderID(m_u__ID);
     
@@ -344,7 +345,7 @@ bool CATextView::becomeFirstResponder()
 		return false;
 	}
 
-	bool result = CAView::becomeFirstResponder();
+	bool result = CAControl::becomeFirstResponder();
 
 	textViewBecomeFirstResponderID(m_u__ID);
 
@@ -467,7 +468,7 @@ void CATextView::update(float dt)
 
 void CATextView::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(contentSize);
+    CAControl::setContentSize(contentSize);
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     

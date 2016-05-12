@@ -1,4 +1,4 @@
-﻿//
+//
 //  CAtextView.cpp
 //  tesss
 //
@@ -607,18 +607,19 @@ CATextView::CATextView()
 CATextView::~CATextView()
 {
     CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    m_pDelegate = NULL;
 }
 
 void CATextView::onEnterTransitionDidFinish()
 {
-    CAView::onEnterTransitionDidFinish();
+    CAControl::onEnterTransitionDidFinish();
     
     this->delayShowImage();
 }
 
 void CATextView::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CAControl::onExitTransitionDidStart();
 }
 
 bool CATextView::resignFirstResponder()
@@ -628,7 +629,7 @@ bool CATextView::resignFirstResponder()
 		return false;
 	}
 
-    bool result = CAView::resignFirstResponder();
+    bool result = CAControl::resignFirstResponder();
 
 
     return result;
@@ -641,7 +642,7 @@ bool CATextView::becomeFirstResponder()
 		return false;
 	}
 
-	bool result = CAView::becomeFirstResponder();
+	bool result = CAControl::becomeFirstResponder();
 
 
     return result;
@@ -725,7 +726,7 @@ CATextView* CATextView::createWithLayout(const DLayout& layout)
 
 bool CATextView::init()
 {
-	if (!CAView::init())
+	if (!CAControl::init())
 	{
 		return false;
 	}
@@ -767,7 +768,7 @@ void CATextView::update(float dt)
 
 void CATextView::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(contentSize);
+    CAControl::setContentSize(contentSize);
 }
 
 bool CATextView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

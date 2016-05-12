@@ -308,6 +308,8 @@
 		B07AE0D51BD10092006C1C63 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9513C1BC63CCB00DBAB6A /* libSDL2.a */; };
 		B07E81141C33B34800A39C95 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07E81131C33B34800A39C95 /* CATextView.h */; };
 		B07E81161C33B36700A39C95 /* CATextView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B07E81151C33B36700A39C95 /* CATextView.mm */; };
+		B0885A191CE1CEA700A5C04C /* CAGPUAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0885A171CE1CEA700A5C04C /* CAGPUAdapter.cpp */; };
+		B0885A1A1CE1CEA700A5C04C /* CAGPUAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = B0885A181CE1CEA700A5C04C /* CAGPUAdapter.h */; };
 		B09205DC19D5645300CB99C1 /* CASyncQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D719D5645300CB99C1 /* CASyncQueue.h */; };
 		B09205DD19D5645300CB99C1 /* CAThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09205D819D5645300CB99C1 /* CAThread.cpp */; };
 		B09205DE19D5645300CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205D919D5645300CB99C1 /* CAThread.h */; };
@@ -688,6 +690,8 @@
 		B06E0C961AC8F7BF004F12F2 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/FFmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
 		B07E81131C33B34800A39C95 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B07E81151C33B36700A39C95 /* CATextView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextView.mm; sourceTree = "<group>"; };
+		B0885A171CE1CEA700A5C04C /* CAGPUAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGPUAdapter.cpp; sourceTree = "<group>"; };
+		B0885A181CE1CEA700A5C04C /* CAGPUAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGPUAdapter.h; sourceTree = "<group>"; };
 		B08BE2231CCDB5D5001A0F36 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		B09205D719D5645300CB99C1 /* CASyncQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASyncQueue.h; sourceTree = "<group>"; };
 		B09205D819D5645300CB99C1 /* CAThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThread.cpp; sourceTree = "<group>"; };
@@ -1221,6 +1225,8 @@
 		1551A5C3158F2ADE00E66CFE /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B0885A171CE1CEA700A5C04C /* CAGPUAdapter.cpp */,
+				B0885A181CE1CEA700A5C04C /* CAGPUAdapter.h */,
 				B02A12CE197CE30A00F4F2C5 /* CATransformation.cpp */,
 				B02A12CF197CE30A00F4F2C5 /* CATransformation.h */,
 				0460ED311957031200D13001 /* CAGLProgram.cpp */,
@@ -1570,6 +1576,7 @@
 				B0ADAE741B2E7F1B00BE8FA3 /* CADrawingPrimitives.h in Headers */,
 				04EABB1F1956DAEA00198A8E /* CATouchDispatcher.cpp in Headers */,
 				EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */,
+				B0885A1A1CE1CEA700A5C04C /* CAGPUAdapter.h in Headers */,
 				B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */,
 				B0ADAE9A1B2E7F1B00BE8FA3 /* CAWebView.h in Headers */,
 				B0ADAE8A1B2E7F1B00BE8FA3 /* CARenderImage.h in Headers */,
@@ -1896,6 +1903,7 @@
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
 				B0596B411976356C00B1E8CB /* ConvertUTF.cpp in Sources */,
+				B0885A191CE1CEA700A5C04C /* CAGPUAdapter.cpp in Sources */,
 				B04455E91C8FBB8A00B949BF /* CAFTRichFont.cpp in Sources */,
 				46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,

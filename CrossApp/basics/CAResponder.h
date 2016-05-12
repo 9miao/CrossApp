@@ -51,6 +51,8 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bTouchEventScrollHandOverToSuperview, TouchEventScrollHandOverToSuperview);// default is true
     
+    CC_SYNTHESIZE_IS(bool, m_bMultipleTouchEnabled, MultipleTouchEnabled);// default is true
+    
     CC_PROPERTY_IS(bool, m_bMouseMovedEnabled, MouseMovedEnabled);// default is false
     
     CC_PROPERTY_IS(bool, m_bMouseScrollWheelEnabled, MouseScrollWheelEnabled);// default is false

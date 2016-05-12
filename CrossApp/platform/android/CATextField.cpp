@@ -402,18 +402,19 @@ CATextField::~CATextField()
     s_map.erase(m_u__ID);
     onRemoveView(m_u__ID);
     CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    m_pDelegate = NULL;
 }
 
 void CATextField::onEnterTransitionDidFinish()
 {
-    CAView::onEnterTransitionDidFinish();
+    CAControl::onEnterTransitionDidFinish();
     
     this->delayShowImage();
 }
 
 void CATextField::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CAControl::onExitTransitionDidStart();
     
     if (this->isFirstResponder())
     {
@@ -443,7 +444,7 @@ bool CATextField::resignFirstResponder()
 		return false;
 	}
 
-    bool result = CAView::resignFirstResponder();
+    bool result = CAControl::resignFirstResponder();
 
     resignFirstResponderID(m_u__ID);
     
@@ -465,7 +466,7 @@ bool CATextField::becomeFirstResponder()
 		return false;
 	}
 
-	bool result = CAView::becomeFirstResponder();
+	bool result = CAControl::becomeFirstResponder();
 
     becomeFirstResponderID(m_u__ID);
     
@@ -591,7 +592,7 @@ void CATextField::update(float dt)
 
 void CATextField::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(contentSize);
+    CAControl::setContentSize(contentSize);
     
     if (m_eClearBtn == WhileEditing)
     {

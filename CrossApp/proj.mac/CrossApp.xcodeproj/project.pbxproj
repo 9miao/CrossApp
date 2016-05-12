@@ -249,6 +249,8 @@
 		B074CCEE1C31546F00493A8A /* CATextEditHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B074CCEC1C31546F00493A8A /* CATextEditHelper.cpp */; };
 		B074CCEF1C31546F00493A8A /* CATextEditHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = B074CCED1C31546F00493A8A /* CATextEditHelper.h */; };
 		B07E827B1C33E7F700A39C95 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07E827A1C33E7F700A39C95 /* CATextView.h */; };
+		B0885A141CE1C90100A5C04C /* CAGPUAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0885A121CE1C90100A5C04C /* CAGPUAdapter.cpp */; };
+		B0885A151CE1C90100A5C04C /* CAGPUAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = B0885A131CE1C90100A5C04C /* CAGPUAdapter.h */; };
 		B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */; };
 		B08F4BB619C7D2EF008DE306 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */; };
 		B08F4BB719C7D2EF008DE306 /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */; };
@@ -625,6 +627,8 @@
 		B074CCEC1C31546F00493A8A /* CATextEditHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextEditHelper.cpp; sourceTree = "<group>"; };
 		B074CCED1C31546F00493A8A /* CATextEditHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextEditHelper.h; sourceTree = "<group>"; };
 		B07E827A1C33E7F700A39C95 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
+		B0885A121CE1C90100A5C04C /* CAGPUAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGPUAdapter.cpp; sourceTree = "<group>"; };
+		B0885A131CE1C90100A5C04C /* CAGPUAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGPUAdapter.h; sourceTree = "<group>"; };
 		B08F4BB219C7D2EF008DE306 /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
 		B08F4BB319C7D2EF008DE306 /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		B08F4BB419C7D2EF008DE306 /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
@@ -1044,6 +1048,8 @@
 		04EAAFF11956D75500198A8E /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B0885A121CE1C90100A5C04C /* CAGPUAdapter.cpp */,
+				B0885A131CE1C90100A5C04C /* CAGPUAdapter.h */,
 				B02A12CA197CE15D00F4F2C5 /* CATransformation.cpp */,
 				B02A12CB197CE15D00F4F2C5 /* CATransformation.h */,
 				04EAB0051956D75500198A8E /* CAShaderCache.cpp */,
@@ -1593,6 +1599,7 @@
 				3E2154521B8180340075448E /* json_lib.h in Headers */,
 				04EAB1541956D75600198A8E /* CCStdC.h in Headers */,
 				04EAB1561956D75600198A8E /* CCWindow.h in Headers */,
+				B0885A151CE1C90100A5C04C /* CAGPUAdapter.h in Headers */,
 				020F5F891BF34BAB0098C44C /* CAWaterfallView.h in Headers */,
 				04EAB1581956D75600198A8E /* EAGLView.h in Headers */,
 				04EAB15D1956D75600198A8E /* platform.h in Headers */,
@@ -1754,6 +1761,7 @@
 				B0B05F9F1BB1483200B891CE /* CAAutoCollectionView.cpp in Sources */,
 				B048ADF41CC9BC0A0039C5BB /* CACell.cpp in Sources */,
 				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
+				B0885A141CE1C90100A5C04C /* CAGPUAdapter.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				B0B05FCF1BB1483200B891CE /* CAWindow.cpp in Sources */,
 				B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */,

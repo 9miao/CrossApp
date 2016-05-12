@@ -215,6 +215,7 @@ CATextView::CATextView()
 CATextView::~CATextView()
 {
     [textView_Mac removeFromSuperview];
+    m_pDelegate = NULL;
 }
 
 CATextView* CATextView::createWithFrame(const DRect& frame)
@@ -272,14 +273,14 @@ bool CATextView::init()
 
 void CATextView::onEnterTransitionDidFinish()
 {
-    CAView::onEnterTransitionDidFinish();
+    CAControl::onEnterTransitionDidFinish();
     
     this->delayShowImage();
 }
 
 void CATextView::onExitTransitionDidStart()
 {
-    CAView::onExitTransitionDidStart();
+    CAControl::onExitTransitionDidStart();
     
     if (this->isFirstResponder())
     {
@@ -294,7 +295,7 @@ bool CATextView::resignFirstResponder()
         return false;
     }
     
-    bool result = CAView::resignFirstResponder();
+    bool result = CAControl::resignFirstResponder();
     
     [textView_Mac resignFirstResponder];
 
@@ -315,7 +316,7 @@ bool CATextView::becomeFirstResponder()
         return false;
     }
     
-    bool result = CAView::becomeFirstResponder();
+    bool result = CAControl::becomeFirstResponder();
     
     [textView_Mac becomeFirstResponder];
     
@@ -399,7 +400,7 @@ void CATextView::hideNativeTextView()
 
 void CATextView::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(contentSize);
+    CAControl::setContentSize(contentSize);
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     

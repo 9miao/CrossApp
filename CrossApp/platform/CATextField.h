@@ -47,7 +47,7 @@ public:
     }
 };
 
-class CC_DLL CATextField : public CAView
+class CC_DLL CATextField : public CAControl
 {
 public:
 

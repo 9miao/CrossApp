@@ -12,10 +12,8 @@
 
 #include "view/CAImageView.h"
 #include "view/CAScale9ImageView.h"
-
+#include "control/CAControl.h"
 NS_CC_BEGIN
-
-
 
 
 class CC_DLL CATextView;
@@ -54,7 +52,7 @@ public:
 
 
 
-class CC_DLL CATextView : public CAView
+class CC_DLL CATextView : public CAControl
 {
 public:
     typedef enum

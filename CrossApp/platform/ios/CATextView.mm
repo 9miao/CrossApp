@@ -144,6 +144,7 @@ CATextView::CATextView()
 CATextView::~CATextView()
 {
     [textView_iOS removeTextView];
+    m_pDelegate = NULL;
 }
 
 CATextView* CATextView::createWithFrame(const DRect& frame)

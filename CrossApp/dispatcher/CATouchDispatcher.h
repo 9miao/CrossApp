@@ -101,6 +101,8 @@ protected:
     
     CAVector<CAResponder*> m_vTouchesViews;
     
+    bool m_bBanMultipleTouch;
+    
     DPoint m_tFirstPoint;
 };
 
@@ -178,6 +180,8 @@ protected:
     CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);
     
     CC_SYNTHESIZE_READONLY(CAResponder*, m_pScrollRunningResponder, ScrollRunningResponder);
+    
+    bool m_bBanMultipleTouch;
     
     int m_iDispatchEvents;
     
