@@ -40,6 +40,26 @@ typedef int (CAObject::*SEL_Compare)(CAObject*);
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
 
+typedef struct DelayTimerElement
+{
+	DelayTimerElement()
+		: pObj(NULL)
+		, func1(NULL)
+		, func2(NULL)
+		, fInterval(0)
+		, fCurrentTime(0)
+	{
+
+	}
+	CAObject* pObj;
+	SEL_CallFunc func1;
+	SEL_CallFuncO func2;
+	float fInterval;
+	float fCurrentTime;
+}
+tDelayTimerElement;
+
+
 class CC_DLL CACopying
 {
 public:
@@ -86,7 +106,7 @@ public:
     
     void performSelector(SEL_CallFunc callFunc, float afterDelay);
     
-    void performSelector(SEL_CallFuncO callFunc, float afterDelay);
+	void performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay);
     
     CC_SYNTHESIZE(void*, m_pUserData, UserData);
     
@@ -97,6 +117,10 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTextTag, TextTag);
     
     friend class CAAutoreleasePool;
+
+private:
+	void updateDelayTimers(float dt);
+	std::vector<tDelayTimerElement> m_vDelayTEVect;
 };
 
 class CC_DLL CAZone

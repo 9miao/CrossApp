@@ -92,7 +92,54 @@ bool CAObject::isEqual(const CAObject *pObject)
 
 void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 {
-//    CAScheduler::schedule(schedule_selector(CAView::update), this, 0, 0, afterDelay);
+	tDelayTimerElement t;
+	t.func1 = callFunc;
+	t.fInterval = afterDelay;
+	m_vDelayTEVect.push_back(t);
+	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
+}
+
+void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
+{
+	tDelayTimerElement t;
+	objParam->retain();
+	t.pObj = objParam;
+	t.func2 = callFunc;
+	t.fInterval = afterDelay;
+	m_vDelayTEVect.push_back(t);
+	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
+}
+
+void CAObject::updateDelayTimers(float dt)
+{
+	std::vector<tDelayTimerElement>::iterator it = m_vDelayTEVect.begin();
+	while (it != m_vDelayTEVect.end())
+	{
+		it->fCurrentTime += dt;
+
+		if (it->fInterval <= it->fCurrentTime)
+		{
+			if (it->func1)
+			{
+				(this->*it->func1)();
+			}
+			if (it->func2)
+			{
+				(this->*it->func2)(it->pObj);
+			}
+			CC_SAFE_RELEASE(it->pObj);
+			it = m_vDelayTEVect.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+
+	if (m_vDelayTEVect.empty())
+	{
+		CAScheduler::unschedule(schedule_selector(CAObject::updateDelayTimers), this);
+	}
 }
 
 CAZone::CAZone(CAObject *pObject)
