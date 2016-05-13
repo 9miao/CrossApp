@@ -34,7 +34,7 @@ CAObject::~CAObject(void)
 {
     CAScheduler::unscheduleAllForTarget(this);
 
-	releaseAllTDelays();
+	releaseAllDelays();
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -144,7 +144,7 @@ void CAObject::updateDelayTimers(float dt)
 	}
 }
 
-void CAObject::releaseAllTDelays()
+void CAObject::releaseAllDelays()
 {
 	for (int i = 0; i < m_vDelayTEVect.size(); i++)
 	{
