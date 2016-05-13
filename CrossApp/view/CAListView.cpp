@@ -543,7 +543,8 @@ void CAListView::reloadData()
             addSubview(m_pListFooterView);
         }
     }
-	loadCell();
+    
+	this->loadCell();
     this->layoutPullToRefreshView();
     this->startDeaccelerateScroll();
 }

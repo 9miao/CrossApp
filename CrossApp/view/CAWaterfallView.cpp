@@ -516,10 +516,10 @@ void CAWaterfallView::reloadData()
 		addSubview(m_pWaterfallFooterView);
 	}
 
+    this->loadWaterfallCell();
 	this->updateSectionHeaderAndFooterRects();
 	this->layoutPullToRefreshView();
 	this->startDeaccelerateScroll();
-	this->loadWaterfallCell();
 }
 
 void CAWaterfallView::firstReloadData()

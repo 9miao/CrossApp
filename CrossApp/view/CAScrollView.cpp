@@ -400,7 +400,6 @@ void CAScrollView::closeToPoint(float dt, float now, float total)
         m_tCloseToPoint = this->getViewSize();
         m_tInitialPoint = m_tCloseToPoint;
         this->changedFromPullToRefreshView();
-        this->detectionFromPullToRefreshView();
         this->setTouchEnabledAtSubviews(true);
     }
 }
@@ -1208,6 +1207,7 @@ void CAScrollView::detectionFromPullToRefreshView()
 void CAScrollView::startPullToHeaderRefreshView()
 {
     this->setContentOffset(DPoint(0, -128.0f), true);
+    this->performSelector(callfunc_selector(CAScrollView::detectionFromPullToRefreshView), 0.3);
 }
 
 bool CAScrollView::isHeaderRefreshing()

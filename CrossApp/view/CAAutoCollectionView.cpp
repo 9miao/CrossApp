@@ -786,10 +786,10 @@ void CAAutoCollectionView::reloadData()
 		addSubview(m_pCollectionFooterView);
 	}
     
+    this->loadCollectionCell();
 	this->updateSectionHeaderAndFooterRects();
 	this->layoutPullToRefreshView();
-	this->startDeaccelerateScroll();
-	this->loadCollectionCell();
+    this->startDeaccelerateScroll();
 }
 
 void CAAutoCollectionView::firstReloadData()
