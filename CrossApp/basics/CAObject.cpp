@@ -104,7 +104,10 @@ void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
 	tDelayTimerElement t;
-	objParam->retain();
+	if (objParam)
+	{
+		objParam->retain();
+	}
 	t.pObj = objParam;
 	t.func2 = callFunc;
 	t.fInterval = afterDelay;
