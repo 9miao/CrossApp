@@ -94,6 +94,8 @@ void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(CACollectionView
     cell->getContentView()->setRotation(0);
     cell->getContentView()->setScale(1.0f);
     CAViewAnimation::commitAnimations();
+    
+    p_Conllection->startPullToHeaderRefreshView();
 }
 
 void CollectionViewTest::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)

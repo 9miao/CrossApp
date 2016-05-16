@@ -33,8 +33,8 @@ CAObject::CAObject(void)
 CAObject::~CAObject(void)
 {
     CAScheduler::unscheduleAllForTarget(this);
-
-	releaseAllSelector();
+    
+	releaseAllDelays();
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -97,18 +97,21 @@ void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 	tDelayTimerElement t;
 	t.func1 = callFunc;
 	t.fInterval = afterDelay;
-	m_vDelayTEVect.push_back(t);
+	m_vWillAddVect.push_back(t);
 	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
 }
 
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
 	tDelayTimerElement t;
-	objParam->retain();
+	if (objParam)
+	{
+		objParam->retain();
+	}
 	t.pObj = objParam;
 	t.func2 = callFunc;
 	t.fInterval = afterDelay;
-	m_vDelayTEVect.push_back(t);
+	m_vWillAddVect.push_back(t);
 	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
 }
 
@@ -138,14 +141,18 @@ void CAObject::updateDelayTimers(float dt)
 		}
 	}
 
+	m_vDelayTEVect.insert(m_vDelayTEVect.end(), m_vWillAddVect.begin(), m_vWillAddVect.end());
+	m_vWillAddVect.clear();
+
 	if (m_vDelayTEVect.empty())
 	{
 		CAScheduler::unschedule(schedule_selector(CAObject::updateDelayTimers), this);
 	}
 }
 
-void CAObject::releaseAllSelector()
+void CAObject::releaseAllDelays()
 {
+	m_vDelayTEVect.insert(m_vDelayTEVect.end(), m_vWillAddVect.begin(), m_vWillAddVect.end());
 	for (int i = 0; i < m_vDelayTEVect.size(); i++)
 	{
 		CC_SAFE_RELEASE(m_vDelayTEVect[i].pObj);
