@@ -144,6 +144,21 @@ namespace CADevice
         
     }
 
+	CC_DLL void startGyroscope(CAGyroDelegate* delegate)
+	{
+
+	}
+
+	CC_DLL void setGyroInterval(float interval)
+	{
+
+	}
+
+	CC_DLL void stopGyroscope()
+	{
+
+	}
+
 }
 
 NS_CC_END

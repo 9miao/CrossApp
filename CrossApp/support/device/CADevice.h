@@ -13,6 +13,7 @@
 #include "basics/CAObject.h"
 #include "images/CAImage.h"
 #include "platform/CAAccelerometerDelegate.h"
+#include "platform/CAGyroDelegate.h"
 
 NS_CC_BEGIN
 
@@ -197,6 +198,12 @@ namespace CADevice
 	CC_DLL void setAccelerometerInterval(float interval);
 
 	CC_DLL void stopAccelerometer();
+    
+    CC_DLL void startGyroscope(CAGyroDelegate* delegate);
+    
+    CC_DLL void setGyroInterval(float interval);
+    
+    CC_DLL void stopGyroscope();
 };
 
 NS_CC_END

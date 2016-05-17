@@ -3,6 +3,7 @@ package org.CrossApp.lib;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public class CrossAppGLSurfaceView extends GLSurfaceView {
 	// ===========================================================
@@ -56,7 +58,7 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 		return mGLSurfaceView;
 	}
 
-	public static void queueAccelerometer(final float x, final float y, final float z, final float timestamp) 
+	public static void queueAccelerometer(final float x, final float y, final float z, final float timestamp)
 	{
 		mGLSurfaceView.queueEvent(new Runnable()
 		{
@@ -68,6 +70,18 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 		});
 	}
 
+	public static void queueGyroscope(final float x, final float y, final float z, final float timestamp)
+	{
+		mGLSurfaceView.queueEvent(new Runnable()
+		{
+			@Override
+			public void run() 
+			{
+				CrossAppGyroscope.onGyroSensorChanged(x,y,z,timestamp);
+			}
+		});
+	}
+	
 	public void setCrossAppRenderer(final CrossAppRenderer renderer)
 	{
 		this.mRenderer = renderer;
@@ -234,14 +248,22 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 	{
         if(!this.isInEditMode())
         {
-            Log.e("SUN", "SurfaceView onSizeChanged ..."+pNewSurfaceWidth+"."+pNewSurfaceHeight+" old "+pOldSurfaceWidth+"."+pOldSurfaceHeight);
-            
-            ViewGroup.LayoutParams lp = getLayoutParams();
-            lp.width = pNewSurfaceWidth;
-            lp.height = pNewSurfaceHeight;
-            setLayoutParams(lp);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+	        params.leftMargin = 0; 
+	    	params.rightMargin = 0;
+	    	params.topMargin = 0;
+	    	params.bottomMargin = 0;
+            setLayoutParams(params);
             this.mRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
             this.mRenderer.handleOnResume();
+            this.queueEvent(new Runnable() 
+	    	{
+	            @Override
+	            public void run()
+	            {
+	            	CrossAppRenderer.nativeChanged(pNewSurfaceWidth, pNewSurfaceHeight);
+	            }
+	        }); 
         }
 	}
 
