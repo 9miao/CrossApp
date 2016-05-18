@@ -394,6 +394,9 @@
 		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
 		E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */; };
 		E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */; };
+		E0C0BA5C1CEC52C30097F0C3 /* CAGyroDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C0BA5B1CEC52C30097F0C3 /* CAGyroDelegate.h */; };
+		E0C0BA5F1CEC53F60097F0C3 /* CAGyroscope.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C0BA5D1CEC53F60097F0C3 /* CAGyroscope.h */; };
+		E0C0BA601CEC53F60097F0C3 /* CAGyroscope.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0C0BA5E1CEC53F60097F0C3 /* CAGyroscope.mm */; };
 		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
 		EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */; };
 		EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */; };
@@ -783,6 +786,9 @@
 		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
 		E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAccelerometer.mm; sourceTree = "<group>"; };
+		E0C0BA5B1CEC52C30097F0C3 /* CAGyroDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGyroDelegate.h; sourceTree = "<group>"; };
+		E0C0BA5D1CEC53F60097F0C3 /* CAGyroscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGyroscope.h; sourceTree = "<group>"; };
+		E0C0BA5E1CEC53F60097F0C3 /* CAGyroscope.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAGyroscope.mm; sourceTree = "<group>"; };
 		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
@@ -1139,6 +1145,7 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				E0C0BA5B1CEC52C30097F0C3 /* CAGyroDelegate.h */,
 				E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */,
 				B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */,
 				B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */,
@@ -1424,6 +1431,8 @@
 		3E19F2941B8B0ED100720027 /* Device_ios */ = {
 			isa = PBXGroup;
 			children = (
+				E0C0BA5D1CEC53F60097F0C3 /* CAGyroscope.h */,
+				E0C0BA5E1CEC53F60097F0C3 /* CAGyroscope.mm */,
 				3E19F2951B8B0ED100720027 /* CAAddress.h */,
 				3E19F2961B8B0ED100720027 /* CAAddress.mm */,
 				3E19F2971B8B0ED100720027 /* CAAlbumController.h */,
@@ -1595,6 +1604,7 @@
 				1551A6BC158F2ADE00E66CFE /* mat3.h in Headers */,
 				B09F30371C916B970090A5D4 /* CAFont.h in Headers */,
 				1551A6BD158F2ADE00E66CFE /* mat4.h in Headers */,
+				E0C0BA5C1CEC52C30097F0C3 /* CAGyroDelegate.h in Headers */,
 				1551A6BE158F2ADE00E66CFE /* neon_matrix_impl.h in Headers */,
 				1551A6BF158F2ADE00E66CFE /* plane.h in Headers */,
 				B0ADAE681B2E7F1B00BE8FA3 /* CAActivityIndicatorView.h in Headers */,
@@ -1717,6 +1727,7 @@
 				04EA9FE81956CE2500198A8E /* CAScheduler.h in Headers */,
 				04EA9FEA1956CE2500198A8E /* CABar.h in Headers */,
 				04EA9FEC1956CE2500198A8E /* CAButton.h in Headers */,
+				E0C0BA5F1CEC53F60097F0C3 /* CAGyroscope.h in Headers */,
 				04EA9FEE1956CE2500198A8E /* CAControl.h in Headers */,
 				04EA9FF21956CE2500198A8E /* CAProgress.h in Headers */,
 				04EA9FF41956CE2500198A8E /* CASegmentedControl.h in Headers */,
@@ -1863,6 +1874,7 @@
 				1551A736158F2ADE00E66CFE /* CCFileUtilsIOS.mm in Sources */,
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
+				E0C0BA601CEC53F60097F0C3 /* CAGyroscope.mm in Sources */,
 				1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
 				B0412DD21BC7966C00E2C118 /* CAVideoPlayerView.cpp in Sources */,
