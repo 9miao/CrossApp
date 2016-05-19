@@ -650,7 +650,7 @@ import android.widget.TextView.OnEditorActionListener;
 			@Override
 			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
 				// TODO Auto-generated method stub
-				if (keyBoardReturnType != EditorInfo.IME_ACTION_NONE)
+				if (keyBoardReturnType != EditorInfo.IME_ACTION_NONE && arg2.getAction() == KeyEvent.ACTION_DOWN)
 				{
 					context.runOnGLThread(new Runnable() 
 	            	{
