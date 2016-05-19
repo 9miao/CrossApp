@@ -89,6 +89,8 @@ public:
     void performSelector(SEL_CallFunc callFunc, float afterDelay);
     
 	void performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay);
+
+	static void updateDelayTimers(float t);
     
     CC_SYNTHESIZE(void*, m_pUserData, UserData);
     
@@ -112,50 +114,6 @@ public:
     CAObject *m_pCopyObject;
 };
 
-
-typedef struct DelayTimerElement
-{
-	DelayTimerElement()
-		: pOwnerObj(NULL)
-		, func1(NULL)
-		, func2(NULL)
-		, pObj(NULL)
-		, fInterval(0)
-		, fCurrentTime(0)
-	{
-
-	}
-	CAObject* pOwnerObj;
-	SEL_CallFunc func1;
-	SEL_CallFuncO func2;
-	CAObject* pObj;
-	float fInterval;
-	float fCurrentTime;
-}
-tDelayTimerElement;
-
-
-class CAObjectHelper : public CAObject
-{
-public:
-
-	CAObjectHelper(void);
-
-	virtual ~CAObjectHelper(void);
-
-	static CAObjectHelper* getInstance();
-
-	void performSelector(CAObject* pOwnerObj, SEL_CallFunc callFunc, float afterDelay);
-
-	void performSelector(CAObject* pOwnerObj, SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay);
-
-	void updateDelayTimers(float dt);
-
-	void releaseAllDelays();
-
-private:
-	CASyncQueue<tDelayTimerElement> m_vDelayTimerVect;
-};
 
 const float FLOAT_NONE = FLT_MAX;
 const int INT_NONE = 0x8FFFFFFF;
