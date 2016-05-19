@@ -2,7 +2,7 @@
 //  CAGryoscope.h
 //  CrossApp
 //
-//  Created by 秦乐 on 16/5/11.
+//  Created by 秦 on 16/5/11.
 //  Copyright © 2016年 cocos2d-x. All rights reserved.
 //
 
