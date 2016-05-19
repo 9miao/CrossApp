@@ -5,6 +5,7 @@
 #include "ccMacros.h"
 #include "CAScheduler.h"
 #include "script_support/CCScriptSupport.h"
+#include "CAObjectHelper.h"
 NS_CC_BEGIN
 
 CAObject* CACopying::copyWithZone(CAZone *pZone)
@@ -33,8 +34,6 @@ CAObject::CAObject(void)
 CAObject::~CAObject(void)
 {
     CAScheduler::unscheduleAllForTarget(this);
-    
-	releaseAllDelays();
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -94,70 +93,12 @@ bool CAObject::isEqual(const CAObject *pObject)
 
 void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 {
-	tDelayTimerElement t;
-	t.func1 = callFunc;
-	t.fInterval = afterDelay;
-	m_vWillAddVect.push_back(t);
-	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
+	CAObjectHelper::getInstance()->performSelector(this, callFunc, afterDelay);
 }
 
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
-	tDelayTimerElement t;
-	if (objParam)
-	{
-		objParam->retain();
-	}
-	t.pObj = objParam;
-	t.func2 = callFunc;
-	t.fInterval = afterDelay;
-	m_vWillAddVect.push_back(t);
-	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
-}
-
-void CAObject::updateDelayTimers(float dt)
-{
-	std::vector<tDelayTimerElement>::iterator it = m_vDelayTEVect.begin();
-	while (it != m_vDelayTEVect.end())
-	{
-		it->fCurrentTime += dt;
-
-		if (it->fInterval <= it->fCurrentTime)
-		{
-			if (it->func1)
-			{
-				(this->*it->func1)();
-			}
-			if (it->func2)
-			{
-				(this->*it->func2)(it->pObj);
-			}
-			CC_SAFE_RELEASE(it->pObj);
-			it = m_vDelayTEVect.erase(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
-
-	m_vDelayTEVect.insert(m_vDelayTEVect.end(), m_vWillAddVect.begin(), m_vWillAddVect.end());
-	m_vWillAddVect.clear();
-
-	if (m_vDelayTEVect.empty())
-	{
-		CAScheduler::unschedule(schedule_selector(CAObject::updateDelayTimers), this);
-	}
-}
-
-void CAObject::releaseAllDelays()
-{
-	m_vDelayTEVect.insert(m_vDelayTEVect.end(), m_vWillAddVect.begin(), m_vWillAddVect.end());
-	for (int i = 0; i < m_vDelayTEVect.size(); i++)
-	{
-		CC_SAFE_RELEASE(m_vDelayTEVect[i].pObj);
-	}
-	m_vDelayTEVect.clear();
+	CAObjectHelper::getInstance()->performSelector(this, callFunc, objParam, afterDelay);
 }
 
 CAZone::CAZone(CAObject *pObject)

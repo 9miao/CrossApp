@@ -529,6 +529,9 @@
     <ClCompile Include="..\shaders\CAGPUAdapter.cpp">
       <Filter>shaders</Filter>
     </ClCompile>
+    <ClCompile Include="..\basics\CAObjectHelper.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1067,6 +1070,9 @@
     </ClInclude>
     <ClInclude Include="..\shaders\CAGPUAdapter.h">
       <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAObjectHelper.h">
+      <Filter>basics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
