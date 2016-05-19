@@ -165,7 +165,7 @@ public abstract class CrossAppDevice  extends Activity  {
 		return CrossAppNetWorkManager.getAPNType();
 	}
 	
-	
+	// Accelerorometer
 	public static void enableAccelerometer() {
 		CrossAppHelper.setsAccelerometerEnabled(true);
 		CrossAppHelper.getsCrossAppAccelerometer().enable();
@@ -180,15 +180,39 @@ public abstract class CrossAppDevice  extends Activity  {
 		CrossAppHelper.getsCrossAppAccelerometer().disable();
 	}
 	
+	// Gyroscope
+	public static void enableGyroscope() {
+		
+		CrossAppHelper.setGyroscopeEnable(true);
+		
+		CrossAppHelper.getCrossAppGyroscope().enable();
+	}
+
+	public static void setGyroscopeInterval(float interval) {
+		CrossAppHelper.getCrossAppGyroscope().setInterval(interval);
+	}
+
+	public static void disableGyroscope() {
+		CrossAppHelper.setGyroscopeEnable(false);
+		CrossAppHelper.getCrossAppGyroscope().disable();
+	}
+	
+	
 	public  void onResume() {
 		if (CrossAppHelper.issAccelerometerEnabled()) {
 			CrossAppHelper.getsCrossAppAccelerometer().enable();
+		}
+		if(CrossAppHelper.isGyroscopeEnabled()){
+			CrossAppHelper.getCrossAppGyroscope().enable();
 		}
 	}
 
 	public  void onPause() {
 		if (CrossAppHelper.issAccelerometerEnabled()) {
 			CrossAppHelper.getsCrossAppAccelerometer().disable();
+		}
+		if(CrossAppHelper.isGyroscopeEnabled()){
+			CrossAppHelper.getCrossAppGyroscope().disable();
 		}
 	}
 	
@@ -297,12 +321,12 @@ public abstract class CrossAppDevice  extends Activity  {
         .setOngoing(false)
         .build();   
         
-        notification.flags = Notification.FLAG_AUTO_CANCEL;//鐐瑰嚮鍚庤嚜鍔ㄦ秷澶� 
-        notification.defaults = Notification.DEFAULT_SOUND;//澹伴煶榛樿  
+        notification.flags = Notification.FLAG_AUTO_CANCEL;//閻愮懓鍤崥搴ゅ殰閸斻劍绉锋径锟�
+        notification.defaults = Notification.DEFAULT_SOUND;//婢逛即鐓舵妯款吇  
         
         ++mIndex;
 		
-        manager.notify(mIndex, notification);//鍙戝姩閫氱煡        	
+        manager.notify(mIndex, notification);//閸欐垵濮╅柅姘辩叀        	
 	}
 	
 	public static void sendLocalNotification(final String title,final String content,int time)
@@ -331,7 +355,7 @@ public abstract class CrossAppDevice  extends Activity  {
         return CrossAppNativeTool.getSaveImagePath();
     }
     
-    //鏇存柊鍥惧簱
+    //閺囧瓨鏌婇崶鎯х氨
     public static void UpdateCamera(final String url)
     { 
     	CrossAppNativeTool.UpdateCamera(url);

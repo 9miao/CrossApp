@@ -28,7 +28,9 @@ public class CrossAppHelper {
 	private static CrossAppSound sCocos2dSound;
 	private static AssetManager sAssetManager;
 	private static CrossAppAccelerometer sCrossAppAccelerometer;
+	private static CrossAppGyroscope sCrossAppGyroscope;
 	private static boolean sAccelerometerEnabled;
+	private static boolean bGyroscope;
 	private static String sPackageName;
 	private static String sFileDirectory;
 	private static Context sContext = null;
@@ -49,6 +51,7 @@ public class CrossAppHelper {
 		CrossAppHelper.nativeSetApkPath(applicationInfo.sourceDir);
 
 		CrossAppHelper.setsCrossAppAccelerometer(new CrossAppAccelerometer(pContext));
+		CrossAppHelper.setCrossAppGyroscope(new CrossAppGyroscope(pContext));
 		CrossAppHelper.sCocos2dMusic = new CrossAppMusic(pContext);
 		CrossAppHelper.sCocos2dSound = new CrossAppSound(pContext);
 		CrossAppHelper.sAssetManager = pContext.getAssets();
@@ -97,7 +100,6 @@ public class CrossAppHelper {
 		CrossAppHelper.getsCrossAppAccelerometer().enable();
 	}
 
-
 	public static void setAccelerometerInterval(float interval) {
 		CrossAppHelper.getsCrossAppAccelerometer().setInterval(interval);
 	}
@@ -107,15 +109,41 @@ public class CrossAppHelper {
 		CrossAppHelper.getsCrossAppAccelerometer().disable();
 	}
 	
+	
+	public static void enableGyroscopr() {
+		CrossAppHelper.setGyroscopeEnable(true);
+		CrossAppHelper.getCrossAppGyroscope().enable();
+	}
+
+	public static void setGyroscoprInterval(float interval) {
+		CrossAppHelper.getCrossAppGyroscope().setInterval(interval);
+	}
+
+	public static void disableGyroscopr() {
+		CrossAppHelper.setGyroscopeEnable(false);
+		CrossAppHelper.getCrossAppGyroscope().disable();
+	}
+	
+	
 	public static void onResume() {
-		if (CrossAppHelper.issAccelerometerEnabled()) {
+		if (CrossAppHelper.issAccelerometerEnabled()) 
+		{
 			CrossAppHelper.getsCrossAppAccelerometer().enable();
+		}
+		if(CrossAppHelper.isGyroscopeEnabled())
+		{
+			CrossAppHelper.getCrossAppGyroscope().enable();
 		}
 	}
 
 	public static void onPause() {
-		if (CrossAppHelper.issAccelerometerEnabled()) {
+		if (CrossAppHelper.issAccelerometerEnabled())
+		{
 			CrossAppHelper.getsCrossAppAccelerometer().disable();
+		}
+		if(CrossAppHelper.isGyroscopeEnabled())
+		{
+			CrossAppHelper.getCrossAppGyroscope().disable();
 		}
 	}
 	
@@ -321,6 +349,7 @@ public class CrossAppHelper {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
+    // Accelerometer
 	public static boolean issAccelerometerEnabled() {
 		return sAccelerometerEnabled;
 	}
@@ -329,6 +358,7 @@ public class CrossAppHelper {
 		CrossAppHelper.sAccelerometerEnabled = sAccelerometerEnabled;
 	}
 
+	
 	public static CrossAppAccelerometer getsCrossAppAccelerometer() {
 		return sCrossAppAccelerometer;
 	}
@@ -337,6 +367,27 @@ public class CrossAppHelper {
 		CrossAppHelper.sCrossAppAccelerometer = sCrossAppAccelerometer;
 	}
 
+	// Gyroscope
+	public static boolean isGyroscopeEnabled() {
+		return bGyroscope;
+	}
+
+	public static void setGyroscopeEnabled(boolean gyroscopeEnabled) {
+		CrossAppHelper.bGyroscope = gyroscopeEnabled;
+	}
+
+	public static void setGyroscopeEnable(boolean gyroEnable) {
+		CrossAppHelper.bGyroscope = gyroEnable;
+	}
+	
+	public static CrossAppGyroscope getCrossAppGyroscope() {
+		return sCrossAppGyroscope;
+	}
+	
+	public static void setCrossAppGyroscope(CrossAppGyroscope gyroscope) {
+		CrossAppHelper.sCrossAppGyroscope = gyroscope;
+	}
+	
 	public static interface CrossAppHelperListener {
 		public void showDialog(final String pTitle, final String pMessage);
 		public void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength);

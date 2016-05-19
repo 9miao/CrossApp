@@ -199,6 +199,33 @@ extern "C"
 		}
 	}
 
+	void JAVAStartGyroscope()
+	{
+		JniMethodInfo jmi;
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "enableGyroscope", "()V"))
+		{
+			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+		}
+	}
+
+	void JAVASetGyroscope(float interval)
+	{
+		JniMethodInfo jmi;
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "setGyroscopeInterval", "(F)V"))
+		{
+			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID, interval);
+		}
+	}
+
+	void JAVAStopGyroscope()
+	{
+		JniMethodInfo jmi;
+		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "disableGyroscope", "()V"))
+		{
+			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+		}
+	}
+
     CANetWorkType JAVAgetNetWorkType()
     {
         CANetWorkType networkType = CANetWorkTypeNone;
@@ -389,6 +416,7 @@ static const char *_path = NULL;
 static CALocationDelegate *locationDelegate = NULL;
 static CAWifiDelegate *wifidelegate = NULL;
 static CAAccelerometerDelegate* accelerometerDelegate = NULL;
+static CAGyroDelegate* gyroscopeDelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
 void openCamera(CAMediaDelegate* target)
@@ -490,6 +518,23 @@ void setAccelerometerInterval(float interval)
 void stopAccelerometer()
 {
 	JAVAStopAccelerometer();
+}
+
+void startGyroscope(CAGyroDelegate* delegate)
+{
+	gyroscopeDelegate = delegate;
+
+	JAVAStartGyroscope();
+}
+
+void setGyroInterval(float interval)
+{
+	JAVASetGyroscope(interval);
+}
+
+void stopGyroscope()
+{
+	JAVAStopGyroscope();
 }
 
 void startUpdateLocation(CALocationDelegate* gpsDelegate)
@@ -617,6 +662,23 @@ extern "C"
 		acceleration->timestamp = pTime;
 
 		accelerometerDelegate->didAccelerate(acceleration);
+	}
+
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGyroscope_onGyroSensorChanged(
+		JNIEnv *env,
+		jobject obj,
+		jfloat px,
+		jfloat py,
+		jfloat pz,
+		jfloat pTime)
+	{
+		CAGyroDate* gyroDate = new CAGyroDate();
+		gyroDate->x = px;
+		gyroDate->y = py;
+		gyroDate->z = pz;
+		gyroDate->timestamp = pTime;
+
+		gyroscopeDelegate->didGyroscope(gyroDate);
 	}
 
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGPS_returnLocationInfo(JNIEnv *env, jobject obj, jobject sender)

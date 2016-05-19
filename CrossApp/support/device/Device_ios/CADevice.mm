@@ -16,6 +16,7 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "CABlueTooth.h"
 #import "Reachability.h"
+#import "CAGyroscope.h"
 
 NS_CC_BEGIN
 
@@ -245,6 +246,20 @@ void stopAccelerometer()
     CAAccelerometer::sharedAccelerometer()->stopAccelerometer();
 }
     
+void startGyroscope(CAGyroDelegate* delegate)
+{
+    [[CAGyroscope sharedGyroscope] addGyroDelegate:delegate];
+}
+
+void setGyroInterval(float value)
+{
+    [[CAGyroscope sharedGyroscope] setGyroInterval:value];
+}
+    
+void stopGyroscope()
+{
+    [[CAGyroscope sharedGyroscope] stopUpdatingGyroscope];
+}
 }
 
 NS_CC_END
