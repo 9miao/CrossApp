@@ -8,7 +8,6 @@
 #ifndef __CrossApp_CASyncQueue__
 #define __CrossApp_CASyncQueue__
 
-#include "ccTypes.h"
 #include "ccMacros.h"
 #include <queue>
 #include <vector>

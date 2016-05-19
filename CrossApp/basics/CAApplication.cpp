@@ -782,6 +782,7 @@ void CCDisplayLinkDirector::mainLoop(void)
          if (! m_bPaused)
          {
              CAScheduler::getScheduler()->update(m_fDeltaTime);
+			 CAObjectHelper::getInstance()->updateDelayTimers(m_fDeltaTime);
              drawScene();
          }
          CAPoolManager::sharedPoolManager()->pop();        

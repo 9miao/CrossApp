@@ -3,11 +3,13 @@
 #ifndef __CAObject_H__
 #define __CAObject_H__
 
+#include "CASyncQueue.h"
 #include "platform/CCPlatformMacros.h"
 #include "float.h"
 #include <string>
 #include <vector>
 #include <deque>
+
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
 #endif // EMSCRIPTEN
@@ -108,6 +110,51 @@ public:
 public:
     
     CAObject *m_pCopyObject;
+};
+
+
+typedef struct DelayTimerElement
+{
+	DelayTimerElement()
+		: pOwnerObj(NULL)
+		, func1(NULL)
+		, func2(NULL)
+		, pObj(NULL)
+		, fInterval(0)
+		, fCurrentTime(0)
+	{
+
+	}
+	CAObject* pOwnerObj;
+	SEL_CallFunc func1;
+	SEL_CallFuncO func2;
+	CAObject* pObj;
+	float fInterval;
+	float fCurrentTime;
+}
+tDelayTimerElement;
+
+
+class CAObjectHelper : public CAObject
+{
+public:
+
+	CAObjectHelper(void);
+
+	virtual ~CAObjectHelper(void);
+
+	static CAObjectHelper* getInstance();
+
+	void performSelector(CAObject* pOwnerObj, SEL_CallFunc callFunc, float afterDelay);
+
+	void performSelector(CAObject* pOwnerObj, SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay);
+
+	void updateDelayTimers(float dt);
+
+	void releaseAllDelays();
+
+private:
+	CASyncQueue<tDelayTimerElement> m_vDelayTimerVect;
 };
 
 const float FLOAT_NONE = FLT_MAX;
