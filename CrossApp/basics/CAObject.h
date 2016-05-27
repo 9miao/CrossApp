@@ -3,11 +3,13 @@
 #ifndef __CAObject_H__
 #define __CAObject_H__
 
+#include "CASyncQueue.h"
 #include "platform/CCPlatformMacros.h"
 #include "float.h"
 #include <string>
 #include <vector>
 #include <deque>
+
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
 #endif // EMSCRIPTEN
@@ -39,26 +41,6 @@ typedef int (CAObject::*SEL_Compare)(CAObject*);
 #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
-
-typedef struct DelayTimerElement
-{
-	DelayTimerElement()
-		: pObj(NULL)
-		, func1(NULL)
-		, func2(NULL)
-		, fInterval(0)
-		, fCurrentTime(0)
-	{
-
-	}
-	CAObject* pObj;
-	SEL_CallFunc func1;
-	SEL_CallFuncO func2;
-	float fInterval;
-	float fCurrentTime;
-}
-tDelayTimerElement;
-
 
 class CC_DLL CACopying
 {
@@ -107,6 +89,8 @@ public:
     void performSelector(SEL_CallFunc callFunc, float afterDelay);
     
 	void performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay);
+
+	static void updateDelayTimers(float t);
     
     CC_SYNTHESIZE(void*, m_pUserData, UserData);
     
@@ -117,12 +101,6 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sTextTag, TextTag);
     
     friend class CAAutoreleasePool;
-
-private:
-	void updateDelayTimers(float dt);
-	void releaseAllDelays();
-	std::vector<tDelayTimerElement> m_vWillAddVect;
-	std::vector<tDelayTimerElement> m_vDelayTEVect;
 };
 
 class CC_DLL CAZone
@@ -135,6 +113,7 @@ public:
     
     CAObject *m_pCopyObject;
 };
+
 
 const float FLOAT_NONE = FLT_MAX;
 const int INT_NONE = 0x8FFFFFFF;

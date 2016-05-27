@@ -5,7 +5,125 @@
 #include "ccMacros.h"
 #include "CAScheduler.h"
 #include "script_support/CCScriptSupport.h"
+
 NS_CC_BEGIN
+
+
+typedef struct DelayTimerElement
+{
+	DelayTimerElement()
+		: pOwnerObj(NULL)
+		, func1(NULL)
+		, func2(NULL)
+		, pObj(NULL)
+		, fInterval(0)
+		, fCurrentTime(0)
+	{
+
+	}
+	CAObject* pOwnerObj;
+	SEL_CallFunc func1;
+	SEL_CallFuncO func2;
+	CAObject* pObj;
+	float fInterval;
+	float fCurrentTime;
+}
+tDelayTimerElement;
+
+
+class CAObjectHelper : public CAObject
+{
+public:
+
+	CAObjectHelper(void) {}
+
+	virtual ~CAObjectHelper(void)
+	{
+		releaseAllDelays();
+	}
+
+	static CAObjectHelper* getInstance()
+	{
+		static CAObjectHelper instance;
+		return &instance;
+	}
+
+	void performSelector(CAObject* pOwnerObj, SEL_CallFunc callFunc, float afterDelay)
+	{
+		CCAssert(pOwnerObj, "");
+		pOwnerObj->retain();
+		tDelayTimerElement t;
+		t.pOwnerObj = pOwnerObj;
+		t.func1 = callFunc;
+		t.fInterval = afterDelay;
+		m_vDelayTimerVect.AddElement(t);
+	}
+
+	void performSelector(CAObject* pOwnerObj, SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
+	{
+		CCAssert(pOwnerObj, "");
+		pOwnerObj->retain();
+		tDelayTimerElement t;
+		t.pOwnerObj = pOwnerObj;
+		if (objParam)
+		{
+			objParam->retain();
+		}
+		t.pObj = objParam;
+		t.func2 = callFunc;
+		t.fInterval = afterDelay;
+		m_vDelayTimerVect.AddElement(t);
+	}
+
+	void updateDelayTimers(float dt)
+	{
+		std::vector<tDelayTimerElement> vTimers = m_vDelayTimerVect.GetQueueElements();
+
+		std::vector<tDelayTimerElement>::iterator it = vTimers.begin();
+		while (it != vTimers.end())
+		{
+			it->fCurrentTime += dt;
+
+			if (it->fInterval <= it->fCurrentTime)
+			{
+				if (it->func1)
+				{
+					(it->pOwnerObj->*it->func1)();
+				}
+				if (it->func2)
+				{
+					(it->pOwnerObj->*it->func2)(it->pObj);
+				}
+				CC_SAFE_RELEASE(it->pOwnerObj);
+				CC_SAFE_RELEASE(it->pObj);
+				it = vTimers.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+		for (size_t i = 0; i < vTimers.size(); i++)
+		{
+			m_vDelayTimerVect.AddElement(vTimers[i]);
+		}
+	}
+
+	void releaseAllDelays()
+	{
+		std::vector<tDelayTimerElement> vTimers = m_vDelayTimerVect.GetQueueElements();
+		for (int i = 0; i < vTimers.size(); i++)
+		{
+			CC_SAFE_RELEASE(vTimers[i].pOwnerObj);
+			CC_SAFE_RELEASE(vTimers[i].pObj);
+		}
+		m_vDelayTimerVect.Clear();
+	}
+
+private:
+	CASyncQueue<tDelayTimerElement> m_vDelayTimerVect;
+};
+
 
 CAObject* CACopying::copyWithZone(CAZone *pZone)
 {
@@ -33,8 +151,6 @@ CAObject::CAObject(void)
 CAObject::~CAObject(void)
 {
     CAScheduler::unscheduleAllForTarget(this);
-    
-	releaseAllDelays();
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -94,75 +210,24 @@ bool CAObject::isEqual(const CAObject *pObject)
 
 void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 {
-	tDelayTimerElement t;
-	t.func1 = callFunc;
-	t.fInterval = afterDelay;
-	m_vWillAddVect.push_back(t);
-	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
+	CAObjectHelper::getInstance()->performSelector(this, callFunc, afterDelay);
 }
 
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
-	tDelayTimerElement t;
-	if (objParam)
-	{
-		objParam->retain();
-	}
-	t.pObj = objParam;
-	t.func2 = callFunc;
-	t.fInterval = afterDelay;
-	m_vWillAddVect.push_back(t);
-	CAScheduler::schedule(schedule_selector(CAObject::updateDelayTimers), this, 0, kCCRepeatForever, 1 / 60);
+	CAObjectHelper::getInstance()->performSelector(this, callFunc, objParam, afterDelay);
 }
 
-void CAObject::updateDelayTimers(float dt)
+void CAObject::updateDelayTimers(float t)
 {
-	std::vector<tDelayTimerElement>::iterator it = m_vDelayTEVect.begin();
-	while (it != m_vDelayTEVect.end())
-	{
-		it->fCurrentTime += dt;
-
-		if (it->fInterval <= it->fCurrentTime)
-		{
-			if (it->func1)
-			{
-				(this->*it->func1)();
-			}
-			if (it->func2)
-			{
-				(this->*it->func2)(it->pObj);
-			}
-			CC_SAFE_RELEASE(it->pObj);
-			it = m_vDelayTEVect.erase(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
-
-	m_vDelayTEVect.insert(m_vDelayTEVect.end(), m_vWillAddVect.begin(), m_vWillAddVect.end());
-	m_vWillAddVect.clear();
-
-	if (m_vDelayTEVect.empty())
-	{
-		CAScheduler::unschedule(schedule_selector(CAObject::updateDelayTimers), this);
-	}
-}
-
-void CAObject::releaseAllDelays()
-{
-	m_vDelayTEVect.insert(m_vDelayTEVect.end(), m_vWillAddVect.begin(), m_vWillAddVect.end());
-	for (int i = 0; i < m_vDelayTEVect.size(); i++)
-	{
-		CC_SAFE_RELEASE(m_vDelayTEVect[i].pObj);
-	}
-	m_vDelayTEVect.clear();
+	CAObjectHelper::getInstance()->updateDelayTimers(t);
 }
 
 CAZone::CAZone(CAObject *pObject)
 {
     m_pCopyObject = pObject;
 }
+
+
 
 NS_CC_END
