@@ -429,11 +429,7 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
-    
-    if (this->isFirstResponder())
-    {
-        this->resignFirstResponder();
-    }
+    this->resignFirstResponder();
 }
 
 bool CATextField::resignFirstResponder()

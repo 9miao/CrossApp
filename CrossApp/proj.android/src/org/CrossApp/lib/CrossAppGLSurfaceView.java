@@ -70,6 +70,18 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 		});
 	}
 
+	public static void queueGyroscope(final float x, final float y, final float z, final float timestamp)
+	{
+		mGLSurfaceView.queueEvent(new Runnable()
+		{
+			@Override
+			public void run() 
+			{
+				CrossAppGyroscope.onGyroSensorChanged(x,y,z,timestamp);
+			}
+		});
+	}
+	
 	public void setCrossAppRenderer(final CrossAppRenderer renderer)
 	{
 		this.mRenderer = renderer;

@@ -659,6 +659,7 @@ void CATextField::onExitTransitionDidStart()
     CAControl::onExitTransitionDidStart();
 
 	CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
+    this->resignFirstResponder();
 }
 
 bool CATextField::resignFirstResponder()

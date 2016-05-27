@@ -1081,7 +1081,7 @@
 				LastUpgradeCheck = 0430;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = YV7UQS6C4A;
+						DevelopmentTeam = EWZQ84AT3D;
 					};
 				};
 			};
@@ -1311,7 +1311,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: feng wu (47G833P8GL)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1345,7 +1345,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 				);
 				OTHER_CFLAGS = "-O2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg.Test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg000Test;
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1365,7 +1365,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: feng wu (47G833P8GL)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1396,7 +1396,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/lib\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg.Test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg000Test;
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

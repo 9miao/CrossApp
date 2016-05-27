@@ -102,7 +102,8 @@ void sendLocalNotification(const char* title,const char* content,int time)
     
     UILocalNotification *notification = [[[UILocalNotification alloc] init] autorelease];
     NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:time];
-    if (notification != nil) {
+    if (notification != nil)
+    {
         notification.fireDate = pushDate;
         notification.timeZone = [NSTimeZone defaultTimeZone];
         notification.repeatInterval = kCFCalendarUnitDay;

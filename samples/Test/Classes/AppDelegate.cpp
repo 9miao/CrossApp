@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // run
     application->runWindow(RootWindow::getInstance());
-
+    
     return true;
 }
 

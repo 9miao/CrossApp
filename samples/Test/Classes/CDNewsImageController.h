@@ -17,8 +17,8 @@ public:
     CDNewsImagecollectionCell();
     virtual ~CDNewsImagecollectionCell();
     static CDNewsImagecollectionCell* create(const std::string& identifier);
-    virtual void highlightedTableViewCell();
-    virtual void selectedTableViewCell();
+    virtual void highlightedcollectionCell();
+    virtual void selectedcollectionCell();
     
     CC_SYNTHESIZE_READONLY(CommonUrlImageView*, m_pImage1, Image1);
     CC_SYNTHESIZE_READONLY(CommonUrlImageView*, m_pImage2, Image2);
@@ -55,7 +55,7 @@ public:
     virtual void scrollViewFooterBeginRefreshing(CAScrollView* view);
     virtual void scrollViewStopMoved(CAScrollView* view);
 public:
-    void initImageTableView();
+    void initImageCollectionView();
     void onRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
     void onRefreshRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
     float getRandNum();

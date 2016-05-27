@@ -3,6 +3,7 @@
 //#include "support/device/CADevice.h"
 #include "CDUIShowAutoCollectionView.h"
 
+int PickerViewNum = 0;
 
 PickerViewTest::PickerViewTest()
 {
@@ -14,6 +15,7 @@ PickerViewTest::~PickerViewTest()
 {
     CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
     drawer->setTouchMoved(true);
+    PickerViewNum = 0;
 }
 
 static const CHAR* adressTag[34] =
@@ -53,8 +55,6 @@ static const CHAR* adressTag[34] =
     _T("香港特别行政区"),
     _T("澳门特别行政区"),
 };
-
-int PickerViewNum = 0;
 
 void CDUIShowAutoCollectionView::PickerViewRightBtnRightcallback(CAControl* control, DPoint point)
 {

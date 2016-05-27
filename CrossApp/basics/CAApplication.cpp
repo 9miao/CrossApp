@@ -784,7 +784,7 @@ void CCDisplayLinkDirector::mainLoop(void)
              CAScheduler::getScheduler()->update(m_fDeltaTime);
              drawScene();
          }
-         CAPoolManager::sharedPoolManager()->pop();        
+         CAPoolManager::sharedPoolManager()->pop();
      }
 }
 

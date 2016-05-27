@@ -84,7 +84,7 @@ void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *w
 {
     //选中
     CAWaterfallViewCell* cell = waterfallView->cellForRowAtIndexPath(itemIndex);
-    cell->getContentView()->setRotation(360);
+    cell->getContentView()->setRotation(-360);
     cell->getContentView()->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
     cell->getContentView()->setRotation(0);

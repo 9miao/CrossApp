@@ -68,13 +68,9 @@ static CALocation* m_pLocation = NULL;
     {
         
         NSString *longitude = [[NSString alloc] initWithFormat:@"%g",curLocation.coordinate.longitude];
-        
         NSString *latitude = [[NSString alloc] initWithFormat:@"%g",curLocation.coordinate.latitude];
-        
         NSString *altitude = [[NSString alloc] initWithFormat:@"%g",curLocation.verticalAccuracy];
-        
         NSString *speed = [[NSString alloc] initWithFormat:@"%g",curLocation.speed];
-        
         NSString* bearing = [[NSString alloc] initWithFormat:@"%g",curLocation.course];
         
         

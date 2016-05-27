@@ -32,12 +32,12 @@ CDNewsImagecollectionCell* CDNewsImagecollectionCell::create(const std::string& 
     return NULL;
 }
 
-void CDNewsImagecollectionCell::highlightedTableViewCell()
+void CDNewsImagecollectionCell::highlightedcollectionCell()
 {
     this->setBackgroundView(CAView::createWithColor(ccc4(0, 0, 0, 128)));
 }
 
-void CDNewsImagecollectionCell::selectedTableViewCell()
+void CDNewsImagecollectionCell::selectedcollectionCell()
 {
     this->setBackgroundView(CAView::createWithColor(ccc4(0, 0, 0, 128)));
 }
@@ -141,15 +141,15 @@ void CDNewsImageController::viewDidLoad()
             p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_H_C(0, 0.5)));
             this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
             p_pLoading->setLoadingMinTime(0.5f);
-            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageTableView));
+            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageCollectionView));
         }
     }else{
-        this->initImageTableView();
+        this->initImageCollectionView();
     }
 
 }
 
-void CDNewsImageController::initImageTableView()
+void CDNewsImageController::initImageCollectionView()
 {
     if (m_ImageMsg.empty()) {
         showAlert();
@@ -232,7 +232,7 @@ void CDNewsImageController::buttonCallBack(CAControl* btn,DPoint point)
         p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_T_H(50, 0.5)));
         this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
         p_pLoading->setLoadingMinTime(0.5f);
-        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageTableView));
+        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageCollectionView));
     }
 }
 

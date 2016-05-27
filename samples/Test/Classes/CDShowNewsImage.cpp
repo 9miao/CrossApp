@@ -34,12 +34,18 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
 {
     m_image = _image;
     
+    CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
+    idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
+    idc1->startAnimating();
+    
     CAVector<CAView* > viewList;
     for (int i=0; i<m_image.m_imageUrl.size(); i++)
     {
+        this->getView()->insertSubview(idc1, -1);
+        
         CommonUrlImageView* temImage = CommonUrlImageView::createWithLayout(DLayoutFill);
         temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
-        temImage->setImage(CAImage::create("HelloWorld.png"));
+//        temImage->setImage(CAImage::create("image/HelloWorld.png"));
         temImage->setUrl(m_image.m_imageUrl[i]);
         
         CAScrollView* p_ScrollView = CAScrollView::createWithLayout(DLayoutFill);
@@ -51,6 +57,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         p_ScrollView->setBounceVertical(false);
         p_ScrollView->setScrollViewDelegate(this);
         p_ScrollView->addSubview(temImage);
+        p_ScrollView->addSubview(idc1);
         viewList.pushBack(p_ScrollView);
     }
     
@@ -61,6 +68,11 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     p_PageView->setPageViewDelegate(this);
     p_PageView->setSpacing(40);
     this->getView()->addSubview(p_PageView);
+    
+//    CAView* view = CAView::createWithLayout(DLayoutFill);
+//    view->addSubview(p_PageView);
+//    view->setColor(CAColor_black);
+//    this->getView()->addSubview(view);
     
     p_bg = CAView::createWithColor(ccc4(0,0,0,200));
     p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.85)));
@@ -83,7 +95,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     p_bg->addSubview(p_index);
     
     p_des = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 20), DVerticalLayoutFill));
-    p_des->setText(m_image.m_imageDesc[4]);
+    p_des->setText(m_image.m_imageDesc[0]);
 	p_des->setColor(ccc4(200, 200, 200, 255));
     p_des->setFontSize(26);
     

@@ -41,7 +41,6 @@ bool CDListViewTest::init()
     listView->setOrientation(CAListView::Horizontal);
     //listView->setShowsHorizontalScrollIndicator(false);
     listView->setShowsScrollIndicators(false);
-    
     listView->setSeparatorColor(CAColor_clear);
     this->addSubview(listView);
     return true;
@@ -127,6 +126,8 @@ void ListViewTest::viewDidLoad()
     p_ListView->setAllowsMultipleSelection(false);
     p_ListView->setListViewOrientation(CAListViewOrientationVertical);
     p_ListView->setShowsScrollIndicators(true);
+    p_ListView->setSeparatorViewHeight(30);
+    p_ListView->setAllowsHeadAndFootHover(false);
 
     p_ListView->setSeparatorColor(CAColor_gray);
     this->getView()->addSubview(p_ListView);

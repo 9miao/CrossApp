@@ -225,6 +225,7 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
+    this->resignFirstResponder();
 }
 
 bool CATextField::resignFirstResponder()

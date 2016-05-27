@@ -26,12 +26,12 @@ import shutil
 def dumpUsage():
     print "Usage: create_project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMING_LANGUAGE"
     print "Options:"
-    print "  -project   PROJECT_NAME          Project name, for example: MyGame"
-    print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
+    print "  -project   PROJECT_NAME          Project name, for example: MyCpp"
+    print "  -package   PACKAGE_NAME          Package name, for example: com.CrossApp.www"
     print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be [cpp | javascript]"
     print ""
-    print "Sample 1: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame"
-    print "Sample 2: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
+    print "Sample 1: ./create_project.py -project MyCpp -package com.CrossApp.www"
+    print "Sample 2: ./create_project.py -project MyCpp -package com.CrossApp.www -language javascript"
     print ""
 
 def checkParams(context):
@@ -78,17 +78,18 @@ def checkParams(context):
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-cpp"
         platforms_list = ["ios",
                           "android",
-                          "win32",
                           "mac",
-                          "linux",
-                          "wp8-xaml"]
+                          "win32",
+                          "win32_vs2015"]
     elif ("javascript" == context["language"]):
         context["src_project_name"] = "HelloCpp"
         context["src_package_name"] = "org.CrossApp.hellocpp"
         context["src_project_path"] = os.getcwd() + "/../../template/multi-platform-js"
         platforms_list = ["ios",
                           "android",
-                          "win32"]
+                          "mac",
+                          "win32",
+                          "win32_vs2015"]
 # end of checkParams(context) function
 
 def replaceString(filepath, src_string, dst_string):
@@ -139,10 +140,7 @@ def processPlatformProjects(platform):
     for i in range(0, len(data["rename"])):
         tmp = data["rename"][i].replace("PACKAGE_PATH", java_package_path)
         src = tmp.replace("PROJECT_NAME", context["src_project_name"])
-        if (platform == "wp8-xaml"):
-            dst = replaceLastNameInPath(tmp)
-        else:
-            dst = tmp.replace("PROJECT_NAME", context["dst_project_name"])
+        dst = tmp.replace("PROJECT_NAME", context["dst_project_name"])
         if (os.path.exists(proj_path + src) == True):
             os.rename(proj_path + src, proj_path + dst)
 
