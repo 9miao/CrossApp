@@ -619,6 +619,67 @@ protected:
 	std::list<T> _data;
 };
 
+template <class T1, class T2>
+class CAPair : public CAObject
+{
+public:
+	CAPair<T1, T2>() {}
+
+	CAPair<T1, T2>(T1 obj1, T2 obj2)
+	{
+		CC_SAFE_RETAIN(obj1);
+		CC_SAFE_RETAIN(obj2);
+		_cpair = std::make_pair(obj1, obj2);
+	}
+
+	CAPair<T1, T2>(const std::pair<T1, T2>& c)
+	{
+		CC_SAFE_RETAIN(c.first);
+		CC_SAFE_RETAIN(c.second);
+		_cpair = c;
+	}
+
+
+	CAPair<T1, T2>(const CAPair<T1, T2>& other)
+	{
+		CCLOGINFO("In the copy constructor!");
+		clear();
+		_cpair = other;
+		CC_SAFE_RETAIN(_cpair.first);
+		CC_SAFE_RETAIN(_cpair.second);
+	}
+
+	CAPair<T1, T2>& operator=(const CAPair<T1, T2>& other)
+	{
+		if (this != &other)
+		{
+			clear();
+			_cpair = other._cpair;
+			CC_SAFE_RETAIN(_cpair.first);
+			CC_SAFE_RETAIN(_cpair.second);
+		}
+		return *this;
+	}
+
+	~CAPair<T1, T2>()
+	{
+		clear();
+	}
+
+	void clear()
+	{
+		CC_SAFE_RELEASE(_cpair.first);
+		CC_SAFE_RELEASE(_cpair.second);
+		_cpair.first = _cpair.first = NULL;
+	}
+
+	T1 first() { return _cpair.first; }
+	T2 second() { return _cpair.second; }
+
+private:
+	std::pair<T1, T2> _cpair;
+};
+
 
 template <class T>
 class CADeque: public CAObject
