@@ -140,6 +140,10 @@ public:
     
     void removeMouseScrollWheel(CAResponder* responder);
     
+    const CAEvent* eventWithTouch(CATouch* touch);
+    
+    const CAEvent* eventWithTouchID(int touchID);
+    
 public:
 
     /**

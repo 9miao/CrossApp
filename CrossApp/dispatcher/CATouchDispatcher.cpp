@@ -808,4 +808,28 @@ void CATouchDispatcher::removeScrollRunningResponder(CAResponder* var)
     }
 }
 
+const CAEvent* CATouchDispatcher::eventWithTouch(CATouch* touch)
+{
+    CAEvent* event = NULL;
+    if (touch)
+    {
+        int touchID = touch->getID();
+        if (m_vTouchControllers.count(touchID) > 0)
+        {
+            event = m_vTouchControllers.at(touchID)->getEvent();
+        }
+    }
+    return event;
+}
+
+const CAEvent* CATouchDispatcher::eventWithTouchID(int touchID)
+{
+    CAEvent* event = NULL;
+    if (m_vTouchControllers.count(touchID) > 0)
+    {
+        event = m_vTouchControllers.at(touchID)->getEvent();
+    }
+    return event;
+}
+
 NS_CC_END
