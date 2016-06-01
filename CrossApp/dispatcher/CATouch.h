@@ -63,9 +63,9 @@ public:
     : m_eType(keyboardEvent)
     {}
     
-    EventType getEventType() { return m_eType;}
+    inline const EventType& getEventType() { return m_eType;}
     
-    void setEventType(EventType type) { m_eType = type;}
+    inline void setEventType(const EventType& type) { m_eType = type;}
 protected:
     EventType m_eType;
 
