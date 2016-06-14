@@ -57,7 +57,6 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         p_ScrollView->setBounceVertical(false);
         p_ScrollView->setScrollViewDelegate(this);
         p_ScrollView->addSubview(temImage);
-        p_ScrollView->addSubview(idc1);
         viewList.pushBack(p_ScrollView);
     }
     

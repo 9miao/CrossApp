@@ -569,6 +569,13 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
             m_fZoomScale = MAX(m_fZoomScale, m_fMinimumZoomScale);
             
             m_pContainer->setScale(m_fZoomScale);
+            
+            if (m_pScrollViewDelegate)
+            {
+                m_pScrollViewDelegate->scrollViewDidZoom(this);
+            }
+            m_bZooming = true;
+            
         }
         
         if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
