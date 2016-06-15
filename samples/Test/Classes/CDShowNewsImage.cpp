@@ -37,12 +37,11 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
     idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
     idc1->startAnimating();
+    this->getView()->insertSubview(idc1, -1);
     
     CAVector<CAView* > viewList;
     for (int i=0; i<m_image.m_imageUrl.size(); i++)
     {
-        this->getView()->insertSubview(idc1, -1);
-        
         CommonUrlImageView* temImage = CommonUrlImageView::createWithLayout(DLayoutFill);
         temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
 //        temImage->setImage(CAImage::create("image/HelloWorld.png"));
@@ -57,7 +56,6 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         p_ScrollView->setBounceVertical(false);
         p_ScrollView->setScrollViewDelegate(this);
         p_ScrollView->addSubview(temImage);
-        p_ScrollView->addSubview(idc1);
         viewList.pushBack(p_ScrollView);
     }
     
