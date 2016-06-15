@@ -160,6 +160,8 @@ double CADownloadManager::getDownloadFileSize(const std::string& downloadUrl, co
     curl_easy_setopt(handle, CURLOPT_URL, downloadUrl.c_str());
     curl_easy_setopt(handle, CURLOPT_HEADER, 1);
     curl_easy_setopt(handle, CURLOPT_NOBODY, 1);
+	curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V6);
+	
     if (curl_easy_perform(handle) == CURLE_OK)
     {
         curl_easy_getinfo(handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &downloadFileSize);
@@ -772,6 +774,7 @@ public:
 		curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
 		curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, CADownloadResponseProgressFunc);
 		curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, pDownloadRes);
+		curl_easy_setopt(_curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V6);
 
 		res = curl_easy_perform(_curl);
 		curl_easy_cleanup(_curl);
