@@ -1621,24 +1621,31 @@ DRect CAView::convertRectToWorldSpace(const CrossApp::DRect &nodeRect)
 DPoint CAView::convertToNodeSpace(const DPoint& worldPoint)
 {
     DPoint ret = worldPoint;//DPointApplyAffineTransform(p, worldToNodeTransform());
+    
+    CADeque<CAView*> views;
     for (CAView* v = this; v; v = v->m_pSuperview)
     {
+        views.pushFront(v);
+    }
+    
+    CADeque<CAView*>::iterator itr;
+    for (itr = views.begin(); itr!=views.end(); itr++)
+    {
+        CAView* v = *itr;
         ret.x -= (v->m_obPoint.x - v->m_obAnchorPointInPoints.x * v->m_fScaleX);
         ret.y -= (v->m_obPoint.y - v->m_obAnchorPointInPoints.y * v->m_fScaleY);
+        ret.x /= v->m_fScaleX, ret.y /= v->m_fScaleY;
     }
-    ret.x /= m_fScaleX, ret.y /= m_fScaleY;
     return ret;
 }
 
 DPoint CAView::convertToWorldSpace(const DPoint& nodePoint)
 {
-    DPoint p = nodePoint;
-    
-    DPoint ret = p;//DPointApplyAffineTransform(p, nodeToWorldTransform());
-    ret.x *= m_fScaleX, ret.y *= m_fScaleY;
+    DPoint ret = nodePoint;//DPointApplyAffineTransform(p, nodeToWorldTransform());
     
     for (CAView* v = this; v; v = v->m_pSuperview)
     {
+        ret.x *= v->m_fScaleX, ret.y *= v->m_fScaleY;
         ret.x += (v->m_obPoint.x - v->m_obAnchorPointInPoints.x * v->m_fScaleX);
         ret.y += (v->m_obPoint.y - v->m_obAnchorPointInPoints.y * v->m_fScaleY);
     }
