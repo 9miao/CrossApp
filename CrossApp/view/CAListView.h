@@ -112,8 +112,6 @@ public:
 
     CC_SYNTHESIZE(unsigned int, m_nSeparatorViewHeight, SeparatorViewHeight);
     
-	CC_SYNTHESIZE(bool, m_bAllowsHeadAndFootHover, AllowsHeadAndFootHover);
-
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsSelection, AllowsSelection);
     
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bAllowsMultipleSelection, AllowsMultipleSelection);
