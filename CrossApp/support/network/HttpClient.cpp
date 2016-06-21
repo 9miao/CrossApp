@@ -202,6 +202,10 @@ static bool configureCURL(CURL *handle, CAHttpClient* httpClient)
     if (code != CURLE_OK) {
         return false;
     }
+	code = curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V6);
+	if (code != CURLE_OK) {
+		return false;
+	}
     if (httpClient->_sslCaFilename.empty())
     {
         curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
