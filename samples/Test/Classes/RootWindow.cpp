@@ -61,7 +61,7 @@ bool RootWindow::init()
     
     m_pRootDrawerController = drawer;
     CAApplication::getApplication()->setNotificationView(NULL);
-
+ 
     return true;
 }
 
@@ -168,7 +168,7 @@ void RootWindow::intNewsView()
         
         CAVector<CAViewController*> vec;
         vec.pushBack(newsTabBarController);
-        /////////////////NewsTabBar///////////////////////
+        /////////////////NewsTabBar///////////////////////  
         
         /////////////////ImageTabBar///////////////////////
         CAVector<CAViewController*> vec_image;

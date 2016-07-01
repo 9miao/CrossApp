@@ -13,6 +13,8 @@
 #include "control/CAControl.h"
 
 NS_CC_BEGIN
+
+class CAUIEditorParser;
 class CC_DLL CACell: public CAView
 {
     
@@ -36,6 +38,8 @@ public:
     
     CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
 
+    CAView* getViewWithID(const std::string &tag);
+    
 protected:
 
     virtual void normalCell();
@@ -62,6 +66,8 @@ protected:
     
     void resetCell();
     
+    void parser();
+    
 private:
 
     using CAView::init;
@@ -73,6 +79,8 @@ private:
     using CAView::initWithLayout;
     
     CAControlState m_eControlState;
+    
+    CAUIEditorParser* m_pParser;
 };
 
 NS_CC_END;

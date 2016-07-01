@@ -1379,7 +1379,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             listView->setZOrder(atoi(value));
         }
-        
+
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
             listView->setBackgroundColor(ccc4Int(atoi(value)));
@@ -1441,12 +1441,6 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                 CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Footer);
                 listView->setFooterRefreshView(pullview);
             }
-        }
-        
-        if (const char* value = viewXml->Attribute("allowsHeadAndFootHover"))
-        {
-            bool var = (atoi(value)==1) ? true : false;
-            listView->setAllowsHeadAndFootHover(var);
         }
     }
     else if (contrlType.compare("CATableView") == 0)

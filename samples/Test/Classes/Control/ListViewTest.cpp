@@ -124,10 +124,9 @@ void ListViewTest::viewDidLoad()
     p_ListView->setListViewDataSource(this);
     p_ListView->setAllowsSelection(true);
     p_ListView->setAllowsMultipleSelection(false);
-    p_ListView->setListViewOrientation(CAListViewOrientationVertical);
+    p_ListView->setOrientation(CAListView::Vertical);
     p_ListView->setShowsScrollIndicators(true);
     p_ListView->setSeparatorViewHeight(30);
-    p_ListView->setAllowsHeadAndFootHover(false);
 
     p_ListView->setSeparatorColor(CAColor_gray);
     this->getView()->addSubview(p_ListView);

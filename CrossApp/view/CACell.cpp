@@ -7,6 +7,7 @@
 //
 
 #include "CACell.h"
+#include "support/CAUIEditorParser.h"
 
 NS_CC_BEGIN
 
@@ -15,6 +16,7 @@ CACell::CACell()
 ,m_pContentView(NULL)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
+,m_pParser(NULL)
 {
     this->setHaveNextResponder(true);
     this->setDisplayRange(false);
@@ -25,6 +27,7 @@ CACell::~CACell()
 {
     CC_SAFE_RELEASE_NULL(m_pContentView);
     CC_SAFE_RELEASE_NULL(m_pBackgroundView);
+    CC_SAFE_RELEASE_NULL(m_pParser);
 }
 
 CACell* CACell::create(const std::string& reuseIdentifier)
@@ -48,8 +51,24 @@ bool CACell::initWithReuseIdentifier(const std::string& reuseIdentifier)
     this->setBackgroundView(CAView::create());
     this->setReuseIdentifier(reuseIdentifier);
     this->normalCell();
+    this->parser();
     
     return true;
+}
+
+CAView* CACell::getViewWithID(const std::string &tag)
+{
+    return m_pParser->m_mViews.getValue(tag);
+}
+
+void CACell::parser()
+{
+    m_pParser = new CAUIEditorParser();
+    
+    std::string filePath = "r/cell/" + m_sReuseIdentifier + ".xib";
+    
+    m_pParser->initWithPath(filePath, m_pContentView);
+    
 }
 
 void CACell::setBackgroundView(CrossApp::CAView *var)
