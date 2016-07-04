@@ -13,6 +13,8 @@ AppDelegate::~AppDelegate()
     
 }
 
+
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
@@ -24,7 +26,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // run
     application->runWindow(RootWindow::getInstance());
-    
+
     return true;
 }
 

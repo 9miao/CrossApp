@@ -68,7 +68,16 @@ void CAViewController::parser()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     name = name.substr(6, name.length() - 6);
 #else
-    name = name.substr(2, name.length() - 2);
+    
+    if (name.length() <= 10)
+    {
+        name = name.substr(1, name.length() - 1);
+    }
+    else
+    {
+        name = name.substr(2, name.length() - 2);
+    }
+
 #endif
     
     std::string filePath = "r/" + name + ".xib";
