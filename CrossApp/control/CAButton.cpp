@@ -434,11 +434,6 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         if (m_bAllowsSelected)
         {
-            if (getBounds().containsPoint(point))
-            {
-                m_bSelected = !m_bSelected;
-            }
-            
             if (m_bSelected)
             {
                 this->setControlState(CAControlStateSelected);
@@ -635,16 +630,43 @@ bool CAButton::setTouchBegin(const DPoint& point)
 {
 	m_bTouchClick = true;
 
-    if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
+    if (m_bAllowsSelected)
     {
-		((CAObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
+        m_bSelected = !m_bSelected;
+        
+        if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
+        {
+            if (m_bSelected)
+            {
+                this->setControlState(CAControlStateSelected);
+            }
+            else
+            {
+                this->setControlState(CAControlStateNormal);
+            }
+            
+            ((CAObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
+        }
+        else
+        {
+            if (m_bTouchClick)
+            {
+                this->setControlState(CAControlStateHighlighted);
+            }
+        }
     }
-    
-	if (m_bTouchClick)
-	{
-		this->setControlState(CAControlStateHighlighted);
-	}
-
+    else
+    {
+        if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
+        {
+            ((CAObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
+        }
+        
+        if (m_bTouchClick)
+        {
+            this->setControlState(CAControlStateHighlighted);
+        }
+    }
 	return m_bTouchClick;
 }
 
