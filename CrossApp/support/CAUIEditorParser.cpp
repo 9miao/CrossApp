@@ -363,6 +363,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setImageForState(CAControlStateDisabled, CAImage::create(value));
         }
 
+        if (const char* value = viewXml->Attribute("allowsSelected"))
+        {
+            btn->setAllowsSelected(atoi(value));
+        }
+        
         if (strcmp(viewXml->Attribute("backgroundType"), "Scale9") == 0)
         {
             if (const char* value = viewXml->Attribute("backgroundNormal"))
