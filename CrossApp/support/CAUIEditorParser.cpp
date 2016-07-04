@@ -37,7 +37,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         view = CAView::create();
         superview->addSubview(view);
-        map.insert(viewXml->Attribute("textTag"), view);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, view);
+        view->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -62,7 +65,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAImageView* imageView = CAImageView::create();
         superview->addSubview(imageView);
-        map.insert(viewXml->Attribute("textTag"), imageView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, imageView);
+        imageView->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -97,7 +103,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAScale9ImageView* scale9ImageVew = CAScale9ImageView::create();
         superview->addSubview(scale9ImageVew);
-        map.insert(viewXml->Attribute("textTag"), scale9ImageVew);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, scale9ImageVew);
+        scale9ImageVew->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -152,7 +161,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CALabel* label = CALabel::create();
         superview->addSubview(label);
-        map.insert(viewXml->Attribute("textTag"), label);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, label);
+        label->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -239,7 +251,9 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         CAButton* btn = CAButton::create((CAButtonType)atoi(viewXml->Attribute("type")));
         superview->addSubview(btn);
         
-        map.insert(viewXml->Attribute("textTag"), btn);
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, btn);
+        btn->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -538,7 +552,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
         CATextField* textField = CATextField::createWithLayout(layout);
 		superview->addSubview(textField);
-		map.insert(viewXml->Attribute("textTag"), textField);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, textField);
+        textField->setTextTag(key);
 
 
         if (const char* value = viewXml->Attribute("z"))
@@ -643,7 +660,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CASwitch* sw = CASwitch::create();
         superview->addSubview(sw);
-        map.insert(viewXml->Attribute("textTag"), sw);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, sw);
+        sw->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -690,7 +710,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		CASegmentedControl* segmentControl = CASegmentedControl::create(itemCount);
         superview->addSubview(segmentControl);
-        map.insert(viewXml->Attribute("textTag"), segmentControl);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, segmentControl);
+        segmentControl->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -811,7 +834,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAProgress* progress = CAProgress::create();
         superview->addSubview(progress);
-        map.insert(viewXml->Attribute("textTag"), progress);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, progress);
+        progress->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -869,7 +895,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		CATextView* textView = CATextView::createWithLayout(layout);
 		superview->addSubview(textView);
-		map.insert(viewXml->Attribute("textTag"), textView);
+		
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, textView);
+        textView->setTextTag(key);
 
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -907,7 +936,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CASlider* slider = CASlider::create();
         superview->addSubview(slider);
-        map.insert(viewXml->Attribute("textTag"), slider);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, slider);
+        slider->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -967,7 +999,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAStepper* stepper = CAStepper::create((CAStepperOrientation)(atoi(viewXml->Attribute("orientation"))));
         superview->addSubview(stepper);
-        map.insert(viewXml->Attribute("textTag"), stepper);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, stepper);
+        stepper->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -1017,7 +1052,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     {
         CAActivityIndicatorView* activity = CAActivityIndicatorView::create();
         superview->addSubview(activity);
-        map.insert(viewXml->Attribute("textTag"), activity);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, activity);
+        activity->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -1112,7 +1150,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAPickerView* pickerView = CAPickerView::createWithLayout(layout);
         superview->addSubview(pickerView);
-        map.insert(viewXml->Attribute("textTag"), pickerView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, pickerView);
+        pickerView->setTextTag(key);
         
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1161,7 +1202,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		CADatePickerView* datePicker = CADatePickerView::createWithLayout(layout, (CADatePickerMode)atoi(viewXml->Attribute("mode")));
 		superview->addSubview(datePicker);
-		map.insert(viewXml->Attribute("textTag"), datePicker);
+		
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, datePicker);
+        datePicker->setTextTag(key);
 
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1185,7 +1229,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAWebView* webView = CAWebView::createWithLayout(layout);
         superview->addSubview(webView);
-        map.insert(viewXml->Attribute("textTag"), webView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, webView);
+        webView->setTextTag(key);
         
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1207,7 +1254,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		
         CAGifView* gifView = CAGifView::createWithGif(gif);
 		superview->addSubview(gifView);
-        map.insert(viewXml->Attribute("textTag"), gifView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, gifView);
+        gifView->setTextTag(key);
         
         DLayout layout;
         layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
@@ -1236,7 +1286,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
         superview->addSubview(scrollView);
-        map.insert(viewXml->Attribute("textTag"), scrollView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, scrollView);
+        scrollView->setTextTag(key);
         
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1324,7 +1377,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         CAPageView* pageView = CAPageView::createWithLayout(layout, (CAPageView::Orientation)(atoi(viewXml->Attribute("orientation"))));
         
         superview->addSubview(pageView);
-        map.insert(viewXml->Attribute("textTag"), pageView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, pageView);
+        pageView->setTextTag(key);
         
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1378,7 +1434,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAListView* listView = CAListView::createWithLayout(layout);
         superview->addSubview(listView);
-        map.insert(viewXml->Attribute("textTag"), listView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, listView);
+        listView->setTextTag(key);
  
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1460,7 +1519,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CATableView* tableView = CATableView::createWithLayout(layout);
         superview->addSubview(tableView);
-        map.insert(viewXml->Attribute("textTag"), tableView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, tableView);
+        tableView->setTextTag(key);
         
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1548,7 +1610,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAAutoCollectionView* collectionView = CAAutoCollectionView::createWithLayout(layout);
         superview->addSubview(collectionView);
-        map.insert(viewXml->Attribute("textTag"), collectionView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, collectionView);
+        collectionView->setTextTag(key);
   
         if (const char* value = viewXml->Attribute("z"))
         {
@@ -1670,7 +1735,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAWaterfallView* waterfallView = CAWaterfallView::createWithLayout(layout);
         superview->addSubview(waterfallView);
-        map.insert(viewXml->Attribute("textTag"), waterfallView);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, waterfallView);
+        waterfallView->setTextTag(key);
         
         if (const char* value = viewXml->Attribute("z"))
         {
