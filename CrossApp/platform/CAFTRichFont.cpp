@@ -511,7 +511,7 @@ unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight)
 	memset(pBuffer, 0, size);
 
 	m_HyperlinkRect = DRectZero;
-	std::vector<CCRect> cc;
+	std::vector<DRect> cc;
 
 	FT_Vector pen;
 	pen.x = pen.y = 0;
@@ -520,7 +520,7 @@ unsigned char* CAFTRichFont::getBitmap(int* outWidth, int* outHeight)
 		FTLineInfoEx* line = m_lines[i];
 
 		pen.x = - line->bbox.xMin;
-		pen.y += line->height;
+		pen.y += line->height * 1.25f;
 
 		drawText(line, pBuffer, &pen);
 

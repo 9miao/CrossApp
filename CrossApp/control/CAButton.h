@@ -77,6 +77,8 @@ public:
     
     void setTitleFontSize(float fontSize);
     
+    void setTitleBold(bool bold);
+    
     virtual void setControlState(const CAControlState& var);
     
     using CAControl::addTarget;
@@ -128,6 +130,8 @@ protected:
     std::string m_sTitleFontName;
     
     float m_fTitleFontSize;
+    
+    bool m_bTitleBold;
         
     DSize m_pTitleLabelSize;
     

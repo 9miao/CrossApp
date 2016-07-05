@@ -29,6 +29,7 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_pLabel(NULL)
 ,m_sTitleFontName("")
 ,m_fTitleFontSize(0)
+,m_bTitleBold(false)
 ,m_pTitleLabelSize(DSizeZero)
 ,m_bDefineTitleLabelSize(false)
 ,m_pImageSize(DSizeZero)
@@ -516,8 +517,8 @@ void CAButton::setControlState(const CAControlState& var)
     
     CAImage* image = NULL;
     std::string title = "";
-    DRect imageViewCenter = CCRectZero;
-    DRect rect = CCRectZero;
+    DRect imageViewCenter = DRectZero;
+    DRect rect = DRectZero;
     DRect labelCenter = this->getBounds();
     float labelSize = 0;
     
@@ -564,7 +565,7 @@ void CAButton::setControlState(const CAControlState& var)
         imageViewCenter.origin.x = size.width / 2;
         imageViewCenter.origin.y = size.height * 0.35f;
         
-        labelSize = size.height * 0.2f;
+        labelSize = size.height * 0.25f;
         labelCenter.origin.x = size.width / 2;
         labelCenter.origin.y = size.height * 0.75f;
     }
@@ -768,6 +769,12 @@ void CAButton::setTitleFontSize(float fontSize)
 {
     m_fTitleFontSize = fontSize;
     m_pLabel->setFontSize(m_fTitleFontSize);
+}
+
+void CAButton::setTitleBold(bool bold)
+{
+    m_bTitleBold = bold;
+    m_pLabel->setBold(bold);
 }
 
 NS_CC_END
