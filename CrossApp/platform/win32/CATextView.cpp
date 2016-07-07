@@ -620,7 +620,10 @@ void CATextView::onEnterTransitionDidFinish()
 void CATextView::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
-    this->resignFirstResponder();
+    if (this->isFirstResponder())
+    {
+        this->resignFirstResponder();
+    }
 }
 
 bool CATextView::resignFirstResponder()

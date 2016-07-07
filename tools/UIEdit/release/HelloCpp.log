@@ -1,0 +1,120 @@
+﻿生成启动时间为 2016/7/6 星期三 下午 6:42:08。
+     1>项目“F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\HelloCpp.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\kazmath\include" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\platform\win32" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\the_third_party\win32" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\the_third_party\win32\OGLES" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\the_third_party\win32\pthread" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\the_third_party\freetype\include" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CrossApp\the_third_party\curl\include\win32" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\external" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\CocosDenshion\include" /I"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\..\..\..\extensions" /I..\Classes /I.. /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USE_MATH_DEFINES /D GL_GLEXT_PROTOTYPES /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release.win32\\" /Fd"Release.win32\vc120.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\Classes\MainScenes.cpp
+         MainScenes.cpp
+     1>f:\cap\crossapp\crossapp\animation/CAAnimation.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\animation/CAViewAnimation.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\images/CAImage.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\images/CAImageCache.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\control\CASegmentedControl.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\control/CASlider.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\control/CAPageControl.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\control/CAStepper.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\controller/CAViewController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\view/CAPageView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\view\CAPullToRefreshView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\view\CAActivityIndicatorView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\controller/CADrawerController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\view/CAPickerView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\view/CADatePickerView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\video/CAVideoPlayerRender.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\video/CAVideoPlayerView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\video/CAVideoPlayerControlView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\cocoa/CACalendar.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\platform/CAGyroDelegate.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\platform/CATextField.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\platform/CATextView.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\crossapp\platform/CADensityDpi.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\tempClass.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\Tools.h(266): warning C4996: 'CrossApp::CAListViewCell::highlightedListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(254) : 参见“CrossApp::CAListViewCell::highlightedListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\Tools.h(266): warning C4996: 'CrossApp::CAListViewCell::selectedListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(256) : 参见“CrossApp::CAListViewCell::selectedListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\Tools.h(266): warning C4996: 'CrossApp::CAListViewCell::normalListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(252) : 参见“CrossApp::CAListViewCell::normalListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\Tools.h(266): warning C4996: 'CrossApp::CAListViewCell::disabledListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(258) : 参见“CrossApp::CAListViewCell::disabledListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\CATreeListView.h(56): warning C4996: 'CrossApp::CAListViewCell::highlightedListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(254) : 参见“CrossApp::CAListViewCell::highlightedListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\CATreeListView.h(56): warning C4996: 'CrossApp::CAListViewCell::selectedListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(256) : 参见“CrossApp::CAListViewCell::selectedListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\CATreeListView.h(56): warning C4996: 'CrossApp::CAListViewCell::normalListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(252) : 参见“CrossApp::CAListViewCell::normalListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\CATreeListView.h(56): warning C4996: 'CrossApp::CAListViewCell::disabledListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(258) : 参见“CrossApp::CAListViewCell::disabledListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\CanvasController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\AutoController.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\MainScenes.h(76): warning C4996: 'CrossApp::CAListViewCell::highlightedListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(254) : 参见“CrossApp::CAListViewCell::highlightedListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\MainScenes.h(76): warning C4996: 'CrossApp::CAListViewCell::selectedListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(256) : 参见“CrossApp::CAListViewCell::selectedListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\MainScenes.h(76): warning C4996: 'CrossApp::CAListViewCell::normalListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(252) : 参见“CrossApp::CAListViewCell::normalListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\MainScenes.h(76): warning C4996: 'CrossApp::CAListViewCell::disabledListViewCell': 被声明为已否决
+                 f:\cap\crossapp\crossapp\view/CAListView.h(258) : 参见“CrossApp::CAListViewCell::disabledListViewCell”的声明
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\CAResources.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>..\Classes\MainScenes.cpp(385): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(670): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(722): warning C4996: 'CrossApp::_px': 被声明为已否决
+                 f:\cap\crossapp\crossapp\basics/CAApplication.h(358) : 参见“CrossApp::_px”的声明
+     1>..\Classes\MainScenes.cpp(1534): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1566): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1632): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1717): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1753): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1771): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1895): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1917): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(1990): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(2074): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(2192): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(2470): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(4022): warning C4018: “<”: 有符号/无符号不匹配
+     1>..\Classes\MainScenes.cpp(4441): warning C4018: “<”: 有符号/无符号不匹配
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\UIEdit.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\\" libExtensions.lib libCrossApp.lib libCocosDenshion.lib pthreadVCE2.lib opengl32.lib glew32.lib libcurl_imp.lib websockets.lib sqlite3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\UIEdit.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\UIEdit.lib" /MACHINE:X86 /SAFESEH Release.win32\AppDelegate.obj
+         Release.win32\AutoController.obj
+         Release.win32\AutoView.obj
+         Release.win32\CAColourPicker.obj
+         Release.win32\CAColourView.obj
+         Release.win32\CAHuePicker.obj
+         Release.win32\CAListMenuView.obj
+         Release.win32\CAMenuView.obj
+         Release.win32\CanvasController.obj
+         Release.win32\CanvasScenes.obj
+         Release.win32\CanvasView.obj
+         Release.win32\CASaturationBrightnessPicker.obj
+         Release.win32\CATreeListControl.obj
+         Release.win32\CATreeListItem.obj
+         Release.win32\CATreeListView.obj
+         Release.win32\CAWindowFrame.obj
+         Release.win32\MainScenes.obj
+         Release.win32\OpenProjects.obj
+         Release.win32\PropertyView.obj
+         Release.win32\RootWindow.obj
+         Release.win32\SqlManage.obj
+         Release.win32\tempClass.obj
+         Release.win32\Tools.obj
+         Release.win32\main.obj
+         "F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\libCocosDenshion.lib"
+         "F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\libCrossApp.lib"
+         "F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\libExtensions.lib"
+            正在创建库 F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\UIEdit.lib 和对象 F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\UIEdit.exp
+         正在生成代码
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(37): warning C4715: “bgColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+     1>f:\cap\crossapp\samples\crossapp-uieditor\classes\caresources.h(29): warning C4715: “labelColor”: 不是所有的控件路径都返回值
+         已完成代码的生成
+         HelloCpp.vcxproj -> F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\Release.win32\UIEdit.exe
+     1>已完成生成项目“F:\CAP\CrossApp\samples\CrossApp-UIEditor\proj.win32\HelloCpp.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:33.22
