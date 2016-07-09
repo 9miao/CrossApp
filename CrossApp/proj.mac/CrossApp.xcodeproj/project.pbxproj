@@ -14,6 +14,8 @@
 		022CAAEB1BF1C41500ED015B /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 022CAAE81BF1C41500ED015B /* sqlite3.c */; };
 		022CAAEC1BF1C41500ED015B /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAE91BF1C41500ED015B /* sqlite3.h */; };
 		022CAAED1BF1C41500ED015B /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 022CAAEA1BF1C41500ED015B /* sqlite3ext.h */; };
+		0292C7561D30EC6600A0D1B0 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0292C7541D30EC6600A0D1B0 /* WebSocket.cpp */; };
+		0292C7571D30EC6600A0D1B0 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 0292C7551D30EC6600A0D1B0 /* WebSocket.h */; };
 		040665C21956F40E003E0D62 /* CAGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 040665C11956F40D003E0D62 /* CAGLProgram.cpp */; };
 		040665C41956F45A003E0D62 /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */; };
 		0460ECF41956F97A00D13001 /* CAApplicationCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ECF01956F97A00D13001 /* CAApplicationCaller.h */; };
@@ -360,6 +362,8 @@
 		022CAAE81BF1C41500ED015B /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		022CAAE91BF1C41500ED015B /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		022CAAEA1BF1C41500ED015B /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
+		0292C7541D30EC6600A0D1B0 /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
+		0292C7551D30EC6600A0D1B0 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
 		040665C11956F40D003E0D62 /* CAGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGLProgram.cpp; sourceTree = "<group>"; };
 		040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLViewProtocol.h; sourceTree = "<group>"; };
 		0460ECF01956F97A00D13001 /* CAApplicationCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplicationCaller.h; sourceTree = "<group>"; };
@@ -1298,6 +1302,8 @@
 		3E2153CB1B817AB80075448E /* network */ = {
 			isa = PBXGroup;
 			children = (
+				0292C7541D30EC6600A0D1B0 /* WebSocket.cpp */,
+				0292C7551D30EC6600A0D1B0 /* WebSocket.h */,
 				3E2153CC1B817AB80075448E /* DownloadManager.cpp */,
 				3E2153CD1B817AB80075448E /* DownloadManager.h */,
 				3E2153CE1B817AB80075448E /* HttpClient.cpp */,
@@ -1590,6 +1596,7 @@
 				04EAB1461956D75600198A8E /* CCApplication.h in Headers */,
 				B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */,
 				04EAB14A1956D75600198A8E /* CAAccelerometer.h in Headers */,
+				0292C7571D30EC6600A0D1B0 /* WebSocket.h in Headers */,
 				04EAB14D1956D75600198A8E /* CCEventDispatcher.h in Headers */,
 				04EAB14F1956D75600198A8E /* CCFileUtilsMac.h in Headers */,
 				B0F9B66E1C8E7F4F00BE7B1B /* CARichLabel.h in Headers */,
@@ -1772,6 +1779,7 @@
 				3E2154561B8180340075448E /* json_writer.cpp in Sources */,
 				04EAB09D1956D75600198A8E /* CASwitch.cpp in Sources */,
 				022CAAEB1BF1C41500ED015B /* sqlite3.c in Sources */,
+				0292C7561D30EC6600A0D1B0 /* WebSocket.cpp in Sources */,
 				B0B05FC31BB1483200B891CE /* CATableView.cpp in Sources */,
 				B0B05FB11BB1483200B891CE /* CALabel.cpp in Sources */,
 				B0A11DA81AE8C5C500933BF6 /* gif_hash.c in Sources */,
@@ -1959,6 +1967,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -1968,6 +1977,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2003,6 +2013,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -2012,6 +2023,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

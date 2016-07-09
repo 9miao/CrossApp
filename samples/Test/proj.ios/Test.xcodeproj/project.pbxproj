@@ -1081,7 +1081,7 @@
 				LastUpgradeCheck = 0430;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = EWZQ84AT3D;
+						DevelopmentTeam = YV7UQS6C4A;
 					};
 				};
 			};
@@ -1311,7 +1311,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: feng wu (47G833P8GL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1335,17 +1335,12 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-O2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg000Test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crossapp.test;
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1365,7 +1360,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: feng wu (47G833P8GL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1387,16 +1382,11 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../CrossApp/support/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.liynfg000Test;
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crossapp.test;
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

@@ -2076,6 +2076,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2086,6 +2087,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2118,6 +2120,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2128,6 +2131,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
