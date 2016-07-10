@@ -901,7 +901,12 @@ void CATextField::setMarginImageLeft(const DSize& imgSize, const std::string& fi
 		ima->setTag(1010);
 		this->addSubview(ima);
 	}
-	ima->setCenter(DRect(imgSize.width / 2, getBounds().size.height / 2, imgSize.width, imgSize.height));
+	DLayout layout;
+	layout.horizontal.left = 0;
+	layout.horizontal.width = imgSize.width;
+	layout.vertical.height = imgSize.height;
+	layout.vertical.center = 0.5f;
+	ima->setLayout(layout);
 	ima->setImage(CAImage::create(filePath));
 }
 
@@ -916,7 +921,12 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 		ima->setTag(1011);
 		this->addSubview(ima);
 	}
-	ima->setCenter(DRect(getBounds().size.width - imgSize.width / 2, getBounds().size.height / 2, imgSize.width, imgSize.height));
+	DLayout layout;
+	layout.horizontal.right = 0;
+	layout.horizontal.width = imgSize.width;
+	layout.vertical.height = imgSize.height;
+	layout.vertical.center = 0.5f;
+	ima->setLayout(layout);
 	ima->setImage(CAImage::create(filePath));
 }
 

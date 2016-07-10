@@ -99,7 +99,6 @@ void CDUIShowAutoCollectionView::viewDidUnload()
     
 }
 
-//选中
 void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     switch (item)
@@ -435,14 +434,11 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
     }
 }
 
-//取消选中
 void CDUIShowAutoCollectionView::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    //取消选中
     CCLog("取消选中");
 }
 
-//获取指定cell
 CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
@@ -482,19 +478,16 @@ CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCo
     return p_Cell;
 }
 
-//项目大小
 DSize CDUIShowAutoCollectionView::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
 
-//每个Section中Item的个数
 unsigned int CDUIShowAutoCollectionView::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return (unsigned int)m_vTitle.size();
 }
 
-//section的个数
 unsigned int CDUIShowAutoCollectionView::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;

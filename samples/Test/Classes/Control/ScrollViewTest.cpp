@@ -47,51 +47,42 @@ void ScrollViewTest::refreshData(float interval)
     p_Conllection->reloadData();
 }
 
-//触摸滚动时调用
 void ScrollViewTest::scrollViewDidMoved(CAScrollView* view)
 {
     CCLog("DidMoved-->");
 }
 
-//触摸滚动停止时调用
 void ScrollViewTest::scrollViewStopMoved(CAScrollView* view)
 {
     CCLog("StopMoved-->");
 }
 
-//滚动时调用（包括惯性滚动时）
 void ScrollViewTest::scrollViewDidScroll(CAScrollView* view)
 {
     CCLog("DidMScroll-->");
 }
 
-//开始滚动时调用
 void ScrollViewTest::scrollViewWillBeginDragging(CAScrollView* view)
 {
     CCLog("BeginDragging-->");
 }
 
-//结束滚动时调用
 void ScrollViewTest::scrollViewDidEndDragging(CAScrollView* view)
 {
     CCLog("DidEndDragging-->");
 }
 
-//缩放时调用
 void ScrollViewTest::scrollViewDidZoom(CAScrollView* view)
 {
     CCLog("DidZoom-->");
 }
 
-//头部开始刷新时调用
 void ScrollViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     colorArr.clear();
     CAScheduler::schedule(schedule_selector(ScrollViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
-
 }
 
-//尾巴开始刷新时调用
 void ScrollViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
     CAScheduler::schedule(schedule_selector(ScrollViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);

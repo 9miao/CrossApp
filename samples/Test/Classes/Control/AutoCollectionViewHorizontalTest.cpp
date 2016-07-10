@@ -99,10 +99,8 @@ void EAutoCollectionViewHorizontal::scrollViewFooterBeginRefreshing(CAScrollView
     
 }
 
-//选中
 void EAutoCollectionViewHorizontal::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    //选中
     CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
     cell->getContentView()->setRotation(-360);
     cell->getContentView()->setScale(0.5f);
@@ -110,33 +108,24 @@ void EAutoCollectionViewHorizontal::collectionViewDidSelectCellAtIndexPath(CAAut
     cell->getContentView()->setRotation(0);
     cell->getContentView()->setScale(1.0f);
     CAViewAnimation::commitAnimations();
-    CCLog("选中");
 }
 
-//取消选中
 void EAutoCollectionViewHorizontal::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    //取消选中
-    CCLog("取消选中");
 }
 
-//获取指定cell
 CACollectionViewCell* EAutoCollectionViewHorizontal::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    //根据标识获得CACollectionViewCell
     ECollectionViewHorizontalCell* Cell = dynamic_cast<ECollectionViewHorizontalCell*>(collectionView->dequeueReusableCellWithIdentifier("CrossApp"));
     
-    //如果没有找到相应的CACollectionViewCell则新建一个
     if (Cell == NULL)
     {
         Cell = ECollectionViewHorizontalCell::create("CrossApp");
         
-        //生成Item背景
         CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
         Cell->getContentView()->addSubview(itemImage);
         
-        //生成itemCALabel
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
@@ -145,12 +134,10 @@ CACollectionViewCell* EAutoCollectionViewHorizontal::collectionCellAtIndex(CAAut
         Cell->getContentView()->addSubview(itemText);
     }
     
-    //设置Item背景颜色
     CAView* itemImageView = Cell->getContentView()->getSubviewByTag(99);
     itemImageView->setColor(HorizontalcolorArr.at(item));
     CCLog("row = %d", item);
     
-    //设置itme文本显示
     char pos[20] = "";
     sprintf(pos, "(%d,%d)", section, item);
     CALabel* itemText = (CALabel*)Cell->getContentView()->getSubviewByTag(100);
@@ -159,19 +146,16 @@ CACollectionViewCell* EAutoCollectionViewHorizontal::collectionCellAtIndex(CAAut
     return Cell;
 }
 
-//项目大小
 DSize EAutoCollectionViewHorizontal::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(CCRANDOM_0_1() * 200 + 130, CCRANDOM_0_1() * 200 + 130);
 }
 
-//每个Section中Item的个数
 unsigned int EAutoCollectionViewHorizontal::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return (unsigned int)HorizontalcolorArr.size();
 }
 
-//section的个数
 unsigned int EAutoCollectionViewHorizontal::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 3;
@@ -238,14 +222,12 @@ void CDUIShowAutoCollectionView::AutoCollectionHorizontalRightBtnRightcallback(C
 
 void AutoCollectionViewHorizontalTest::viewDidLoad()
 {
-    //随机出颜色
     for (int i = 0; i < 60; i++)
     {
         char r = CCRANDOM_0_1() * 255;
         char g = CCRANDOM_0_1() * 255;
         char b = CCRANDOM_0_1() * 255;
         
-        //将随机的ccc4对象放入到容器里
         HorizontalcolorArr.push_back(ccc4(r, g, b, 255));
     }
     
@@ -277,10 +259,8 @@ void AutoCollectionViewHorizontalTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-//选中
 void AutoCollectionViewHorizontalTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    //选中
     CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
     cell->getContentView()->setRotation(-360);
     cell->getContentView()->setScale(0.5f);
@@ -288,33 +268,24 @@ void AutoCollectionViewHorizontalTest::collectionViewDidSelectCellAtIndexPath(CA
     cell->getContentView()->setRotation(0);
     cell->getContentView()->setScale(1.0f);
     CAViewAnimation::commitAnimations();
-    CCLog("选中");
 }
 
-//取消选中
 void AutoCollectionViewHorizontalTest::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
-    //取消选中
-    CCLog("取消选中");
 }
 
-//获取指定cell
 CACollectionViewCell* AutoCollectionViewHorizontalTest::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    //根据标识获得CACollectionViewCell
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
 
-    //如果没有找到相应的CACollectionViewCell则新建一个
     if (p_Cell == NULL)
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
         
-        //生成Item背景
         CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
         p_Cell->getContentView()->addSubview(itemImage);
         
-        //生成itemCALabel
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
@@ -323,12 +294,10 @@ CACollectionViewCell* AutoCollectionViewHorizontalTest::collectionCellAtIndex(CA
         p_Cell->getContentView()->addSubview(itemText);
     }
 
-    //设置Item背景颜色
     CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
     itemImageView->setColor(HorizontalcolorArr.at(item));
     CCLog("row = %d", item);
     
-    //设置itme文本显示
     char pos[20] = "";
     sprintf(pos, "(%d,%d)", section, item);
     CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
@@ -337,19 +306,16 @@ CACollectionViewCell* AutoCollectionViewHorizontalTest::collectionCellAtIndex(CA
     
 }
 
-//项目大小
 DSize AutoCollectionViewHorizontalTest::collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
 
-//每个Section中Item的个数
 unsigned int AutoCollectionViewHorizontalTest::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return (unsigned int)HorizontalcolorArr.size();
 }
 
-//section的个数
 unsigned int AutoCollectionViewHorizontalTest::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;
