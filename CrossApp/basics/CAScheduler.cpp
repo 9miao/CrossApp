@@ -85,7 +85,7 @@ void Timer::update(float dt)
         {
             return;
         }
-        trigger(_delay);
+        trigger(_interval);
         _elapsed = _elapsed - _delay;
         _timesExecuted += 1;
         _useDelay = false;
@@ -93,29 +93,23 @@ void Timer::update(float dt)
         if (!_runForever && _timesExecuted > _repeat)
         {    //unschedule timer
             cancel();
-            return;
         }
+        return;
     }
     
     // if _interval == 0, should trigger once every frame
     float interval = (_interval > 0) ? _interval : _elapsed;
-    while (_elapsed >= interval)
+    if (_elapsed >= interval || interval <= 0.0167)
     {
-        trigger(interval);
+        trigger(interval); 
         _elapsed -= interval;
         _timesExecuted += 1;
         
         if (!_runForever && _timesExecuted > _repeat)
         {
             cancel();
-            break;
         }
-        
-        if (_elapsed <= 0.f)
-        {
-            break;
-        }
-    }
+    } 
 }
 
 // TimerTargetSelector
@@ -299,6 +293,9 @@ void CAScheduler::scheduleSelector(const ccSchedulerFunc& callback, void *target
 {
     CCAssert(target, "Argument target must be non-nullptr");
     CCAssert(!key.empty(), "key should not be empty!");
+    
+    delay = MAX(delay, 1/60.0f);
+    interval = MAX(interval, 1/60.0f);
     
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);

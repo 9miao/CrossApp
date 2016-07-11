@@ -6,6 +6,11 @@ LOCAL_MODULE := CrossApp_static
 
 LOCAL_MODULE_FILENAME := libCrossApp
 
+ifeq ($(USE_ARM_MODE),1)
+LOCAL_ARM_MODE := arm
+endif
+
+
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
 animation/CAViewAnimation.cpp \

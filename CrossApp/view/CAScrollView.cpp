@@ -825,9 +825,6 @@ void CAScrollView::startDeaccelerateScroll()
 
 void CAScrollView::deaccelerateScrolling(float dt)
 {
-    dt = MIN(dt, 1/30.0f);
-    dt = MAX(dt, 1/100.0f);
-
     if (m_tInertia.getLength() > maxSpeed(dt) * 1.5f)
     {
         m_tInertia = ccpMult(m_tInertia, maxSpeed(dt) * 1.5f / m_tInertia.getLength());

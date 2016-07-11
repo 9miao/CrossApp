@@ -415,7 +415,10 @@ void CATextField::onEnterTransitionDidFinish()
 void CATextField::onExitTransitionDidStart()
 {
     CAControl::onExitTransitionDidStart();
-    this->resignFirstResponder();
+    if (this->isFirstResponder())
+    {
+        this->resignFirstResponder();
+    }
 }
 
 void showClearButtonJNI(int key)

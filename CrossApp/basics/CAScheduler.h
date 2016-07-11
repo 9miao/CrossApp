@@ -58,8 +58,8 @@ public:
     
     inline SEL_SCHEDULE getSelector() const { return _selector; };
     
-    virtual void trigger(float dt) override;
-    virtual void cancel() override;
+    virtual void trigger(float dt);
+    virtual void cancel();
     
 protected:
     CAObject* _target;
@@ -78,8 +78,8 @@ public:
     inline const ccSchedulerFunc& getCallback() const { return _callback; };
     inline const std::string& getKey() const { return _key; };
     
-    virtual void trigger(float dt) override;
-    virtual void cancel() override;
+    virtual void trigger(float dt);
+    virtual void cancel();
     
 protected:
     void* _target;
@@ -229,7 +229,7 @@ protected:
     CAVector<SchedulerScriptHandlerEntry*> _scriptHandlerEntries;
 #endif
     
-    std::vector<std::function<void()>> _functionsToPerform;
+    std::vector<std::function<void()> > _functionsToPerform;
     std::mutex _performMutex;
 };
 
