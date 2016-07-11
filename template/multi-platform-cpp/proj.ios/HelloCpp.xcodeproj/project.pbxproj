@@ -1089,15 +1089,10 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;
 				PRODUCT_NAME = HelloCpp;
@@ -1139,15 +1134,10 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
-					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";

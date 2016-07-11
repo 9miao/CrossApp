@@ -224,7 +224,6 @@
 		3E0F75571B7DD0C4004CFD41 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75061B7DD0C4004CFD41 /* reader.h */; };
 		3E0F75581B7DD0C4004CFD41 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75081B7DD0C4004CFD41 /* value.h */; };
 		3E0F75591B7DD0C4004CFD41 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75091B7DD0C4004CFD41 /* writer.h */; };
-		3E0F755E1B7DD0C4004CFD41 /* libwebsockets.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75181B7DD0C4004CFD41 /* libwebsockets.h */; };
 		3E0F75641B7DD0C4004CFD41 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75251B7DD0C4004CFD41 /* DownloadManager.cpp */; };
 		3E0F75651B7DD0C4004CFD41 /* DownloadManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0F75261B7DD0C4004CFD41 /* DownloadManager.h */; };
 		3E0F75661B7DD0C4004CFD41 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F75271B7DD0C4004CFD41 /* HttpClient.cpp */; };
@@ -393,6 +392,8 @@
 		B0D7FA7F1B21506B004B2B86 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
 		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
+		D63C0E7E1D33445C00DC5EE1 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D63C0E7C1D33445C00DC5EE1 /* WebSocket.cpp */; };
+		D63C0E7F1D33445C00DC5EE1 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = D63C0E7D1D33445C00DC5EE1 /* WebSocket.h */; };
 		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
 		E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */; };
 		E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */; };
@@ -608,7 +609,6 @@
 		3E0F75061B7DD0C4004CFD41 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		3E0F75081B7DD0C4004CFD41 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		3E0F75091B7DD0C4004CFD41 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		3E0F75181B7DD0C4004CFD41 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
 		3E0F75251B7DD0C4004CFD41 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
 		3E0F75261B7DD0C4004CFD41 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
 		3E0F75271B7DD0C4004CFD41 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
@@ -787,6 +787,8 @@
 		B0E951441BC63CFA00DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
 		B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
 		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
+		D63C0E7C1D33445C00DC5EE1 /* WebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocket.cpp; sourceTree = "<group>"; };
+		D63C0E7D1D33445C00DC5EE1 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
 		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
 		E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAccelerometer.mm; sourceTree = "<group>"; };
@@ -1290,7 +1292,6 @@
 				1551A5E9158F2ADE00E66CFE /* base64.h */,
 				3E0F74DE1B7DD0C3004CFD41 /* device */,
 				3E0F74F31B7DD0C3004CFD41 /* Json */,
-				3E0F750A1B7DD0C4004CFD41 /* libwebsockets */,
 				3E0F75241B7DD0C4004CFD41 /* network */,
 				3E0F752D1B7DD0C4004CFD41 /* sqlite3 */,
 				3E0F75701B7DD0F4004CFD41 /* LocalStorage */,
@@ -1378,33 +1379,11 @@
 			path = lib_json;
 			sourceTree = "<group>";
 		};
-		3E0F750A1B7DD0C4004CFD41 /* libwebsockets */ = {
-			isa = PBXGroup;
-			children = (
-				3E0F75161B7DD0C4004CFD41 /* ios */,
-			);
-			path = libwebsockets;
-			sourceTree = "<group>";
-		};
-		3E0F75161B7DD0C4004CFD41 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				3E0F75171B7DD0C4004CFD41 /* include */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		3E0F75171B7DD0C4004CFD41 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				3E0F75181B7DD0C4004CFD41 /* libwebsockets.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
 		3E0F75241B7DD0C4004CFD41 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				D63C0E7C1D33445C00DC5EE1 /* WebSocket.cpp */,
+				D63C0E7D1D33445C00DC5EE1 /* WebSocket.h */,
 				3E0F75251B7DD0C4004CFD41 /* DownloadManager.cpp */,
 				3E0F75261B7DD0C4004CFD41 /* DownloadManager.h */,
 				3E0F75271B7DD0C4004CFD41 /* HttpClient.cpp */,
@@ -1579,7 +1558,6 @@
 				04EABB1A1956DAEA00198A8E /* CAViewController.cpp in Headers */,
 				04EABB1C1956DAEA00198A8E /* CAKeypadDelegate.cpp in Headers */,
 				3E19F2A41B8B0ED100720027 /* CAAddress.h in Headers */,
-				3E0F755E1B7DD0C4004CFD41 /* libwebsockets.h in Headers */,
 				04EABB1D1956DAEA00198A8E /* CAKeypadDispatcher.cpp in Headers */,
 				04EABB1E1956DAEA00198A8E /* CATouch.cpp in Headers */,
 				B0ADAE741B2E7F1B00BE8FA3 /* CADrawingPrimitives.h in Headers */,
@@ -1717,6 +1695,7 @@
 				1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
 				1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */,
+				D63C0E7F1D33445C00DC5EE1 /* WebSocket.h in Headers */,
 				B0B0A2E61AF0DCA900BAC0B0 /* CAAnimation.h in Headers */,
 				B0412DD31BC7966C00E2C118 /* CAVideoPlayerView.h in Headers */,
 				46A393F716E5D01B00210B16 /* CAUserDefault.h in Headers */,
@@ -1961,6 +1940,7 @@
 				04EAA0071956CE2500198A8E /* CATouch.cpp in Sources */,
 				3E0F75491B7DD0C4004CFD41 /* CSContentJsonDictionary.cpp in Sources */,
 				3E19F2AD1B8B0ED100720027 /* CACameraController.mm in Sources */,
+				D63C0E7E1D33445C00DC5EE1 /* WebSocket.cpp in Sources */,
 				B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */,
 				B07E81161C33B36700A39C95 /* CATextView.mm in Sources */,
 				04EAA0091956CE2500198A8E /* CATouchDispatcher.cpp in Sources */,
@@ -2076,7 +2056,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2120,7 +2100,7 @@
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",

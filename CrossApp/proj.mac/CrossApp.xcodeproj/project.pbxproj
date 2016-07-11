@@ -1967,7 +1967,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -2013,7 +2013,7 @@
 					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
 					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
-					"\"$(SRCROOT)/../the_third_party/websockets/include\"",
+					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",

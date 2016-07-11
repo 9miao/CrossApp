@@ -1069,10 +1069,6 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/png/include/mac/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/jpeg/include/mac/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/tiff/include/mac/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/webp/include/mac/\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -1115,10 +1111,6 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/png/include/mac/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/jpeg/include/mac/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/tiff/include/mac/\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/webp/include/mac/\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
