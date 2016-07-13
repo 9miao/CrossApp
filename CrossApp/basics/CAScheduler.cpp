@@ -4,7 +4,7 @@
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
 #include "cocoa/CCSet.h"
-
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
@@ -1044,6 +1044,13 @@ void CAScheduler::scheduleSelector(SEL_SCHEDULE selector, CAObject *target, floa
 void CAScheduler::scheduleSelector(SEL_SCHEDULE selector, CAObject *target, float interval, bool paused)
 {
     this->scheduleSelector(selector, target, interval, kCCRepeatForever, 0.0f, paused);
+}
+
+void CAScheduler::scheduleSelectorUpdate(CAObject *target, int priority, bool paused)
+{
+    this->schedulePerFrame([target](float dt){
+        target->update(dt);
+    }, target, priority, paused);
 }
 
 bool CAScheduler::isScheduledSelector(SEL_SCHEDULE selector, CAObject *target)

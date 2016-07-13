@@ -155,13 +155,7 @@ public:
 
     void scheduleSelector(SEL_SCHEDULE selector, CAObject *target, float interval, bool paused);
 
-    template <class T>
-    void scheduleSelectorUpdate(T *target, int priority, bool paused)
-    {
-        this->schedulePerFrame([target](float dt){
-            target->update(dt);
-        }, target, priority, paused);
-    }
+    void scheduleSelectorUpdate(CAObject *target, int priority, bool paused);
     
 #if CC_ENABLE_SCRIPT_BINDING
     unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);

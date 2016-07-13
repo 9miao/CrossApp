@@ -125,7 +125,6 @@
 		B018710B1B844E16006510B5 /* gameswf_video_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01870A71B844E16006510B5 /* gameswf_video_impl.cpp */; };
 		B018710C1B844E16006510B5 /* NOTES.txt in Resources */ = {isa = PBXBuildFile; fileRef = B01870A91B844E16006510B5 /* NOTES.txt */; };
 		B018710D1B844E16006510B5 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = B01870AA1B844E16006510B5 /* TODO */; };
-		B023E3441CCF24FF0023BF33 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B023E3431CCF24FF0023BF33 /* Images.xcassets */; };
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B0621C301AC3DCB2005EBCA7 /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C2B1AC3DCB2005EBCA7 /* FirstViewController.cpp */; };
@@ -391,7 +390,6 @@
 		B01870A81B844E16006510B5 /* gameswf_video_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameswf_video_impl.h; sourceTree = "<group>"; };
 		B01870A91B844E16006510B5 /* NOTES.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTES.txt; sourceTree = "<group>"; };
 		B01870AA1B844E16006510B5 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
-		B023E3431CCF24FF0023BF33 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HelloCpp/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
@@ -800,7 +798,6 @@
 		B04C0BBA19011F33009854FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B023E3431CCF24FF0023BF33 /* Images.xcassets */,
 				B09FC0BB1AD3A25F0009C2D7 /* r */,
 				B0621C321AC3DCCA005EBCA7 /* fonts */,
 				B0621C341AC3DCCA005EBCA7 /* source_material */,
@@ -880,7 +877,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
-				B023E3441CCF24FF0023BF33 /* Images.xcassets in Resources */,
 				B0621C351AC3DCCA005EBCA7 /* fonts in Resources */,
 				B018710D1B844E16006510B5 /* TODO in Resources */,
 				41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */,
