@@ -2,7 +2,9 @@
 #ifndef __PLATFOMR_CCNS_H__
 #define __PLATFOMR_CCNS_H__
 
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 
 NS_CC_BEGIN
 

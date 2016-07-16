@@ -854,12 +854,12 @@ void CAScrollView::deaccelerateScrolling(float dt)
         
         if (fabsf(off_x) > FLT_EPSILON)
         {
-            resilience.x = off_x / size.width;
+            resilience.x = off_x / 800;
         }
         
         if (fabsf(off_y) > FLT_EPSILON)
         {
-            resilience.y = off_y / size.height;
+            resilience.y = off_y / 800;
         }
         
         resilience = ccpMult(resilience, maxSpeed(dt));

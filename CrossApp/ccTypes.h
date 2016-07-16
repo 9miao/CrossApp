@@ -4,7 +4,10 @@
 #define __CCTYPES_H__
 
 #include <string>
-#include "basics/CAGeometry.h"
+#include "basics/CASize.h"
+#include "basics/CAPoint.h"
+#include "basics/CAPoint3D.h"
+#include "basics/CARect.h"
 #include "CCGL.h"
 
 
@@ -129,38 +132,6 @@ static inline bool CAColor4FEqual(CAColor4F a, CAColor4F b)
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
-/** A vertex composed of 2 floats: x, y
- @since v0.8
- */
-typedef struct _ccVertex2F
-{
-    GLfloat x;
-    GLfloat y;
-} ccVertex2F;
-
-static inline ccVertex2F vertex2(const float x, const float y)
-{
-    ccVertex2F c = {x, y};
-    return c;
-}
-
-
-/** A vertex composed of 2 floats: x, y
- @since v0.8
- */
-typedef struct _ccVertex3F
-{
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
-} ccVertex3F;
-
-static inline ccVertex3F vertex3(const float x, const float y, const float z)
-{
-    ccVertex3F c = {x, y, z};
-    return c;
-}
-        
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
  */
@@ -179,33 +150,33 @@ static inline ccTex2F tex2(const float u, const float v)
 //! Point Sprite component
 typedef struct _DPointSprite
 {
-    ccVertex2F    pos;        // 8 bytes
+    DPoint    pos;        // 8 bytes
     CAColor4B    color;        // 4 bytes
     GLfloat        size;        // 4 bytes
 } DPointSprite;
 
 //!    A 2D Quad. 4 * 2 floats
 typedef struct _ccQuad2 {
-    ccVertex2F        tl;
-    ccVertex2F        tr;
-    ccVertex2F        bl;
-    ccVertex2F        br;
+    DPoint        tl;
+    DPoint        tr;
+    DPoint        bl;
+    DPoint        br;
 } ccQuad2;
 
 
 //!    A 3D Quad. 4 * 3 floats
 typedef struct _ccQuad3 {
-    ccVertex3F        bl;
-    ccVertex3F        br;
-    ccVertex3F        tl;
-    ccVertex3F        tr;
+    DPoint3D        bl;
+    DPoint3D        br;
+    DPoint3D        tl;
+    DPoint3D        tr;
 } ccQuad3;
 
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV2F_C4B_T2F
 {
     //! vertices (2F)
-    ccVertex2F        vertices;
+    DPoint        vertices;
     //! colors (4B)
     CAColor4B        colors;
     //! tex coords (2F)
@@ -216,7 +187,7 @@ typedef struct _ccV2F_C4B_T2F
 typedef struct _ccV2F_C4F_T2F
 {
     //! vertices (2F)
-    ccVertex2F        vertices;
+    DPoint        vertices;
     //! colors (4F)
     CAColor4F        colors;
     //! tex coords (2F)
@@ -227,7 +198,7 @@ typedef struct _ccV2F_C4F_T2F
 typedef struct _ccV3F_C4B_T2F
 {
     //! vertices (3F)
-    ccVertex3F        vertices;            // 12 bytes
+    DPoint3D        vertices;            // 12 bytes
 //    char __padding__[4];
 
     //! colors (4B)
@@ -262,7 +233,7 @@ typedef struct _ccV2F_C4B_T2F_Quad
     ccV2F_C4B_T2F    tr;
 } ccV2F_C4B_T2F_Quad;
 
-//! 4 ccVertex3FTex2FColor4B
+//! 4 DPoint3DTex2FColor4B
 typedef struct _ccV3F_C4B_T2F_Quad
 {
     //! top left
@@ -275,7 +246,7 @@ typedef struct _ccV3F_C4B_T2F_Quad
     ccV3F_C4B_T2F    br;
 } ccV3F_C4B_T2F_Quad;
 
-//! 4 ccVertex2FTex2FColor4F Quad
+//! 4 DPointTex2FColor4F Quad
 typedef struct _ccV2F_C4F_T2F_Quad
 {
     //! bottom left
@@ -288,17 +259,42 @@ typedef struct _ccV2F_C4F_T2F_Quad
     ccV2F_C4F_T2F    tr;
 } ccV2F_C4F_T2F_Quad;
 
-//! Blend Function used for textures
-typedef struct _ccBlendFunc
+
+
+
+struct CC_DLL BlendFunc
 {
-    //! source blend function
+    /** source blend function */
     GLenum src;
-    //! destination blend function
+    /** destination blend function */
     GLenum dst;
-} ccBlendFunc;
+    
+    /** Blending disabled. Uses {GL_ONE, GL_ZERO} */
+    static const BlendFunc DISABLE;
+    /** Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA} */
+    static const BlendFunc ALPHA_PREMULTIPLIED;
+    /** Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA} */
+    static const BlendFunc ALPHA_NON_PREMULTIPLIED;
+    /** Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE} */
+    static const BlendFunc ADDITIVE;
+    
+    bool operator==(const BlendFunc &a) const
+    {
+        return src == a.src && dst == a.dst;
+    }
+    
+    bool operator!=(const BlendFunc &a) const
+    {
+        return src != a.src || dst != a.dst;
+    }
+    
+    bool operator<(const BlendFunc &a) const
+    {
+        return src < a.src || (src == a.src && dst < a.dst);
+    }
+};
 
-static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
-
+static const BlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 // XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Vertical text alignment type
 typedef enum
@@ -353,6 +349,26 @@ typedef enum
     CAInterfaceOrientationLandscape      = 2,
 }CAInterfaceOrientation;
 
+typedef enum
+{
+    CALayoutLinearHorizontal = 0,
+    CALayoutLinearVertical
+}
+CALayoutLinearType;
+
+enum
+{
+    OnEnter,
+    OnExit,
+    OnEnterTransitioDidFinish,
+    OnExitTransitionDidStart,
+    OnCleanup
+};
+
+
+#define kCAViewPointInvalid DPoint(FLT_MIN, FLT_MIN)
+#define kCAViewSizeInvalid DPointZero
+#define kCAViewRectInvalid DRectZero
 static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 
 /**
@@ -370,6 +386,13 @@ static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAA
 #define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
 
 #define LINE_WIDTH MAX(s_px_to_dip(1.0f) + 0.01f, 1.01f)
+
+
+#if CC_NODE_RENDER_SUBPIXEL
+#define RENDER_IN_SUBPIXEL
+#else
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
+#endif
 
 NS_CC_END
 

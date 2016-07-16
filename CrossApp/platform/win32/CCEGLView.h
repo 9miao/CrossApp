@@ -27,7 +27,9 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 #include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN

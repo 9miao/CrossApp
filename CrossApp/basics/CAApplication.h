@@ -6,7 +6,9 @@
 #include "platform/CCPlatformMacros.h"
 #include "CAObject.h"
 #include "ccTypes.h"
-#include "CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "ccTypeInfo.h"
@@ -49,7 +51,7 @@ public:
         /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
         P3D,
 
-        Default = P2D,
+        Default = P3D,
     } Projection;
     
     /**

@@ -100,7 +100,7 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
         _webController->setTitle(" ");
         
         _webController->autorelease();
-        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
+        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(false);
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
         _webController->initWebView("http://crossapp.9miao.com");
     }
@@ -111,7 +111,7 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
         _webController->setTitle(" ");
         
         _webController->autorelease();
-        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(true);
+        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(false);
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
         _webController->initWebView("http://www.9miao.com/");
     }

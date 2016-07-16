@@ -1,4 +1,3 @@
-#include "basics/CAGeometry.h"
 #include "platform/android/CAAccelerometer.h"
 #include "JniHelper.h"
 #include <jni.h>

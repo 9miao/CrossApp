@@ -140,6 +140,8 @@ protected:
     
     void setSkewY(float skewY, CAView* view);
     
+    void setRotation(float rotation, CAView* view);
+    
     void setRotationX(float rotationX, CAView* view);
     
     void setRotationY(float rotationY, CAView* view);

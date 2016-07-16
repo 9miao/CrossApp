@@ -18,8 +18,12 @@ animation/CAAnimation.cpp \
 basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CACamera.cpp \
-basics/CAGeometry.cpp \
 basics/CALayout.cpp \
+basics/CAPoint.cpp \
+basics/CASize.cpp \
+basics/CARect.cpp \
+basics/CAPoint3D.cpp \
+basics/CAVec4.cpp \
 basics/CAObject.cpp \
 basics/CAResponder.cpp \
 basics/CAScheduler.cpp \
@@ -55,7 +59,6 @@ images/gif_lib/gif_font.c \
 images/gif_lib/gif_hash.c \
 images/gif_lib/gifalloc.c \
 images/gif_lib/quantize.c \
-shaders/CATransformation.cpp \
 shaders/CAGLProgram.cpp \
 shaders/CAShaderCache.cpp \
 shaders/ccGLStateCache.cpp \
@@ -64,8 +67,6 @@ support/md5.cpp \
 support/CANotificationCenter.cpp \
 support/CAPointExtension.cpp \
 support/CAProfiling.cpp \
-support/CCVertex.cpp \
-support/TransformUtils.cpp \
 support/base64.cpp \
 support/ccUTF8.cpp \
 support/ConvertUTF.cpp \
@@ -117,6 +118,12 @@ view/CADrawView.cpp \
 view/CADrawingPrimitives.cpp \
 view/CAGifView.cpp \
 view/CARichLabel.cpp \
+math/CAAffineTransform.cpp \
+math/CAVertex.cpp \
+math/Mat4.cpp \
+math/MathUtil.cpp \
+math/Quaternion.cpp \
+math/TransformUtils.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \

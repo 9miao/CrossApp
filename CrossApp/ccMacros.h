@@ -24,6 +24,8 @@ if (strlen(msg))												\
 #endif
 #endif  // CCAssert
 
+#define GP_ASSERT(cond) CCAssert(cond, "")
+
 #include "ccConfig.h"
 
 /** @def CC_SWAP

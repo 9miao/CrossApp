@@ -14,7 +14,9 @@
 #include <stdio.h>
 #include <string>
 #include "basics/CAObject.h"
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN

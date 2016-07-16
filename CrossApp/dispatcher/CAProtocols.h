@@ -82,14 +82,14 @@ public:
      *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
      *
      */
-    virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
+    virtual void setBlendFunc(BlendFunc blendFunc) = 0;
     
     /**
      * Returns the blending function that is currently being used.
      *
-     * @return A ccBlendFunc structure with source and destination factor which specified pixel arithmetic.
+     * @return A BlendFunc structure with source and destination factor which specified pixel arithmetic.
      */
-    virtual ccBlendFunc getBlendFunc(void) = 0;
+    virtual BlendFunc getBlendFunc(void) = 0;
     /**
      * Returns the currently used texture
      *

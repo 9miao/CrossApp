@@ -3,7 +3,9 @@
 #ifndef __CC_EGLVIEW_ANDROID_H__
 #define __CC_EGLVIEW_ANDROID_H__
 
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 #include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN

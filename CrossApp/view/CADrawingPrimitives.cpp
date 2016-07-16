@@ -85,7 +85,7 @@ void ccDrawPoint( const DPoint& point )
 {
     lazy_init();
 
-    ccVertex2F p;
+    DPoint p;
     p.x = point.x;
     p.y = point.y;
 
@@ -118,10 +118,10 @@ void ccDrawPoints( const DPoint *points, unsigned int numberOfPoints )
     s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    ccVertex2F* newPoints = new ccVertex2F[numberOfPoints];
+    DPoint* newPoints = new DPoint[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(DPoint) == sizeof(ccVertex2F) )
+    if( sizeof(DPoint) == sizeof(DPoint) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) points, numberOfPoints * sizeof(DPoint));
@@ -140,7 +140,7 @@ void ccDrawPoints( const DPoint *points, unsigned int numberOfPoints )
 #ifdef EMSCRIPTEN
         // Suspect Emscripten won't be emitting 64-bit code for a while yet,
         // but want to make sure this continues to work even if they do.
-        setGLBufferData(newPoints, numberOfPoints * sizeof(ccVertex2F));
+        setGLBufferData(newPoints, numberOfPoints * sizeof(DPoint));
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
@@ -157,7 +157,7 @@ void ccDrawLine( const DPoint& origin, const DPoint& destination )
 {
     lazy_init();
 
-    ccVertex2F vertices[2] = {
+    DPoint vertices[2] = {
         {origin.x, origin.y},
         {destination.x, destination.y}
     };
@@ -207,7 +207,7 @@ void ccDrawPoly( const DPoint *poli, unsigned int numberOfPoints, bool closePoly
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(DPoint) == sizeof(ccVertex2F) )
+    if( sizeof(DPoint) == sizeof(DPoint) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(DPoint));
@@ -225,13 +225,13 @@ void ccDrawPoly( const DPoint *poli, unsigned int numberOfPoints, bool closePoly
     {
         // Mac on 64-bit
         // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-        ccVertex2F* newPoli = new ccVertex2F[numberOfPoints];
+        DPoint* newPoli = new DPoint[numberOfPoints];
         for( unsigned int i=0; i<numberOfPoints;i++) {
             newPoli[i].x = poli[i].x;
             newPoli[i].y = poli[i].y;
         }
 #ifdef EMSCRIPTEN
-        setGLBufferData(newPoli, numberOfPoints * sizeof(ccVertex2F));
+        setGLBufferData(newPoli, numberOfPoints * sizeof(DPoint));
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
@@ -257,10 +257,10 @@ void ccDrawSolidPoly( const DPoint *poli, unsigned int numberOfPoints, CAColor4F
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    ccVertex2F* newPoli = new ccVertex2F[numberOfPoints];
+    DPoint* newPoli = new DPoint[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(DPoint) == sizeof(ccVertex2F) )
+    if( sizeof(DPoint) == sizeof(DPoint) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(DPoint));
@@ -274,10 +274,10 @@ void ccDrawSolidPoly( const DPoint *poli, unsigned int numberOfPoints, CAColor4F
         // Mac on 64-bit
         for( unsigned int i=0; i<numberOfPoints;i++)
         {
-            newPoli[i] = vertex2( poli[i].x, poli[i].y );
+            newPoli[i] = DPoint( poli[i].x, poli[i].y );
         }
 #ifdef EMSCRIPTEN
-        setGLBufferData(newPoli, numberOfPoints * sizeof(ccVertex2F));
+        setGLBufferData(newPoli, numberOfPoints * sizeof(DPoint));
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
@@ -340,7 +340,7 @@ void ccDrawQuadBezier(const DPoint& origin, const DPoint& control, const DPoint&
 {
     lazy_init();
 
-    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+    DPoint* vertices = new DPoint[segments + 1];
 
     float t = 0.0f;
     for(unsigned int i = 0; i < segments; i++)
@@ -359,7 +359,7 @@ void ccDrawQuadBezier(const DPoint& origin, const DPoint& control, const DPoint&
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(ccVertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(DPoint));
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -377,7 +377,7 @@ void ccDrawCardinalSpline(const std::vector<DPoint>& config, float tension,  uns
 {
     lazy_init();
 
-    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+    DPoint* vertices = new DPoint[segments + 1];
 
     unsigned int p;
     float lt;
@@ -414,7 +414,7 @@ void ccDrawCardinalSpline(const std::vector<DPoint>& config, float tension,  uns
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(ccVertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(DPoint));
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -450,7 +450,7 @@ void ccDrawCubicBezier(const DPoint& origin, const DPoint& control1, const DPoin
 {
     lazy_init();
 
-    ccVertex2F* vertices = new ccVertex2F[segments + 1];
+    DPoint* vertices = new DPoint[segments + 1];
 
     float t = 0;
     for(unsigned int i = 0; i < segments; i++)
@@ -469,7 +469,7 @@ void ccDrawCubicBezier(const DPoint& origin, const DPoint& control1, const DPoin
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(ccVertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(DPoint));
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);

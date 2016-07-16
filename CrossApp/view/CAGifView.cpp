@@ -102,10 +102,10 @@ void CAGifView::setContentSize(const DSize& contentSize)
 void CAGifView::updateImageRect()
 {
     // Don't update Z.
-    m_sQuad.bl.vertices = vertex3(  m_fLeft,    m_fTop, m_fVertexZ);
-    m_sQuad.br.vertices = vertex3( m_fRight,    m_fTop, m_fVertexZ);
-    m_sQuad.tl.vertices = vertex3(  m_fLeft, m_fBottom, m_fVertexZ);
-    m_sQuad.tr.vertices = vertex3( m_fRight, m_fBottom, m_fVertexZ);
+    m_sQuad.bl.vertices = DPoint3D(  m_fLeft,    m_fTop, m_fVertexZ);
+    m_sQuad.br.vertices = DPoint3D( m_fRight,    m_fTop, m_fVertexZ);
+    m_sQuad.tl.vertices = DPoint3D(  m_fLeft, m_fBottom, m_fVertexZ);
+    m_sQuad.tr.vertices = DPoint3D( m_fRight, m_fBottom, m_fVertexZ);
 }
 
 void CAGifView::setGif(CAGif* gif)

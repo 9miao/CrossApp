@@ -22,18 +22,19 @@
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"
-#include <ctype.h>
-#include <cctype>
 #include "support/image_support/TGAlib.h"
-#include "png.h"
-#include "jpeglib.h"
-#include "tiffio.h"
-#include "decode.h"
-#include "etc1.h"
 #include "images/gif_lib/gif_lib.h"
 #include "images/gif_lib/gif_hash.h"
 #include "images/gif_lib/gif_lib_private.h"
 #include "images/gif_lib/GifUtils.h"
+
+#include <ctype.h>
+#include <cctype>
+#include <png.h>
+#include <jpeglib.h>
+#include <tiffio.h>
+#include <decode.h>
+#include <etc1.h>
 
 
 NS_CC_BEGIN
@@ -1420,9 +1421,11 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
                 break;
             }
         }
-        
-        this->convertToRawData();
-        this->premultipliedImageData();
+        if (ret)
+        {
+            this->convertToRawData();
+            this->premultipliedImageData();
+        }
     }
     while (0);
     return ret;

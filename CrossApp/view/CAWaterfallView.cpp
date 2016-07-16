@@ -394,7 +394,7 @@ void CAWaterfallView::reloadViewSizeData()
 	m_nWaterfallHeaderHeight = m_pWaterfallViewDataSource->waterfallViewHeightForHeader(this);
 	if (m_nWaterfallHeaderHeight > 0)
 	{
-		setWaterfallHeaderView(m_pWaterfallViewDataSource->waterfallViewSectionViewForHeader(this, CCSizeMake(nColumnWidth, m_nWaterfallHeaderHeight)));
+		setWaterfallHeaderView(m_pWaterfallViewDataSource->waterfallViewSectionViewForHeader(this, DSize(nColumnWidth, m_nWaterfallHeaderHeight)));
 		viewHeight += m_nWaterfallHeaderHeight;
 		viewHeight += m_nItemMargin;
 	}

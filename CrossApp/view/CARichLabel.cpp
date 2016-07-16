@@ -109,10 +109,10 @@ void CARichLabel::updateImageRect()
 	x2 = MAX(x1, x2);
 	y2 = y1 + m_obRect.size.height;
 	y2 = MAX(y1, y2);
-	m_sQuad.bl.vertices = vertex3(x1, y1, m_fVertexZ);
-	m_sQuad.br.vertices = vertex3(x2, y1, m_fVertexZ);
-	m_sQuad.tl.vertices = vertex3(x1, y2, m_fVertexZ);
-	m_sQuad.tr.vertices = vertex3(x2, y2, m_fVertexZ);
+	m_sQuad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+	m_sQuad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+	m_sQuad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+	m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
 }
 
 bool CARichLabel::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

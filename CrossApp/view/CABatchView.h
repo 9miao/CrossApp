@@ -67,9 +67,9 @@ public:
     
     virtual void setImage(CAImage *image);
     
-    virtual void setBlendFunc(ccBlendFunc blendFunc);
+    virtual void setBlendFunc(BlendFunc blendFunc);
 
-    virtual ccBlendFunc getBlendFunc(void);
+    virtual BlendFunc getBlendFunc(void);
 
     virtual void visit(void);
     
@@ -107,7 +107,7 @@ protected:
     
     CAImageAtlas *m_pobImageAtlas;
     
-    ccBlendFunc m_blendFunc;
+    BlendFunc m_blendFunc;
 
     CAVector<CAView*> m_obDescendants;
 };

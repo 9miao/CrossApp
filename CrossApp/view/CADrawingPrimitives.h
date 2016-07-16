@@ -5,7 +5,7 @@
 
 #include "ccTypes.h"
 #include "ccMacros.h"
-#include "basics/CAGeometry.h"    // for DPoint
+#include "basics/CAPoint.h"
 #include <vector>
 
 

@@ -275,10 +275,10 @@ void CAVideoPlayerView::updateImageRect()
 	m_fTop = m_viewRect.origin.y;
 	m_fBottom = m_viewRect.origin.y + m_viewRect.size.height;
     
-    m_sQuad.bl.vertices = vertex3(m_fLeft, m_fTop, 0);
-    m_sQuad.br.vertices = vertex3(m_fRight, m_fTop, 0);
-    m_sQuad.tl.vertices = vertex3(m_fLeft, m_fBottom, 0);
-    m_sQuad.tr.vertices = vertex3(m_fRight, m_fBottom, 0);
+    m_sQuad.bl.vertices = DPoint3D(m_fLeft, m_fTop, 0);
+    m_sQuad.br.vertices = DPoint3D(m_fRight, m_fTop, 0);
+    m_sQuad.tl.vertices = DPoint3D(m_fLeft, m_fBottom, 0);
+    m_sQuad.tr.vertices = DPoint3D(m_fRight, m_fBottom, 0);
 }
 
 void CAVideoPlayerView::visit()

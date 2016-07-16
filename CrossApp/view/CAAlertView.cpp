@@ -341,7 +341,7 @@ void CAAlertView::calcuAlerViewSize()
 
 	float alertViewButtonHeight = 88;
 
-	float alertViewMessageHeight = 150;
+	float alertViewMessageHeight = 130;
 
 	m_fAlertViewHeight += alertViewSpaceHeight;
 

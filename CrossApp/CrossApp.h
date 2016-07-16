@@ -30,7 +30,11 @@
 #include "basics/CAAutoreleasePool.h"
 #include "basics/CACamera.h"
 #include "basics/CAFPSImages.h"
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
+#include "basics/CAPoint3D.h"
+#include "basics/CAVec4.h"
 #include "basics/CALayout.h"
 #include "basics/CAObject.h"
 #include "basics/CAResponder.h"
@@ -111,6 +115,15 @@
 #include "cocoa/CCNS.h"
 #include "cocoa/CACalendar.h"
 
+//math
+#include "math/CAAffineTransform.h"
+#include "math/CAMath.h"
+#include "math/CAMathBase.h"
+#include "math/CAVertex.h"
+#include "math/Mat4.h"
+#include "math/MathUtil.h"
+#include "math/Quaternion.h"
+#include "math/TransformUtils.h"
 
 // kazmath
 #include "kazmath/include/kazmath/kazmath.h"
@@ -118,7 +131,6 @@
 
 
 // shaders
-#include "shaders/CATransformation.h"
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"
@@ -131,7 +143,6 @@
 #include "support/CAPointExtension.h"
 #include "support/CAProfiling.h"
 #include "support/user_default/CAUserDefault.h"
-#include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
 #include "support/base64.h"

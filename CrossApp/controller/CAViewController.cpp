@@ -986,7 +986,7 @@ void CANavigationController::update(float dt)
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (pTouch->getLocation().x > 48)
+    if (pTouch->getLocation().x > 80)
     {
         return false;
     }

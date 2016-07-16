@@ -9,10 +9,10 @@
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "basics/CAApplication.h"
-#include "support/TransformUtils.h"
+#include "math/TransformUtils.h"
 #include "support/CAProfiling.h"
 #include "kazmath/GL/matrix.h"
-
+#include "ccMacros.h"
 NS_CC_BEGIN
 
 CABatchView* CABatchView::createWithImage(CAImage* image, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
@@ -473,12 +473,12 @@ void CABatchView::updateBlendFunc(void)
     }
 }
 
-void CABatchView::setBlendFunc(ccBlendFunc blendFunc)
+void CABatchView::setBlendFunc(BlendFunc blendFunc)
 {
     m_blendFunc = blendFunc;
 }
 
-ccBlendFunc CABatchView::getBlendFunc(void)
+BlendFunc CABatchView::getBlendFunc(void)
 {
     return m_blendFunc;
 }

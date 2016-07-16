@@ -2,7 +2,6 @@
 
 #import "CCApplication.h"
 #import <UIKit/UIKit.h>
-#import "basics/CAGeometry.h"
 #import "CAApplicationCaller.h"
 
 

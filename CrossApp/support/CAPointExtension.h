@@ -2,7 +2,9 @@
 #ifndef __SUPPORT_CGPOINTEXTENSION_H__
 #define __SUPPORT_CGPOINTEXTENSION_H__
 
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 #include <math.h>
 
 NS_CC_BEGIN

@@ -10,7 +10,9 @@
 #define __CAIMAGE_H__
 
 #include "basics/CAObject.h"
-#include "basics/CAGeometry.h"
+#include "basics/CAPoint.h"
+#include "basics/CASize.h"
+#include "basics/CARect.h"
 #include "ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "CCGL.h"

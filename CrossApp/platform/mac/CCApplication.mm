@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
 #include "platform/CCFileUtils.h"
-#include "CAGeometry.h"
+#include "ccTypes.h"
 #include "CAApplication.h"
 #import "CAApplicationCaller.h"
 

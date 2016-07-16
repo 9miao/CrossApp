@@ -25,7 +25,7 @@ protected:
     GLsizei         m_nBufferCount;
     ccV2F_C4B_T2F   *m_pBuffer;
     
-    ccBlendFunc     m_sBlendFunc;
+    BlendFunc     m_sBlendFunc;
     
     bool            m_bDirty;
     
@@ -55,14 +55,14 @@ public:
     /**
      * @js NA
      */
-    ccBlendFunc getBlendFunc() const;
+    BlendFunc getBlendFunc() const;
     /**
      * @code
      * when this function bound to js ,the input param is change
      * js:var setBlendFunc(var src,var dst)
      * @endcode
      */
-    void setBlendFunc(const ccBlendFunc &blendFunc);
+    void setBlendFunc(const BlendFunc &blendFunc);
     
     CADrawView();
 

@@ -154,10 +154,8 @@ void CAApplication::updateDraw()
 }
 
 void CAApplication::drawScene(float dt)
-{
-    //tick before glClear: issue #533
-    
-    if (m_nDrawCount > 0)
+{    
+    if (m_nDrawCount > 0 || 1)
     {
         --m_nDrawCount;
         
@@ -266,7 +264,7 @@ void CAApplication::setOpenGLView(CCEGLView *pobOpenGLView)
         // set size
         m_obWinSizeInPoints = m_pobOpenGLView->getDesignResolutionSize();
         
-        createStatsLabel();
+        //createStatsLabel();
         
         if (m_pobOpenGLView)
         {

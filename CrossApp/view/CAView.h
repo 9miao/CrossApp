@@ -12,7 +12,7 @@
 #include <iostream>
 #include "ccMacros.h"
 #include "CCGL.h"
-#include "shaders/CATransformation.h"
+#include "ccTypes.h"
 #include "basics/CALayout.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"
@@ -21,7 +21,9 @@
 #include "platform/CAAccelerometerDelegate.h"
 #include "basics/CAResponder.h"
 #include "images/CAImageCache.h"
-
+#include "math/CAAffineTransform.h"
+#include "math/CAMath.h"
+#include "math/TransformUtils.h"
 
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
@@ -42,25 +44,6 @@ class CAViewAnimation;
 class CARenderImage;
 struct transformValues_;
 
-
-enum {
-    kCAViewOnEnter,
-    kCAViewOnExit,
-    kCAViewOnEnterTransitionDidFinish,
-    kCAViewOnExitTransitionDidStart,
-    kCAViewOnCleanup
-};
-
-typedef enum
-{
-    CALayoutLinearHorizontal = 0,
-    CALayoutLinearVertical
-}
-CALayoutLinearType;
-
-#define kCAViewPointInvalid DPoint(FLT_MIN, FLT_MIN)
-#define kCAViewSizeInvalid DPoint(0, 0)
-#define kCAViewRectInvalid DRect(0, 0, 0, 0)
 
 class CC_DLL CAView
 :public CAResponder
@@ -239,13 +222,31 @@ public:
     
 public:
     
-    void transform(void);
+    void transform();
+    void transformAncestors();
+    virtual void updateTransform();
+
+    virtual const Mat4& getViewToSuperviewTransform() const;
+    virtual AffineTransform getViewToSuperviewAffineTransform() const;
     
-    void transformAncestors(void);
-
-    virtual void updateTransform(void);
-
-    virtual CATransformation viewToSuperviewTransform(void);
+    virtual Mat4 getViewToSuperviewTransform(CAView* ancestor) const;
+    
+    virtual AffineTransform getViewToSuperviewAffineTransform(CAView* ancestor) const;
+    
+    virtual void setViewToSuperviewTransform(const Mat4& transform);
+    
+    virtual const Mat4& getSuperviewToViewTransform() const;
+    virtual AffineTransform getSuperviewToViewAffineTransform() const;
+    
+    
+    virtual Mat4 getViewToWorldTransform() const;
+    virtual AffineTransform getViewToWorldAffineTransform() const;
+    
+    virtual Mat4 getWorldToViewTransform() const;
+    virtual AffineTransform getWorldToViewAffineTransform() const;
+    
+    void setAdditionalTransform(Mat4* additionalTransform);
+    void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     DRect convertRectToNodeSpace(const DRect& worldRect);
 
@@ -260,15 +261,13 @@ public:
     DPoint convertToWorldSize(const DSize& nodeSize);
     
     DPoint convertTouchToNodeSpace(CATouch * touch);
-
-    DPoint convertTouchToNodeSpaceAR(CATouch * touch);
     
     virtual void setOrderOfArrival(unsigned int uOrderOfArrival);
     
     virtual unsigned int getOrderOfArrival();
 
     virtual void setGLServerState(ccGLServerState glServerState);
-
+    
     virtual ccGLServerState getGLServerState();
 
     virtual void setShaderProgram(CAGLProgram *pShaderProgram);
@@ -287,7 +286,7 @@ public:
     
     virtual float getDisplayedAlpha();
     
-    virtual void updateDisplayedAlpha(float parentOpacity);
+    virtual void updateDisplayedAlpha(float SuperviewOpacity);
     
     virtual const CAColor4B& getColor(void);
     
@@ -295,15 +294,15 @@ public:
     
     virtual void setColor(const CAColor4B& color);
     
-    virtual void updateDisplayedColor(const CAColor4B& parentColor);
+    virtual void updateDisplayedColor(const CAColor4B& SuperviewColor);
 
     virtual void update(float fDelta);
     
     virtual void reViewlayout(const DSize& contentSize, bool allowAnimation = false);
     
-    inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
+    inline void setBlendFunc(BlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
     
-    inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+    inline BlendFunc getBlendFunc(void) { return m_sBlendFunc; }
     
     inline virtual bool isDirty(void) { return m_bDirty; }
     
@@ -369,6 +368,8 @@ protected:
     
     virtual void updateImageRect();
     
+    void updateRotationQuat();
+    
 protected:
  
     CC_SYNTHESIZE(CAContentContainer*, m_pContentContainer, ContentContainer);
@@ -384,9 +385,13 @@ protected:
     
     int                         m_fRotationX;
     int                         m_fRotationY;
+    int                         m_fRotationZ_X;             ///< rotation angle on Z-axis, component X
+    int                         m_fRotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    Quaternion                  m_obRotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
     
     float                       m_fScaleX;
     float                       m_fScaleY;
+    float                       m_fScaleZ;
     
     float                       m_fVertexZ;
     
@@ -399,10 +404,6 @@ protected:
     DLayout                     m_obLayout;
     DRect                       m_obReturn;
     
-    
-    CATransformation            m_sAdditionalTransform;
-    CATransformation            m_sTransform;
-    
     CACamera*                   m_pCamera;
 
     int                         m_nZOrder;
@@ -410,18 +411,23 @@ protected:
     CAVector<CAView*>           m_obSubviews;
     CAView*                     m_pSuperview;
 
-    
-    CAGLProgram*                m_pShaderProgram;
-    
+    // "cache" variables are allowed to be mutable
+    mutable Mat4                m_tTransform;      ///< transform
+    mutable bool                m_bTransformDirty;   ///< transform dirty flag
+    mutable Mat4                m_tInverse;        ///< inverse transform
+    mutable bool                m_bInverseDirty;     ///< inverse transform dirty flag
+    mutable Mat4                m_tAdditionalTransform; ///< transform
+    bool                        m_bUseAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
+    bool                        m_bTransformUpdated;         ///< Whether or not the Transform object was updated since the last
     
     ccGLServerState             m_eGLServerState;
+    CAGLProgram*                m_pShaderProgram;
+    Mat4                        m_tTransformToBatch;
     
     unsigned int                m_uOrderOfArrival;
     
     bool                        m_bRunning;
     
-    bool                        m_bTransformDirty;
-    bool                        m_bInverseDirty;
     bool                        m_bVisible;
 
     bool                        m_bReorderChildDirty;
@@ -441,7 +447,7 @@ protected:
     bool                        m_bHasChildren;
     bool                        m_bShouldBeHidden;
     
-    CATransformation            m_transformToBatch;
+    
 
     DRect                       m_obRect;
     bool                        m_bRectRotated;
@@ -454,7 +460,7 @@ protected:
     bool                        m_bFlipX;
     bool                        m_bFlipY;
     
-    ccBlendFunc                 m_sBlendFunc;
+    BlendFunc                 m_sBlendFunc;
     
     CAImage*                    m_pobImage;
     
