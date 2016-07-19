@@ -558,6 +558,12 @@ void CASegmentedControl::addTarget(CAObject* target, SEL_CASegmentedControl sele
     m_pCallFunc = selector;
 }
 
+void CASegmentedControl::rempveTarget(CAObject* target, SEL_CASegmentedControl selector)
+{
+    m_pTarget = NULL;
+    m_pCallFunc = NULL;
+}
+
 void CASegmentedControl::callFunc(CAObject* object, int index)
 {
     if(m_pTarget && m_pCallFunc)

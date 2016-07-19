@@ -243,7 +243,7 @@ void CABatchView::draw(void)
     CC_RETURN_IF(!m_pobImageAtlas);
     CC_RETURN_IF(m_pobImageAtlas->getTotalQuads() == 0);
     
-    CC_NODE_DRAW_SETUP();
+    CAIMAGE_DRAW_SETUP();
 
     CAVector<CAView*>::const_iterator itr;
     for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)

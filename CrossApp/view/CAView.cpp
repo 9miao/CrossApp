@@ -30,16 +30,6 @@
 #include "platform/CADensityDpi.h"
 #include "ccMacros.h"
 
-#define SET_DIRTY_RECURSIVELY() {                                       \
-                        if (m_pobBatchView && ! m_bRecursiveDirty)      \
-                        {                                               \
-                            m_bRecursiveDirty = true;                   \
-                            setDirty(true);                             \
-                            if (m_bHasChildren)                         \
-                                setDirtyRecursively(true);              \
-                        }                                               \
-                    }
-
 
 NS_CC_BEGIN;
 
@@ -1231,7 +1221,7 @@ void CAView::draw()
     CC_RETURN_IF(m_pobImage == NULL);
     CC_RETURN_IF(m_pShaderProgram == NULL);
     
-    CC_NODE_DRAW_SETUP();
+    CAIMAGE_DRAW_SETUP();
     
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     ccGLBindTexture2D(m_pobImage->getName());

@@ -78,6 +78,8 @@ public:
     
     void addTarget(CAObject* target, SEL_CASegmentedControl selector);
 
+    void rempveTarget(CAObject* target, SEL_CASegmentedControl selector);
+    
     void setTitleForSegmentAtIndex(const std::string& title, int index);
     std::string getTitleForSegmentAtIndex(int index);
     

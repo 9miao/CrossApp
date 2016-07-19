@@ -198,7 +198,7 @@ void CADrawView::render()
 
 void CADrawView::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CAIMAGE_DRAW_SETUP();
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     
     render();
