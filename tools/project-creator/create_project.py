@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# 2015.01.18 modified by GuKaiqiang copy java/src/* into proj.android/src/
+# -----------------------------------------
 # create_project.py
 # Create cross-platform CrossApp project
 # Copyright (c) 2012 CrossApp
@@ -22,6 +24,7 @@ import sys
 import os, os.path
 import json
 import shutil
+import platform as PLT
 
 def dumpUsage():
     print "Usage: create_project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMING_LANGUAGE"
@@ -40,7 +43,7 @@ def checkParams(context):
     global platforms_list
     
     # invalid invoke, tell users how to input params
-    if len(sys.argv) < 7:
+    if len(sys.argv) < 5:
         dumpUsage()
         sys.exit()
     
@@ -66,8 +69,10 @@ def checkParams(context):
         print "Invalid -package parameter"
         raise_error = True
     if context["language"] == "undefined":
-        print "Invalid -language parameter"
-        raise_error = True
+        context["language"] = "cpp"
+        #  print "Invalid -language parameter"
+        print "Default language is CPP"
+        # raise_error = True
     if raise_error != False:
         sys.exit()
                                  
@@ -128,6 +133,7 @@ def processPlatformProjects(platform):
     if (platform == "android"):
         src_pkg = context["src_package_name"].split('.')
         dst_pkg = context["dst_package_name"].split('.')
+
         os.rename(proj_path + "src/" + src_pkg[0],
                   proj_path + "src/" + dst_pkg[0])
         os.rename(proj_path + "src/" + dst_pkg[0] + "/" + src_pkg[1],
@@ -135,6 +141,12 @@ def processPlatformProjects(platform):
         os.rename(proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + src_pkg[2],
                   proj_path + "src/" + dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2])
         java_package_path = dst_pkg[0] + "/" + dst_pkg[1] + "/" + dst_pkg[2]
+
+        # if development os is Linux, copy $CROSSAPP_ROOT/CrossApp/platform/android/java/src/* to proj.android/src/
+        if 'Linux' in PLT.system():
+            CrossApp_src_path = os.path.join(os.environ.get('CROSSAPP_ROOT'), 'CrossApp/platform/android/java/src/org')
+            print 'Crossapp path:', CrossApp_src_path
+            shutil.copytree(CrossApp_src_path, os.path.join(proj_path, 'src/org'))
 
     # rename files and folders
     for i in range(0, len(data["rename"])):
