@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/CrossApp-proj.android-studio.iml" filepath="$PROJECT_DIR$/../../../CrossApp/proj.android-studio/CrossApp-proj.android-studio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hellocpp/hellocpp.iml" filepath="$PROJECT_DIR$/hellocpp/hellocpp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml" filepath="$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml" />
+    </modules>
+  </component>
+</project>

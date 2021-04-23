@@ -1,0 +1,4 @@
+include  ':proj.android'
+project (':proj.android').projectDir = new File(settingsDir,'../../../CrossApp/proj.android')
+
+include ':hellocpp'

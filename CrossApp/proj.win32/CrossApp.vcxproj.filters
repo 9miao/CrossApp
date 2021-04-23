@@ -1,0 +1,1468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="cocoa">
+      <UniqueIdentifier>{aec8225f-81a7-4213-b97b-7004d5535398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{926fc31c-8742-4984-9940-c972dd02fc8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\win32">
+      <UniqueIdentifier>{9428f8e6-4ce3-4596-b8af-14d70b7c5b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support">
+      <UniqueIdentifier>{d94bbf20-8de9-49a7-ae20-6a1140cf633b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\data_support">
+      <UniqueIdentifier>{4a64789e-cc8d-4f84-a869-e6dae2e0d58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\image_support">
+      <UniqueIdentifier>{bb98a889-9a48-4e31-af2f-117f14da388a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\zip_support">
+      <UniqueIdentifier>{fdea327e-b905-47db-8c33-b70d7866166b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\tinyxml2">
+      <UniqueIdentifier>{cc25bb83-527d-4218-8d68-ebf963ce7698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\user_default">
+      <UniqueIdentifier>{c45b97e8-fa1f-4e58-8ec5-d46371c2dd26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="images">
+      <UniqueIdentifier>{206d4064-4116-4818-9079-856d7713b2f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dispatcher">
+      <UniqueIdentifier>{3c91932f-7667-4049-b9bd-caac4c8eab15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="basics">
+      <UniqueIdentifier>{f1bbccae-d5af-4bae-bf17-a91ca2a1be51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view">
+      <UniqueIdentifier>{ba59ef57-9195-43a2-87c2-63a53dca3e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control">
+      <UniqueIdentifier>{12cb0ced-d422-4b8c-b268-e49a397457e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controller">
+      <UniqueIdentifier>{24dff2f3-45d2-4912-9920-9c403fee2557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script_support">
+      <UniqueIdentifier>{35ff7a6b-396a-40d7-8836-75ea0a2bbaf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="animation">
+      <UniqueIdentifier>{9a11cabc-ff1b-4ddb-8450-fcc2fed59407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="images\gif_lib">
+      <UniqueIdentifier>{80ac80b5-ea8e-41ed-a8ad-cc62a8cf14b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\json">
+      <UniqueIdentifier>{22e56ebe-f31d-4db2-ad05-ea45289e5c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\json\lib_json">
+      <UniqueIdentifier>{e982ce20-2e84-40cd-90c1-38111ece0e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\LocalStorage">
+      <UniqueIdentifier>{7e40d8df-8c3d-4324-b3b9-42ec36b8d151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\sqlite3">
+      <UniqueIdentifier>{3b623472-1e34-43bf-a172-60319e7c75ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{e61d24a2-c4ff-4ba6-92c1-742745170c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{0a46523d-a206-4484-8051-083b628406db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\actions">
+      <UniqueIdentifier>{559acc69-8cbf-4a43-ba8d-893f28d2e128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="device">
+      <UniqueIdentifier>{7e359e05-c09e-4834-8865-d9aa826308d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{0601c122-ca2a-426a-b97d-118ad61d47b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{1adcf5d1-1961-4cbd-b83f-3f3479fcf662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\xxhash">
+      <UniqueIdentifier>{455bf6b7-850d-4c25-9363-7394c9ecb4d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\clipper">
+      <UniqueIdentifier>{1e3f3ea7-d86a-42b2-8846-860cfff74af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\poly2tri">
+      <UniqueIdentifier>{3a361901-52f5-45e5-a3df-4383b33f82bd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\cocoa\CCNS.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocoa\CCSet.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\platform.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCApplication.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCEGLView.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCStdC.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\base64.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ccUtils.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\data_support\ccCArray.cpp">
+      <Filter>support\data_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\image_support\TGAlib.cpp">
+      <Filter>support\image_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\zip_support\ioapi.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\zip_support\unzip.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\zip_support\ZipUtils.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ccUTF8.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\tinyxml2\tinyxml2.cpp">
+      <Filter>support\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImage.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImageCache.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\user_default\CAUserDefault.cpp">
+      <Filter>support\user_default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAApplication.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAAutoreleasePool.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CACamera.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAFPSImages.c">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAObject.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAResponder.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAScheduler.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dispatcher\CAKeypadDispatcher.cpp">
+      <Filter>dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dispatcher\CATouch.cpp">
+      <Filter>dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dispatcher\CATouchDispatcher.cpp">
+      <Filter>dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAClippingView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAImageView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CALabel.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CARenderImage.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAScale9ImageView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAScrollView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CATableView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAWindow.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CABar.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CAButton.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CAControl.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CAProgress.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CASegmentedControl.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CASlider.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CASwitch.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\controller\CABarItem.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\controller\CAViewController.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossApp.cpp" />
+    <ClCompile Include="..\view\CAAlertView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CACollectionView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CADensityDpi.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ConvertUTF.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\ConvertUTFWrapper.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAIndexPath.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAPageView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAPickerView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocoa\CACalendar.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\md5.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAActivityIndicatorView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CAPageControl.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\controller\CADrawerController.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CADatePickerView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAListView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CAStepper.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAPullToRefreshView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAWebView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\animation\CAViewAnimation.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CADrawingPrimitives.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CADrawView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAClipboard.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CATextEditHelper.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\dgif_lib.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gif_err.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gif_font.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gif_hash.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\gifalloc.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\quantize.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAGifView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAGif.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAAutoCollectionView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\CSContentJsonDictionary.cpp">
+      <Filter>support\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\lib_json\json_reader.cpp">
+      <Filter>support\json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\lib_json\json_value.cpp">
+      <Filter>support\json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\Json\lib_json\json_writer.cpp">
+      <Filter>support\json\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\LocalStorage\LocalStorage.cpp">
+      <Filter>support\LocalStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CAProfiling.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAWaterfallView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CAUIEditorParser.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CATextField.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CATextView.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CARichLabel.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAThread.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\controller\CAFont.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CALayout.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CACell.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\CAAffineTransform.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\CAVertex.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\TransformUtils.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAPoint.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAPoint3D.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CARect.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CASize.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAVec4.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAValue.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CAFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CASAXParser.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CACommon.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGAction.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionCamera.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionCatmullRom.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionEase.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionInstant.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionInterval.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionManager.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionProgressTimer.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionTween.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGAnimation.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGAnimationCache.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGTweenFunction.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGNode.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGProgressTimer.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSprite.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSpriteBatchNode.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSpriteFrame.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSpriteFrameCache.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\CAMat4.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\CAMathUtil.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\CAQuaternion.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\egif_lib.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\openbsd-reallocarray.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\device\win32\CAAddressBook.cpp">
+      <Filter>device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\device\win32\CADevice.cpp">
+      <Filter>device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\device\win32\CAImagePickerController.cpp">
+      <Filter>device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\device\win32\CAMotionManager.cpp">
+      <Filter>device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCBatchCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCCustomCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgram.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgramCache.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgramState.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\ccGLStateCache.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCGroupCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCMaterial.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCMeshCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPass.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPrimitive.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCProperties.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCQuadCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCRenderCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCRenderer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCRenderState.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\ccShaders.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCTechnique.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\DownloadManager.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\HttpClient.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\WebSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CACameraBackgroundBrush.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAConfiguration.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CANotificationCenter.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAPointExtension.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAAlertViewImpl.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\xxhash\xxhash.c">
+      <Filter>support\xxhash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\clipper\clipper.cpp">
+      <Filter>support\clipper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\poly2tri\common\shapes.cc">
+      <Filter>support\poly2tri</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\poly2tri\sweep\advancing_front.cc">
+      <Filter>support\poly2tri</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\poly2tri\sweep\cdt.cc">
+      <Filter>support\poly2tri</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\poly2tri\sweep\sweep.cc">
+      <Filter>support\poly2tri</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\poly2tri\sweep\sweep_context.cc">
+      <Filter>support\poly2tri</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CAThemeManager.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\control\CACheckbox.cpp">
+      <Filter>control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\CAImageCube.cpp">
+      <Filter>images</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAColor.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFontProcesstor.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFreeTypeFont.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFTFontCache.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFTRichFont.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CATempTypeFont.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAAVPlayerImpl.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAIMEDispatcher.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\animation\CACustomAnimation.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAAVPlayerView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\script_support\CAScriptSupport.cpp">
+      <Filter>script_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAData.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\cocoa\CCNS.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CCSet.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCApplicationProtocol.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCEGLViewProtocol.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\platform.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCApplication.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCEGLView.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCGL.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCPlatformDefine.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCStdC.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\base64.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\ccUtils.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\data_support\ccCArray.h">
+      <Filter>support\data_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\data_support\uthash.h">
+      <Filter>support\data_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\data_support\utlist.h">
+      <Filter>support\data_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\image_support\TGAlib.h">
+      <Filter>support\image_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\zip_support\ioapi.h">
+      <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\zip_support\unzip.h">
+      <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\zip_support\ZipUtils.h">
+      <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\ccUTF8.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\tinyxml2\tinyxml2.h">
+      <Filter>support\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImage.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageCache.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\user_default\CAUserDefault.h">
+      <Filter>support\user_default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAApplication.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAAutoreleasePool.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CACamera.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAFPSImages.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAObject.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAResponder.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAScheduler.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dispatcher\CAKeypadDispatcher.h">
+      <Filter>dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dispatcher\CAProtocols.h">
+      <Filter>dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dispatcher\CATouch.h">
+      <Filter>dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dispatcher\CATouchDispatcher.h">
+      <Filter>dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAClippingView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAImageView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CALabel.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CARenderImage.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAScale9ImageView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAScrollView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CATableView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAWindow.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CABar.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAButton.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAControl.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAProgress.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CASegmentedControl.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CASlider.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CASwitch.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\controller\CABarItem.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\controller\CAViewController.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ccConfig.h" />
+    <ClInclude Include="..\ccMacros.h" />
+    <ClInclude Include="..\ccTypeInfo.h" />
+    <ClInclude Include="..\ccTypes.h" />
+    <ClInclude Include="..\CrossApp.h" />
+    <ClInclude Include="..\view\CAAlertView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CACollectionView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CADensityDpi.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASTLContainer.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\ConvertUTF.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAIndexPath.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAPageView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAPickerView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CACalendar.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\md5.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAActivityIndicatorView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAPageControl.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\controller\CADrawerController.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CADatePickerView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAListView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CAStepper.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAPullToRefreshView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAWebView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAWebViewImpl.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\animation\CAViewAnimation.h">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CADrawingPrimitives.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CADrawView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAClipboard.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CATextEditHelper.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAGifView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAGif.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAAutoCollectionView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\CSContentJsonDictionary.h">
+      <Filter>support\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\config.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\features.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\forwards.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\json_batchallocator.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\json_lib.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\json_tool.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\reader.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\value.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\writer.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\Json\lib_json\autolink.h">
+      <Filter>support\json\lib_json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\LocalStorage\LocalStorage.h">
+      <Filter>support\LocalStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\support\CAProfiling.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\sqlite3\sqlite3.h">
+      <Filter>support\sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\sqlite3\sqlite3ext.h">
+      <Filter>support\sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAWaterfallView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CAUIEditorParser.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CATextField.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CATextView.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CARichLabel.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAThread.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASyncQueue.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\deelx.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\controller\CAFont.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CALayout.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CACell.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAAffineTransform.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAMath.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAMathBase.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAVertex.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\TransformUtils.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAPoint.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAPoint3D.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CARect.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CASize.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAVec4.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAValue.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CACommon.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFileUtils.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CASAXParser.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGAction.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionCamera.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionCatmullRom.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionEase.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionInstant.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionInterval.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionManager.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionProgressTimer.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionTween.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGAnimation.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGAnimationCache.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGTweenFunction.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGNode.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGProgressTimer.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSprite.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSpriteBatchNode.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSpriteFrame.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSpriteFrameCache.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAMat4.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAMathUtil.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CAQuaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\gif_lib\gif_hash.h">
+      <Filter>images\gif_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\gif_lib\gif_lib.h">
+      <Filter>images\gif_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\gif_lib\gif_lib_private.h">
+      <Filter>images\gif_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\unistd.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossApp-Prefix.h" />
+    <ClInclude Include="..\renderer\CCBatchCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCCustomCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCFrameBuffer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgram.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgramCache.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgramState.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGLProgramStateCache.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\ccGLStateCache.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCGroupCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCMaterial.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCMeshCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPass.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPrimitive.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPrimitiveCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCProperties.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCQuadCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCRenderCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCRenderCommandPool.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCRenderer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCRenderState.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\ccShaders.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTechnique.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCVertexIndexBuffer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCVertexIndexData.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\DownloadManager.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpClient.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpRequest.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\HttpResponse.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\WebSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CACameraBackgroundBrush.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAConfiguration.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CANotificationCenter.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAPointExtension.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAAlertViewImpl.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\xxhash\xxhash.h">
+      <Filter>support\xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\clipper\clipper.hpp">
+      <Filter>support\clipper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\common\shapes.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\common\utils.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\sweep\advancing_front.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\sweep\cdt.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\sweep\sweep.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\sweep\sweep_context.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\poly2tri\poly2tri.h">
+      <Filter>support\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\CAThemeManager.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\control\CACheckbox.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\CAImageCube.h">
+      <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAColor.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAAVPlayerImpl.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFontProcesstor.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAFreeTypeFont.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAFTFontCache.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAFTRichFont.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CATempTypeFont.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAIMEDelegate.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAIMEDispatcher.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\animation\CACustomAnimation.h">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAAVPlayerView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CAAddressBook.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CADevice.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CAImagePickerController.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CAMotionManager.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\script_support\CAScriptSupport.h">
+      <Filter>script_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAData.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\support\Json\lib_json\json_internalarray.inl">
+      <Filter>support\json\lib_json</Filter>
+    </None>
+    <None Include="..\support\Json\lib_json\json_internalmap.inl">
+      <Filter>support\json\lib_json</Filter>
+    </None>
+    <None Include="..\support\Json\lib_json\json_valueiterator.inl">
+      <Filter>support\json\lib_json</Filter>
+    </None>
+    <None Include="..\math\CAMat4.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\CAMathUtil.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\CAMathUtilNeon.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\CAMathUtilNeon64.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\CAMathUtilSSE.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\CAQuaternion.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Color.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_ColorNormal.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_ColorNormalTex.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_ColorTex.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Particle.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Particle.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_PositionNormalTex.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_PositionTex.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Skybox.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Skybox.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Terrain.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_3D_Terrain.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_CameraClear.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_CameraClear.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_ETC1AS_PositionTextureColor.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_ETC1AS_PositionTextureGray.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_df.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_df_glow.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_normal.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Label_outline.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Position_uColor.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_Position_uColor.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColor.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColor.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorTextureAsPointsize.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTexture_uColor.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureA8Color.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.vert">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_UI_Gray.frag">
+      <Filter>render</Filter>
+    </None>
+    <None Include="..\..\samples\Test_JS\proj.win32\Test-js.vcxproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\renderer\CMakeLists.txt">
+      <Filter>render</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{20545893-551c-4f10-ae10-8d1be8921597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="auto">
+      <UniqueIdentifier>{3aee79a6-75f3-4fc7-b92a-6ae0c4f8357b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual">
+      <UniqueIdentifier>{22fa7dc3-08d6-4d50-9c52-3dc62f0c375e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_manual_conversions.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\ScriptingCore.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\crossapp_specifics.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\jsb_websocket.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_config.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_manual_conversions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\ScriptingCore.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\spidermonkey_specifics.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.hpp">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\crossapp_specifics.hpp">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\jsb_websocket.hpp">
+      <Filter>manual</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

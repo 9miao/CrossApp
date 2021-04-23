@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.CrossApp.hellojs"
+        versionCode 1
+        versionName "1.0.0"
+        minSdkVersion 15
+        targetSdkVersion 30
+        externalNativeBuild {
+            ndkBuild {
+                arguments 'NDK_TOOLCHAIN_VERSION=clang'
+            }
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+            moduleName "CrossApp_cpp_shared"
+        }
+    }
+    signingConfigs {
+        config {
+            storeFile file('../../xxx.keystore')
+            storePassword 'xxxxxx'
+            keyAlias 'xxx'
+            keyPassword 'xxxxxx'
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/libs']
+            assets.srcDirs = ['../../Resources']
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+repositories {
+    flatDir {
+        dirs 'src/main/libs'
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'src/main/libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation project(':proj.android')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}

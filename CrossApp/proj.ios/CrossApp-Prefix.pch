@@ -1,0 +1,7 @@
+ //
+// Prefix header for all source files of the 'CrossApp' target in the 'CrossApp' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

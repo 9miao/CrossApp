@@ -1,0 +1,63 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From Test:
+* README.md
+* ant.properties
+* build.xml
+* build_native.sh
+* proguard-project.txt
+From libCrossApp:
+* ant.properties
+* build.xml
+* proguard-project.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In libCrossApp:
+* AndroidManifest.xml => libCrossApp\src\main\AndroidManifest.xml
+* libs\armeabi\liblbs.so => libCrossApp\src\main\jniLibs\armeabi\liblbs.so
+* libs\tbs_sdk_thirdapp_v2.5.0.1031_36880_sharewithdownload_obfs_20161107_154437.jar => libCrossApp\libs\tbs_sdk_thirdapp_v2.5.0.1031_36880_sharewithdownload_obfs_20161107_154437.jar
+* lint.xml => libCrossApp\lint.xml
+* res\ => libCrossApp\src\main\res\
+* src\ => libCrossApp\src\main\java\
+In Test:
+* AndroidManifest.xml => test\src\main\AndroidManifest.xml
+* jni\ => test\src\main\jni\
+* libs\armeabi\libCrossApp_cpp.so => test\src\main\jniLibs\armeabi\libCrossApp_cpp.so
+* lint.xml => test\lint.xml
+* res\ => test\src\main\res\
+* src\ => test\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

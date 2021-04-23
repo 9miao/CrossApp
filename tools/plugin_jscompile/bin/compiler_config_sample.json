@@ -1,0 +1,36 @@
+{
+    "pre_order":
+    [
+        "script/jsb_cocos2d_constants.js",
+        "script/jsb_cocos2d.js",
+        "script/jsb_cocos2d_extension.js",
+        "script/jsb_chipmunk_constants.js",
+        "script/jsb_chipmunk.js",
+        "script/jsb_opengl_constants.js",
+        "script/jsb_opengl.js",
+        "script/jsb_cocosbuilder.js",
+        "script/jsb_sys.js",
+        "script/jsb_cocos2d_studio.js",
+        "script/jsb_cocos2d_gui.js",
+        "script/jsb.js",
+        "tests/tests_resources-jsb.js",
+        "tests/tests-main.js",
+        "tests/BaseTestLayer/BaseTestLayer.js",
+        "tests/PerformanceTest/PerformanceTest.js",
+        "tests/tests-boot-jsb.js"
+    ],
+    "post_order":
+    [
+
+    ],
+    "skip":
+    [
+        "tests/main.js",
+        "tests/tests_resources-html5.js",
+        "tests/tests-boot-html5.js",
+        "tests/AdvanceCompiler",
+        "script/jsb_debugger.js",
+        "script/debugger/"
+    ],
+    "closure_params": ""
+}

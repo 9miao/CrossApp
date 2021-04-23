@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--  <FrameLayout
+         android:id="@+id/cameraPreview"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_weight="1" /> -->
+
+
+    <org.CrossApp.lib.FinderView
+        android:id="@+id/finder_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ffffff">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="34dp"
+            android:scaleType="fitCenter" />
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

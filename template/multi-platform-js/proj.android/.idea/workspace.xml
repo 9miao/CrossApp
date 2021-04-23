@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1d68585c-54e1-4975-8904-8077b90c55fc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/libraries/Gradle____local_aars____Users_guangtou_Desktop_GTcontent_GT_project_cross_CrossApp_proj_android_studio_libs_tbs_sdk_thirdapp_v2_5_0_1031_36880_sharewithdownload_obfs_20161107_154437_jar_unspecified_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/lint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/Android.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/libs/lint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/test.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/jni/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/jni/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/libs/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/test.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/libraries/Gradle____local_aars____Users_guangtou_Desktop_GTcontent_GT_project_cross_CrossApp_proj_android_studio_libs_tbs_sdk_thirdapp_v2_5_0_1031_36880_sharewithdownload_obfs_20161107_154437_jar_unspecified_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/jni/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/jni/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/libs/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/hellocpp/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/test.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/jni/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/jni/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/libs/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/values/strings.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="emulator-5554" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hellocpp/build.gradle">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="154" />
+    <option name="y" value="140" />
+    <option name="width" value="1396" />
+    <option name="height" value="822" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="hellocpp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../sdk" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="hellocpp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="hellocpp" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1d68585c-54e1-4975-8904-8077b90c55fc" name="Default Changelist" comment="" />
+      <created>1610428536955</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610428536955</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="154" y="140" width="1396" height="822" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.3633678" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Build Variants" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Run" />
+      <window_info anchor="bottom" id="Logcat" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Android Profiler" />
+      <window_info anchor="bottom" id="Debug" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Build" visible="true" weight="0.37945205" />
+      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hellocpp/build.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+  </component>
+</project>

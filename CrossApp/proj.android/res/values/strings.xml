@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="finderview_tag">将二维码对准方框，即可自动扫描</string>
+</resources>

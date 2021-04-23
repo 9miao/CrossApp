@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="cocos" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
+        <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb.js" />
+        <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js" />
+        <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js" />
+        <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_prepare.js" />
+        <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_specifics_api.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
+      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb.js" />
+      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js" />
+      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js" />
+      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_prepare.js" />
+      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_specifics_api.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
