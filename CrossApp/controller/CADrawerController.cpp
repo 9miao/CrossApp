@@ -126,7 +126,7 @@ void CADrawerController::viewDidLoad()
     this->achieveLayout();
     
     m_pContainer[0]->setLayout(m_rHideLayout[0]);
-    m_pContainer[0]->setAnchorPoint(DPoint(0.5f, 0.5f));
+    m_pContainer[0]->setAnchorPoint(DPoint(0.3f, 0.5f));
     m_pContainer[1]->setLayout(m_rHideLayout[1]);
     m_pContainer[1]->setAnchorPoint(DPoint(0.0f, 0.5f));
     
@@ -306,13 +306,13 @@ void CADrawerController::updateViewFrame()
     
     if (m_bEffect3D)
     {
-        float scale0 = 0.5f + 0.5f * m_fCurrDivision / m_fDivision;
+        float scale0 = 0.93f + 0.07f * m_fCurrDivision / m_fDivision;
         float scale1 = 1.0f - powf(m_fCurrDivision / m_fDivision, 2) * 0.2f;
         
         m_pContainer[0]->setAlpha(m_fCurrDivision / m_fDivision);
         m_pContainer[0]->setScale(scale0);
         m_pContainer[1]->setScale(scale1);
-        point[0].x = (m_fCurrDivision - m_fDivision) / 3;
+        point[0].x = 0;
     }
     else
     {
@@ -396,12 +396,12 @@ void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CADrawerController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     if (m_bShow
-        && !(m_fOffX > FLT_EPSILON)
+        && !(m_fOffX * 2 > FLT_EPSILON)
         && m_pContainer[1]->getFrame().containsPoint(this->getView()->convertTouchToNodeSpace(pTouch)))
     {
         this->hideLeftViewController(true);
     }
-    else if (std::abs(m_fOffX) > FLT_EPSILON)
+    else if (std::abs(m_fOffX * 2) > FLT_EPSILON)
     {
         if (m_fOffX > 0)
         {
